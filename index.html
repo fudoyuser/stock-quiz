@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Quiz kiến thức chứng khoán Việt Nam: mã cổ phiếu, lĩnh vực kinh doanh, quy định giao dịch, chỉ số, báo cáo tài chính và lịch sử thị trường.">
+<meta name="description" content="Quiz kiến thức chứng khoán Việt Nam 16 phần: mã cổ phiếu, lĩnh vực, quy định, chỉ số, BCTC, phân tích kỹ thuật, phái sinh, trái phiếu, quỹ, quản trị rủi ro.">
 <title>Bảng Điện Quiz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +13,7 @@
 :root {
   --bg: #f3f5f2; --card: #ffffff; --opt: #f7f9f6; --ink: #121815; --muted: #5f6b65; --line: #dde3de;
   --up: #11935a; --up-soft: #dcf3e7; --down: #d23b3b; --down-soft: #fbe2e0; --ref: #b88a00; --ceil: #8a3fc7; --floor: #1a8fb8;
-  --c1: #11935a; --c2: #8a3fc7; --c3: #2a72c9; --c4: #c2570c; --c5: #0e8a8a; --c6: #c2366b; --c7: #6d5bd0; --c8: #a07a00; --c9: #3d7a1f; --c10: #b8432b;
+  --c1: #11935a; --c2: #8a3fc7; --c3: #2a72c9; --c4: #c2570c; --c5: #0e8a8a; --c6: #c2366b; --c7: #6d5bd0; --c8: #a07a00; --c9: #3d7a1f; --c10: #b8432b; --c11: #1f7fae; --c12: #9a3fb0; --c13: #7a6a12; --c14: #2f7f5f; --c15: #c0392b; --c16: #4a5fc1;
   --accent: var(--c1); --accent-ink: #ffffff;
   color-scheme: light;
 }
@@ -21,14 +21,14 @@
   :root:not([data-theme="light"]) {
     --bg: #0b0f0d; --card: #131916; --opt: #18201c; --ink: #e9efeb; --muted: #8d9a93; --line: #25302a;
     --up: #2fd47f; --up-soft: #12301f; --down: #ff6363; --down-soft: #3a1717; --ref: #f2c230; --ceil: #c98bff; --floor: #4fd1ff;
-    --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --accent-ink: #06130c;
+    --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --c11: #5cc3f2; --c12: #e08cff; --c13: #e0c95a; --c14: #6fd6a8; --c15: #ff7b6b; --c16: #93a3ff; --accent-ink: #06130c;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #0b0f0d; --card: #131916; --opt: #18201c; --ink: #e9efeb; --muted: #8d9a93; --line: #25302a;
   --up: #2fd47f; --up-soft: #12301f; --down: #ff6363; --down-soft: #3a1717; --ref: #f2c230; --ceil: #c98bff; --floor: #4fd1ff;
-  --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --accent-ink: #06130c;
+  --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --c11: #5cc3f2; --c12: #e08cff; --c13: #e0c95a; --c14: #6fd6a8; --c15: #ff7b6b; --c16: #93a3ff; --accent-ink: #06130c;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -143,6 +143,10 @@ h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; }
 .board td .mono, .opt .mono { font-family: "JetBrains Mono", monospace; }
 .board td.empty { color: var(--muted); font-family: inherit; font-weight: 400; }
 .opt.tk span { font: inherit; }
+.chart { display: flex; justify-content: center; background: var(--opt); border: 1px solid var(--line); border-radius: 12px; padding: 10px; margin-top: 6px; }
+.chart svg { width: 100%; max-width: 360px; height: auto; display: block; }
+.thumb { display: block; margin-top: 6px; }
+.thumb svg { width: 160px; height: auto; display: block; background: var(--opt); border-radius: 8px; }
 footer { text-align: center; font-size: 13px; color: var(--muted); }
 </style>
 </head>
@@ -156,7 +160,7 @@ footer { text-align: center; font-size: 13px; color: var(--muted); }
       <button class="theme" id="themeBtn" type="button">Giao diện: Tự động</button>
     </div>
     <h1>Bảng Điện <span>Quiz</span></h1>
-    <p>Ôn kiến thức chứng khoán Việt Nam qua 10 phần: từ mã cổ phiếu, lĩnh vực kinh doanh của doanh nghiệp đến quy định giao dịch, chỉ số, báo cáo tài chính và lịch sử thị trường. Mỗi phần là một bộ câu hỏi riêng.</p>
+    <p>Ôn kiến thức chứng khoán Việt Nam qua 16 phần: từ mã cổ phiếu, lĩnh vực kinh doanh, quy định giao dịch, báo cáo tài chính đến phân tích kỹ thuật, phái sinh, trái phiếu, quỹ và quản trị rủi ro. Mỗi phần là một bộ câu hỏi riêng.</p>
   </header>
 
   <nav class="parts" id="parts" role="tablist" aria-label="Chọn phần"></nav>
@@ -190,6 +194,7 @@ footer { text-align: center; font-size: 13px; color: var(--muted); }
       <span class="label" id="qLabel"></span>
       <div class="big" id="qMain"></div>
       <div class="sub" id="qSub"></div>
+      <div class="chart" id="qChart" hidden></div>
     </div>
     <div class="opts" id="opts"></div>
     <form class="typebox" id="typeForm" hidden autocomplete="off">
@@ -229,7 +234,7 @@ footer { text-align: center; font-size: 13px; color: var(--muted); }
     <p class="note">Dữ liệu dùng để ôn tập, không phải khuyến nghị đầu tư. Doanh nghiệp có thể đổi tên, chuyển sàn, hủy niêm yết hoặc mở rộng lĩnh vực kinh doanh; hãy kiểm tra lại trên website của sở giao dịch khi cần chính xác.</p>
   </section>
 
-  <footer>Bảng Điện Quiz · 10 phần kiến thức chứng khoán Việt Nam · Chỉ để ôn tập, không phải khuyến nghị đầu tư</footer>
+  <footer>Bảng Điện Quiz · 16 phần kiến thức chứng khoán Việt Nam · Chỉ để ôn tập, không phải khuyến nghị đầu tư</footer>
 </main>
 
 <script>
@@ -614,6 +619,170 @@ const HISTORY = [
   { q: "Biên độ dao động trên HOSE khi thị trường mới mở cửa năm 2000 là bao nhiêu?", a: "±2%", w: ["±7%", "±10%", "Không giới hạn"], e: "Biên độ được nới dần qua các năm, hiện là ±7%." }
 ];
 
+/* ===== Biểu đồ minh họa (Phần 11) =====
+   chart = { candles: [[mở, cao, thấp, đóng], …] } hoặc { lines: [{ d: [...], dash, label }], hline: [y, …] } */
+function chartSVG(c, W = 320, H = 150) {
+  const P = 12, vals = [];
+  const n = c.candles ? c.candles.length : Math.max(...c.lines.map(l => l.d.length));
+  (c.candles || []).forEach(k => vals.push(k[1], k[2]));
+  (c.lines || []).forEach(l => vals.push(...l.d));
+  (c.hline || []).forEach(y => vals.push(y));
+  const lo = Math.min(...vals), hi = Math.max(...vals), rng = hi - lo || 1;
+  const step = (W - 2 * P - (c.lines && c.lines.some(l => l.label) ? 40 : 0)) / n;
+  const x = i => P + step * (i + .5), y = v => P + (hi - v) / rng * (H - 2 * P);
+  let s = "";
+  for (const v of c.hline || []) s += `<line x1="${P}" x2="${W - P}" y1="${y(v)}" y2="${y(v)}" stroke="var(--ref)" stroke-width="1.5" stroke-dasharray="5 4"/>`;
+  (c.candles || []).forEach(([o, h, l, cl], i) => {
+    const col = cl >= o ? "var(--up)" : "var(--down)", bw = Math.min(step * .56, 26);
+    const top = y(Math.max(o, cl)), bh = Math.max(Math.abs(y(o) - y(cl)), 1.5);
+    s += `<line x1="${x(i)}" x2="${x(i)}" y1="${y(h)}" y2="${y(l)}" stroke="${col}" stroke-width="1.6"/>`;
+    s += `<rect x="${x(i) - bw / 2}" y="${top}" width="${bw}" height="${bh}" fill="${col}" rx="1.5"/>`;
+  });
+  for (const l of c.lines || []) {
+    s += `<polyline fill="none" stroke="${l.color || "var(--ink)"}" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"${l.dash ? ' stroke-dasharray="6 5"' : ""} points="${l.d.map((v, i) => `${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ")}"/>`;
+    if (l.label) s += `<text x="${x(l.d.length - 1) + 6}" y="${y(l.d[l.d.length - 1]) + 4}" font-size="11" fill="var(--muted)" font-family="JetBrains Mono, monospace">${l.label}</text>`;
+  }
+  return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Biểu đồ minh họa">${s}</svg>`;
+}
+
+const TECH = [
+  { q: "Cây nến cuối cùng (giá mở cửa gần bằng giá đóng cửa, bóng trên và bóng dưới dài) gọi là gì?", chart: { candles: [[46, 47.5, 44, 44.5], [44.5, 46, 42.5, 43], [43, 47, 39, 43.05]] }, a: "Doji", w: ["Marubozu", "Nến nhấn chìm", "Sao băng"], e: "Doji thể hiện sự lưỡng lự giữa bên mua và bên bán; sau một xu hướng dài có thể báo hiệu đảo chiều." },
+  { q: "Sau một nhịp giảm, xuất hiện cây nến thân nhỏ ở phía trên, bóng dưới rất dài. Đây là mô hình gì?", chart: { candles: [[52, 53, 49, 49.5], [49.5, 50.5, 46.5, 47], [47, 47.5, 44, 44.5], [44, 44.9, 37.5, 44.6]] }, a: "Nến búa (Hammer)", w: ["Sao băng (Shooting Star)", "Nến nhấn chìm giảm", "Marubozu giảm"], e: "Bóng dưới dài cho thấy bên mua đã kéo giá lên mạnh từ vùng thấp, thường là tín hiệu đảo chiều tăng." },
+  { q: "Sau một nhịp tăng, xuất hiện cây nến thân nhỏ ở phía dưới, bóng trên rất dài. Đây là mô hình gì?", chart: { candles: [[40, 43.5, 39.5, 43], [43, 46.5, 42.5, 46], [46, 49.5, 45.5, 49], [49.4, 56, 49, 49.8]] }, a: "Sao băng (Shooting Star)", w: ["Nến búa (Hammer)", "Doji chuồn chuồn", "Nến nhấn chìm tăng"], e: "Bóng trên dài cho thấy bên bán đã đẩy giá xuống mạnh từ vùng cao, thường là tín hiệu đảo chiều giảm." },
+  { q: "Cây nến xanh cuối cùng bao trùm toàn bộ thân cây nến đỏ trước đó sau nhịp giảm. Đây là mô hình gì?", chart: { candles: [[50, 51, 46.5, 47], [47, 48, 44.5, 45], [45, 45.5, 43, 43.5], [43, 47.2, 42.5, 46.8]] }, a: "Nhấn chìm tăng (Bullish Engulfing)", w: ["Nhấn chìm giảm (Bearish Engulfing)", "Sao hôm (Evening Star)", "Doji"], e: "Bên mua áp đảo hoàn toàn phiên trước, là tín hiệu đảo chiều tăng." },
+  { q: "Cây nến đỏ cuối cùng bao trùm toàn bộ thân cây nến xanh trước đó sau nhịp tăng. Đây là mô hình gì?", chart: { candles: [[40, 43, 39.5, 42.5], [42.5, 45, 42, 44.5], [44.5, 46.5, 44, 46], [46.5, 47, 42, 43]] }, a: "Nhấn chìm giảm (Bearish Engulfing)", w: ["Nhấn chìm tăng (Bullish Engulfing)", "Sao mai (Morning Star)", "Nến búa"], e: "Bên bán áp đảo hoàn toàn phiên trước, là tín hiệu đảo chiều giảm." },
+  { q: "Mô hình 3 nến: đỏ dài, nến thân nhỏ, rồi xanh dài sau nhịp giảm. Đây là mô hình gì?", chart: { candles: [[53, 54, 47.5, 48], [48, 48.5, 42.5, 43], [42, 42.6, 40.6, 41.4], [42, 48, 41.8, 47.5]] }, a: "Sao mai (Morning Star)", w: ["Sao hôm (Evening Star)", "Ba chàng lính trắng", "Vai – đầu – vai"], e: "Sao mai là mô hình đảo chiều tăng; nến giữa thể hiện lực bán đã cạn." },
+  { q: "Mô hình 3 nến: xanh dài, nến thân nhỏ, rồi đỏ dài sau nhịp tăng. Đây là mô hình gì?", chart: { candles: [[40, 45, 39.5, 44.5], [44.5, 50, 44, 49.5], [50.2, 51.6, 49.6, 50.6], [50, 50.4, 43, 43.6]] }, a: "Sao hôm (Evening Star)", w: ["Sao mai (Morning Star)", "Nến búa", "Hai đáy"], e: "Sao hôm là mô hình đảo chiều giảm." },
+  { q: "Cây nến cuối cùng có thân xanh dài, gần như không có bóng nến. Nó cho thấy điều gì?", chart: { candles: [[46, 47, 43, 43.5], [43.5, 44.5, 42, 42.5], [42.5, 49, 42.5, 49]] }, a: "Bên mua kiểm soát hoàn toàn phiên (Marubozu tăng)", w: ["Thị trường lưỡng lự", "Bên bán áp đảo", "Giá sắp đảo chiều giảm"], e: "Marubozu tăng: mở cửa ở giá thấp nhất, đóng cửa ở giá cao nhất." },
+  { q: "Giá tạo hai đỉnh gần bằng nhau rồi giảm thủng đường nét đứt. Đây là mô hình gì?", chart: { lines: [{ d: [20, 28, 36, 44, 50, 45, 39, 38.5, 43, 48, 50.5, 45, 38, 31, 25] }], hline: [38] }, a: "Hai đỉnh (Double Top)", w: ["Hai đáy (Double Bottom)", "Cốc tay cầm", "Tam giác tăng"], e: "Mô hình đảo chiều giảm; xác nhận khi giá thủng đường viền cổ (đáy giữa hai đỉnh)." },
+  { q: "Giá tạo hai đáy gần bằng nhau rồi vượt lên đường nét đứt. Đây là mô hình gì?", chart: { lines: [{ d: [50, 42, 34, 26, 20, 25, 31, 32, 27, 22, 19.5, 25, 32, 39, 45] }], hline: [32] }, a: "Hai đáy (Double Bottom)", w: ["Hai đỉnh (Double Top)", "Vai – đầu – vai", "Nêm giảm"], e: "Mô hình đảo chiều tăng, hình chữ W." },
+  { q: "Ba đỉnh, đỉnh giữa cao nhất, rồi giá thủng đường nét đứt. Đây là mô hình gì?", chart: { lines: [{ d: [20, 27, 35, 31, 28, 37, 46, 38, 29, 33, 36, 32, 27, 21, 16] }], hline: [28] }, a: "Vai – đầu – vai", w: ["Ba đỉnh bằng nhau", "Cốc tay cầm", "Hai đáy"], e: "Một trong những mô hình đảo chiều giảm nổi tiếng nhất; đường nét đứt là đường viền cổ (neckline)." },
+  { q: "Giá liên tục tạo đỉnh sau cao hơn đỉnh trước, đáy sau cao hơn đáy trước. Đây là xu hướng gì?", chart: { lines: [{ d: [20, 28, 24, 34, 30, 40, 36, 46, 42, 52] }] }, a: "Xu hướng tăng", w: ["Xu hướng giảm", "Đi ngang (sideway)", "Đảo chiều giảm"], e: "Theo lý thuyết Dow: đỉnh cao dần, đáy cao dần là xu hướng tăng." },
+  { q: "Giá nhiều lần giảm về đường nét đứt rồi bật lên. Đường này gọi là gì?", chart: { lines: [{ d: [45, 38, 31, 36, 42, 37, 30.5, 35, 40, 34, 30.3, 36] }], hline: [30] }, a: "Đường hỗ trợ", w: ["Đường kháng cự", "Đường viền cổ", "Đường trung bình động"], e: "Hỗ trợ là vùng giá mà lực mua đủ mạnh để ngăn giá giảm tiếp." },
+  { q: "Giá nhiều lần chạm đường nét đứt rồi vượt lên mạnh. Hiện tượng cuối cùng gọi là gì?", chart: { lines: [{ d: [20, 26, 30, 26, 23, 28, 30, 26, 24, 29, 35, 41] }], hline: [30] }, a: "Bứt phá (breakout) qua kháng cự", w: ["Thủng hỗ trợ", "Phân kỳ âm", "Bẫy giảm giá"], e: "Breakout đáng tin hơn khi đi kèm khối lượng giao dịch lớn." },
+  { q: "Đường MA ngắn hạn (nét liền) cắt lên trên đường MA dài hạn (nét đứt). Tín hiệu này gọi là gì?", chart: { lines: [{ d: [30, 29, 28, 28, 29, 31, 34, 37, 40, 43], label: "MA50" }, { d: [36, 35.5, 35, 34.6, 34.3, 34.2, 34.3, 34.6, 35, 35.6], dash: true, label: "MA200", color: "var(--muted)" }] }, a: "Giao cắt vàng (Golden Cross)", w: ["Giao cắt tử thần (Death Cross)", "Phân kỳ âm", "Bứt phá giả"], e: "Golden Cross thường được xem là tín hiệu tăng giá trung – dài hạn." },
+  { q: "Đường MA ngắn hạn (nét liền) cắt xuống dưới đường MA dài hạn (nét đứt). Tín hiệu này gọi là gì?", chart: { lines: [{ d: [44, 45, 46, 45.5, 44, 42, 39, 36, 33, 30], label: "MA50" }, { d: [38, 38.5, 39, 39.4, 39.7, 39.8, 39.7, 39.4, 39, 38.4], dash: true, label: "MA200", color: "var(--muted)" }] }, a: "Giao cắt tử thần (Death Cross)", w: ["Giao cắt vàng (Golden Cross)", "Hai đáy", "Nến búa"], e: "Death Cross thường được xem là tín hiệu giảm giá trung – dài hạn." },
+  { q: "Chỉ báo RSI trên 70 thường được hiểu là gì?", a: "Vùng quá mua", w: ["Vùng quá bán", "Tín hiệu mua chắc chắn", "Khối lượng giao dịch cao"], e: "RSI dao động 0–100: trên 70 là quá mua, dưới 30 là quá bán. Đây chỉ là cảnh báo, không phải lệnh mua bán." },
+  { q: "Chỉ báo RSI dưới 30 thường được hiểu là gì?", a: "Vùng quá bán", w: ["Vùng quá mua", "Xu hướng tăng mạnh", "Cổ phiếu sắp bị hủy niêm yết"], e: "Giá có thể hồi phục, nhưng trong xu hướng giảm mạnh RSI có thể ở vùng quá bán rất lâu." },
+  { q: "Giá tạo đỉnh mới cao hơn nhưng RSI lại tạo đỉnh thấp hơn. Hiện tượng này gọi là gì?", a: "Phân kỳ âm (giảm giá)", w: ["Phân kỳ dương (tăng giá)", "Hội tụ", "Golden Cross"], e: "Đà tăng đang yếu dần, cảnh báo khả năng đảo chiều giảm." },
+  { q: "Đường MA20 là gì?", a: "Trung bình giá đóng cửa của 20 phiên gần nhất", w: ["Giá cao nhất 20 phiên", "Khối lượng trung bình 20 phiên", "Giá dự báo sau 20 phiên"], e: "MA (Moving Average) giúp làm mượt biến động giá để nhìn xu hướng." },
+  { q: "EMA khác SMA ở điểm nào?", a: "EMA đặt trọng số lớn hơn cho các phiên gần đây", w: ["EMA chỉ dùng giá mở cửa", "EMA tính theo khối lượng", "EMA luôn nằm trên SMA"], e: "Vì vậy EMA phản ứng nhanh hơn với biến động giá mới." },
+  { q: "MACD được tạo thành từ gì?", a: "Hiệu số giữa hai đường EMA (thường là EMA12 và EMA26)", w: ["Tỷ lệ giữa giá và khối lượng", "Trung bình RSI", "Độ lệch chuẩn của giá"], e: "Đường MACD cắt lên đường tín hiệu (EMA9 của MACD) thường được xem là tín hiệu mua." },
+  { q: "Dải Bollinger (Bollinger Bands) gồm những gì?", a: "Đường MA20 và hai dải cách nó ±2 độ lệch chuẩn", w: ["Ba đường MA 20, 50, 200", "Đỉnh và đáy 52 tuần", "Các mức Fibonacci"], e: "Dải co hẹp cho thấy biến động thấp, thường xảy ra trước một nhịp biến động mạnh." },
+  { q: "Giá tăng mạnh nhưng khối lượng giao dịch rất thấp. Điều này thường cho thấy gì?", a: "Đà tăng thiếu sự xác nhận của dòng tiền, kém bền vững", w: ["Đà tăng rất chắc chắn", "Cổ phiếu sắp tăng trần", "Không có ý nghĩa gì"], e: "Khối lượng xác nhận xu hướng: tăng giá kèm khối lượng tăng mới đáng tin." },
+  { q: "Một mức kháng cự đã bị phá vỡ thường có xu hướng trở thành gì?", a: "Mức hỗ trợ mới", w: ["Mức kháng cự mạnh hơn", "Đường viền cổ", "Không còn ý nghĩa"], e: "Nguyên lý đổi vai: kháng cự bị vượt qua thường trở thành hỗ trợ khi giá quay lại kiểm tra." },
+  { q: "Các mức Fibonacci thoái lui phổ biến gồm những mức nào?", a: "23,6% – 38,2% – 50% – 61,8%", w: ["10% – 20% – 30% – 40%", "25% – 50% – 75% – 100%", "7% – 10% – 15%"], e: "Dùng để dự đoán vùng giá có thể điều chỉnh về trước khi tiếp tục xu hướng." },
+  { q: "\"Bull trap\" (bẫy tăng giá) là gì?", a: "Giá vượt kháng cự rồi nhanh chóng quay đầu giảm, \"bẫy\" người mua đuổi", w: ["Giá giảm thủng hỗ trợ rồi tăng lại", "Cổ phiếu tăng trần nhiều phiên", "Lệnh mua bị hủy"], e: "Ngược lại, \"bear trap\" là giá thủng hỗ trợ rồi bật tăng trở lại." }
+];
+
+const DERIV = [
+  { q: "Hợp đồng tương lai chỉ số VN30 thanh toán khi đáo hạn bằng cách nào?", a: "Thanh toán bằng tiền theo chênh lệch giá", w: ["Giao nhận 30 cổ phiếu VN30", "Giao nhận chứng chỉ quỹ ETF", "Không thanh toán, tự động gia hạn"], e: "Không có việc giao nhận cổ phiếu; lãi lỗ được trả bằng tiền." },
+  { q: "Ngày đáo hạn của hợp đồng tương lai chỉ số VN30 là ngày nào?", a: "Thứ Năm thứ ba của tháng đáo hạn", w: ["Ngày cuối cùng của tháng", "Thứ Sáu đầu tiên của tháng", "Ngày 15 hàng tháng"], e: "Nếu trùng ngày nghỉ, ngày đáo hạn lùi về ngày giao dịch liền trước." },
+  { q: "Hệ số nhân của hợp đồng tương lai chỉ số VN30 là bao nhiêu?", a: "100.000 đồng/điểm", w: ["10.000 đồng/điểm", "1.000.000 đồng/điểm", "1.000 đồng/điểm"], e: "Giá trị 1 hợp đồng = Điểm chỉ số × 100.000 đồng." },
+  { q: "Nhà đầu tư mở vị thế Long 1 hợp đồng VN30 ở 1.300 điểm, đóng vị thế ở 1.320 điểm. Lãi (chưa tính phí, thuế) là?", a: "2.000.000 đồng", w: ["200.000 đồng", "20.000.000 đồng", "20.000 đồng"], e: "(1.320 − 1.300) × 100.000 × 1 = 2.000.000 đồng." },
+  { q: "Nhà đầu tư Short 2 hợp đồng VN30 ở 1.350 điểm, chỉ số tăng lên 1.360 điểm. Kết quả là?", a: "Lỗ 2.000.000 đồng", w: ["Lãi 2.000.000 đồng", "Lỗ 1.000.000 đồng", "Lãi 1.000.000 đồng"], e: "Short lỗ khi giá tăng: (1.360 − 1.350) × 100.000 × 2 = 2.000.000 đồng." },
+  { q: "Vị thế \"Long\" trong hợp đồng tương lai nghĩa là gì?", a: "Mua, kỳ vọng giá tăng", w: ["Bán, kỳ vọng giá giảm", "Nắm giữ dài hạn trên 1 năm", "Đặt lệnh giá thị trường"], e: "Long = mua, Short = bán. Phái sinh cho phép kiếm lời cả khi thị trường giảm." },
+  { q: "Lãi lỗ của vị thế hợp đồng tương lai được ghi nhận như thế nào?", a: "Hằng ngày, theo giá thanh toán cuối ngày (mark-to-market)", w: ["Chỉ khi đóng vị thế", "Chỉ vào ngày đáo hạn", "Cuối mỗi tháng"], e: "Nếu lỗ làm tài khoản ký quỹ thiếu, nhà đầu tư phải nộp thêm tiền." },
+  { q: "Tại một thời điểm, có bao nhiêu kỳ hạn hợp đồng tương lai VN30 được giao dịch?", a: "4: tháng hiện tại, tháng kế tiếp và 2 tháng cuối quý gần nhất", w: ["1: chỉ tháng hiện tại", "12: mỗi tháng một hợp đồng", "2: tháng này và tháng sau"], e: "Hợp đồng tháng gần nhất thường có thanh khoản cao nhất." },
+  { q: "Vì sao phái sinh được xem là có \"đòn bẩy\"?", a: "Chỉ cần ký quỹ một phần nhỏ giá trị hợp đồng nhưng hưởng lãi/lỗ trên toàn bộ giá trị", w: ["Được công ty chứng khoán cho vay không lãi", "Giá luôn biến động gấp đôi cổ phiếu", "Được Nhà nước bảo lãnh"], e: "Đòn bẩy khuếch đại cả lãi lẫn lỗ, có thể mất nhiều hơn số tiền ký quỹ ban đầu nếu không kiểm soát." },
+  { q: "Nhà đầu tư nắm nhiều cổ phiếu VN30 và lo thị trường giảm ngắn hạn. Có thể dùng phái sinh thế nào để phòng hộ?", a: "Mở vị thế Short hợp đồng tương lai VN30", w: ["Mở vị thế Long hợp đồng tương lai VN30", "Mua thêm chứng quyền mua", "Không thể phòng hộ"], e: "Khi thị trường giảm, lãi từ vị thế Short bù đắp phần lỗ của danh mục cổ phiếu." },
+  { q: "\"Basis\" trong phái sinh chỉ số là gì?", a: "Chênh lệch giữa giá hợp đồng tương lai và chỉ số cơ sở VN30", w: ["Số tiền ký quỹ ban đầu", "Phí giao dịch", "Số hợp đồng đang mở"], e: "Basis dần thu hẹp về 0 khi đến ngày đáo hạn." },
+  { q: "Khối lượng mở (Open Interest) là gì?", a: "Số hợp đồng chưa được tất toán tại một thời điểm", w: ["Khối lượng khớp trong phiên ATO", "Số hợp đồng được phép mở tối đa", "Số tài khoản phái sinh"], e: "OI tăng cùng giá thường cho thấy dòng tiền mới tham gia vào xu hướng." },
+  { q: "Có thể mua và bán (đóng vị thế) hợp đồng tương lai ngay trong cùng một ngày không?", a: "Có, giao dịch trong ngày được phép", w: ["Không, phải chờ T+2", "Chỉ vào ngày đáo hạn", "Chỉ với nhà đầu tư tổ chức"], e: "Đây là khác biệt lớn so với cổ phiếu cơ sở phải chờ T+2 mới bán được." },
+  { q: "Ngoài chỉ số VN30, thị trường phái sinh Việt Nam còn có hợp đồng tương lai trên tài sản nào?", a: "Trái phiếu Chính phủ", w: ["Vàng", "Giá dầu Brent", "Tỷ giá USD/VND"], e: "Có hợp đồng tương lai trái phiếu Chính phủ kỳ hạn 5 năm và 10 năm." },
+  { q: "Chứng quyền có bảo đảm (CW) do ai phát hành?", a: "Công ty chứng khoán", w: ["Doanh nghiệp có cổ phiếu cơ sở", "Ngân hàng Nhà nước", "Ủy ban Chứng khoán"], e: "Doanh nghiệp có cổ phiếu cơ sở không liên quan đến việc phát hành chứng quyền." },
+  { q: "Chứng quyền mua có giá thực hiện 50.000đ, tỷ lệ chuyển đổi 5:1. Khi đáo hạn, giá thanh toán cổ phiếu cơ sở là 60.000đ. Mỗi chứng quyền nhận bao nhiêu?", a: "2.000 đồng", w: ["10.000 đồng", "12.000 đồng", "0 đồng"], e: "(60.000 − 50.000) ÷ 5 = 2.000 đồng mỗi chứng quyền." },
+  { q: "Chứng quyền mua ở trạng thái \"lỗ\" (OTM) khi đáo hạn thì người sở hữu nhận được gì?", a: "Không nhận được gì, mất toàn bộ tiền mua chứng quyền", w: ["Được hoàn lại tiền mua", "Nhận cổ phiếu cơ sở", "Được gia hạn thêm 3 tháng"], e: "OTM: giá cổ phiếu cơ sở thấp hơn giá thực hiện." },
+  { q: "Chứng quyền mua ở trạng thái \"có lãi\" (ITM) khi nào?", a: "Giá cổ phiếu cơ sở cao hơn giá thực hiện", w: ["Giá cổ phiếu cơ sở thấp hơn giá thực hiện", "Giá chứng quyền tăng trần", "Còn trên 30 ngày đến đáo hạn"], e: "ATM là khi giá cơ sở xấp xỉ bằng giá thực hiện." },
+  { q: "Càng gần ngày đáo hạn, giá trị thời gian của chứng quyền thay đổi thế nào?", a: "Giảm dần về 0", w: ["Tăng dần", "Không đổi", "Tăng gấp đôi vào ngày cuối"], e: "Hiện tượng hao mòn thời gian (time decay) khiến chứng quyền OTM mất giá nhanh khi gần đáo hạn." }
+];
+
+const BONDS = [
+  { q: "Mua trái phiếu doanh nghiệp, nhà đầu tư trở thành gì của doanh nghiệp?", a: "Chủ nợ", w: ["Cổ đông", "Thành viên hội đồng quản trị", "Người bảo lãnh"], e: "Trái phiếu là khoản vay; cổ phiếu mới là phần sở hữu." },
+  { q: "Lãi coupon của trái phiếu là gì?", a: "Tiền lãi định kỳ tính trên mệnh giá theo lãi suất ghi trên trái phiếu", w: ["Phần chênh lệch giá khi bán", "Cổ tức bằng cổ phiếu", "Phí môi giới"], e: "Ví dụ coupon 8%/năm trên mệnh giá 100 triệu là 8 triệu đồng mỗi năm." },
+  { q: "Trái phiếu mệnh giá 100 triệu đồng, coupon 8%/năm, trả lãi 6 tháng/lần. Mỗi kỳ nhận bao nhiêu?", a: "4 triệu đồng", w: ["8 triệu đồng", "800 nghìn đồng", "2 triệu đồng"], e: "100 triệu × 8% ÷ 2 = 4 triệu đồng mỗi kỳ." },
+  { q: "Lãi suất thị trường tăng lên thì giá trái phiếu đang lưu hành (lãi cố định) thường thế nào?", a: "Giảm", w: ["Tăng", "Không đổi", "Tăng gấp đôi"], e: "Giá trái phiếu và lãi suất thị trường biến động ngược chiều." },
+  { q: "Trái phiếu có kỳ hạn dài so với kỳ hạn ngắn thì giá nhạy cảm với lãi suất thế nào?", a: "Nhạy cảm hơn", w: ["Kém nhạy cảm hơn", "Như nhau", "Không bị ảnh hưởng"], e: "Thời gian đáo hạn bình quân (duration) càng dài, giá càng biến động mạnh khi lãi suất thay đổi." },
+  { q: "Trái phiếu coupon 10.000 đồng/năm đang giao dịch giá 125.000 đồng. Lợi suất hiện hành là?", a: "8%", w: ["10%", "12,5%", "6%"], e: "Lợi suất hiện hành = Coupon ÷ Giá = 10.000 ÷ 125.000 = 8%." },
+  { q: "Lợi suất đáo hạn (YTM) là gì?", a: "Tỷ suất sinh lời nếu mua ở giá hiện tại và giữ đến đáo hạn, nhận đủ lãi và gốc", w: ["Lãi coupon ghi trên trái phiếu", "Lãi suất tiết kiệm ngân hàng", "Giá trái phiếu ngày đáo hạn"], e: "YTM là thước đo phổ biến nhất để so sánh các trái phiếu." },
+  { q: "Trái phiếu có lãi coupon cao hơn lãi suất thị trường thường được giao dịch ở mức giá nào?", a: "Cao hơn mệnh giá", w: ["Thấp hơn mệnh giá", "Đúng bằng mệnh giá", "Bằng 0"], e: "Nhà đầu tư sẵn sàng trả thêm để nhận dòng lãi cao hơn mặt bằng chung." },
+  { q: "Trái phiếu zero-coupon là gì?", a: "Không trả lãi định kỳ, được phát hành với giá chiết khấu và hoàn trả đủ mệnh giá khi đáo hạn", w: ["Trái phiếu không có kỳ hạn", "Trái phiếu lãi suất 0 và bán bằng mệnh giá", "Trái phiếu đã vỡ nợ"], e: "Lợi nhuận đến từ chênh lệch giữa giá mua và mệnh giá." },
+  { q: "Trái phiếu chuyển đổi cho phép người nắm giữ làm gì?", a: "Đổi trái phiếu thành cổ phiếu của doanh nghiệp theo tỷ lệ định trước", w: ["Đổi sang trái phiếu Chính phủ", "Đổi lấy tiền mặt bất kỳ lúc nào", "Đổi sang ngoại tệ"], e: "Khi chuyển đổi sẽ làm tăng số cổ phiếu và có thể pha loãng." },
+  { q: "Lãi suất thả nổi của trái phiếu thường được xác định thế nào?", a: "Lãi suất tham chiếu (vd: lãi tiết kiệm bình quân của một số ngân hàng) cộng biên độ cố định", w: ["Do người mua tự chọn mỗi kỳ", "Bằng tỷ lệ lạm phát", "Bằng lãi suất qua đêm liên ngân hàng"], e: "Lãi suất thả nổi được điều chỉnh định kỳ theo lãi suất tham chiếu." },
+  { q: "Loại trái phiếu nào thường có rủi ro tín dụng (vỡ nợ) thấp nhất?", a: "Trái phiếu Chính phủ", w: ["Trái phiếu doanh nghiệp bất động sản", "Trái phiếu không có tài sản đảm bảo", "Trái phiếu lãi suất cao nhất thị trường"], e: "Đổi lại, lãi suất trái phiếu Chính phủ thường thấp hơn trái phiếu doanh nghiệp." },
+  { q: "Khi doanh nghiệp phá sản, thứ tự ưu tiên thanh toán thế nào?", a: "Chủ nợ (trong đó có trái chủ) được thanh toán trước cổ đông", w: ["Cổ đông được thanh toán trước", "Chia đều cho tất cả", "Cổ đông lớn được ưu tiên nhất"], e: "Cổ đông phổ thông được nhận cuối cùng, thường không còn gì." },
+  { q: "Xếp hạng tín nhiệm AAA có ý nghĩa gì?", a: "Mức tín nhiệm cao nhất, rủi ro vỡ nợ rất thấp", w: ["Mức tín nhiệm thấp nhất", "Trái phiếu đã vỡ nợ", "Lãi suất cao nhất thị trường"], e: "Trái phiếu dưới mức đầu tư (high yield, \"junk bond\") có lãi cao nhưng rủi ro lớn." },
+  { q: "Trái phiếu doanh nghiệp có được bảo hiểm tiền gửi như sổ tiết kiệm không?", a: "Không", w: ["Có, tối đa 125 triệu đồng", "Có, toàn bộ số tiền", "Có nếu mua tại quầy ngân hàng"], e: "Mua trái phiếu tại ngân hàng vẫn là đầu tư, không phải gửi tiết kiệm. Nhiều người đã nhầm lẫn điều này." },
+  { q: "Năm 2022, sự kiện nào làm rung chuyển thị trường trái phiếu doanh nghiệp Việt Nam?", a: "Hủy các đợt phát hành của Tân Hoàng Minh và vụ án Vạn Thịnh Phát", w: ["Ngân hàng Nhà nước cấm phát hành trái phiếu", "Trái phiếu Chính phủ vỡ nợ", "Đóng cửa sàn HNX"], e: "Niềm tin sụt giảm mạnh, nhiều doanh nghiệp chậm trả lãi, gốc trái phiếu sau đó." },
+  { q: "Nghị định 08/2023 về trái phiếu doanh nghiệp nổi bật với nội dung nào?", a: "Cho phép đàm phán gia hạn, trả nợ trái phiếu bằng tài sản khác", w: ["Cấm hoàn toàn trái phiếu doanh nghiệp", "Bắt buộc Nhà nước mua lại trái phiếu", "Miễn thuế cho trái chủ"], e: "Nhằm tháo gỡ áp lực đáo hạn sau khủng hoảng 2022." },
+  { q: "Trái phiếu doanh nghiệp phát hành riêng lẻ hiện chỉ được bán cho đối tượng nào?", a: "Nhà đầu tư chứng khoán chuyên nghiệp", w: ["Mọi cá nhân có tài khoản ngân hàng", "Chỉ người nước ngoài", "Cán bộ của doanh nghiệp phát hành"], e: "Cá nhân phải chứng minh đủ điều kiện (vd: danh mục chứng khoán niêm yết bình quân từ 2 tỷ đồng theo quy định hiện hành)." },
+  { q: "Trái phiếu Chính phủ ở Việt Nam được giao dịch thứ cấp chủ yếu ở đâu?", a: "Sở Giao dịch Chứng khoán Hà Nội (HNX)", w: ["Sở Giao dịch Chứng khoán TP. HCM (HOSE)", "Ngân hàng Nhà nước", "Không được giao dịch"], e: "HNX vận hành thị trường trái phiếu Chính phủ chuyên biệt." },
+  { q: "Rủi ro thanh khoản của trái phiếu doanh nghiệp là gì?", a: "Khó bán lại trước hạn hoặc phải bán với giá thấp", w: ["Doanh nghiệp trả lãi quá sớm", "Lãi suất cố định không đổi", "Bị tính thuế cao"], e: "Nhiều trái phiếu riêng lẻ gần như không có người mua lại khi thị trường mất niềm tin." }
+];
+
+const FUNDS = [
+  { q: "NAV của quỹ đầu tư là gì?", a: "Giá trị tài sản ròng của quỹ (tổng tài sản trừ nợ)", w: ["Giá niêm yết của cổ phiếu trong quỹ", "Phí quản lý hằng năm", "Lợi nhuận năm trước"], e: "NAV/chứng chỉ quỹ = NAV ÷ số chứng chỉ quỹ đang lưu hành." },
+  { q: "Quỹ mở khác quỹ đóng ở điểm chính nào?", a: "Quỹ mở mua lại chứng chỉ quỹ từ nhà đầu tư định kỳ theo NAV; quỹ đóng thì không", w: ["Quỹ mở chỉ dành cho tổ chức", "Quỹ đóng không bao giờ niêm yết", "Quỹ mở không có phí"], e: "Chứng chỉ quỹ đóng giao dịch trên sàn như cổ phiếu và có thể lệch xa NAV." },
+  { q: "ETF khác quỹ mở chủ động ở điểm nào?", a: "ETF mô phỏng thụ động một chỉ số và giao dịch trên sàn như cổ phiếu", w: ["ETF do Ngân hàng Nhà nước quản lý", "ETF không được giao dịch trong phiên", "ETF luôn có lợi nhuận cao hơn"], e: "ETF thường có phí thấp hơn quỹ chủ động." },
+  { q: "Quỹ chủ động (active) hướng tới điều gì?", a: "Đạt hiệu suất vượt chỉ số tham chiếu nhờ lựa chọn cổ phiếu", w: ["Mô phỏng sát chỉ số", "Chỉ đầu tư trái phiếu Chính phủ", "Giữ toàn bộ tiền mặt"], e: "Đổi lại, phí quản lý của quỹ chủ động thường cao hơn." },
+  { q: "\"Tracking error\" của ETF là gì?", a: "Mức chênh lệch giữa hiệu suất của quỹ và chỉ số mà quỹ mô phỏng", w: ["Lỗi khi đặt lệnh mua ETF", "Phí giao dịch", "Số cổ phiếu trong danh mục"], e: "Tracking error càng nhỏ, quỹ mô phỏng chỉ số càng tốt." },
+  { q: "Quỹ \"VNM ETF\" niêm yết tại Mỹ là quỹ gì?", a: "Quỹ VanEck Vietnam ETF đầu tư vào cổ phiếu Việt Nam", w: ["Quỹ của Vinamilk", "Quỹ trái phiếu Chính phủ", "Quỹ mở của Vietcombank"], e: "Trùng tên với mã VNM của Vinamilk nhưng hoàn toàn khác nhau." },
+  { q: "Fubon FTSE Vietnam ETF là quỹ đến từ đâu?", a: "Đài Loan", w: ["Hàn Quốc", "Nhật Bản", "Thái Lan"], e: "Đây là một trong những ETF ngoại lớn nhất đầu tư vào cổ phiếu Việt Nam." },
+  { q: "Khi các quỹ ETF \"cơ cấu danh mục\" theo kỳ review chỉ số, điều gì thường xảy ra?", a: "Cổ phiếu được thêm vào rổ bị mua vào, cổ phiếu bị loại bị bán ra", w: ["Thị trường tạm ngừng giao dịch", "Tất cả cổ phiếu đều tăng giá", "Quỹ trả cổ tức đặc biệt"], e: "Nhiều nhà đầu tư theo dõi các kỳ review để dự đoán dòng tiền ETF." },
+  { q: "Đầu tư định kỳ (DCA) vào chứng chỉ quỹ là gì?", a: "Bỏ một số tiền cố định đều đặn mỗi kỳ, bất kể giá lên hay xuống", w: ["Mua toàn bộ một lần khi giá thấp nhất", "Bán định kỳ mỗi tháng", "Vay margin để mua quỹ"], e: "DCA giúp bình quân giá vốn và giảm áp lực chọn thời điểm." },
+  { q: "Quỹ cân bằng đầu tư vào đâu?", a: "Kết hợp cổ phiếu và trái phiếu", w: ["Chỉ cổ phiếu", "Chỉ tiền gửi", "Chỉ vàng"], e: "Mức rủi ro nằm giữa quỹ cổ phiếu và quỹ trái phiếu." },
+  { q: "Phí quản lý quỹ được thu như thế nào?", a: "Theo tỷ lệ % NAV mỗi năm, trừ trực tiếp vào tài sản quỹ", w: ["Một lần khi mở tài khoản", "Theo số lệnh đặt", "Chỉ khi quỹ có lãi"], e: "Ngoài ra có thể có phí phát hành (khi mua) và phí mua lại (khi bán)." },
+  { q: "Chứng chỉ quỹ ETF E1VFVN30 mô phỏng chỉ số nào?", a: "VN30", w: ["VN-Index", "VNDiamond", "HNX30"], e: "FUEVFVND mô phỏng VNDiamond, còn FUESSV30 cũng mô phỏng VN30." },
+  { q: "Quỹ đầu tư có cam kết lợi nhuận cho nhà đầu tư không?", a: "Không, giá trị chứng chỉ quỹ có thể giảm", w: ["Có, tối thiểu bằng lãi tiết kiệm", "Có, nếu là quỹ mở", "Có, do Nhà nước bảo đảm"], e: "Kết quả quá khứ không đảm bảo lợi nhuận tương lai." },
+  { q: "Ưu điểm lớn nhất của quỹ đầu tư đối với nhà đầu tư cá nhân mới là gì?", a: "Đa dạng hóa và được quản lý bởi chuyên gia với số vốn nhỏ", w: ["Lợi nhuận luôn cao hơn tự đầu tư", "Không mất phí", "Không có rủi ro"], e: "Phù hợp với người không có thời gian theo dõi thị trường." },
+  { q: "Chứng chỉ quỹ đóng giao dịch trên sàn với giá thấp hơn NAV gọi là gì?", a: "Giao dịch chiết khấu (discount)", w: ["Giao dịch thặng dư (premium)", "Tracking error", "Pha loãng"], e: "Ngược lại, giá cao hơn NAV là giao dịch thặng dư (premium)." },
+  { q: "Quỹ trái phiếu thường phù hợp với nhà đầu tư nào?", a: "Ưu tiên thu nhập ổn định, chấp nhận lợi nhuận vừa phải và rủi ro thấp hơn cổ phiếu", w: ["Muốn lợi nhuận gấp đôi mỗi năm", "Thích giao dịch lướt sóng", "Muốn sở hữu cổ phần chi phối"], e: "Vẫn có rủi ro từ lãi suất và tín dụng của các trái phiếu trong danh mục." }
+];
+
+const RISK = [
+  { q: "Danh mục giảm 50%. Cần tăng bao nhiêu % để hòa vốn?", a: "100%", w: ["50%", "75%", "150%"], e: "100 → 50 cần tăng gấp đôi để về lại 100. Lỗ càng sâu càng khó gỡ." },
+  { q: "Danh mục giảm 20%. Cần tăng bao nhiêu % để hòa vốn?", a: "25%", w: ["20%", "30%", "40%"], e: "100 → 80, cần tăng 20 trên 80 = 25%." },
+  { q: "\"Cắt lỗ\" (stop-loss) là gì?", a: "Bán ra khi giá giảm đến mức lỗ đã định trước để hạn chế thiệt hại", w: ["Mua thêm khi giá giảm", "Bán khi giá tăng trần", "Chờ đến khi hòa vốn mới bán"], e: "Mức cắt lỗ nên được đặt trước khi mua, không phải khi đang lỗ." },
+  { q: "Tỷ lệ R:R = 1:3 nghĩa là gì?", a: "Chấp nhận rủi ro 1 phần để kỳ vọng lợi nhuận 3 phần", w: ["Thắng 1 lệnh trong 3 lệnh", "Dùng đòn bẩy gấp 3", "Nắm giữ 1 đến 3 tháng"], e: "Ví dụ: cắt lỗ 5%, mục tiêu chốt lời 15%." },
+  { q: "Tỷ lệ thắng 40%, mỗi lệnh thắng lãi 3R, mỗi lệnh thua lỗ 1R. Về dài hạn kết quả thế nào?", a: "Có lãi (kỳ vọng +0,6R mỗi lệnh)", w: ["Lỗ vì thua nhiều hơn thắng", "Hòa vốn", "Không thể xác định"], e: "0,4 × 3 − 0,6 × 1 = +0,6R. Không cần thắng nhiều, chỉ cần lãi lớn hơn lỗ." },
+  { q: "Vốn 100 triệu, chỉ chấp nhận rủi ro 2% vốn mỗi lệnh, điểm cắt lỗ cách giá mua 10%. Nên mua tối đa bao nhiêu?", a: "20 triệu đồng", w: ["2 triệu đồng", "10 triệu đồng", "100 triệu đồng"], e: "Rủi ro tối đa 2 triệu; 2 triệu ÷ 10% = 20 triệu." },
+  { q: "Dùng margin tỷ lệ 1:1 (vay bằng số vốn tự có), cổ phiếu giảm 20%. Vốn tự có giảm bao nhiêu?", a: "Khoảng 40% (chưa tính lãi vay)", w: ["20%", "10%", "Không đổi"], e: "Tổng tài sản gấp đôi vốn, nên mức giảm trên vốn tự có cũng gấp đôi." },
+  { q: "FOMO trong đầu tư là gì?", a: "Sợ bỏ lỡ cơ hội nên mua đuổi theo đám đông khi giá đã tăng mạnh", w: ["Sợ thua lỗ nên không bao giờ mua", "Chiến lược mua bán định kỳ", "Phân tích dòng tiền khối ngoại"], e: "FOMO thường dẫn đến \"đu đỉnh\"." },
+  { q: "\"Ác cảm thua lỗ\" (loss aversion) khiến nhà đầu tư hay làm gì?", a: "Giữ cổ phiếu lỗ quá lâu và bán cổ phiếu lãi quá sớm", w: ["Cắt lỗ rất nhanh", "Không bao giờ chốt lời", "Chỉ mua cổ phiếu blue-chip"], e: "Nỗi đau mất mát được cảm nhận mạnh hơn niềm vui khi lãi cùng mức." },
+  { q: "\"Thiên kiến xác nhận\" (confirmation bias) là gì?", a: "Chỉ tìm và tin vào thông tin ủng hộ quyết định mình đã chọn", w: ["Kiểm chứng kỹ mọi nguồn tin", "Làm theo khuyến nghị của công ty chứng khoán", "Đọc báo cáo tài chính đã kiểm toán"], e: "Nên chủ động tìm lý do vì sao mình có thể sai." },
+  { q: "\"Hiệu ứng mỏ neo\" (anchoring) thường thể hiện thế nào?", a: "Bám vào giá mua cũ hoặc đỉnh cũ để quyết định, dù thông tin đã thay đổi", w: ["Đa dạng hóa danh mục", "Đặt lệnh cắt lỗ tự động", "Đầu tư định kỳ"], e: "Ví dụ: \"cổ phiếu từng lên 100, giờ 50 là rẻ\" mà bỏ qua việc doanh nghiệp đã xấu đi." },
+  { q: "\"Bình quân giá xuống\" liên tục cho cổ phiếu đang giảm có rủi ro gì?", a: "Dồn thêm vốn vào khoản đầu tư sai, khiến khoản lỗ phình to", w: ["Không có rủi ro vì giá vốn giảm", "Bị phạt bởi Ủy ban Chứng khoán", "Mất quyền nhận cổ tức"], e: "Chỉ nên mua thêm khi luận điểm đầu tư vẫn còn đúng, không phải chỉ vì giá rẻ hơn." },
+  { q: "Đa dạng hóa danh mục nhằm mục đích gì?", a: "Giảm rủi ro do một cổ phiếu hoặc một ngành gặp sự cố", w: ["Tăng gấp đôi lợi nhuận", "Loại bỏ hoàn toàn rủi ro", "Giảm phí giao dịch"], e: "Đa dạng hóa không loại bỏ được rủi ro hệ thống (cả thị trường cùng giảm)." },
+  { q: "Nắm 5 cổ phiếu đều thuộc ngành bất động sản có phải là danh mục đa dạng hóa tốt không?", a: "Không, vì chúng chịu chung rủi ro ngành", w: ["Có, vì có 5 mã", "Có, nếu đều là blue-chip", "Có, nếu mua ở các sàn khác nhau"], e: "Các cổ phiếu cùng ngành thường biến động cùng chiều (tương quan cao)." },
+  { q: "Các nhóm chat hứa hẹn \"phím hàng\" cam kết lợi nhuận nhanh thường tiềm ẩn rủi ro gì?", a: "Lừa đảo, kéo xả, nhà đầu tư nhỏ thường là người \"đứng mũi chịu sào\"", w: ["Không có rủi ro vì có chuyên gia", "Chỉ rủi ro phí thành viên", "Luôn có lợi nhuận nếu làm đúng"], e: "Thao túng giá là hành vi vi phạm pháp luật; không ai cam kết lợi nhuận chắc chắn trên thị trường chứng khoán." },
+  { q: "Vì sao không nên dùng tiền vay nóng, tiền sinh hoạt để đầu tư chứng khoán?", a: "Áp lực trả nợ buộc phải bán đúng lúc thị trường xấu, dễ thua lỗ nặng", w: ["Vì bị cấm theo luật", "Vì công ty chứng khoán không nhận", "Vì không được hưởng cổ tức"], e: "Chỉ nên đầu tư bằng tiền nhàn rỗi có thể để yên trong thời gian dài." },
+  { q: "Ghi \"nhật ký giao dịch\" giúp ích gì?", a: "Nhìn lại lý do mua bán, nhận ra lỗi lặp lại và cải thiện kỷ luật", w: ["Giảm thuế phải nộp", "Tăng hạn mức margin", "Được ưu tiên khớp lệnh"], e: "Nên ghi cả lý do vào lệnh, điểm cắt lỗ, mục tiêu và cảm xúc lúc đó." },
+  { q: "\"Tâm lý bầy đàn\" trên thị trường là gì?", a: "Mua bán theo số đông thay vì dựa trên phân tích của bản thân", w: ["Đầu tư theo quỹ ETF", "Giao dịch theo nhóm có giấy phép", "Đầu tư dài hạn"], e: "Tâm lý bầy đàn khuếch đại cả bong bóng lẫn hoảng loạn bán tháo." }
+];
+
+const SECTOR_Q = [
+  { q: "Chỉ số NIM quan trọng nhất khi phân tích ngành nào?", a: "Ngân hàng", w: ["Bán lẻ", "Thép", "Cảng biển"], e: "NIM (biên lãi ròng) đo khả năng kiếm lời từ chênh lệch lãi cho vay và huy động." },
+  { q: "\"Room tín dụng\" do Ngân hàng Nhà nước phân bổ ảnh hưởng trực tiếp đến điều gì của ngân hàng?", a: "Mức tăng trưởng cho vay tối đa trong năm", w: ["Giá cổ phiếu tối đa", "Số chi nhánh được mở", "Lãi suất huy động"], e: "Ngân hàng được cấp room cao thường có dư địa tăng trưởng lợi nhuận tốt hơn." },
+  { q: "Tỷ lệ an toàn vốn (CAR) theo chuẩn Basel II tối thiểu là bao nhiêu?", a: "8%", w: ["4%", "20%", "50%"], e: "CAR thể hiện năng lực vốn để chống đỡ rủi ro của ngân hàng." },
+  { q: "Với doanh nghiệp bất động sản, khoản \"người mua trả tiền trước\" lớn thường báo hiệu điều gì?", a: "Doanh thu, lợi nhuận sẽ được ghi nhận khi bàn giao trong tương lai", w: ["Doanh nghiệp đang lỗ", "Doanh nghiệp sắp phá sản", "Doanh nghiệp không có dự án"], e: "Doanh nghiệp bất động sản thường chỉ ghi nhận doanh thu khi bàn giao nhà." },
+  { q: "Yếu tố nào quan trọng nhất với giá trị dài hạn của doanh nghiệp bất động sản nhà ở?", a: "Quỹ đất sạch, pháp lý đầy đủ ở vị trí tốt", w: ["Số lượng nhân viên", "Giá dầu thế giới", "Tỷ giá USD/VND"], e: "Pháp lý dự án là điểm nghẽn lớn nhất của ngành bất động sản Việt Nam." },
+  { q: "Giá quặng sắt và than cốc là đầu vào quan trọng của ngành nào?", a: "Thép", w: ["Ngân hàng", "Dược phẩm", "Công nghệ"], e: "Chênh lệch giữa giá thép bán ra và giá nguyên liệu quyết định biên lợi nhuận." },
+  { q: "Doanh nghiệp thép tích trữ nhiều nguyên liệu giá cao, sau đó giá thép giảm mạnh. Rủi ro là gì?", a: "Phải trích lập giảm giá hàng tồn kho, lợi nhuận sụt mạnh hoặc lỗ", w: ["Lợi nhuận tăng đột biến", "Không ảnh hưởng gì", "Được Nhà nước bù lỗ"], e: "Ngành thép mang tính chu kỳ cao." },
+  { q: "SSSG (tăng trưởng doanh thu cửa hàng hiện hữu) là chỉ số quan trọng của ngành nào?", a: "Bán lẻ", w: ["Ngân hàng", "Thủy điện", "Bảo hiểm"], e: "SSSG cho biết tăng trưởng thật, không tính phần đến từ việc mở thêm cửa hàng." },
+  { q: "Lợi nhuận của công ty chứng khoán phụ thuộc nhiều nhất vào yếu tố nào?", a: "Thanh khoản thị trường và dư nợ cho vay margin", w: ["Giá dầu thế giới", "Thời tiết", "Giá quặng sắt"], e: "Thị trường sôi động thì doanh thu môi giới và cho vay margin tăng mạnh." },
+  { q: "Hiện tượng La Niña (mưa nhiều) thường có lợi cho nhóm doanh nghiệp nào?", a: "Thủy điện", w: ["Nhiệt điện than", "Bán lẻ điện máy", "Hàng không"], e: "Nước về hồ nhiều giúp thủy điện phát điện cao, chi phí thấp. El Niño thì ngược lại." },
+  { q: "Giá dầu Brent tăng mạnh thường có lợi cho nhóm cổ phiếu nào?", a: "Thăm dò, khai thác và dịch vụ dầu khí (PVD, PVS)", w: ["Hàng không (HVN, VJC)", "Nhựa (BMP, NTP)", "Vận tải đường bộ"], e: "Ngược lại, hàng không bất lợi vì chi phí nhiên liệu bay tăng." },
+  { q: "Chỉ số TEU (sản lượng container) quan trọng với ngành nào?", a: "Cảng biển và logistics", w: ["Ngân hàng", "Dược phẩm", "Bất động sản nhà ở"], e: "TEU = đơn vị container 20 feet." },
+  { q: "Đồng USD tăng giá so với VND thường có lợi cho nhóm doanh nghiệp nào?", a: "Doanh nghiệp xuất khẩu như thủy sản, dệt may", w: ["Doanh nghiệp vay nợ nhiều bằng USD", "Doanh nghiệp nhập khẩu nguyên liệu", "Hàng không thuê máy bay bằng USD"], e: "Doanh thu bằng USD quy đổi ra nhiều VND hơn." },
+  { q: "Vì sao cổ phiếu cao su như GVR, PHR được kỳ vọng ngoài mảng mủ cao su?", a: "Chuyển đổi đất trồng cao su sang làm khu công nghiệp", w: ["Sản xuất lốp xe", "Xuất khẩu gỗ cao su sang Mỹ", "Được miễn thuế vĩnh viễn"], e: "Quỹ đất lớn giúp các doanh nghiệp cao su có thêm nguồn thu từ cho thuê đất KCN." },
+  { q: "Dòng vốn FDI tăng mạnh có lợi trực tiếp nhất cho nhóm doanh nghiệp nào?", a: "Khu công nghiệp (KBC, SZC, IDC…)", w: ["Ngân hàng", "Bán lẻ trang sức", "Thủy sản"], e: "Doanh nghiệp FDI cần thuê đất để xây nhà máy." },
+  { q: "Với doanh nghiệp phân bón urê, chi phí đầu vào lớn nhất là gì?", a: "Khí thiên nhiên (hoặc than)", w: ["Quặng sắt", "Mủ cao su", "Bột giấy"], e: "DPM, DCM sản xuất urê từ khí, nên giá khí ảnh hưởng mạnh đến biên lợi nhuận." },
+  { q: "Với doanh nghiệp bảo hiểm, ngoài phí bảo hiểm, nguồn lợi nhuận quan trọng còn lại là gì?", a: "Lãi từ hoạt động đầu tư (tiền gửi, trái phiếu, cổ phiếu)", w: ["Bán lẻ hàng hóa", "Phí môi giới chứng khoán", "Cho thuê văn phòng"], e: "Doanh nghiệp bảo hiểm nắm lượng tiền nhàn rỗi lớn từ phí thu trước." },
+  { q: "Thuế chống bán phá giá của Mỹ ảnh hưởng mạnh tới nhóm doanh nghiệp xuất khẩu nào của Việt Nam?", a: "Cá tra, tôm (VHC, ANV, MPC…)", w: ["Ngân hàng", "Cảng hàng không", "Điện lực"], e: "Mỹ là thị trường xuất khẩu lớn của ngành thủy sản; mức thuế ảnh hưởng trực tiếp tới giá bán." },
+  { q: "Lượng khách quốc tế và giá nhiên liệu bay là yếu tố quan trọng với ngành nào?", a: "Hàng không", w: ["Thép", "Bất động sản KCN", "Phân bón"], e: "Nhiên liệu chiếm tỷ trọng lớn trong chi phí của hãng bay." },
+  { q: "Tỷ lệ nợ xấu (NPL) tăng nhanh ở một ngân hàng thường dẫn tới điều gì?", a: "Phải tăng trích lập dự phòng, lợi nhuận giảm", w: ["Lợi nhuận tăng mạnh", "Được nới room tín dụng", "Giá cổ phiếu chắc chắn tăng"], e: "Theo dõi cả tỷ lệ bao phủ nợ xấu (dự phòng ÷ nợ xấu) để đánh giá khả năng chống đỡ." }
+];
+
 /* ===== Tiện ích ===== */
 const $ = id => document.getElementById(id);
 const store = {
@@ -640,14 +809,14 @@ function bizDistractors(s) {
 }
 /* Câu hỏi từ ngân hàng câu hỏi kiến thức */
 const bankQ = (label) => item => ({
-  label, main: item.q, cls: "big desc",
+  label, main: item.q, cls: "big desc", chart: item.chart,
   opts: shuffle([item.a, ...item.w]).map(x => ({ id: x, html: esc(x) })), ans: item.a,
   explain: ok => `<div>${ok ? "✓ Chính xác!" : `✗ Chưa đúng. Đáp án: <b>${esc(item.a)}</b>.`}</div><p>${esc(item.e)}</p>`,
   review: ["", `${item.q} → ${item.a}`]
 });
 const bankBoard = bank => ({
   head: ["Câu hỏi", "Đáp án"],
-  rows: () => bank.map(x => [esc(x.q), `<b>${esc(x.a)}</b><small>${esc(x.e)}</small>`]),
+  rows: () => bank.map(x => [esc(x.q) + (x.chart ? `<span class="thumb">${chartSVG(x.chart, 200, 90)}</span>` : ""), `<b>${esc(x.a)}</b><small>${esc(x.e)}</small>`]),
   search: "Tìm trong câu hỏi hoặc đáp án…", first: false
 });
 
@@ -763,6 +932,30 @@ const PARTS = [
   {
     id: "history", hash: "lich-su", title: "Lịch sử thị trường", desc: "Các mốc từ 2000 đến nay.",
     items: () => HISTORY, make: bankQ("Lịch sử thị trường chứng khoán Việt Nam"), board: bankBoard(HISTORY)
+  },
+  {
+    id: "tech", hash: "ky-thuat", title: "Phân tích kỹ thuật", desc: "Mô hình nến, mô hình giá, RSI, MACD…",
+    items: () => TECH, make: bankQ("Phân tích kỹ thuật"), board: bankBoard(TECH)
+  },
+  {
+    id: "deriv", hash: "phai-sinh", title: "Thị trường phái sinh", desc: "Hợp đồng tương lai VN30, chứng quyền.",
+    items: () => DERIV, make: bankQ("Thị trường phái sinh"), board: bankBoard(DERIV)
+  },
+  {
+    id: "bonds", hash: "trai-phieu", title: "Trái phiếu", desc: "Coupon, lợi suất, rủi ro, bài học 2022.",
+    items: () => BONDS, make: bankQ("Trái phiếu"), board: bankBoard(BONDS)
+  },
+  {
+    id: "funds", hash: "quy", title: "Quỹ đầu tư & ETF", desc: "NAV, quỹ mở, quỹ đóng, ETF, DCA.",
+    items: () => FUNDS, make: bankQ("Quỹ đầu tư & ETF"), board: bankBoard(FUNDS)
+  },
+  {
+    id: "risk", hash: "rui-ro", title: "Quản trị rủi ro & tâm lý", desc: "Cắt lỗ, R:R, quy mô vị thế, FOMO.",
+    items: () => RISK, make: bankQ("Quản trị rủi ro & tâm lý đầu tư"), board: bankBoard(RISK)
+  },
+  {
+    id: "sectors", hash: "nganh", title: "Đọc hiểu theo ngành", desc: "Mỗi ngành cần nhìn chỉ số gì?",
+    items: () => SECTOR_Q, make: bankQ("Đọc hiểu theo ngành"), board: bankBoard(SECTOR_Q)
   }
 ];
 const PART = Object.fromEntries(PARTS.map((p, i) => [p.id, Object.assign(p, { num: i + 1 })]));
@@ -866,6 +1059,7 @@ function renderQ() {
   $("qLabel").textContent = q.label;
   $("qMain").textContent = q.main; $("qMain").className = q.cls;
   $("qSub").textContent = q.sub || ""; $("qSub").hidden = !q.sub;
+  $("qChart").innerHTML = q.chart ? chartSVG(q.chart) : ""; $("qChart").hidden = !q.chart;
   $("typeForm").hidden = !q.type; $("opts").hidden = !!q.type;
   if (q.type) {
     const inp = $("typeInput"); inp.value = ""; inp.className = ""; inp.disabled = false; inp.focus();

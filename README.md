@@ -1,6 +1,6 @@
 # Bảng Điện Quiz
 
-Quiz kiến thức chứng khoán Việt Nam gồm **10 phần tách biệt**. Mỗi phần có thiết lập, điểm cao nhất và bảng tra cứu riêng, có link riêng (`#ma`, `#linh-vuc`…).
+Quiz kiến thức chứng khoán Việt Nam gồm **16 phần tách biệt**. Mỗi phần có thiết lập, điểm cao nhất và bảng tra cứu riêng, có link riêng (`#ma`, `#linh-vuc`…).
 
 | Phần | Link | Nội dung | Số câu |
 |---|---|---|---|
@@ -14,6 +14,12 @@ Quiz kiến thức chứng khoán Việt Nam gồm **10 phần tách biệt**. M
 | 8. Chỉ số thị trường | `#chi-so` | VN-Index, VN30, VN100, VNDiamond, ETF, cổ phiếu trụ | 16 |
 | 9. Đọc báo cáo tài chính | `#bctc` | Tính EPS, P/E, ROE, D/E và nhận diện rủi ro | 20 |
 | 10. Lịch sử thị trường | `#lich-su` | Các mốc từ năm 2000 đến nay | 18 |
+| 11. Phân tích kỹ thuật | `#ky-thuat` | Mô hình nến, mô hình giá (có biểu đồ minh họa), MA, RSI, MACD, Bollinger | 27 |
+| 12. Thị trường phái sinh | `#phai-sinh` | Hợp đồng tương lai VN30, chứng quyền có bảo đảm | 19 |
+| 13. Trái phiếu | `#trai-phieu` | Coupon, lợi suất, lãi suất và giá, rủi ro, bài học 2022 | 20 |
+| 14. Quỹ đầu tư & ETF | `#quy` | NAV, quỹ mở/đóng, ETF nội và ngoại, DCA | 16 |
+| 15. Quản trị rủi ro & tâm lý | `#rui-ro` | Cắt lỗ, R:R, quy mô vị thế, margin, FOMO và các thiên kiến | 18 |
+| 16. Đọc hiểu theo ngành | `#nganh` | Ngân hàng, bất động sản, thép, bán lẻ, điện, cảng biển… nhìn chỉ số gì | 20 |
 
 Dữ liệu chỉ để ôn tập, không phải khuyến nghị đầu tư. Quy định, sàn niêm yết và cơ cấu sở hữu có thể thay đổi, nên kiểm tra lại với nguồn chính thức.
 
@@ -23,5 +29,6 @@ Dữ liệu chỉ để ôn tập, không phải khuyến nghị đầu tư. Quy
 - **Sàn niêm yết** (Phần 5): object `EXCH`, chỉ gồm những mã có sàn ổn định.
 - **Tập đoàn** (Phần 6): mảng `GROUPS`.
 - **Thương hiệu** (Phần 7): mảng `BRANDS`.
-- **Câu hỏi kiến thức** (Phần 3, 4, 8, 9, 10): mảng `TERMS`, `RULES`, `INDEXES`, `FINANCE`, `HISTORY`. Mỗi câu có `q` (câu hỏi), `a` (đáp án đúng), `w` (3 đáp án sai), `e` (giải thích).
+- **Câu hỏi kiến thức** (Phần 3, 4, 8–16): mảng `TERMS`, `RULES`, `INDEXES`, `FINANCE`, `HISTORY`, `TECH`, `DERIV`, `BONDS`, `FUNDS`, `RISK`, `SECTOR_Q`. Mỗi câu có `q` (câu hỏi), `a` (đáp án đúng), `w` (3 đáp án sai), `e` (giải thích).
+- **Biểu đồ minh họa** (Phần 11): thêm `chart` vào câu hỏi, dạng `{ candles: [[mở, cao, thấp, đóng], …] }` hoặc `{ lines: [{ d: [...], dash, label }], hline: [giá] }`.
 - **Thêm phần mới**: thêm một object vào mảng `PARTS` và một màu `--cN` trong CSS.
