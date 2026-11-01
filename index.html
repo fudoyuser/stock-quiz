@@ -146,6 +146,7 @@ h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; }
 .chart { display: flex; justify-content: center; background: var(--opt); border: 1px solid var(--line); border-radius: 12px; padding: 10px; margin-top: 6px; }
 .chart svg { width: 100%; max-width: 360px; height: auto; display: block; }
 .thumb { display: block; margin-top: 6px; }
+.tag { display: inline-block; font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--accent); border: 1px solid var(--line); border-radius: 99px; padding: 0 8px; margin: 0 6px 4px 0; }
 .thumb svg { width: 160px; height: auto; display: block; background: var(--opt); border-radius: 8px; }
 footer { text-align: center; font-size: 13px; color: var(--muted); }
 </style>
@@ -760,27 +761,86 @@ const RISK = [
   { q: "\"Tâm lý bầy đàn\" trên thị trường là gì?", a: "Mua bán theo số đông thay vì dựa trên phân tích của bản thân", w: ["Đầu tư theo quỹ ETF", "Giao dịch theo nhóm có giấy phép", "Đầu tư dài hạn"], e: "Tâm lý bầy đàn khuếch đại cả bong bóng lẫn hoảng loạn bán tháo." }
 ];
 
+const SECTOR_TOPICS = {
+  bank: "Ngân hàng", fin: "Chứng khoán & Bảo hiểm", re: "Bất động sản & KCN", mat: "Thép, Vật liệu & Hóa chất",
+  cons: "Bán lẻ & Tiêu dùng", energy: "Dầu khí & Điện", trans: "Vận tải & Logistics", export: "Xuất khẩu", tech: "Công nghệ & Viễn thông"
+};
 const SECTOR_Q = [
-  { q: "Chỉ số NIM quan trọng nhất khi phân tích ngành nào?", a: "Ngân hàng", w: ["Bán lẻ", "Thép", "Cảng biển"], e: "NIM (biên lãi ròng) đo khả năng kiếm lời từ chênh lệch lãi cho vay và huy động." },
-  { q: "\"Room tín dụng\" do Ngân hàng Nhà nước phân bổ ảnh hưởng trực tiếp đến điều gì của ngân hàng?", a: "Mức tăng trưởng cho vay tối đa trong năm", w: ["Giá cổ phiếu tối đa", "Số chi nhánh được mở", "Lãi suất huy động"], e: "Ngân hàng được cấp room cao thường có dư địa tăng trưởng lợi nhuận tốt hơn." },
-  { q: "Tỷ lệ an toàn vốn (CAR) theo chuẩn Basel II tối thiểu là bao nhiêu?", a: "8%", w: ["4%", "20%", "50%"], e: "CAR thể hiện năng lực vốn để chống đỡ rủi ro của ngân hàng." },
-  { q: "Với doanh nghiệp bất động sản, khoản \"người mua trả tiền trước\" lớn thường báo hiệu điều gì?", a: "Doanh thu, lợi nhuận sẽ được ghi nhận khi bàn giao trong tương lai", w: ["Doanh nghiệp đang lỗ", "Doanh nghiệp sắp phá sản", "Doanh nghiệp không có dự án"], e: "Doanh nghiệp bất động sản thường chỉ ghi nhận doanh thu khi bàn giao nhà." },
-  { q: "Yếu tố nào quan trọng nhất với giá trị dài hạn của doanh nghiệp bất động sản nhà ở?", a: "Quỹ đất sạch, pháp lý đầy đủ ở vị trí tốt", w: ["Số lượng nhân viên", "Giá dầu thế giới", "Tỷ giá USD/VND"], e: "Pháp lý dự án là điểm nghẽn lớn nhất của ngành bất động sản Việt Nam." },
-  { q: "Giá quặng sắt và than cốc là đầu vào quan trọng của ngành nào?", a: "Thép", w: ["Ngân hàng", "Dược phẩm", "Công nghệ"], e: "Chênh lệch giữa giá thép bán ra và giá nguyên liệu quyết định biên lợi nhuận." },
-  { q: "Doanh nghiệp thép tích trữ nhiều nguyên liệu giá cao, sau đó giá thép giảm mạnh. Rủi ro là gì?", a: "Phải trích lập giảm giá hàng tồn kho, lợi nhuận sụt mạnh hoặc lỗ", w: ["Lợi nhuận tăng đột biến", "Không ảnh hưởng gì", "Được Nhà nước bù lỗ"], e: "Ngành thép mang tính chu kỳ cao." },
-  { q: "SSSG (tăng trưởng doanh thu cửa hàng hiện hữu) là chỉ số quan trọng của ngành nào?", a: "Bán lẻ", w: ["Ngân hàng", "Thủy điện", "Bảo hiểm"], e: "SSSG cho biết tăng trưởng thật, không tính phần đến từ việc mở thêm cửa hàng." },
-  { q: "Lợi nhuận của công ty chứng khoán phụ thuộc nhiều nhất vào yếu tố nào?", a: "Thanh khoản thị trường và dư nợ cho vay margin", w: ["Giá dầu thế giới", "Thời tiết", "Giá quặng sắt"], e: "Thị trường sôi động thì doanh thu môi giới và cho vay margin tăng mạnh." },
-  { q: "Hiện tượng La Niña (mưa nhiều) thường có lợi cho nhóm doanh nghiệp nào?", a: "Thủy điện", w: ["Nhiệt điện than", "Bán lẻ điện máy", "Hàng không"], e: "Nước về hồ nhiều giúp thủy điện phát điện cao, chi phí thấp. El Niño thì ngược lại." },
-  { q: "Giá dầu Brent tăng mạnh thường có lợi cho nhóm cổ phiếu nào?", a: "Thăm dò, khai thác và dịch vụ dầu khí (PVD, PVS)", w: ["Hàng không (HVN, VJC)", "Nhựa (BMP, NTP)", "Vận tải đường bộ"], e: "Ngược lại, hàng không bất lợi vì chi phí nhiên liệu bay tăng." },
-  { q: "Chỉ số TEU (sản lượng container) quan trọng với ngành nào?", a: "Cảng biển và logistics", w: ["Ngân hàng", "Dược phẩm", "Bất động sản nhà ở"], e: "TEU = đơn vị container 20 feet." },
-  { q: "Đồng USD tăng giá so với VND thường có lợi cho nhóm doanh nghiệp nào?", a: "Doanh nghiệp xuất khẩu như thủy sản, dệt may", w: ["Doanh nghiệp vay nợ nhiều bằng USD", "Doanh nghiệp nhập khẩu nguyên liệu", "Hàng không thuê máy bay bằng USD"], e: "Doanh thu bằng USD quy đổi ra nhiều VND hơn." },
-  { q: "Vì sao cổ phiếu cao su như GVR, PHR được kỳ vọng ngoài mảng mủ cao su?", a: "Chuyển đổi đất trồng cao su sang làm khu công nghiệp", w: ["Sản xuất lốp xe", "Xuất khẩu gỗ cao su sang Mỹ", "Được miễn thuế vĩnh viễn"], e: "Quỹ đất lớn giúp các doanh nghiệp cao su có thêm nguồn thu từ cho thuê đất KCN." },
-  { q: "Dòng vốn FDI tăng mạnh có lợi trực tiếp nhất cho nhóm doanh nghiệp nào?", a: "Khu công nghiệp (KBC, SZC, IDC…)", w: ["Ngân hàng", "Bán lẻ trang sức", "Thủy sản"], e: "Doanh nghiệp FDI cần thuê đất để xây nhà máy." },
-  { q: "Với doanh nghiệp phân bón urê, chi phí đầu vào lớn nhất là gì?", a: "Khí thiên nhiên (hoặc than)", w: ["Quặng sắt", "Mủ cao su", "Bột giấy"], e: "DPM, DCM sản xuất urê từ khí, nên giá khí ảnh hưởng mạnh đến biên lợi nhuận." },
-  { q: "Với doanh nghiệp bảo hiểm, ngoài phí bảo hiểm, nguồn lợi nhuận quan trọng còn lại là gì?", a: "Lãi từ hoạt động đầu tư (tiền gửi, trái phiếu, cổ phiếu)", w: ["Bán lẻ hàng hóa", "Phí môi giới chứng khoán", "Cho thuê văn phòng"], e: "Doanh nghiệp bảo hiểm nắm lượng tiền nhàn rỗi lớn từ phí thu trước." },
-  { q: "Thuế chống bán phá giá của Mỹ ảnh hưởng mạnh tới nhóm doanh nghiệp xuất khẩu nào của Việt Nam?", a: "Cá tra, tôm (VHC, ANV, MPC…)", w: ["Ngân hàng", "Cảng hàng không", "Điện lực"], e: "Mỹ là thị trường xuất khẩu lớn của ngành thủy sản; mức thuế ảnh hưởng trực tiếp tới giá bán." },
-  { q: "Lượng khách quốc tế và giá nhiên liệu bay là yếu tố quan trọng với ngành nào?", a: "Hàng không", w: ["Thép", "Bất động sản KCN", "Phân bón"], e: "Nhiên liệu chiếm tỷ trọng lớn trong chi phí của hãng bay." },
-  { q: "Tỷ lệ nợ xấu (NPL) tăng nhanh ở một ngân hàng thường dẫn tới điều gì?", a: "Phải tăng trích lập dự phòng, lợi nhuận giảm", w: ["Lợi nhuận tăng mạnh", "Được nới room tín dụng", "Giá cổ phiếu chắc chắn tăng"], e: "Theo dõi cả tỷ lệ bao phủ nợ xấu (dự phòng ÷ nợ xấu) để đánh giá khả năng chống đỡ." }
+  /* Ngân hàng */
+  { sec: "bank", q: "Chỉ số NIM của ngân hàng đo lường điều gì?", a: "Biên lãi ròng: chênh lệch lãi cho vay và lãi huy động trên tài sản sinh lãi", w: ["Tỷ lệ nợ xấu", "Tỷ lệ an toàn vốn", "Tốc độ tăng trưởng tín dụng"], e: "NIM cao cho thấy ngân hàng kiếm lời tốt từ hoạt động tín dụng." },
+  { sec: "bank", q: "\"Room tín dụng\" do Ngân hàng Nhà nước phân bổ ảnh hưởng trực tiếp đến điều gì?", a: "Mức tăng trưởng cho vay tối đa trong năm", w: ["Giá cổ phiếu tối đa", "Số chi nhánh được mở", "Lãi suất huy động"], e: "Ngân hàng được cấp room cao thường có dư địa tăng trưởng lợi nhuận tốt hơn." },
+  { sec: "bank", q: "Tỷ lệ an toàn vốn (CAR) theo chuẩn Basel II tối thiểu là bao nhiêu?", a: "8%", w: ["4%", "20%", "50%"], e: "CAR thể hiện năng lực vốn để chống đỡ rủi ro của ngân hàng." },
+  { sec: "bank", q: "Tỷ lệ nợ xấu (NPL) tăng nhanh thường dẫn tới điều gì?", a: "Phải tăng trích lập dự phòng, lợi nhuận giảm", w: ["Lợi nhuận tăng mạnh", "Được nới room tín dụng", "Giá cổ phiếu chắc chắn tăng"], e: "Chi phí dự phòng là khoản ăn mòn lợi nhuận lớn nhất của ngân hàng khi chu kỳ xấu." },
+  { sec: "bank", q: "Tỷ lệ bao phủ nợ xấu (LLR) trên 100% nghĩa là gì?", a: "Dự phòng đã trích lập lớn hơn tổng nợ xấu", w: ["Nợ xấu chiếm hơn 100% dư nợ", "Ngân hàng không còn nợ xấu", "Ngân hàng lỗ toàn bộ vốn"], e: "LLR = Dự phòng ÷ Nợ xấu. Càng cao, bộ đệm chống rủi ro càng dày." },
+  { sec: "bank", q: "Vì sao tỷ lệ CASA cao là lợi thế lớn của ngân hàng?", a: "Nguồn vốn từ tiền gửi không kỳ hạn rẻ, giúp NIM cao hơn", w: ["Giúp ngân hàng được miễn thuế", "Giúp tăng số chi nhánh", "Giúp giảm tỷ lệ an toàn vốn"], e: "Các ngân hàng có hệ sinh thái thanh toán mạnh thường có CASA cao." },
+  { sec: "bank", q: "Chỉ số định giá nào được dùng phổ biến nhất cho cổ phiếu ngân hàng?", a: "P/B", w: ["EV/EBITDA", "P/S", "Tỷ suất cổ tức"], e: "Tài sản của ngân hàng chủ yếu là tài sản tài chính, nên giá trị sổ sách phản ánh khá sát giá trị doanh nghiệp." },
+  { sec: "bank", q: "Thu nhập ngoài lãi của ngân hàng gồm những gì?", a: "Phí dịch vụ thanh toán, bảo hiểm (bancassurance), kinh doanh ngoại hối…", w: ["Lãi cho vay khách hàng", "Lãi tiền gửi tại NHNN", "Vốn góp của cổ đông"], e: "Tỷ trọng thu nhập ngoài lãi cao giúp lợi nhuận ít phụ thuộc vào chu kỳ tín dụng." },
+  /* Chứng khoán & Bảo hiểm */
+  { sec: "fin", q: "Lợi nhuận của công ty chứng khoán phụ thuộc nhiều nhất vào yếu tố nào?", a: "Thanh khoản thị trường và dư nợ cho vay margin", w: ["Giá dầu thế giới", "Thời tiết", "Giá quặng sắt"], e: "Thị trường sôi động thì doanh thu môi giới và cho vay margin tăng mạnh." },
+  { sec: "fin", q: "Mảng nào khiến lợi nhuận công ty chứng khoán biến động mạnh nhất theo thị trường?", a: "Tự doanh (công ty tự đầu tư bằng vốn của mình)", w: ["Lưu ký chứng khoán", "Tư vấn niêm yết", "Phí quản lý tài khoản"], e: "Thị trường giảm mạnh có thể khiến mảng tự doanh lỗ lớn." },
+  { sec: "fin", q: "Tổng dư nợ cho vay ký quỹ của một công ty chứng khoán bị giới hạn ở mức nào?", a: "Không vượt quá 200% vốn chủ sở hữu", w: ["Không giới hạn", "Bằng 50% vốn điều lệ", "Bằng 1.000% vốn chủ sở hữu"], e: "Vì vậy các công ty chứng khoán liên tục tăng vốn để mở rộng cho vay margin." },
+  { sec: "fin", q: "Thị phần môi giới của các công ty chứng khoán trên HOSE được công bố như thế nào?", a: "HOSE công bố định kỳ mỗi quý", w: ["Không bao giờ công bố", "Mỗi ngày trên bảng điện", "Chỉ công bố khi có yêu cầu của UBCK"], e: "Đây là chỉ số quan trọng để so sánh sức mạnh mảng môi giới." },
+  { sec: "fin", q: "Ngoài phí bảo hiểm, nguồn lợi nhuận quan trọng của doanh nghiệp bảo hiểm là gì?", a: "Lãi từ hoạt động đầu tư (tiền gửi, trái phiếu, cổ phiếu)", w: ["Bán lẻ hàng hóa", "Phí môi giới chứng khoán", "Cho thuê văn phòng"], e: "Doanh nghiệp bảo hiểm nắm lượng tiền nhàn rỗi lớn từ phí thu trước." },
+  { sec: "fin", q: "Tỷ lệ kết hợp (combined ratio) của bảo hiểm phi nhân thọ trên 100% nghĩa là gì?", a: "Bồi thường cộng chi phí vượt doanh thu phí, mảng bảo hiểm gốc đang lỗ", w: ["Doanh nghiệp lãi gấp đôi", "Tỷ lệ tái bảo hiểm 100%", "Doanh thu tăng 100%"], e: "Khi đó doanh nghiệp phải dựa vào lãi đầu tư để có lợi nhuận." },
+  { sec: "fin", q: "Từ năm 2023, doanh thu bảo hiểm nhân thọ tại Việt Nam sụt giảm chủ yếu vì sao?", a: "Khủng hoảng niềm tin sau các vụ bán bảo hiểm qua ngân hàng sai quy định", w: ["Bảo hiểm nhân thọ bị cấm", "Lãi suất tiết kiệm bằng 0", "Doanh nghiệp bảo hiểm đóng cửa hàng loạt"], e: "Kênh bancassurance bị siết chặt, quy định tư vấn và bán hàng chặt chẽ hơn." },
+  /* Bất động sản & KCN */
+  { sec: "re", q: "Khoản \"người mua trả tiền trước\" lớn ở doanh nghiệp bất động sản thường báo hiệu điều gì?", a: "Doanh thu, lợi nhuận sẽ được ghi nhận khi bàn giao trong tương lai", w: ["Doanh nghiệp đang lỗ", "Doanh nghiệp sắp phá sản", "Doanh nghiệp không có dự án"], e: "Doanh nghiệp bất động sản thường chỉ ghi nhận doanh thu khi bàn giao nhà." },
+  { sec: "re", q: "Yếu tố nào quan trọng nhất với giá trị dài hạn của doanh nghiệp bất động sản nhà ở?", a: "Quỹ đất sạch, pháp lý đầy đủ ở vị trí tốt", w: ["Số lượng nhân viên", "Giá dầu thế giới", "Tỷ giá USD/VND"], e: "Pháp lý dự án là điểm nghẽn lớn nhất của ngành bất động sản Việt Nam." },
+  { sec: "re", q: "Hàng tồn kho của doanh nghiệp bất động sản nhà ở chủ yếu là gì?", a: "Chi phí các dự án đang phát triển và sản phẩm chưa bàn giao", w: ["Vật liệu xây dựng trong kho", "Hàng hóa bán lẻ", "Tiền gửi ngân hàng"], e: "Hàng tồn kho lớn, chậm luân chuyển là dấu hiệu dự án bán chậm hoặc vướng pháp lý." },
+  { sec: "re", q: "Lãi suất cho vay mua nhà tăng mạnh thường ảnh hưởng thế nào đến doanh nghiệp bất động sản?", a: "Sức mua giảm, chi phí vốn tăng, bán hàng khó khăn", w: ["Bán hàng thuận lợi hơn", "Không ảnh hưởng gì", "Giá đất giảm nên lợi nhuận tăng"], e: "Bất động sản là ngành nhạy cảm với lãi suất bậc nhất." },
+  { sec: "re", q: "Phương pháp định giá phổ biến cho doanh nghiệp bất động sản có nhiều dự án là gì?", a: "RNAV: giá trị tài sản ròng đánh giá lại của các dự án", w: ["P/E năm gần nhất", "Tỷ suất cổ tức", "Số lượng căn hộ đã bán"], e: "Cổ phiếu bất động sản thường giao dịch chiết khấu so với RNAV." },
+  { sec: "re", q: "Áp lực trái phiếu đáo hạn lớn với doanh nghiệp bất động sản (như giai đoạn 2022–2023) gây ra rủi ro gì?", a: "Thiếu dòng tiền trả nợ, phải bán tài sản hoặc giãn nợ", w: ["Lợi nhuận tăng đột biến", "Được miễn thuế", "Giá cổ phiếu chắc chắn tăng"], e: "Nhiều doanh nghiệp phải đàm phán gia hạn trái phiếu theo Nghị định 08/2023." },
+  { sec: "re", q: "Dòng vốn FDI tăng mạnh có lợi trực tiếp nhất cho nhóm nào?", a: "Doanh nghiệp khu công nghiệp (KBC, SZC, IDC…)", w: ["Ngân hàng", "Bán lẻ trang sức", "Thủy sản"], e: "Doanh nghiệp FDI cần thuê đất để xây nhà máy." },
+  { sec: "re", q: "Vì sao các doanh nghiệp cao su như GVR, PHR được kỳ vọng thêm từ mảng bất động sản?", a: "Chuyển đổi đất trồng cao su sang làm khu công nghiệp", w: ["Sản xuất lốp xe", "Xuất khẩu gỗ cao su", "Được miễn thuế vĩnh viễn"], e: "Quỹ đất lớn giúp có thêm nguồn thu từ cho thuê đất KCN." },
+  /* Thép, vật liệu & hóa chất */
+  { sec: "mat", q: "Nguyên liệu đầu vào chính của thép sản xuất bằng lò cao là gì?", a: "Quặng sắt và than cốc", w: ["Khí thiên nhiên", "Mủ cao su", "Cát và đá"], e: "Chênh lệch giữa giá thép bán ra và giá nguyên liệu quyết định biên lợi nhuận." },
+  { sec: "mat", q: "Doanh nghiệp thép tích trữ nhiều nguyên liệu giá cao, sau đó giá thép giảm mạnh. Rủi ro là gì?", a: "Phải trích lập giảm giá hàng tồn kho, lợi nhuận sụt mạnh hoặc lỗ", w: ["Lợi nhuận tăng đột biến", "Không ảnh hưởng gì", "Được Nhà nước bù lỗ"], e: "Ngành thép mang tính chu kỳ cao." },
+  { sec: "mat", q: "Nhu cầu thép xây dựng trong nước phụ thuộc nhiều nhất vào đâu?", a: "Thị trường bất động sản và đầu tư công", w: ["Xuất khẩu thủy sản", "Giá vàng", "Lượng khách du lịch"], e: "Giải ngân đầu tư công mạnh (cao tốc, sân bay) hỗ trợ tiêu thụ thép, xi măng." },
+  { sec: "mat", q: "Việt Nam áp thuế chống bán phá giá lên thép cuộn cán nóng (HRC) nhập khẩu từ Trung Quốc. Ai hưởng lợi nhiều nhất?", a: "Nhà sản xuất HRC trong nước như Hòa Phát", w: ["Doanh nghiệp nhập khẩu HRC để cán tôn", "Người mua nhà", "Doanh nghiệp xuất khẩu thủy sản"], e: "Thép nhập rẻ bị đánh thuế giúp hàng trong nước cạnh tranh hơn." },
+  { sec: "mat", q: "Doanh nghiệp tôn mạ (HSG, NKG) nhạy cảm với yếu tố nào ở thị trường xuất khẩu?", a: "Các vụ kiện phòng vệ thương mại và thuế nhập khẩu ở Mỹ, EU", w: ["Giá cà phê", "Lãi suất tiết kiệm trong nước", "Số lượng khách quốc tế"], e: "Xuất khẩu chiếm tỷ trọng lớn trong doanh thu tôn mạ." },
+  { sec: "mat", q: "Chi phí đầu vào lớn nhất của doanh nghiệp phân bón urê (DPM, DCM) là gì?", a: "Khí thiên nhiên", w: ["Quặng sắt", "Mủ cao su", "Bột giấy"], e: "Giá khí ảnh hưởng mạnh đến biên lợi nhuận phân bón." },
+  { sec: "mat", q: "Đầu vào quan trọng nhất ảnh hưởng biên lợi nhuận của doanh nghiệp ống nhựa (BMP, NTP) là gì?", a: "Giá hạt nhựa PVC, HDPE", w: ["Giá quặng sắt", "Giá điện gió", "Giá cước container"], e: "Hạt nhựa có giá biến động theo giá dầu." },
+  { sec: "mat", q: "Ngành xi măng Việt Nam đang chịu vấn đề lớn nào?", a: "Dư cung, cạnh tranh giá gay gắt, chi phí than và điện cao", w: ["Thiếu cung trầm trọng", "Bị cấm xuất khẩu", "Không có đối thủ cạnh tranh"], e: "Biên lợi nhuận ngành xi măng thường thấp." },
+  /* Bán lẻ & tiêu dùng */
+  { sec: "cons", q: "SSSG trong ngành bán lẻ là gì?", a: "Tăng trưởng doanh thu của các cửa hàng hiện hữu (không tính cửa hàng mới)", w: ["Tổng số cửa hàng mở mới", "Tăng trưởng giá cổ phiếu", "Tỷ lệ hàng trả lại"], e: "SSSG cho biết tăng trưởng thật, không tính phần đến từ việc mở thêm cửa hàng." },
+  { sec: "cons", q: "Doanh nghiệp bán lẻ đóng bớt cửa hàng kém hiệu quả thường nhằm mục đích gì?", a: "Cải thiện biên lợi nhuận và doanh thu trên mỗi cửa hàng", w: ["Tăng tổng doanh thu ngay lập tức", "Được hoàn thuế", "Giảm giá bán"], e: "Ví dụ chuỗi điện máy, bách hóa từng tái cơ cấu mạnh để tối ưu lợi nhuận." },
+  { sec: "cons", q: "Vòng quay hàng tồn kho cao ở doanh nghiệp bán lẻ cho thấy điều gì?", a: "Hàng bán nhanh, vốn ít bị đọng", w: ["Hàng tồn quá nhiều", "Doanh nghiệp sắp thua lỗ", "Giá bán quá cao"], e: "Vòng quay hàng tồn kho = Giá vốn hàng bán ÷ Hàng tồn kho bình quân." },
+  { sec: "cons", q: "Yếu tố vĩ mô nào ảnh hưởng mạnh nhất đến doanh nghiệp bán lẻ điện máy, trang sức?", a: "Sức mua và thu nhập của người tiêu dùng", w: ["Giá quặng sắt", "Lượng mưa", "Giá cước vận tải biển"], e: "Đây là các mặt hàng không thiết yếu, dễ bị cắt giảm khi kinh tế khó khăn." },
+  { sec: "cons", q: "Nghị định 100/2019 (xử phạt nồng độ cồn khi lái xe) ảnh hưởng thế nào đến doanh nghiệp bia?", a: "Tiêu thụ bia tại quán giảm, ảnh hưởng doanh thu của SAB, BHN", w: ["Doanh thu bia tăng mạnh", "Không ảnh hưởng", "Được giảm thuế tiêu thụ đặc biệt"], e: "Ngành bia còn chịu áp lực từ thuế tiêu thụ đặc biệt." },
+  { sec: "cons", q: "Đầu vào nhập khẩu quan trọng ảnh hưởng biên lợi nhuận của doanh nghiệp sữa (VNM) là gì?", a: "Sữa bột nguyên liệu", w: ["Quặng sắt", "Than cốc", "Mủ cao su"], e: "Giá sữa bột thế giới giảm giúp cải thiện biên lợi nhuận gộp." },
+  { sec: "cons", q: "Với chuỗi nhà thuốc (như Long Châu của FRT), chỉ số nào thể hiện tốc độ mở rộng?", a: "Số nhà thuốc mở mới và doanh thu bình quân mỗi nhà thuốc", w: ["Số lượng thuốc tự sản xuất", "Lượng khách quốc tế", "Giá dầu Brent"], e: "Chuỗi bán lẻ dược tăng trưởng nhờ mở rộng mạng lưới nhanh." },
+  /* Dầu khí & Điện */
+  { sec: "energy", q: "Giá dầu Brent tăng mạnh thường có lợi cho nhóm cổ phiếu nào?", a: "Thăm dò, khai thác và dịch vụ dầu khí (PVD, PVS)", w: ["Hàng không (HVN, VJC)", "Ống nhựa (BMP, NTP)", "Bán lẻ điện máy"], e: "Giá dầu cao thúc đẩy hoạt động khoan thăm dò và khai thác." },
+  { sec: "energy", q: "Chuỗi dự án khí – điện Lô B – Ô Môn được kỳ vọng mang lại công việc cho doanh nghiệp nào?", a: "Doanh nghiệp dịch vụ dầu khí như PVS, PVD", w: ["Doanh nghiệp bán lẻ", "Ngân hàng", "Doanh nghiệp thủy sản"], e: "Đây là một trong những dự án dầu khí lớn nhất Việt Nam trong nhiều năm." },
+  { sec: "energy", q: "Lợi nhuận của doanh nghiệp lọc dầu (BSR) phụ thuộc nhiều nhất vào gì?", a: "Chênh lệch giữa giá sản phẩm xăng dầu và giá dầu thô (crack spread)", w: ["Giá điện bán lẻ", "Lãi suất tiết kiệm", "Số cây xăng"], e: "Crack spread mở rộng thì biên lợi nhuận lọc dầu tăng." },
+  { sec: "energy", q: "Hiện tượng La Niña (mưa nhiều) thường có lợi cho nhóm doanh nghiệp nào?", a: "Thủy điện", w: ["Nhiệt điện than", "Hàng không", "Bán lẻ điện máy"], e: "Nước về hồ nhiều giúp thủy điện phát điện cao, chi phí thấp. El Niño thì ngược lại." },
+  { sec: "energy", q: "Khi thủy văn kém (El Niño), nhóm nhà máy điện nào thường được huy động nhiều hơn?", a: "Nhiệt điện than và điện khí", w: ["Thủy điện", "Không nhóm nào", "Chỉ điện mặt trời áp mái"], e: "Hệ thống phải bù phần sản lượng thủy điện thiếu hụt." },
+  { sec: "energy", q: "Biên lợi nhuận của nhà máy nhiệt điện than phụ thuộc nhiều nhất vào gì?", a: "Giá than đầu vào và sản lượng được EVN huy động", w: ["Giá quặng sắt", "Lãi suất cho vay mua nhà", "Giá cước container"], e: "Giá than tăng mạnh mà giá bán điện không tăng tương ứng sẽ làm giảm lợi nhuận." },
+  { sec: "energy", q: "Lợi nhuận của doanh nghiệp bán lẻ xăng dầu (PLX, OIL) chịu ảnh hưởng đặc thù nào?", a: "Giá bán do Nhà nước điều hành theo kỳ, chênh lệch tồn kho khi giá dầu biến động", w: ["Được tự do định giá hoàn toàn", "Chỉ phụ thuộc lượng mưa", "Không có tồn kho"], e: "Giá dầu giảm nhanh có thể gây lỗ do hàng tồn kho nhập giá cao." },
+  { sec: "energy", q: "Rủi ro lớn đối với các dự án điện gió, điện mặt trời hưởng giá FIT ưu đãi là gì?", a: "Thay đổi chính sách giá FIT, bị cắt giảm công suất phát do lưới truyền tải quá tải", w: ["Thiếu nhiên liệu than", "Giá quặng sắt tăng", "Không có ai mua điện"], e: "Nhiều dự án năng lượng tái tạo từng bị cắt giảm công suất và tranh chấp về giá." },
+  /* Vận tải & logistics */
+  { sec: "trans", q: "TEU là đơn vị đo gì, quan trọng với ngành nào?", a: "Sản lượng container (tương đương container 20 feet); ngành cảng biển", w: ["Tấn hàng rời; ngành than", "Số hành khách; ngành hàng không", "Kilowatt giờ; ngành điện"], e: "Sản lượng container thông qua cảng là chỉ số quan trọng nhất của doanh nghiệp cảng." },
+  { sec: "trans", q: "Lợi thế quan trọng nhất của một cảng container là gì?", a: "Vị trí nước sâu, đón được tàu lớn (như Cái Mép – Thị Vải, Lạch Huyện)", w: ["Gần trung tâm thương mại", "Có nhiều nhân viên", "Giá cổ phiếu cao"], e: "Tàu lớn đi thẳng các tuyến xa giúp cảng nước sâu có sản lượng và giá dịch vụ tốt hơn." },
+  { sec: "trans", q: "Khủng hoảng Biển Đỏ năm 2024 khiến tàu phải đi vòng châu Phi. Nhóm nào hưởng lợi?", a: "Chủ tàu, doanh nghiệp vận tải container (như HAH) nhờ giá cước tăng", w: ["Doanh nghiệp xuất khẩu", "Hàng không", "Doanh nghiệp bán lẻ"], e: "Ngược lại, doanh nghiệp xuất nhập khẩu chịu chi phí vận chuyển cao hơn." },
+  { sec: "trans", q: "Hai yếu tố quan trọng nhất với lợi nhuận hãng hàng không là gì?", a: "Giá nhiên liệu bay và lượng khách (đặc biệt khách quốc tế)", w: ["Giá quặng sắt và than cốc", "Lãi suất tiết kiệm và giá vàng", "Lượng mưa và giá điện"], e: "Nhiên liệu chiếm tỷ trọng lớn nhất trong chi phí của hãng bay." },
+  { sec: "trans", q: "Nguồn thu lớn của ACV (Cảng hàng không Việt Nam) tăng mạnh khi nào?", a: "Lượng khách quốc tế tăng, vì phí phục vụ hành khách quốc tế cao hơn nhiều", w: ["Giá vé máy bay nội địa giảm", "Giá dầu giảm", "Lãi suất tăng"], e: "ACV cũng hưởng lợi khi các nhà ga mới (như Long Thành) đi vào hoạt động." },
+  { sec: "trans", q: "Doanh nghiệp logistics hưởng lợi rõ nhất từ yếu tố nào?", a: "Kim ngạch xuất nhập khẩu tăng trưởng", w: ["Giá bất động sản tăng", "Lãi suất cho vay giảm", "Giá vàng tăng"], e: "Hàng hóa lưu chuyển nhiều thì nhu cầu kho bãi, giao nhận, vận chuyển tăng." },
+  { sec: "trans", q: "Mảng chuyển phát nhanh (như VTP) tăng trưởng mạnh trong những năm gần đây nhờ đâu?", a: "Thương mại điện tử bùng nổ", w: ["Xuất khẩu than", "Đầu tư công", "Giá dầu tăng"], e: "Cạnh tranh giá cước giữa các hãng giao hàng cũng rất gay gắt." },
+  /* Xuất khẩu */
+  { sec: "export", q: "Đồng USD tăng giá so với VND thường có lợi cho nhóm doanh nghiệp nào?", a: "Doanh nghiệp xuất khẩu như thủy sản, dệt may", w: ["Doanh nghiệp vay nợ nhiều bằng USD", "Doanh nghiệp nhập khẩu nguyên liệu", "Hãng hàng không thuê máy bay bằng USD"], e: "Doanh thu bằng USD quy đổi ra nhiều VND hơn." },
+  { sec: "export", q: "Thuế chống bán phá giá của Mỹ đối với cá tra, tôm ảnh hưởng thế nào?", a: "Mức thuế thấp giúp doanh nghiệp đó cạnh tranh hơn khi xuất sang Mỹ", w: ["Không ảnh hưởng vì Mỹ là thị trường nhỏ", "Chỉ ảnh hưởng doanh nghiệp nội địa Mỹ", "Doanh nghiệp được hoàn toàn bộ thuế"], e: "Mỗi doanh nghiệp có mức thuế riêng qua các đợt xem xét hành chính." },
+  { sec: "export", q: "Lợi nhuận doanh nghiệp dệt may phụ thuộc nhiều vào yếu tố nào?", a: "Đơn hàng từ các nhãn hàng Mỹ, EU và mức tồn kho của nhà bán lẻ nước ngoài", w: ["Giá quặng sắt", "Lượng mưa trong nước", "Room tín dụng ngân hàng"], e: "Khi nhà bán lẻ Mỹ tồn kho cao, đơn hàng may mặc giảm mạnh." },
+  { sec: "export", q: "Quy tắc xuất xứ \"từ sợi trở đi\" (yarn forward) của CPTPP có ý nghĩa gì với dệt may Việt Nam?", a: "Phải dùng sợi, vải sản xuất trong khối CPTPP mới được hưởng ưu đãi thuế", w: ["Được miễn thuế với mọi nguyên liệu", "Chỉ áp dụng cho sợi tổng hợp", "Cấm nhập khẩu vải"], e: "Doanh nghiệp dệt may khép kín (sợi – dệt – may) có lợi thế hơn." },
+  { sec: "export", q: "Các hiệp định thương mại tự do như EVFTA, CPTPP giúp doanh nghiệp xuất khẩu chủ yếu nhờ gì?", a: "Giảm hoặc xóa bỏ thuế nhập khẩu tại thị trường đối tác", w: ["Được vay vốn không lãi", "Được miễn thuế thu nhập trong nước", "Được Nhà nước bao tiêu sản phẩm"], e: "Doanh nghiệp phải đáp ứng quy tắc xuất xứ để hưởng ưu đãi." },
+  { sec: "export", q: "Năm 2025, Mỹ áp thuế đối ứng lên hàng hóa từ nhiều nước, trong đó có Việt Nam. Nhóm cổ phiếu nào bị ảnh hưởng tâm lý mạnh nhất?", a: "Doanh nghiệp xuất khẩu sang Mỹ (dệt may, gỗ, thủy sản) và khu công nghiệp", w: ["Ngân hàng quốc doanh", "Doanh nghiệp điện", "Bán lẻ dược phẩm"], e: "Mỹ là thị trường xuất khẩu lớn nhất của Việt Nam." },
+  { sec: "export", q: "Ngành gỗ xuất khẩu của Việt Nam phụ thuộc nhiều nhất vào thị trường nào?", a: "Thị trường nhà ở và tiêu dùng đồ nội thất tại Mỹ", w: ["Thị trường bất động sản trong nước", "Giá dầu Trung Đông", "Lượng khách du lịch quốc tế"], e: "Lãi suất cao ở Mỹ làm giảm giao dịch nhà, kéo theo nhu cầu nội thất." },
+  /* Công nghệ & viễn thông */
+  { sec: "tech", q: "Động lực tăng trưởng lớn nhất của FPT trong nhiều năm qua là mảng nào?", a: "Dịch vụ công nghệ thông tin cho khách hàng nước ngoài (Nhật, Mỹ, châu Âu)", w: ["Bán lẻ điện thoại", "Kinh doanh bất động sản", "Khai thác khoáng sản"], e: "Đây là mảng có biên lợi nhuận tốt và tăng trưởng ổn định." },
+  { sec: "tech", q: "Chỉ số nào giúp dự báo doanh thu tương lai của doanh nghiệp dịch vụ công nghệ?", a: "Giá trị hợp đồng ký mới (backlog)", w: ["Số lượng nhân viên nghỉ việc", "Giá cổ phiếu tuần trước", "Lượng mưa"], e: "Hợp đồng ký mới tăng mạnh thường báo trước doanh thu tăng trong các quý sau." },
+  { sec: "tech", q: "Chi phí lớn nhất của doanh nghiệp xuất khẩu phần mềm là gì?", a: "Lương và chi phí nhân sự kỹ sư", w: ["Nguyên liệu thô", "Nhiên liệu", "Chi phí thuê đất khu công nghiệp"], e: "Vì vậy năng suất và khả năng tuyển dụng kỹ sư quyết định biên lợi nhuận." },
+  { sec: "tech", q: "ARPU là chỉ số quan trọng của ngành nào?", a: "Viễn thông, Internet (doanh thu bình quân trên mỗi thuê bao)", w: ["Ngân hàng", "Thép", "Cảng biển"], e: "Tăng ARPU (khách dùng gói đắt hơn) giúp tăng doanh thu mà không cần thêm thuê bao." },
+  { sec: "tech", q: "Nhu cầu trí tuệ nhân tạo (AI) bùng nổ tạo cơ hội cho mảng kinh doanh nào của doanh nghiệp công nghệ Việt Nam?", a: "Trung tâm dữ liệu và hạ tầng điện toán (data center, AI factory)", w: ["Bán lẻ bút viết", "Xuất khẩu cá tra", "Khai thác đá"], e: "FPT, CMC, Viettel đều đầu tư mạnh vào trung tâm dữ liệu." },
+  { sec: "tech", q: "Doanh nghiệp xây dựng hạ tầng viễn thông (như CTR) hưởng lợi từ xu hướng nào?", a: "Triển khai mạng 5G và cho thuê hạ tầng trạm phát sóng", w: ["Giá dầu tăng", "Lãi suất tăng", "Giá thép giảm"], e: "Cho thuê hạ tầng (TowerCo) mang lại doanh thu ổn định dài hạn." }
 ];
 
 /* ===== Tiện ích ===== */
@@ -814,9 +874,9 @@ const bankQ = (label) => item => ({
   explain: ok => `<div>${ok ? "✓ Chính xác!" : `✗ Chưa đúng. Đáp án: <b>${esc(item.a)}</b>.`}</div><p>${esc(item.e)}</p>`,
   review: ["", `${item.q} → ${item.a}`]
 });
-const bankBoard = bank => ({
+const bankBoard = (bank, topics) => ({
   head: ["Câu hỏi", "Đáp án"],
-  rows: () => bank.map(x => [esc(x.q) + (x.chart ? `<span class="thumb">${chartSVG(x.chart, 200, 90)}</span>` : ""), `<b>${esc(x.a)}</b><small>${esc(x.e)}</small>`]),
+  rows: () => bank.map(x => [(topics && x.sec ? `<span class="tag">${topics[x.sec]}</span>` : "") + esc(x.q) + (x.chart ? `<span class="thumb">${chartSVG(x.chart, 200, 90)}</span>` : ""), `<b>${esc(x.a)}</b><small>${esc(x.e)}</small>`]),
   search: "Tìm trong câu hỏi hoặc đáp án…", first: false
 });
 
@@ -954,8 +1014,9 @@ const PARTS = [
     items: () => RISK, make: bankQ("Quản trị rủi ro & tâm lý đầu tư"), board: bankBoard(RISK)
   },
   {
-    id: "sectors", hash: "nganh", title: "Đọc hiểu theo ngành", desc: "Mỗi ngành cần nhìn chỉ số gì?",
-    items: () => SECTOR_Q, make: bankQ("Đọc hiểu theo ngành"), board: bankBoard(SECTOR_Q)
+    id: "sectors", hash: "nganh", title: "Đọc hiểu theo ngành", desc: "Chọn ngành để ôn: ngân hàng, BĐS, thép…",
+    sectors: true, topics: SECTOR_TOPICS,
+    items: () => SECTOR_Q, make: it => bankQ("Đọc hiểu ngành · " + SECTOR_TOPICS[it.sec])(it), board: bankBoard(SECTOR_Q, SECTOR_TOPICS)
   }
 ];
 const PART = Object.fromEntries(PARTS.map((p, i) => [p.id, Object.assign(p, { num: i + 1 })]));
@@ -1027,7 +1088,7 @@ function renderSetup() {
   $("sectorsField").hidden = !P.sectors;
   if (P.sectors) {
     $("sectors").innerHTML = `<button type="button" class="chip" data-s="" aria-pressed="${c.secs.size === 0}">Tất cả<small>${all.length}</small></button>` +
-      Object.entries(SECTORS).map(([k, v]) => [k, v, all.filter(s => s.sec === k).length]).filter(x => x[2])
+      Object.entries(P.topics || SECTORS).map(([k, v]) => [k, v, all.filter(s => s.sec === k).length]).filter(x => x[2])
         .map(([k, v, n]) => `<button type="button" class="chip" data-s="${k}" aria-pressed="${c.secs.has(k)}">${v}<small>${n}</small></button>`).join("");
   }
   $("lengths").innerHTML = LENGTHS.filter(n => n === "all" || n < all.length).map(n =>

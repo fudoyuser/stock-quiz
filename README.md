@@ -19,7 +19,7 @@ Quiz kiến thức chứng khoán Việt Nam gồm **16 phần tách biệt**. M
 | 13. Trái phiếu | `#trai-phieu` | Coupon, lợi suất, lãi suất và giá, rủi ro, bài học 2022 | 20 |
 | 14. Quỹ đầu tư & ETF | `#quy` | NAV, quỹ mở/đóng, ETF nội và ngoại, DCA | 16 |
 | 15. Quản trị rủi ro & tâm lý | `#rui-ro` | Cắt lỗ, R:R, quy mô vị thế, margin, FOMO và các thiên kiến | 18 |
-| 16. Đọc hiểu theo ngành | `#nganh` | Ngân hàng, bất động sản, thép, bán lẻ, điện, cảng biển… nhìn chỉ số gì | 20 |
+| 16. Đọc hiểu theo ngành | `#nganh` | Chia 9 ngành, chọn ngành để ôn riêng: ngân hàng, chứng khoán & bảo hiểm, bất động sản & KCN, thép & vật liệu, bán lẻ, dầu khí & điện, vận tải, xuất khẩu, công nghệ | 66 |
 
 Dữ liệu chỉ để ôn tập, không phải khuyến nghị đầu tư. Quy định, sàn niêm yết và cơ cấu sở hữu có thể thay đổi, nên kiểm tra lại với nguồn chính thức.
 
