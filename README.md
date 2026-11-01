@@ -6,7 +6,7 @@ Quiz kiến thức chứng khoán Việt Nam với 184 doanh nghiệp niêm yế
 Nhìn tên doanh nghiệp, tự gõ chính xác mã cổ phiếu.
 
 ## Phần 2: Lĩnh vực hoạt động chính (`#linh-vuc`)
-Nhìn mã và tên công ty, chọn đúng lĩnh vực hoạt động chính trong 4 đáp án. Đáp án nhiễu của Phần 2 được lấy từ ngành khác, nên không có hai đáp án cùng đúng.
+Đọc mô tả lĩnh vực hoạt động chính, chọn đúng mã cổ phiếu trong 4 mã (chỉ hiện mã, không kèm tên công ty). Đáp án nhiễu của Phần 2 được lấy từ ngành khác, nên không có hai đáp án cùng đúng.
 
 Ở cả hai phần đều lọc được theo ngành và chọn 10/20/30 câu hoặc tất cả. Cuối lượt có danh sách mã cần ôn.
 

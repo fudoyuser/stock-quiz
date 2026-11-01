@@ -450,9 +450,9 @@ const PARTS = {
     ]
   },
   biz: {
-    num: "Phần 2", title: "Lĩnh vực hoạt động chính", desc: "Nhìn mã, chọn đúng lĩnh vực hoạt động chính.", color: "var(--p2)",
+    num: "Phần 2", title: "Lĩnh vực hoạt động chính", desc: "Đọc lĩnh vực hoạt động, chọn đúng mã doanh nghiệp.", color: "var(--p2)",
     modes: [
-      { id: "t2b", ex: "DRC → ?", title: "Mã → Lĩnh vực", desc: "Nhìn mã và tên công ty, chọn đúng lĩnh vực hoạt động chính." }
+      { id: "b2t", ex: "Sản xuất xi măng → ?", title: "Lĩnh vực → Mã", desc: "Đọc lĩnh vực hoạt động, chọn đúng mã cổ phiếu." }
     ]
   }
 };
@@ -607,7 +607,8 @@ function renderQ() {
   $("opts").innerHTML = opts.map((o, k) => {
     if (g.mode === "c2t") return `<button type="button" class="opt tk" data-t="${o.t}">${o.t}</button>`;
     if (g.mode === "t2b") return `<button type="button" class="opt" data-t="${o.t}"><kbd>${k + 1}</kbd><span>${esc(o.biz)}</span></button>`;
-    if (g.mode === "b2t") return `<button type="button" class="opt" data-t="${o.t}"><kbd>${k + 1}</kbd><span><b class="mono">${o.t}</b> · ${esc(companyName(o))}<br><small>${esc(o.full)}</small></span></button>`;
+    /* Chỉ hiện mã, không kèm tên công ty — tên thường đã lộ ngành nghề */
+    if (g.mode === "b2t") return `<button type="button" class="opt tk" data-t="${o.t}">${o.t}</button>`;
     return `<button type="button" class="opt" data-t="${o.t}"><kbd>${k + 1}</kbd><span>${leaks(o) ? `<b>${esc(o.full)}</b>` : `<b>${esc(o.short)}</b><br><small>${esc(o.full)}</small>`}</span></button>`;
   }).join("");
 }
