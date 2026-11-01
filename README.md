@@ -1,26 +1,29 @@
 # Bảng Điện Quiz
 
-Quiz kiến thức chứng khoán Việt Nam. **Phần 1: Mã cổ phiếu**, gồm 115 doanh nghiệp niêm yết trên HOSE, HNX và UPCoM, chia theo 11 ngành.
+Quiz kiến thức chứng khoán Việt Nam với 184 doanh nghiệp niêm yết trên HOSE, HNX và UPCoM, chia theo 12 ngành. Trang có hai phần **tách biệt**: mỗi phần có thiết lập, điểm cao nhất và bảng tra cứu riêng.
 
-Ba kiểu câu hỏi:
-- **Công ty → Mã**: nhìn tên doanh nghiệp, chọn mã đúng trong 4 mã. Các mã sai được chọn từ cùng ngành hoặc từ mã trông gần giống.
+## Phần 1: Mã cổ phiếu (`#ma`)
+- **Công ty → Mã**: nhìn tên doanh nghiệp, chọn mã đúng trong 4 mã (đáp án nhiễu là mã cùng ngành hoặc trông gần giống).
 - **Mã → Công ty**: nhìn mã, chọn đúng doanh nghiệp.
 - **Tự gõ mã**: gõ chính xác mã cổ phiếu.
 
-Có thể lọc theo ngành, chọn 10/20/30 câu hoặc tất cả. Cuối lượt hiện danh sách mã cần ôn. Cuối trang có bảng tra cứu, tìm được cả khi gõ không dấu.
+## Phần 2: Lĩnh vực hoạt động chính (`#linh-vuc`)
+- **Mã → Lĩnh vực**: nhìn mã và tên công ty, chọn đúng lĩnh vực hoạt động chính.
+- **Lĩnh vực → Mã**: đọc mô tả hoạt động, chọn đúng doanh nghiệp.
+
+Đáp án nhiễu của Phần 2 được lấy từ ngành khác, nên không có hai đáp án cùng đúng.
+
+Ở cả hai phần đều lọc được theo ngành và chọn 10/20/30 câu hoặc tất cả. Cuối lượt có danh sách mã cần ôn.
 
 Dữ liệu chỉ để ôn tập, không phải khuyến nghị đầu tư.
 
-## Thêm mã mới
+## Thêm doanh nghiệp
 
-Mở `index.html`, thêm một dòng vào chuỗi `RAW` theo dạng:
+Mở `index.html`, thêm một dòng vào chuỗi `RAW`:
 
 ```
-MÃ|Tên thường gọi|Tên đầy đủ|ngành|Ghi chú (không bắt buộc)
+MÃ|Tên thường gọi|Tên đầy đủ|ngành|Lĩnh vực hoạt động chính|Ghi chú (không bắt buộc)
 ```
 
-`ngành` là một khóa trong `SECTORS` (`bank`, `re`, `fin`, `cons`, `food`, `mat`, `build`, `energy`, `trans`, `tech`, `health`).
-
-## Chạy
-
-Mở trực tiếp `index.html` hoặc bật GitHub Pages (Settings → Pages → Deploy from branch `main`, thư mục `/`).
+- `ngành` là một khóa trong `SECTORS` (`bank`, `re`, `fin`, `cons`, `food`, `mat`, `build`, `energy`, `trans`, `tech`, `health`, `textile`).
+- Các công ty làm cùng một việc nên dùng **đúng cùng một câu** mô tả lĩnh vực (có sẵn hằng `BANK`, `RE`, `KCN`, `SEC`, `INS`), để chúng không bị lấy làm đáp án nhiễu của nhau.
