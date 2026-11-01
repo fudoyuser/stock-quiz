@@ -3,15 +3,10 @@
 Quiz kiến thức chứng khoán Việt Nam với 184 doanh nghiệp niêm yết trên HOSE, HNX và UPCoM, chia theo 12 ngành. Trang có hai phần **tách biệt**: mỗi phần có thiết lập, điểm cao nhất và bảng tra cứu riêng.
 
 ## Phần 1: Mã cổ phiếu (`#ma`)
-- **Công ty → Mã**: nhìn tên doanh nghiệp, chọn mã đúng trong 4 mã (đáp án nhiễu là mã cùng ngành hoặc trông gần giống).
-- **Mã → Công ty**: nhìn mã, chọn đúng doanh nghiệp.
-- **Tự gõ mã**: gõ chính xác mã cổ phiếu.
+Nhìn tên doanh nghiệp, tự gõ chính xác mã cổ phiếu.
 
 ## Phần 2: Lĩnh vực hoạt động chính (`#linh-vuc`)
-- **Mã → Lĩnh vực**: nhìn mã và tên công ty, chọn đúng lĩnh vực hoạt động chính.
-- **Lĩnh vực → Mã**: đọc mô tả hoạt động, chọn đúng doanh nghiệp.
-
-Đáp án nhiễu của Phần 2 được lấy từ ngành khác, nên không có hai đáp án cùng đúng.
+Nhìn mã và tên công ty, chọn đúng lĩnh vực hoạt động chính trong 4 đáp án. Đáp án nhiễu của Phần 2 được lấy từ ngành khác, nên không có hai đáp án cùng đúng.
 
 Ở cả hai phần đều lọc được theo ngành và chọn 10/20/30 câu hoặc tất cả. Cuối lượt có danh sách mã cần ôn.
 

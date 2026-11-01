@@ -164,7 +164,7 @@ footer { text-align: center; font-size: 13px; color: var(--muted); }
       <span class="label" id="setupLabel"></span>
       <h2 id="setupTitle"></h2>
     </div>
-    <div class="field">
+    <div class="field" id="modesField">
       <span class="label">Kiểu câu hỏi</span>
       <div class="modes" id="modes"></div>
     </div>
@@ -444,18 +444,15 @@ const leaks = s => s.short.toUpperCase().replace(/\s/g, "").includes(s.t);
 /* ===== Hai phần, tách biệt hoàn toàn (thiết lập, điểm cao nhất, bảng tra cứu riêng) ===== */
 const PARTS = {
   ticker: {
-    num: "Phần 1", title: "Mã cổ phiếu", desc: "Doanh nghiệp này niêm yết với mã gì?", color: "var(--p1)",
+    num: "Phần 1", title: "Mã cổ phiếu", desc: "Nhìn tên doanh nghiệp, gõ đúng mã cổ phiếu.", color: "var(--p1)",
     modes: [
-      { id: "c2t", ex: "Vinamilk → ?", title: "Công ty → Mã", desc: "Nhìn tên doanh nghiệp, chọn mã đúng trong 4 mã." },
-      { id: "t2c", ex: "VNM → ?", title: "Mã → Công ty", desc: "Nhìn mã cổ phiếu, chọn đúng doanh nghiệp." },
-      { id: "type", ex: "Vinamilk → V_ _", title: "Tự gõ mã", desc: "Khó nhất: gõ chính xác mã cổ phiếu." }
+      { id: "type", ex: "Vinamilk → V_ _", title: "Tự gõ mã", desc: "Nhìn tên doanh nghiệp, gõ chính xác mã cổ phiếu." }
     ]
   },
   biz: {
-    num: "Phần 2", title: "Lĩnh vực hoạt động chính", desc: "Doanh nghiệp này kiếm tiền từ đâu?", color: "var(--p2)",
+    num: "Phần 2", title: "Lĩnh vực hoạt động chính", desc: "Nhìn mã, chọn đúng lĩnh vực hoạt động chính.", color: "var(--p2)",
     modes: [
-      { id: "t2b", ex: "DRC → ?", title: "Mã → Lĩnh vực", desc: "Nhìn mã và tên công ty, chọn đúng lĩnh vực hoạt động chính." },
-      { id: "b2t", ex: "Sản xuất xi măng → ?", title: "Lĩnh vực → Mã", desc: "Đọc mô tả hoạt động, chọn đúng doanh nghiệp." }
+      { id: "t2b", ex: "DRC → ?", title: "Mã → Lĩnh vực", desc: "Nhìn mã và tên công ty, chọn đúng lĩnh vực hoạt động chính." }
     ]
   }
 };
@@ -549,6 +546,7 @@ $("parts").onclick = e => { const b = e.target.closest("[data-p]"); if (b && b.d
 function renderSetup() {
   const P = PARTS[part], c = cfg[part];
   $("setupLabel").textContent = P.num; $("setupTitle").textContent = P.title;
+  $("modesField").hidden = P.modes.length < 2;
   $("modes").innerHTML = P.modes.map(m => `<button type="button" class="mode" data-m="${m.id}" aria-pressed="${c.mode === m.id}">
     <span class="ex">${esc(m.ex)}</span><h3>${m.title}</h3><p>${m.desc}</p></button>`).join("");
   $("sectors").innerHTML = `<button type="button" class="chip" data-s="" aria-pressed="${c.secs.size === 0}">Tất cả<small>${STOCKS.length}</small></button>` +
