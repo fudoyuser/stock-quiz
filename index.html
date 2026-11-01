@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Quiz kiến thức chứng khoán Việt Nam: đoán mã cổ phiếu của các công ty niêm yết trên HOSE, HNX, UPCoM.">
+<title>Bảng Điện Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap">
+<style>
+/* Giao diện: bảng điện chứng khoán — nền tối, chữ số đơn cách, xanh tăng / đỏ giảm / vàng tham chiếu */
+:root {
+  --bg: #f3f5f2; --card: #ffffff; --opt: #f7f9f6; --ink: #121815; --muted: #5f6b65; --line: #dde3de;
+  --up: #11935a; --up-soft: #dcf3e7; --down: #d23b3b; --down-soft: #fbe2e0; --ref: #b88a00; --ceil: #8a3fc7; --floor: #1a8fb8;
+  --accent: #11935a; --accent-ink: #ffffff;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b0f0d; --card: #131916; --opt: #18201c; --ink: #e9efeb; --muted: #8d9a93; --line: #25302a;
+    --up: #2fd47f; --up-soft: #12301f; --down: #ff6363; --down-soft: #3a1717; --ref: #f2c230; --ceil: #c98bff; --floor: #4fd1ff;
+    --accent: #2fd47f; --accent-ink: #06130c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0b0f0d; --card: #131916; --opt: #18201c; --ink: #e9efeb; --muted: #8d9a93; --line: #25302a;
+  --up: #2fd47f; --up-soft: #12301f; --down: #ff6363; --down-soft: #3a1717; --ref: #f2c230; --ceil: #c98bff; --floor: #4fd1ff;
+  --accent: #2fd47f; --accent-ink: #06130c;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body {
+  margin: 0; min-height: 100vh; background: var(--bg); color: var(--ink);
+  font-family: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 16px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-bottom: 64px; overflow-x: hidden;
+}
+[hidden] { display: none !important; }
+.mono { font-family: "JetBrains Mono", ui-monospace, Menlo, monospace; }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 780px; margin: 0 auto; display: grid; gap: 28px; }
+h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; }
+.label { font-family: "JetBrains Mono", monospace; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+
+/* Băng chạy mã */
+.tape { margin: 0 calc(-1 * max(16px, env(safe-area-inset-left, 0px))) 0; border-bottom: 1px solid var(--line); background: var(--card); overflow: hidden; white-space: nowrap; }
+.tape-track { display: inline-flex; gap: 28px; padding: 9px 0; animation: run 90s linear infinite; font-family: "JetBrains Mono", monospace; font-size: 13px; }
+.tape-track span b { margin-right: 6px; }
+@keyframes run { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .tape-track { animation: none; } }
+
+/* Masthead */
+.mast { display: grid; gap: 12px; padding-top: 28px; }
+.mast-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.theme { background: var(--card); border: 1px solid var(--line); border-radius: 99px; padding: 6px 12px; font-size: 13px; color: var(--muted); }
+.mast h1 { font-size: clamp(36px, 8vw, 58px); font-weight: 800; letter-spacing: -.02em; }
+.mast h1 span { color: var(--accent); }
+.mast p { margin: 0; color: var(--muted); max-width: 60ch; }
+.stats { display: flex; gap: 24px; flex-wrap: wrap; }
+.stats div { display: grid; }
+.stats b { font-family: "JetBrains Mono", monospace; font-size: 26px; font-variant-numeric: tabular-nums; }
+.stats span { font-size: 13px; color: var(--muted); }
+
+/* Panel chung */
+.panel { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 22px; display: grid; gap: 18px; }
+.modes { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.mode { text-align: left; background: var(--opt); border: 1.5px solid var(--line); border-radius: 14px; padding: 14px 16px; display: grid; gap: 4px; transition: border-color .15s, transform .15s; }
+.mode:hover { transform: translateY(-1px); }
+.mode[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.mode .ex { font-family: "JetBrains Mono", monospace; font-weight: 800; font-size: 15px; color: var(--accent); }
+.mode h3 { font-size: 17px; }
+.mode p { margin: 0; font-size: 13px; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 1px solid var(--line); background: var(--opt); border-radius: 99px; padding: 6px 12px; font-size: 14px; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chip small { opacity: .6; margin-left: 4px; font-family: "JetBrains Mono", monospace; }
+.field { display: grid; gap: 8px; }
+.go { justify-self: start; background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 12px; padding: 13px 24px; font-weight: 700; font-size: 16px; }
+.go:disabled { opacity: .45; cursor: not-allowed; }
+.ghost { background: transparent; border: 1px solid var(--line); border-radius: 12px; padding: 11px 18px; font-weight: 600; }
+
+/* Màn chơi */
+.hud { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.bar { height: 6px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); width: 0; transition: width .3s; }
+.prompt { display: grid; gap: 6px; text-align: center; padding: 18px 8px 8px; }
+.prompt .big { font-size: clamp(26px, 6vw, 38px); font-weight: 800; letter-spacing: -.01em; }
+.prompt .big.mono { font-size: clamp(48px, 14vw, 84px); letter-spacing: .06em; color: var(--ref); }
+.prompt .sub { color: var(--muted); font-size: 14px; }
+.opts { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+.opt { text-align: left; background: var(--opt); border: 1.5px solid var(--line); border-radius: 12px; padding: 14px 16px; display: flex; gap: 12px; align-items: center; transition: border-color .15s; }
+.opt:hover:not(:disabled) { border-color: var(--accent); }
+.opt kbd { font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--muted); border: 1px solid var(--line); border-radius: 6px; padding: 1px 6px; }
+.opt.tk { font-family: "JetBrains Mono", monospace; font-size: 22px; font-weight: 800; letter-spacing: .06em; justify-content: center; }
+.opt.tk kbd { display: none; }
+.opt:disabled { cursor: default; }
+.opt.right { border-color: var(--up); background: var(--up-soft); }
+.opt.wrong { border-color: var(--down); background: var(--down-soft); }
+.typebox { display: flex; gap: 10px; }
+.typebox input { flex: 1; min-width: 0; text-transform: uppercase; font-family: "JetBrains Mono", monospace; font-weight: 800; font-size: 26px; letter-spacing: .12em; text-align: center; background: var(--opt); border: 1.5px solid var(--line); border-radius: 12px; padding: 10px; }
+.typebox input.right { border-color: var(--up); background: var(--up-soft); }
+.typebox input.wrong { border-color: var(--down); background: var(--down-soft); }
+.explain { border-left: 4px solid var(--up); background: var(--opt); border-radius: 0 12px 12px 0; padding: 12px 16px; display: grid; gap: 4px; }
+.explain.bad { border-left-color: var(--down); }
+.explain b.t { font-family: "JetBrains Mono", monospace; }
+.explain p { margin: 0; font-size: 14px; color: var(--muted); }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* Kết quả */
+.score { font-family: "JetBrains Mono", monospace; font-size: clamp(56px, 16vw, 96px); font-weight: 800; line-height: 1; }
+.score.up { color: var(--up); } .score.down { color: var(--down); } .score.ref { color: var(--ref); }
+.review { display: grid; gap: 8px; }
+.review div { display: flex; gap: 12px; align-items: baseline; padding: 8px 12px; border-radius: 10px; background: var(--down-soft); font-size: 14px; }
+.review b { font-family: "JetBrains Mono", monospace; min-width: 44px; }
+
+/* Bảng tra cứu */
+.search { width: 100%; background: var(--opt); border: 1px solid var(--line); border-radius: 12px; padding: 11px 14px; }
+.board { width: 100%; border-collapse: collapse; font-size: 14px; }
+.board th { text-align: left; font-family: "JetBrains Mono", monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 8px 6px; border-bottom: 1px solid var(--line); }
+.board td { padding: 9px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.board td:first-child { font-family: "JetBrains Mono", monospace; font-weight: 800; color: var(--accent); width: 58px; }
+.board td small { display: block; color: var(--muted); }
+.board .sec { color: var(--muted); white-space: nowrap; }
+@media (max-width: 540px) { .board .sec { display: none; } }
+.note { font-size: 13px; color: var(--muted); margin: 0; }
+footer { text-align: center; font-size: 13px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="tape" aria-hidden="true"><div class="tape-track" id="tape"></div></div>
+
+<main class="wrap">
+  <header class="mast">
+    <div class="mast-top">
+      <span class="label">Kiến thức chứng khoán · Phần 1</span>
+      <button class="theme" id="themeBtn" type="button">Giao diện: Tự động</button>
+    </div>
+    <h1>Bảng Điện <span>Quiz</span></h1>
+    <p>Bạn có nhớ mã cổ phiếu của các doanh nghiệp niêm yết trên HOSE, HNX và UPCoM? Nhìn tên công ty đoán mã, nhìn mã đoán công ty, hoặc tự gõ mã.</p>
+    <div class="stats">
+      <div><b id="statCount">0</b><span>mã cổ phiếu</span></div>
+      <div><b id="statSectors">0</b><span>ngành</span></div>
+      <div><b id="statBest">–</b><span>điểm cao nhất</span></div>
+    </div>
+  </header>
+
+  <!-- Thiết lập -->
+  <section class="panel" id="setup">
+    <div class="field">
+      <span class="label">Kiểu câu hỏi</span>
+      <div class="modes" id="modes"></div>
+    </div>
+    <div class="field">
+      <span class="label">Ngành</span>
+      <div class="chips" id="sectors"></div>
+    </div>
+    <div class="field">
+      <span class="label">Số câu mỗi lượt</span>
+      <div class="chips" id="lengths"></div>
+    </div>
+    <button class="go" id="startBtn" type="button">Bắt đầu</button>
+  </section>
+
+  <!-- Chơi -->
+  <section class="panel" id="play" hidden>
+    <div class="hud">
+      <span class="label" id="hudPos">Câu 1/10</span>
+      <span class="label" id="hudScore">Đúng 0</span>
+    </div>
+    <div class="bar"><i id="hudBar"></i></div>
+    <div class="prompt">
+      <span class="label" id="qLabel"></span>
+      <div class="big" id="qMain"></div>
+      <div class="sub" id="qSub"></div>
+    </div>
+    <div class="opts" id="opts"></div>
+    <form class="typebox" id="typeForm" hidden autocomplete="off">
+      <input id="typeInput" maxlength="4" placeholder="???" aria-label="Nhập mã cổ phiếu" spellcheck="false" autocapitalize="characters">
+      <button class="go" type="submit">Trả lời</button>
+    </form>
+    <div class="explain" id="explain" hidden></div>
+    <div class="actions">
+      <button class="go" id="nextBtn" type="button" hidden>Câu tiếp →</button>
+      <button class="ghost" id="quitBtn" type="button">Dừng</button>
+    </div>
+  </section>
+
+  <!-- Kết quả -->
+  <section class="panel" id="result" hidden>
+    <span class="label">Kết quả phiên</span>
+    <div class="score" id="rScore"></div>
+    <p id="rMsg" style="margin:0"></p>
+    <div class="review" id="rReview"></div>
+    <div class="actions">
+      <button class="go" id="againBtn" type="button">Chơi lại</button>
+      <button class="ghost" id="setupBtn" type="button">Đổi thiết lập</button>
+    </div>
+  </section>
+
+  <!-- Tra cứu -->
+  <section class="panel">
+    <div style="display:grid;gap:4px">
+      <span class="label">Bảng tra cứu</span>
+      <h2 style="font-size:24px">Ôn lại trước khi chơi</h2>
+    </div>
+    <input class="search" id="search" type="search" placeholder="Tìm theo mã hoặc tên công ty…" aria-label="Tìm mã cổ phiếu">
+    <table class="board">
+      <thead><tr><th>Mã</th><th>Doanh nghiệp</th><th class="sec">Ngành</th></tr></thead>
+      <tbody id="boardBody"></tbody>
+    </table>
+    <p class="note">Dữ liệu dùng để ôn tập, không phải khuyến nghị đầu tư. Doanh nghiệp có thể đổi tên, chuyển sàn hoặc hủy niêm yết; hãy kiểm tra lại trên website của sở giao dịch khi cần chính xác.</p>
+  </section>
+
+  <footer>Kiến thức chứng khoán · Phần 1: Mã cổ phiếu. Các phần kiến thức khác sẽ được bổ sung sau.</footer>
+</main>
+
+<script>
+/* ===== Dữ liệu: MÃ | tên thường gọi | tên đầy đủ | ngành | ghi chú (không bắt buộc) ===== */
+const SECTORS = {
+  bank: "Ngân hàng", re: "Bất động sản", fin: "Chứng khoán & Bảo hiểm", cons: "Tiêu dùng & Bán lẻ",
+  food: "Nông nghiệp & Thực phẩm", mat: "Thép, Hóa chất & Vật liệu", build: "Xây dựng & Hạ tầng",
+  energy: "Dầu khí & Điện", trans: "Vận tải & Logistics", tech: "Công nghệ & Viễn thông", health: "Dược phẩm & May mặc"
+};
+const RAW = `
+VCB|Vietcombank|Ngân hàng TMCP Ngoại thương Việt Nam|bank|Thường là cổ phiếu có vốn hóa lớn nhất nhóm ngân hàng.
+BID|BIDV|Ngân hàng TMCP Đầu tư và Phát triển Việt Nam|bank|
+CTG|VietinBank|Ngân hàng TMCP Công Thương Việt Nam|bank|
+TCB|Techcombank|Ngân hàng TMCP Kỹ Thương Việt Nam|bank|
+MBB|MB|Ngân hàng TMCP Quân đội|bank|MB nhưng mã có 3 ký tự: MBB. Đừng nhầm với MBS (Chứng khoán MB).
+VPB|VPBank|Ngân hàng TMCP Việt Nam Thịnh Vượng|bank|
+ACB|ACB|Ngân hàng TMCP Á Châu|bank|
+HDB|HDBank|Ngân hàng TMCP Phát triển TP. Hồ Chí Minh|bank|
+STB|Sacombank|Ngân hàng TMCP Sài Gòn Thương Tín|bank|STB lấy từ "Sài Gòn Thương Tín Bank".
+TPB|TPBank|Ngân hàng TMCP Tiên Phong|bank|
+VIB|VIB|Ngân hàng TMCP Quốc tế Việt Nam|bank|
+SHB|SHB|Ngân hàng TMCP Sài Gòn – Hà Nội|bank|Đừng nhầm với SHS (Chứng khoán Sài Gòn – Hà Nội).
+SSB|SeABank|Ngân hàng TMCP Đông Nam Á|bank|Không phải SEA: mã của SeABank là SSB.
+LPB|LPBank|Ngân hàng TMCP Lộc Phát Việt Nam|bank|Tên cũ là LienVietPostBank; mã LPB vẫn giữ nguyên.
+EIB|Eximbank|Ngân hàng TMCP Xuất Nhập khẩu Việt Nam|bank|
+MSB|MSB|Ngân hàng TMCP Hàng Hải Việt Nam|bank|
+OCB|OCB|Ngân hàng TMCP Phương Đông|bank|
+NAB|Nam A Bank|Ngân hàng TMCP Nam Á|bank|
+VIC|Vingroup|Tập đoàn Vingroup|re|
+VHM|Vinhomes|CTCP Vinhomes|re|
+VRE|Vincom Retail|CTCP Vincom Retail|re|
+NVL|Novaland|CTCP Tập đoàn Đầu tư Địa ốc No Va|re|
+PDR|Phát Đạt|CTCP Phát triển Bất động sản Phát Đạt|re|
+KDH|Khang Điền|CTCP Đầu tư và Kinh doanh Nhà Khang Điền|re|
+NLG|Nam Long|CTCP Đầu tư Nam Long|re|
+DXG|Đất Xanh|CTCP Tập đoàn Đất Xanh|re|
+DIG|DIC Corp|Tổng CTCP Đầu tư Phát triển Xây dựng|re|
+KBC|Kinh Bắc|Tổng Công ty Phát triển Đô thị Kinh Bắc|re|Chuyên khu công nghiệp.
+BCM|Becamex IDC|Tổng Công ty Đầu tư và Phát triển Công nghiệp|re|
+SZC|Sonadezi Châu Đức|CTCP Sonadezi Châu Đức|re|
+IDC|IDICO|Tổng Công ty IDICO|re|
+CEO|C.E.O Group|CTCP Tập đoàn C.E.O|re|
+HDG|Hà Đô|CTCP Tập đoàn Hà Đô|re|
+VPI|Văn Phú – Invest|CTCP Đầu tư Văn Phú – Invest|re|
+SSI|SSI|CTCP Chứng khoán SSI|fin|
+VND|VNDirect|CTCP Chứng khoán VNDirect|fin|Trùng với ký hiệu đồng Việt Nam (VND) — dễ nhớ!
+HCM|HSC|CTCP Chứng khoán Thành phố Hồ Chí Minh|fin|Mã HCM thuộc về Chứng khoán HSC chứ không phải một công ty "Hồ Chí Minh" nào khác.
+VCI|Vietcap|CTCP Chứng khoán Vietcap|fin|Tên cũ là Chứng khoán Bản Việt.
+SHS|SHS|CTCP Chứng khoán Sài Gòn – Hà Nội|fin|
+VIX|VIX|CTCP Chứng khoán VIX|fin|
+MBS|MBS|CTCP Chứng khoán MB|fin|
+FTS|FPTS|CTCP Chứng khoán FPT|fin|
+BVH|Bảo Việt|Tập đoàn Bảo Việt|fin|
+BMI|Bảo Minh|Tổng CTCP Bảo Minh|fin|
+VNM|Vinamilk|CTCP Sữa Việt Nam|cons|
+MSN|Masan|CTCP Tập đoàn Masan|cons|
+MCH|Masan Consumer|CTCP Hàng tiêu dùng Masan|cons|
+SAB|Sabeco|Tổng CTCP Bia – Rượu – Nước giải khát Sài Gòn|cons|
+BHN|Habeco|Tổng CTCP Bia – Rượu – Nước giải khát Hà Nội|cons|
+MWG|Thế Giới Di Động|CTCP Đầu tư Thế Giới Di Động|cons|Chủ chuỗi Thế Giới Di Động, Điện Máy Xanh, Bách Hóa Xanh.
+PNJ|PNJ|CTCP Vàng bạc Đá quý Phú Nhuận|cons|
+FRT|FPT Retail|CTCP Bán lẻ Kỹ thuật số FPT|cons|Chủ chuỗi FPT Shop và Long Châu.
+DGW|Digiworld|CTCP Thế Giới Số|cons|
+KDC|KIDO|CTCP Tập đoàn KIDO|cons|
+VHC|Vĩnh Hoàn|CTCP Vĩnh Hoàn|food|Doanh nghiệp xuất khẩu cá tra lớn.
+ANV|Nam Việt|CTCP Nam Việt|food|
+DBC|Dabaco|CTCP Tập đoàn Dabaco Việt Nam|food|
+HAG|Hoàng Anh Gia Lai|CTCP Hoàng Anh Gia Lai|food|
+BAF|BAF Việt Nam|CTCP Nông nghiệp BAF Việt Nam|food|
+PAN|PAN Group|CTCP Tập đoàn PAN|food|
+QNS|Đường Quảng Ngãi|CTCP Đường Quảng Ngãi|food|
+SBT|TTC AgriS|CTCP Thành Thành Công – Biên Hòa|food|
+HPG|Hòa Phát|CTCP Tập đoàn Hòa Phát|mat|
+HSG|Hoa Sen|CTCP Tập đoàn Hoa Sen|mat|
+NKG|Thép Nam Kim|CTCP Thép Nam Kim|mat|
+DGC|Hóa chất Đức Giang|CTCP Tập đoàn Hóa chất Đức Giang|mat|
+DPM|Đạm Phú Mỹ|Tổng Công ty Phân bón và Hóa chất Dầu khí|mat|
+DCM|Đạm Cà Mau|CTCP Phân bón Dầu khí Cà Mau|mat|
+GVR|Cao su Việt Nam|Tập đoàn Công nghiệp Cao su Việt Nam|mat|
+PHR|Cao su Phước Hòa|CTCP Cao su Phước Hòa|mat|
+BMP|Nhựa Bình Minh|CTCP Nhựa Bình Minh|mat|
+NTP|Nhựa Tiền Phong|CTCP Nhựa Thiếu niên Tiền Phong|mat|
+VCS|Vicostone|CTCP Vicostone|mat|
+PTB|Phú Tài|CTCP Phú Tài|mat|
+GEX|GELEX|CTCP Tập đoàn GELEX|mat|
+REE|REE|CTCP Cơ Điện Lạnh|build|
+CTD|Coteccons|CTCP Xây dựng Coteccons|build|
+VCG|Vinaconex|Tổng CTCP Xuất nhập khẩu và Xây dựng Việt Nam|build|
+HHV|Đèo Cả|CTCP Đầu tư Hạ tầng Giao thông Đèo Cả|build|
+CII|CII|CTCP Đầu tư Hạ tầng Kỹ thuật TP. Hồ Chí Minh|build|
+VGC|Viglacera|Tổng Công ty Viglacera|build|
+PC1|PC1|CTCP Tập đoàn PC1|build|
+GAS|PV GAS|Tổng Công ty Khí Việt Nam|energy|
+PLX|Petrolimex|Tập đoàn Xăng dầu Việt Nam|energy|
+OIL|PVOIL|Tổng Công ty Dầu Việt Nam|energy|
+BSR|Lọc hóa dầu Bình Sơn|CTCP Lọc hóa dầu Bình Sơn|energy|Vận hành Nhà máy lọc dầu Dung Quất.
+PVD|PV Drilling|Tổng CTCP Khoan và Dịch vụ Khoan Dầu khí|energy|
+PVS|PTSC|Tổng CTCP Dịch vụ Kỹ thuật Dầu khí Việt Nam|energy|
+PVT|PVTrans|Tổng CTCP Vận tải Dầu khí|energy|
+POW|PV Power|Tổng Công ty Điện lực Dầu khí Việt Nam|energy|"Power" rút gọn thành POW.
+NT2|Nhơn Trạch 2|CTCP Điện lực Dầu khí Nhơn Trạch 2|energy|Một trong số ít mã có chữ số.
+GEG|Điện Gia Lai|CTCP Điện Gia Lai|energy|
+VJC|Vietjet Air|CTCP Hàng không VietJet|trans|
+HVN|Vietnam Airlines|Tổng Công ty Hàng không Việt Nam|trans|
+ACV|ACV|Tổng Công ty Cảng hàng không Việt Nam|trans|
+GMD|Gemadept|CTCP Gemadept|trans|
+HAH|Hải An|CTCP Vận tải và Xếp dỡ Hải An|trans|
+VSC|Viconship|CTCP Container Việt Nam|trans|
+SCS|SCSC|CTCP Dịch vụ Hàng hóa Sài Gòn|trans|
+VTP|Viettel Post|Tổng CTCP Bưu chính Viettel|trans|
+FPT|FPT|CTCP FPT|tech|
+CMG|CMC|CTCP Tập đoàn Công nghệ CMC|tech|
+FOX|FPT Telecom|CTCP Viễn thông FPT|tech|Không phải FPT: mã của FPT Telecom là FOX.
+VGI|Viettel Global|Tổng CTCP Đầu tư Quốc tế Viettel|tech|
+CTR|Viettel Construction|Tổng CTCP Công trình Viettel|tech|
+ELC|Elcom|CTCP Đầu tư Phát triển Công nghệ Điện tử Viễn thông|tech|
+DHG|Dược Hậu Giang|CTCP Dược Hậu Giang|health|
+IMP|Imexpharm|CTCP Dược phẩm Imexpharm|health|
+DBD|Bidiphar|CTCP Dược – Trang thiết bị Y tế Bình Định|health|
+TRA|Traphaco|CTCP Traphaco|health|
+DMC|Domesco|CTCP Xuất nhập khẩu Y tế Domesco|health|
+TCM|Dệt may Thành Công|CTCP Dệt may – Đầu tư – Thương mại Thành Công|health|
+MSH|May Sông Hồng|CTCP May Sông Hồng|health|
+TNG|TNG|CTCP Đầu tư và Thương mại TNG|health|
+VGT|Vinatex|Tập đoàn Dệt may Việt Nam|health|
+`;
+const STOCKS = RAW.trim().split("\n").map(l => {
+  const [t, short, full, sec, note] = l.split("|");
+  return { t, short, full, sec, note: note || "" };
+});
+const BY_T = Object.fromEntries(STOCKS.map(s => [s.t, s]));
+/* Tên thường gọi trùng mã (SHB, FPT, PV GAS…) sẽ lộ đáp án, nên khi hỏi thì dùng tên đầy đủ */
+const leaks = s => s.short.toUpperCase().replace(/\s/g, "").includes(s.t);
+
+const MODES = [
+  { id: "c2t", ex: "Vinamilk → ?", title: "Công ty → Mã", desc: "Nhìn tên doanh nghiệp, chọn mã đúng trong 4 mã." },
+  { id: "t2c", ex: "VNM → ?", title: "Mã → Công ty", desc: "Nhìn mã cổ phiếu, chọn đúng doanh nghiệp." },
+  { id: "type", ex: "Vinamilk → V_ _", title: "Tự gõ mã", desc: "Khó nhất: gõ chính xác mã cổ phiếu." }
+];
+const LENGTHS = [10, 20, 30, "all"];
+
+/* ===== Tiện ích ===== */
+const $ = id => document.getElementById(id);
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch {} }
+};
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const show = id => ["setup", "play", "result"].forEach(x => $(x).hidden = x !== id);
+
+/* Chọn 3 đáp án nhiễu: ưu tiên mã cùng ngành và mã trông giống nhau (chung chữ cái) */
+function distractors(s) {
+  const score = o => (o.sec === s.sec ? 2 : 0) + [...o.t].filter((c, i) => s.t[i] === c).length * 1.5 + Math.random() * 2.5;
+  return STOCKS.filter(o => o.t !== s.t).map(o => [score(o), o]).sort((a, b) => b[0] - a[0]).slice(0, 3).map(x => x[1]);
+}
+
+/* ===== Theme ===== */
+const THEMES = ["auto", "light", "dark"], THEME_NAME = { auto: "Tự động", light: "Sáng", dark: "Tối" };
+let theme = store.get("bdq-theme") || "auto";
+function applyTheme() {
+  if (theme === "auto") document.documentElement.removeAttribute("data-theme");
+  else document.documentElement.setAttribute("data-theme", theme);
+  $("themeBtn").textContent = "Giao diện: " + THEME_NAME[theme];
+}
+$("themeBtn").onclick = () => { theme = THEMES[(THEMES.indexOf(theme) + 1) % 3]; store.set("bdq-theme", theme); applyTheme(); };
+applyTheme();
+
+/* ===== Băng chạy & thống kê ===== */
+(function tape() {
+  const colors = ["var(--up)", "var(--down)", "var(--ref)", "var(--ceil)", "var(--floor)"];
+  const items = shuffle(STOCKS).slice(0, 40).map(s => {
+    const c = colors[Math.random() * colors.length | 0];
+    const pct = (Math.random() * 7 * (c === "var(--down)" || c === "var(--floor)" ? -1 : 1)).toFixed(2);
+    return `<span><b style="color:${c}">${s.t}</b><span style="color:${c}">${c === "var(--ref)" ? "0.00" : (pct > 0 ? "+" : "") + pct}%</span></span>`;
+  }).join("");
+  $("tape").innerHTML = items + items;
+})();
+$("statCount").textContent = STOCKS.length;
+$("statSectors").textContent = Object.keys(SECTORS).length;
+function showBest() { const b = store.get("bdq-best"); $("statBest").textContent = b ? b + "%" : "–"; }
+showBest();
+
+/* ===== Thiết lập ===== */
+const cfg = { mode: store.get("bdq-mode") || "c2t", secs: new Set(), len: +store.get("bdq-len") || 10 };
+if (store.get("bdq-len") === "all") cfg.len = "all";
+
+function renderSetup() {
+  $("modes").innerHTML = MODES.map(m => `<button type="button" class="mode" data-m="${m.id}" aria-pressed="${cfg.mode === m.id}">
+    <span class="ex">${esc(m.ex)}</span><h3>${m.title}</h3><p>${m.desc}</p></button>`).join("");
+  const all = cfg.secs.size === 0;
+  $("sectors").innerHTML = `<button type="button" class="chip" data-s="" aria-pressed="${all}">Tất cả<small>${STOCKS.length}</small></button>` +
+    Object.entries(SECTORS).map(([k, v]) => `<button type="button" class="chip" data-s="${k}" aria-pressed="${cfg.secs.has(k)}">${v}<small>${STOCKS.filter(s => s.sec === k).length}</small></button>`).join("");
+  $("lengths").innerHTML = LENGTHS.map(n => `<button type="button" class="chip" data-l="${n}" aria-pressed="${cfg.len === n}">${n === "all" ? "Tất cả" : n + " câu"}</button>`).join("");
+}
+$("modes").onclick = e => { const b = e.target.closest("[data-m]"); if (!b) return; cfg.mode = b.dataset.m; store.set("bdq-mode", cfg.mode); renderSetup(); };
+$("sectors").onclick = e => {
+  const b = e.target.closest("[data-s]"); if (!b) return;
+  const k = b.dataset.s;
+  if (!k) cfg.secs.clear(); else cfg.secs.has(k) ? cfg.secs.delete(k) : cfg.secs.add(k);
+  renderSetup();
+};
+$("lengths").onclick = e => { const b = e.target.closest("[data-l]"); if (!b) return; cfg.len = b.dataset.l === "all" ? "all" : +b.dataset.l; store.set("bdq-len", cfg.len); renderSetup(); };
+renderSetup();
+
+/* ===== Chơi ===== */
+let game = null;
+function start() {
+  const pool = STOCKS.filter(s => cfg.secs.size === 0 || cfg.secs.has(s.sec));
+  const qs = shuffle(pool).slice(0, cfg.len === "all" ? pool.length : cfg.len);
+  game = { qs, i: 0, right: 0, misses: [], mode: cfg.mode, answered: false };
+  show("play"); renderQ();
+}
+function renderQ() {
+  const g = game, s = g.qs[g.i];
+  g.answered = false;
+  $("hudPos").textContent = `Câu ${g.i + 1}/${g.qs.length}`;
+  $("hudScore").textContent = `Đúng ${g.right}`;
+  $("hudBar").style.width = (g.i / g.qs.length * 100) + "%";
+  $("explain").hidden = true; $("nextBtn").hidden = true;
+  const main = $("qMain");
+  if (g.mode === "t2c") {
+    $("qLabel").textContent = "Mã này của doanh nghiệp nào?";
+    main.textContent = s.t; main.className = "big mono";
+    $("qSub").textContent = SECTORS[s.sec];
+  } else {
+    $("qLabel").textContent = "Mã cổ phiếu là gì?";
+    main.textContent = leaks(s) ? s.full : s.short; main.className = "big";
+    $("qSub").textContent = leaks(s) ? SECTORS[s.sec] : s.full;
+  }
+  if (g.mode === "type") {
+    $("opts").hidden = true; $("typeForm").hidden = false;
+    const inp = $("typeInput"); inp.value = ""; inp.className = ""; inp.disabled = false; inp.focus();
+  } else {
+    $("typeForm").hidden = true; $("opts").hidden = false;
+    const opts = shuffle([s, ...distractors(s)]);
+    $("opts").innerHTML = opts.map((o, k) => g.mode === "c2t"
+      ? `<button type="button" class="opt tk" data-t="${o.t}">${o.t}</button>`
+      : `<button type="button" class="opt" data-t="${o.t}"><kbd>${k + 1}</kbd><span>${leaks(o) ? `<b>${esc(o.full)}</b>` : `<b>${esc(o.short)}</b><br><small style="color:var(--muted)">${esc(o.full)}</small>`}</span></button>`).join("");
+  }
+}
+function answer(t) {
+  const g = game; if (g.answered) return;
+  g.answered = true;
+  const s = g.qs[g.i], ok = t === s.t;
+  if (ok) g.right++; else g.misses.push({ s, t });
+  if (g.mode === "type") {
+    const inp = $("typeInput"); inp.disabled = true; inp.className = ok ? "right" : "wrong";
+  } else {
+    document.querySelectorAll("#opts .opt").forEach(b => {
+      b.disabled = true;
+      if (b.dataset.t === s.t) b.classList.add("right");
+      else if (b.dataset.t === t) b.classList.add("wrong");
+    });
+  }
+  const ex = $("explain");
+  ex.className = "explain" + (ok ? "" : " bad");
+  const wrongInfo = !ok && t ? (BY_T[t] ? ` Bạn chọn <b class="t">${t}</b> là mã của ${esc(BY_T[t].short)}.` : ` Bạn trả lời <b class="t">${esc(t)}</b>.`) : "";
+  ex.innerHTML = `<div>${ok ? "✓ Chính xác!" : "✗ Chưa đúng."} <b class="t">${s.t}</b> — ${esc(s.full)}.${wrongInfo}</div>${s.note ? `<p>${esc(s.note)}</p>` : ""}`;
+  ex.hidden = false;
+  $("hudScore").textContent = `Đúng ${g.right}`;
+  $("nextBtn").textContent = g.i + 1 < g.qs.length ? "Câu tiếp →" : "Xem kết quả";
+  $("nextBtn").hidden = false; $("nextBtn").focus();
+}
+function next() { if (++game.i < game.qs.length) renderQ(); else finish(); }
+function finish() {
+  const g = game, pct = Math.round(g.right / g.qs.length * 100);
+  const best = +store.get("bdq-best") || 0;
+  if (g.qs.length >= 10 && pct > best) store.set("bdq-best", pct);
+  showBest();
+  $("rScore").textContent = `${g.right}/${g.qs.length}`;
+  $("rScore").className = "score " + (pct >= 80 ? "up" : pct >= 50 ? "ref" : "down");
+  $("rMsg").textContent = pct === 100 ? "Tăng trần! Bạn thuộc bảng điện như lòng bàn tay." :
+    pct >= 80 ? "Xanh rực. Chỉ còn vài mã cần ôn lại." :
+    pct >= 50 ? "Đứng giá tham chiếu. Ôn lại các mã dưới đây nhé." : "Đỏ sàn rồi. Xem bảng tra cứu rồi thử lại!";
+  $("rReview").innerHTML = g.misses.length
+    ? `<span class="label">Các mã cần ôn (${g.misses.length})</span>` + g.misses.map(m => `<div><b>${m.s.t}</b><span>${esc(m.s.short)} · ${esc(m.s.full)}</span></div>`).join("")
+    : "";
+  show("result");
+}
+$("startBtn").onclick = start;
+$("againBtn").onclick = start;
+$("setupBtn").onclick = () => show("setup");
+$("quitBtn").onclick = () => {
+  const done = game.i + (game.answered ? 1 : 0);
+  if (!done) return show("setup");
+  game.qs = game.qs.slice(0, done); finish();
+};
+$("nextBtn").onclick = next;
+$("opts").onclick = e => { const b = e.target.closest(".opt"); if (b) answer(b.dataset.t); };
+$("typeForm").onsubmit = e => { e.preventDefault(); if (game.answered) return next(); const v = $("typeInput").value.trim().toUpperCase(); if (v) answer(v); };
+document.addEventListener("keydown", e => {
+  if ($("play").hidden || !game || e.target.tagName === "INPUT") return;
+  if (!game.answered && game.mode !== "type" && /^[1-4]$/.test(e.key)) { const b = $("opts").children[+e.key - 1]; if (b) answer(b.dataset.t); }
+  else if (game.answered && e.key === "Enter" && document.activeElement !== $("nextBtn")) next();
+});
+
+/* ===== Bảng tra cứu ===== */
+const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/gi, "d").toLowerCase();
+function renderBoard() {
+  const q = norm($("search").value.trim());
+  const rows = STOCKS.filter(s => !q || norm(s.t + " " + s.short + " " + s.full).includes(q))
+    .sort((a, b) => a.t.localeCompare(b.t));
+  $("boardBody").innerHTML = rows.length
+    ? rows.map(s => `<tr><td>${s.t}</td><td>${esc(s.short)}<small>${esc(s.full)}</small></td><td class="sec">${SECTORS[s.sec]}</td></tr>`).join("")
+    : `<tr><td colspan="3" style="color:var(--muted);font-family:inherit;font-weight:400">Không tìm thấy mã phù hợp.</td></tr>`;
+}
+$("search").oninput = renderBoard;
+renderBoard();
+</script>
+</body>
+</html>
