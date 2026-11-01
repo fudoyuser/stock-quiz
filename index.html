@@ -13,7 +13,7 @@
 :root {
   --bg: #f3f5f2; --card: #ffffff; --opt: #f7f9f6; --ink: #121815; --muted: #5f6b65; --line: #dde3de;
   --up: #11935a; --up-soft: #dcf3e7; --down: #d23b3b; --down-soft: #fbe2e0; --ref: #b88a00; --ceil: #8a3fc7; --floor: #1a8fb8;
-  --c1: #11935a; --c2: #8a3fc7; --c3: #2a72c9; --c4: #c2570c; --c5: #0e8a8a; --c6: #c2366b; --c7: #6d5bd0; --c8: #a07a00; --c9: #3d7a1f; --c10: #b8432b; --c11: #1f7fae; --c12: #9a3fb0; --c13: #7a6a12; --c14: #2f7f5f; --c15: #c0392b; --c16: #4a5fc1;
+  --c1: #11935a; --c2: #8a3fc7; --c3: #2a72c9; --c4: #c2570c; --c5: #0e8a8a; --c6: #c2366b; --c7: #6d5bd0; --c8: #a07a00; --c9: #3d7a1f; --c10: #b8432b; --c11: #1f7fae; --c12: #9a3fb0; --c13: #7a6a12; --c14: #2f7f5f; --c15: #c0392b; --c16: #4a5fc1; --c17: #a8481e; --c18: #1d7f8f; --c19: #7a4fa3;
   --accent: var(--c1); --accent-ink: #ffffff;
   color-scheme: light;
 }
@@ -21,14 +21,14 @@
   :root:not([data-theme="light"]) {
     --bg: #0b0f0d; --card: #131916; --opt: #18201c; --ink: #e9efeb; --muted: #8d9a93; --line: #25302a;
     --up: #2fd47f; --up-soft: #12301f; --down: #ff6363; --down-soft: #3a1717; --ref: #f2c230; --ceil: #c98bff; --floor: #4fd1ff;
-    --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --c11: #5cc3f2; --c12: #e08cff; --c13: #e0c95a; --c14: #6fd6a8; --c15: #ff7b6b; --c16: #93a3ff; --accent-ink: #06130c;
+    --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --c11: #5cc3f2; --c12: #e08cff; --c13: #e0c95a; --c14: #6fd6a8; --c15: #ff7b6b; --c16: #93a3ff; --c17: #ff9e6b; --c18: #5fd3e3; --c19: #c7a0ff; --accent-ink: #06130c;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #0b0f0d; --card: #131916; --opt: #18201c; --ink: #e9efeb; --muted: #8d9a93; --line: #25302a;
   --up: #2fd47f; --up-soft: #12301f; --down: #ff6363; --down-soft: #3a1717; --ref: #f2c230; --ceil: #c98bff; --floor: #4fd1ff;
-  --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --c11: #5cc3f2; --c12: #e08cff; --c13: #e0c95a; --c14: #6fd6a8; --c15: #ff7b6b; --c16: #93a3ff; --accent-ink: #06130c;
+  --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --c11: #5cc3f2; --c12: #e08cff; --c13: #e0c95a; --c14: #6fd6a8; --c15: #ff7b6b; --c16: #93a3ff; --c17: #ff9e6b; --c18: #5fd3e3; --c19: #c7a0ff; --accent-ink: #06130c;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -146,6 +146,10 @@ h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; }
 .chart { display: flex; justify-content: center; background: var(--opt); border: 1px solid var(--line); border-radius: 12px; padding: 10px; margin-top: 6px; }
 .chart svg { width: 100%; max-width: 360px; height: auto; display: block; }
 .thumb { display: block; margin-top: 6px; }
+.chart .fin { border-collapse: collapse; font-size: 15px; width: 100%; max-width: 380px; }
+.chart .fin td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: left; }
+.chart .fin td:last-child { text-align: right; font-family: "JetBrains Mono", monospace; font-weight: 700; white-space: nowrap; }
+.chart .fin tr:last-child td { border-bottom: 0; }
 .tag { display: inline-block; font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--accent); border: 1px solid var(--line); border-radius: 99px; padding: 0 8px; margin: 0 6px 4px 0; }
 .thumb svg { width: 160px; height: auto; display: block; background: var(--opt); border-radius: 8px; }
 footer { text-align: center; font-size: 13px; color: var(--muted); }
@@ -161,7 +165,7 @@ footer { text-align: center; font-size: 13px; color: var(--muted); }
       <button class="theme" id="themeBtn" type="button">Giao diện: Tự động</button>
     </div>
     <h1>Bảng Điện <span>Quiz</span></h1>
-    <p>Ôn kiến thức chứng khoán Việt Nam qua 16 phần: từ mã cổ phiếu, lĩnh vực kinh doanh, quy định giao dịch, báo cáo tài chính đến phân tích kỹ thuật, phái sinh, trái phiếu, quỹ và quản trị rủi ro. Mỗi phần là một bộ câu hỏi riêng.</p>
+    <p>Ôn kiến thức chứng khoán Việt Nam qua 19 phần: từ mã cổ phiếu, lĩnh vực kinh doanh, quy định giao dịch, báo cáo tài chính, định giá, vĩ mô đến phân tích kỹ thuật, phái sinh, trái phiếu, quỹ và quản trị rủi ro. Mỗi phần là một bộ câu hỏi riêng.</p>
   </header>
 
   <nav class="parts" id="parts" role="tablist" aria-label="Chọn phần"></nav>
@@ -235,7 +239,7 @@ footer { text-align: center; font-size: 13px; color: var(--muted); }
     <p class="note">Dữ liệu dùng để ôn tập, không phải khuyến nghị đầu tư. Doanh nghiệp có thể đổi tên, chuyển sàn, hủy niêm yết hoặc mở rộng lĩnh vực kinh doanh; hãy kiểm tra lại trên website của sở giao dịch khi cần chính xác.</p>
   </section>
 
-  <footer>Bảng Điện Quiz · 16 phần kiến thức chứng khoán Việt Nam · Chỉ để ôn tập, không phải khuyến nghị đầu tư</footer>
+  <footer>Bảng Điện Quiz · 19 phần kiến thức chứng khoán Việt Nam · Chỉ để ôn tập, không phải khuyến nghị đầu tư</footer>
 </main>
 
 <script>
@@ -620,32 +624,6 @@ const HISTORY = [
   { q: "Biên độ dao động trên HOSE khi thị trường mới mở cửa năm 2000 là bao nhiêu?", a: "±2%", w: ["±7%", "±10%", "Không giới hạn"], e: "Biên độ được nới dần qua các năm, hiện là ±7%." }
 ];
 
-/* ===== Biểu đồ minh họa (Phần 11) =====
-   chart = { candles: [[mở, cao, thấp, đóng], …] } hoặc { lines: [{ d: [...], dash, label }], hline: [y, …] } */
-function chartSVG(c, W = 320, H = 150) {
-  const P = 12, vals = [];
-  const n = c.candles ? c.candles.length : Math.max(...c.lines.map(l => l.d.length));
-  (c.candles || []).forEach(k => vals.push(k[1], k[2]));
-  (c.lines || []).forEach(l => vals.push(...l.d));
-  (c.hline || []).forEach(y => vals.push(y));
-  const lo = Math.min(...vals), hi = Math.max(...vals), rng = hi - lo || 1;
-  const step = (W - 2 * P - (c.lines && c.lines.some(l => l.label) ? 40 : 0)) / n;
-  const x = i => P + step * (i + .5), y = v => P + (hi - v) / rng * (H - 2 * P);
-  let s = "";
-  for (const v of c.hline || []) s += `<line x1="${P}" x2="${W - P}" y1="${y(v)}" y2="${y(v)}" stroke="var(--ref)" stroke-width="1.5" stroke-dasharray="5 4"/>`;
-  (c.candles || []).forEach(([o, h, l, cl], i) => {
-    const col = cl >= o ? "var(--up)" : "var(--down)", bw = Math.min(step * .56, 26);
-    const top = y(Math.max(o, cl)), bh = Math.max(Math.abs(y(o) - y(cl)), 1.5);
-    s += `<line x1="${x(i)}" x2="${x(i)}" y1="${y(h)}" y2="${y(l)}" stroke="${col}" stroke-width="1.6"/>`;
-    s += `<rect x="${x(i) - bw / 2}" y="${top}" width="${bw}" height="${bh}" fill="${col}" rx="1.5"/>`;
-  });
-  for (const l of c.lines || []) {
-    s += `<polyline fill="none" stroke="${l.color || "var(--ink)"}" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"${l.dash ? ' stroke-dasharray="6 5"' : ""} points="${l.d.map((v, i) => `${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ")}"/>`;
-    if (l.label) s += `<text x="${x(l.d.length - 1) + 6}" y="${y(l.d[l.d.length - 1]) + 4}" font-size="11" fill="var(--muted)" font-family="JetBrains Mono, monospace">${l.label}</text>`;
-  }
-  return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Biểu đồ minh họa">${s}</svg>`;
-}
-
 const TECH = [
   { q: "Cây nến cuối cùng (giá mở cửa gần bằng giá đóng cửa, bóng trên và bóng dưới dài) gọi là gì?", chart: { candles: [[46, 47.5, 44, 44.5], [44.5, 46, 42.5, 43], [43, 47, 39, 43.05]] }, a: "Doji", w: ["Marubozu", "Nến nhấn chìm", "Sao băng"], e: "Doji thể hiện sự lưỡng lự giữa bên mua và bên bán; sau một xu hướng dài có thể báo hiệu đảo chiều." },
   { q: "Sau một nhịp giảm, xuất hiện cây nến thân nhỏ ở phía trên, bóng dưới rất dài. Đây là mô hình gì?", chart: { candles: [[52, 53, 49, 49.5], [49.5, 50.5, 46.5, 47], [47, 47.5, 44, 44.5], [44, 44.9, 37.5, 44.6]] }, a: "Nến búa (Hammer)", w: ["Sao băng (Shooting Star)", "Nến nhấn chìm giảm", "Marubozu giảm"], e: "Bóng dưới dài cho thấy bên mua đã kéo giá lên mạnh từ vùng thấp, thường là tín hiệu đảo chiều tăng." },
@@ -843,6 +821,229 @@ const SECTOR_Q = [
   { sec: "tech", q: "Doanh nghiệp xây dựng hạ tầng viễn thông (như CTR) hưởng lợi từ xu hướng nào?", a: "Triển khai mạng 5G và cho thuê hạ tầng trạm phát sóng", w: ["Giá dầu tăng", "Lãi suất tăng", "Giá thép giảm"], e: "Cho thuê hạ tầng (TowerCo) mang lại doanh thu ổn định dài hạn." }
 ];
 
+/* ===== Mở rộng: biểu đồ có khung chỉ báo phía dưới, bảng số liệu ===== */
+/* chart = { candles | lines, hline, lower: { title, lines, bars, hline } } — vẽ lại chartSVG có hỗ trợ khung dưới */
+function chartSVG(c, W = 320, H = 150) {
+  const P = 12, low = c.lower;
+  if (low) H = Math.round(H * 1.3);
+  const specs = [c, low || {}];
+  const labelPad = specs.some(sp => (sp.lines || []).some(l => l.label)) ? 40 : 0;
+  const n = c.candles ? c.candles.length : Math.max(...[...(c.lines || []), ...((low && low.lines) || [])].map(l => l.d.length), ...((low && low.bars) ? [low.bars.length] : []));
+  const step = (W - 2 * P - labelPad) / n, x = i => P + step * (i + .5);
+  const inner = H - 2 * P, mainH = low ? inner * .52 : inner;
+  function area(sp, top, h) {
+    const vals = [];
+    (sp.candles || []).forEach(k => vals.push(k[1], k[2]));
+    (sp.lines || []).forEach(l => vals.push(...l.d));
+    (sp.hline || []).forEach(v => vals.push(v));
+    if (sp.bars) vals.push(0, ...sp.bars);
+    const lo = Math.min(...vals), hi = Math.max(...vals), rng = hi - lo || 1;
+    const y = v => top + (hi - v) / rng * h;
+    let s = "";
+    for (const v of sp.hline || []) s += `<line x1="${P}" x2="${W - P}" y1="${y(v)}" y2="${y(v)}" stroke="var(--ref)" stroke-width="1.5" stroke-dasharray="5 4"/>`;
+    (sp.bars || []).forEach((v, i) => { const bw = Math.min(step * .56, 22); s += `<rect x="${x(i) - bw / 2}" y="${y(v)}" width="${bw}" height="${Math.max(y(0) - y(v), 1)}" fill="var(--muted)" opacity=".55" rx="1"/>`; });
+    (sp.candles || []).forEach(([o, hh, l, cl], i) => {
+      const col = cl >= o ? "var(--up)" : "var(--down)", bw = Math.min(step * .56, 26);
+      s += `<line x1="${x(i)}" x2="${x(i)}" y1="${y(hh)}" y2="${y(l)}" stroke="${col}" stroke-width="1.6"/>`;
+      s += `<rect x="${x(i) - bw / 2}" y="${y(Math.max(o, cl))}" width="${bw}" height="${Math.max(Math.abs(y(o) - y(cl)), 1.5)}" fill="${col}" rx="1.5"/>`;
+    });
+    for (const l of sp.lines || []) {
+      s += `<polyline fill="none" stroke="${l.color || "var(--ink)"}" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"${l.dash ? ' stroke-dasharray="6 5"' : ""} points="${l.d.map((v, i) => `${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ")}"/>`;
+      if (l.label) s += `<text x="${x(l.d.length - 1) + 6}" y="${y(l.d[l.d.length - 1]) + 4}" font-size="11" fill="var(--muted)" font-family="JetBrains Mono, monospace">${l.label}</text>`;
+    }
+    if (sp.title) s += `<text x="${P}" y="${top - 2}" font-size="10" fill="var(--muted)" font-family="JetBrains Mono, monospace">${sp.title}</text>`;
+    return s;
+  }
+  let s = area(c, P, mainH);
+  if (low) {
+    const top = P + mainH + inner * .1;
+    s += `<line x1="${P}" x2="${W - P}" y1="${top - inner * .05}" y2="${top - inner * .05}" stroke="var(--line)"/>`;
+    s += area(low, top, inner * .38);
+  }
+  return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Biểu đồ minh họa">${s}</svg>`;
+}
+/* Bảng số liệu rút gọn cho câu hỏi tính toán */
+const tableHTML = t => `<table class="fin">${t.map(([k, v]) => `<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("")}</table>`;
+const tableText = t => t.map(([k, v]) => `${k}: ${v}`).join(" · ");
+
+TECH.push(
+  { q: "Khung dưới là chỉ báo RSI, hai đường nét đứt là mức 70 và 30. Ở cuối biểu đồ, RSI đang ở vùng nào?", chart: { lines: [{ d: [30, 31, 33, 32, 35, 38, 41, 44, 48, 52] }], lower: { title: "RSI", lines: [{ d: [48, 52, 57, 54, 60, 66, 70, 74, 78, 81] }], hline: [70, 30] } }, a: "Quá mua", w: ["Quá bán", "Trung tính", "Phân kỳ dương"], e: "Giá tăng liên tục đẩy RSI lên trên 70; rủi ro điều chỉnh ngắn hạn tăng lên." },
+  { q: "Giá (khung trên) tạo đỉnh sau cao hơn, nhưng RSI (khung dưới) tạo đỉnh sau thấp hơn. Đây là tín hiệu gì?", chart: { lines: [{ d: [30, 35, 40, 38, 36, 41, 46, 43, 40, 44, 48] }], lower: { title: "RSI", lines: [{ d: [50, 60, 72, 62, 55, 63, 68, 58, 52, 57, 61] }], hline: [70, 30] } }, a: "Phân kỳ âm, cảnh báo đà tăng suy yếu", w: ["Phân kỳ dương, tín hiệu mua", "Golden Cross", "Xu hướng tăng được xác nhận"], e: "Giá đi lên nhưng động lượng yếu dần, khả năng đảo chiều giảm tăng." },
+  { q: "Giá vượt đường kháng cự (nét đứt) cùng lúc khối lượng (cột ở khung dưới) tăng đột biến. Điều này cho thấy gì?", chart: { lines: [{ d: [20, 26, 30, 26, 23, 28, 30, 26, 24, 29, 35, 41] }], hline: [30], lower: { title: "KL", bars: [3, 3, 4, 3, 2, 3, 4, 3, 2, 3, 9, 8] } }, a: "Bứt phá có xác nhận của dòng tiền, độ tin cậy cao hơn", w: ["Bứt phá giả, nên bán ngay", "Thị trường đang lưỡng lự", "Tín hiệu quá bán"], e: "Breakout kèm khối lượng lớn cho thấy lực mua thật sự, ít có khả năng là bẫy tăng giá." },
+  { q: "Đường MACD (nét liền) cắt lên trên đường tín hiệu (nét đứt) khi đang ở dưới mức 0. Đây thường là tín hiệu gì?", chart: { lines: [{ d: [-3, -3.5, -3.8, -3.6, -3, -2, -1, .2, 1.2, 2], label: "MACD" }, { d: [-2, -2.5, -3, -3.2, -3.2, -3, -2.6, -2, -1.4, -.7], dash: true, label: "Signal", color: "var(--muted)" }], hline: [0] }, a: "Tín hiệu mua: động lượng tăng đang mạnh lên", w: ["Tín hiệu bán", "Thị trường quá mua", "Không có ý nghĩa"], e: "Nhiều nhà đầu tư dùng giao cắt MACD và đường tín hiệu để xác định điểm vào lệnh." },
+  { q: "Giá giảm rồi hồi phục dạng chữ U về đỉnh cũ, điều chỉnh nhẹ rồi vượt lên. Đây là mô hình gì?", chart: { lines: [{ d: [50, 44, 38, 34, 32, 33, 36, 41, 46, 50, 48, 46.5, 47, 50.5, 55] }], hline: [50] }, a: "Cốc tay cầm (Cup and Handle)", w: ["Vai – đầu – vai", "Hai đỉnh", "Nêm tăng"], e: "Mô hình tiếp diễn xu hướng tăng; phần \"tay cầm\" là nhịp rũ bỏ cuối cùng." },
+  { q: "Giá dao động qua lại giữa hai đường nét đứt trong thời gian dài. Trạng thái này gọi là gì?", chart: { lines: [{ d: [40, 46, 49.5, 44, 40.5, 45, 49.8, 46, 40.2, 44, 49, 45] }], hline: [50, 40] }, a: "Đi ngang (sideway) / tích lũy trong biên độ", w: ["Xu hướng tăng", "Xu hướng giảm", "Vai – đầu – vai"], e: "Có thể mua gần hỗ trợ, bán gần kháng cự, hoặc chờ giá bứt phá khỏi biên độ." }
+);
+
+FINANCE.push(
+  { q: "Từ bảng số liệu, biên lợi nhuận gộp là bao nhiêu?", table: [["Doanh thu thuần", "2.000 tỷ"], ["Giá vốn hàng bán", "1.500 tỷ"], ["Chi phí bán hàng & QLDN", "200 tỷ"], ["Lợi nhuận sau thuế", "240 tỷ"]], a: "25%", w: ["12%", "75%", "15%"], e: "(2.000 − 1.500) ÷ 2.000 = 25%." },
+  { q: "Từ bảng số liệu, biên lợi nhuận ròng là bao nhiêu?", table: [["Doanh thu thuần", "2.000 tỷ"], ["Giá vốn hàng bán", "1.500 tỷ"], ["Chi phí bán hàng & QLDN", "200 tỷ"], ["Lợi nhuận sau thuế", "240 tỷ"]], a: "12%", w: ["25%", "24%", "16%"], e: "240 ÷ 2.000 = 12%." },
+  { q: "Từ bảng số liệu, ROE là bao nhiêu?", table: [["Tổng tài sản", "5.000 tỷ"], ["Nợ phải trả", "3.000 tỷ"], ["Vốn chủ sở hữu", "2.000 tỷ"], ["Lợi nhuận sau thuế", "300 tỷ"]], a: "15%", w: ["6%", "10%", "60%"], e: "ROE = 300 ÷ 2.000 = 15% (giả định vốn chủ sở hữu bình quân bằng số cuối kỳ)." },
+  { q: "Từ bảng số liệu, ROA là bao nhiêu?", table: [["Tổng tài sản", "5.000 tỷ"], ["Nợ phải trả", "3.000 tỷ"], ["Vốn chủ sở hữu", "2.000 tỷ"], ["Lợi nhuận sau thuế", "300 tỷ"]], a: "6%", w: ["15%", "10%", "1,5%"], e: "ROA = 300 ÷ 5.000 = 6%." },
+  { q: "Từ bảng số liệu, P/E của cổ phiếu là bao nhiêu?", table: [["LNST cổ đông công ty mẹ", "120 tỷ"], ["Số cổ phiếu lưu hành", "40 triệu"], ["Giá cổ phiếu", "45.000 đồng"]], a: "15", w: ["3", "11,25", "30"], e: "EPS = 120 tỷ ÷ 40 triệu = 3.000 đồng; P/E = 45.000 ÷ 3.000 = 15." },
+  { q: "Từ bảng số liệu, nhận định nào đúng về khả năng thanh toán?", table: [["Tài sản ngắn hạn", "800 tỷ"], ["Nợ ngắn hạn", "1.000 tỷ"], ["Tiền và tương đương tiền", "50 tỷ"]], a: "Hệ số thanh toán hiện hành 0,8 – có áp lực trả nợ ngắn hạn", w: ["Hệ số 1,25 – rất an toàn", "Hệ số 8 – thừa tiền mặt", "Không thể đánh giá"], e: "800 ÷ 1.000 = 0,8 < 1: tài sản ngắn hạn không đủ trang trải nợ ngắn hạn." },
+  { q: "Từ bảng số liệu, điểm đáng lo ngại nhất là gì?", table: [["Lợi nhuận sau thuế", "200 tỷ"], ["Dòng tiền thuần từ HĐKD", "−150 tỷ"], ["Phải thu khách hàng tăng thêm", "300 tỷ"]], a: "Lợi nhuận chủ yếu nằm ở khoản phải thu, chưa thu được tiền", w: ["Doanh nghiệp có quá nhiều tiền mặt", "Lợi nhuận quá thấp so với doanh thu", "Doanh nghiệp không vay nợ"], e: "Lãi nhưng dòng tiền kinh doanh âm vì phải thu tăng mạnh: cần kiểm tra chất lượng khách hàng và rủi ro nợ khó đòi." },
+  { q: "Từ bảng số liệu, lợi nhuận sau thuế năm 2 tăng trưởng bao nhiêu?", table: [["LNST năm 1", "100 tỷ"], ["LNST năm 2", "130 tỷ"]], a: "30%", w: ["13%", "23%", "130%"], e: "(130 − 100) ÷ 100 = 30%." }
+);
+
+INDEXES.push(
+  { q: "Chỉ số VN30 ra đời năm nào, với điểm cơ sở bao nhiêu?", a: "Năm 2012, điểm cơ sở 500", w: ["Năm 2000, điểm cơ sở 100", "Năm 2017, điểm cơ sở 1.000", "Năm 2009, điểm cơ sở 100"], e: "VN30 ra mắt đầu năm 2012 để phản ánh nhóm cổ phiếu lớn và thanh khoản nhất HOSE." },
+  { q: "VN-Index là chỉ số giá. Điều đó có nghĩa là gì?", a: "Chỉ phản ánh biến động giá, không cộng dồn cổ tức tiền mặt", w: ["Phản ánh tổng lợi nhuận kể cả cổ tức", "Tính theo giá trị sổ sách", "Chỉ tính các cổ phiếu tăng giá"], e: "Vì vậy lợi nhuận thực tế của nhà đầu tư dài hạn cao hơn mức tăng điểm của VN-Index." },
+  { q: "Nhóm ngành nào thường chiếm tỷ trọng vốn hóa lớn nhất trong VN-Index?", a: "Ngân hàng", w: ["Công nghệ", "Dệt may", "Thủy sản"], e: "Vì vậy diễn biến cổ phiếu ngân hàng ảnh hưởng rất mạnh đến chỉ số." },
+  { q: "VNAllShare gồm những nhóm nào?", a: "VN100 và VNSmallcap (các cổ phiếu HOSE đáp ứng tiêu chí sàng lọc)", w: ["Chỉ VN30", "Cổ phiếu trên cả HOSE, HNX và UPCoM", "Chỉ cổ phiếu ngân hàng"], e: "VNAllShare là cơ sở để HOSE xây dựng các chỉ số ngành như VNFIN, VNREAL." },
+  { q: "HOSE có các chỉ số ngành như VNFIN, VNREAL. Chúng dùng để làm gì?", a: "Theo dõi biến động của từng nhóm ngành (tài chính, bất động sản…)", w: ["Xếp hạng tín nhiệm doanh nghiệp", "Tính thuế giao dịch", "Quy định biên độ giá"], e: "Giúp so sánh nhóm ngành nào đang mạnh hơn thị trường chung." },
+  { q: "P/E của toàn thị trường (P/E VN-Index) thường được dùng để làm gì?", a: "Đánh giá thị trường đang đắt hay rẻ so với lịch sử và khu vực", w: ["Tính biên độ dao động", "Xác định ngày đáo hạn phái sinh", "Tính phí giao dịch"], e: "P/E thị trường thấp hơn trung bình lịch sử thường được xem là vùng định giá hấp dẫn." },
+  { q: "Hiện tại, MSCI xếp thị trường chứng khoán Việt Nam vào nhóm nào?", a: "Thị trường cận biên (Frontier Market)", w: ["Thị trường phát triển", "Thị trường mới nổi", "Không được xếp hạng"], e: "Việc được MSCI nâng hạng lên mới nổi có thể thu hút dòng vốn lớn hơn cả FTSE." },
+  { q: "Vì sao việc nâng hạng thị trường được nhà đầu tư kỳ vọng?", a: "Thu hút dòng vốn từ các quỹ đầu tư theo chỉ số thị trường mới nổi", w: ["Biên độ giao dịch được nới gấp đôi", "Được miễn thuế giao dịch", "Tất cả cổ phiếu được chia cổ tức"], e: "Các quỹ thụ động bắt buộc phân bổ vốn theo tỷ trọng của thị trường trong chỉ số." },
+  { q: "Phiên giao dịch ngày đáo hạn hợp đồng tương lai VN30 thường có đặc điểm gì?", a: "Biến động mạnh ở các cổ phiếu VN30, đặc biệt phiên ATC", w: ["Thị trường tạm ngừng giao dịch", "Không có giao dịch cổ phiếu VN30", "Biên độ bị thu hẹp còn ±1%"], e: "Giá thanh toán cuối cùng của hợp đồng dựa trên giá trị chỉ số VN30 phiên đó." },
+  { q: "Chỉ số chứng khoán Mỹ (S&P 500, Dow Jones, Nasdaq) giảm mạnh qua đêm thường ảnh hưởng thế nào?", a: "Tác động tiêu cực đến tâm lý nhà đầu tư Việt Nam phiên hôm sau", w: ["Luôn làm VN-Index tăng", "Không có ảnh hưởng", "Làm HOSE tạm ngừng giao dịch"], e: "Mức độ ảnh hưởng không cố định, nhưng các cú sốc lớn trên thế giới thường lan sang thị trường mới nổi." },
+  { q: "Cùng tăng 5%, cổ phiếu nào làm VN-Index tăng nhiều điểm hơn?", a: "Cổ phiếu có vốn hóa lớn hơn", w: ["Cổ phiếu có giá cao hơn", "Cổ phiếu có nhiều cổ đông hơn", "Cổ phiếu niêm yết lâu hơn"], e: "VN-Index tính theo vốn hóa, không theo thị giá từng cổ phiếu." },
+  { q: "Chỉ số vốn hóa thị trường trên GDP thường dùng để làm gì?", a: "Đánh giá quy mô thị trường chứng khoán so với nền kinh tế", w: ["Tính lãi suất cơ bản", "Đo tỷ lệ lạm phát", "Tính biên độ giá"], e: "Tỷ lệ quá cao so với lịch sử có thể là dấu hiệu thị trường đắt." }
+);
+
+FUNDS.push(
+  { q: "Ngân hàng giám sát của quỹ đầu tư có vai trò gì?", a: "Lưu ký, giám sát để tài sản quỹ tách biệt và được quản lý đúng quy định", w: ["Cho quỹ vay tiền", "Quyết định mua cổ phiếu nào", "Bảo đảm quỹ luôn có lãi"], e: "Tài sản quỹ không thuộc tài sản của công ty quản lý quỹ." },
+  { q: "Phí mua lại (khi bán chứng chỉ quỹ mở) thường thay đổi thế nào theo thời gian nắm giữ?", a: "Giảm dần, có thể về 0 nếu nắm giữ đủ lâu", w: ["Tăng dần theo thời gian", "Luôn cố định 5%", "Chỉ thu khi quỹ có lãi"], e: "Cơ chế này khuyến khích đầu tư dài hạn." },
+  { q: "Cơ chế hoán đổi danh mục của ETF hoạt động thế nào?", a: "Thành viên lập quỹ đổi rổ cổ phiếu lấy lô chứng chỉ ETF (và ngược lại)", w: ["Nhà đầu tư cá nhân đổi tiền lấy cổ phiếu", "Quỹ đổi cổ phiếu lấy trái phiếu", "Ngân hàng đổi ngoại tệ cho quỹ"], e: "Cơ chế này giúp giá ETF bám sát giá trị tài sản ròng." },
+  { q: "iNAV của ETF là gì?", a: "Giá trị tài sản ròng tham chiếu được cập nhật trong phiên giao dịch", w: ["NAV cuối năm tài chính", "Giá IPO của ETF", "Phí quản lý quỹ"], e: "So sánh giá ETF với iNAV để biết ETF đang giao dịch cao hơn hay thấp hơn giá trị thực." },
+  { q: "Quỹ đầu tư bất động sản (REIT) mang lại thu nhập chủ yếu từ đâu?", a: "Tiền cho thuê bất động sản (văn phòng, mặt bằng…)", w: ["Bán lẻ hàng tiêu dùng", "Cho vay ký quỹ", "Phí giao dịch chứng khoán"], e: "REIT cho phép đầu tư vào bất động sản với số vốn nhỏ." },
+  { q: "Khi chọn quỹ mở, tiêu chí nào quan trọng nhất?", a: "Hiệu suất dài hạn ổn định, mức phí và chiến lược đầu tư phù hợp với mình", w: ["Lợi nhuận tháng gần nhất cao nhất", "Quỹ có nhiều quảng cáo nhất", "Giá chứng chỉ quỹ thấp nhất"], e: "Lợi nhuận ngắn hạn cao có thể do may mắn hoặc rủi ro lớn." },
+  { q: "Giá chứng chỉ quỹ (NAV/CCQ) thấp có nghĩa là quỹ \"rẻ\" hơn không?", a: "Không, giá NAV/CCQ không phản ánh quỹ đắt hay rẻ", w: ["Có, nên mua quỹ có giá thấp nhất", "Có, vì sẽ tăng nhanh hơn", "Có, nếu dưới 10.000 đồng"], e: "Điều quan trọng là tài sản bên trong quỹ và hiệu suất, không phải mức giá tuyệt đối." },
+  { q: "Quỹ hưu trí tự nguyện có đặc điểm gì?", a: "Đóng góp định kỳ trong dài hạn, nhận lại khi đến tuổi nghỉ hưu", w: ["Rút tiền bất cứ lúc nào không giới hạn", "Chỉ đầu tư vào cổ phiếu penny", "Do Bảo hiểm xã hội bắt buộc"], e: "Bổ sung cho lương hưu từ bảo hiểm xã hội." },
+  { q: "Bị nhà đầu tư rút vốn ồ ạt, quỹ mở có thể gặp áp lực gì?", a: "Phải bán bớt tài sản, có thể bán ở giá thấp", w: ["Được Nhà nước bơm tiền", "Tự động đóng cửa vĩnh viễn", "Tăng NAV ngay lập tức"], e: "Bán tháo để đáp ứng lệnh rút vốn có thể gây thiệt hại cho nhà đầu tư còn ở lại." },
+  { q: "Xtrackers FTSE Vietnam Swap UCITS ETF là gì?", a: "Một ETF ngoại đầu tư vào thị trường chứng khoán Việt Nam", w: ["Quỹ trái phiếu Chính phủ Việt Nam", "Quỹ đầu tư bất động sản tại Đức", "Quỹ mở của một ngân hàng Việt Nam"], e: "Cùng VanEck Vietnam ETF và Fubon FTSE Vietnam ETF, đây là các ETF ngoại thường được nhắc đến." },
+  { q: "Quỹ chỉ số (thụ động) có ưu điểm gì so với quỹ chủ động?", a: "Phí thấp, minh bạch, hiệu suất bám sát thị trường", w: ["Luôn có lợi nhuận cao hơn", "Không bao giờ giảm giá", "Được miễn mọi loại thuế"], e: "Về dài hạn, nhiều quỹ chủ động không vượt được chỉ số sau khi trừ phí." },
+  { q: "Lợi nhuận từ đầu tư chứng chỉ quỹ mở đến từ đâu?", a: "Phần tăng của NAV/CCQ giữa lúc mua và lúc bán (và cổ tức nếu quỹ chi trả)", w: ["Lãi suất cố định hằng tháng", "Phí do quỹ trả cho nhà đầu tư", "Tiền thưởng của công ty quản lý quỹ"], e: "Nếu NAV giảm, nhà đầu tư lỗ." }
+);
+
+HISTORY.push(
+  { q: "Năm 2006, VN-Index tăng khoảng bao nhiêu?", a: "Khoảng 145%", w: ["Khoảng 15%", "Khoảng 50%", "Khoảng 500%"], e: "Năm 2006 là năm bùng nổ, mở đầu bong bóng chứng khoán 2006–2007." },
+  { q: "Năm 2008, VN-Index giảm khoảng bao nhiêu?", a: "Khoảng 66%", w: ["Khoảng 10%", "Khoảng 30%", "Khoảng 95%"], e: "Khủng hoảng tài chính toàn cầu cùng lạm phát cao trong nước khiến thị trường lao dốc." },
+  { q: "VN-Index lần đầu vượt mốc 1.000 điểm vào năm nào?", a: "2007", w: ["2000", "2018", "2021"], e: "Sau đó phải đến tháng 1/2018 chỉ số mới quay lại mốc 1.000 điểm." },
+  { q: "Tháng 4/2018, VN-Index lập đỉnh khoảng bao nhiêu điểm?", a: "Khoảng 1.200 điểm", w: ["Khoảng 900 điểm", "Khoảng 1.500 điểm", "Khoảng 1.000 điểm"], e: "VN-Index đạt khoảng 1.204 điểm, vượt đỉnh năm 2007." },
+  { q: "Vinamilk (VNM) niêm yết trên HOSE năm nào?", a: "2006", w: ["2000", "2010", "2015"], e: "VNM là một trong những doanh nghiệp lớn niêm yết trong làn sóng 2006." },
+  { q: "Vietcombank (VCB) niêm yết trên HOSE năm nào?", a: "2009", w: ["2000", "2006", "2015"], e: "VCB nhanh chóng trở thành một trong những cổ phiếu có vốn hóa lớn nhất thị trường." },
+  { q: "Năm 2012, sự kiện nào khiến thị trường, đặc biệt nhóm ngân hàng, giảm mạnh?", a: "Ông Nguyễn Đức Kiên (\"bầu Kiên\") bị bắt", w: ["Sàn HNX đóng cửa", "Áp dụng thanh toán T+0", "Nâng hạng thị trường"], e: "Sự kiện gây chấn động vì liên quan đến ngân hàng ACB." },
+  { q: "Tháng 3/2022, sự kiện nào làm thị trường chao đảo?", a: "Chủ tịch FLC Trịnh Văn Quyết bị bắt vì thao túng giá cổ phiếu", w: ["VN-Index lập đỉnh mới", "HOSE chuyển sang hệ thống KRX", "Ra mắt hợp đồng tương lai VN30"], e: "Mở đầu cho đợt thanh lọc mạnh nhóm cổ phiếu đầu cơ năm 2022." },
+  { q: "Năm 2021 ghi nhận kỷ lục gì về nhà đầu tư?", a: "Số tài khoản chứng khoán mở mới cao kỷ lục, hơn 1,5 triệu tài khoản", w: ["Không có tài khoản mở mới", "Nhà đầu tư nước ngoài mua ròng kỷ lục", "Số công ty niêm yết giảm một nửa"], e: "Làn sóng nhà đầu tư F0 sau Covid đưa thanh khoản lên mức kỷ lục." },
+  { q: "FPT niêm yết trên HOSE năm nào?", a: "2006", w: ["2000", "2012", "2018"], e: "FPT là một trong những cổ phiếu công nghệ lâu đời nhất trên sàn." }
+);
+
+RISK.push(
+  { q: "\"Trailing stop\" (cắt lỗ động) hoạt động thế nào?", a: "Điểm cắt lỗ được dời lên theo giá khi giá tăng, giúp bảo vệ lợi nhuận", w: ["Cắt lỗ cố định ở giá mua", "Chỉ bán khi giá giảm về sàn", "Mua thêm khi giá giảm"], e: "Ví dụ: luôn đặt cắt lỗ cách đỉnh gần nhất 8%." },
+  { q: "Vì sao nhiều nhà đầu tư chốt lời từng phần thay vì bán hết một lần?", a: "Khóa một phần lợi nhuận mà vẫn giữ cơ hội nếu giá tiếp tục tăng", w: ["Để được giảm thuế", "Vì luật cấm bán hết một lần", "Để tăng hạn mức margin"], e: "Đây là cách cân bằng giữa tham lam và sợ hãi." },
+  { q: "Rủi ro hệ thống là gì?", a: "Rủi ro ảnh hưởng tới toàn bộ thị trường, không thể loại bỏ bằng đa dạng hóa", w: ["Rủi ro riêng của một doanh nghiệp", "Rủi ro do lỗi phần mềm giao dịch", "Rủi ro chỉ của cổ phiếu penny"], e: "Ví dụ: khủng hoảng kinh tế, lãi suất tăng mạnh, dịch bệnh." },
+  { q: "Rủi ro phi hệ thống là gì?", a: "Rủi ro riêng của từng doanh nghiệp hoặc ngành, có thể giảm bằng đa dạng hóa", w: ["Rủi ro của toàn thị trường", "Rủi ro tỷ giá toàn cầu", "Rủi ro chiến tranh"], e: "Ví dụ: lãnh đạo doanh nghiệp bị bắt, nhà máy cháy." },
+  { q: "Drawdown (sụt giảm từ đỉnh) của tài khoản là gì?", a: "Mức giảm từ giá trị cao nhất xuống thấp nhất của tài khoản trong một giai đoạn", w: ["Số tiền rút ra khỏi tài khoản", "Phí giao dịch", "Lợi nhuận trung bình mỗi tháng"], e: "Kiểm soát drawdown quan trọng hơn tối đa hóa lợi nhuận." },
+  { q: "\"Ngụy biện chi phí chìm\" khiến nhà đầu tư làm gì?", a: "Không chịu bán vì đã lỗ quá nhiều, dù triển vọng doanh nghiệp đã xấu", w: ["Cắt lỗ đúng kế hoạch", "Đa dạng hóa danh mục", "Chốt lời sớm"], e: "Quyết định nên dựa vào triển vọng tương lai, không phải số tiền đã mất." },
+  { q: "Sau chuỗi nhiều lệnh thắng liên tiếp, nhà đầu tư dễ mắc thiên kiến nào?", a: "Quá tự tin, tăng quy mô lệnh và bỏ qua quản trị rủi ro", w: ["Sợ hãi, không dám mua", "Ác cảm thua lỗ", "Hiệu ứng mỏ neo"], e: "Thị trường thuận lợi dễ khiến ta nhầm may mắn với kỹ năng." },
+  { q: "\"Ngụy biện con bạc\" trong đầu tư là gì?", a: "Tin rằng cổ phiếu đã giảm nhiều phiên thì \"chắc chắn\" sắp tăng", w: ["Đầu tư theo kế hoạch", "Cắt lỗ khi đúng điểm", "Đa dạng hóa theo ngành"], e: "Các phiên giảm trước đó không làm tăng xác suất phiên sau tăng." },
+  { q: "Một cổ phiếu chiếm 70% danh mục. Đây là rủi ro gì?", a: "Rủi ro tập trung: một sự cố có thể làm tổn thất nặng toàn bộ tài khoản", w: ["Danh mục đã đa dạng hóa tốt", "Rủi ro hệ thống", "Không có rủi ro nếu là blue-chip"], e: "Nhiều nhà đầu tư giới hạn mỗi cổ phiếu tối đa 20–30% danh mục." },
+  { q: "Giữ một tỷ lệ tiền mặt khi thị trường xấu có lợi ích gì?", a: "Giảm thua lỗ và có sẵn vốn để mua khi có cơ hội tốt", w: ["Không có lợi ích, tiền mặt luôn lãng phí", "Được miễn phí giao dịch", "Được ưu tiên mua IPO"], e: "Tiền mặt cũng là một vị thế." }
+);
+
+DERIV.push(
+  { q: "Biên độ dao động giá trong ngày của hợp đồng tương lai chỉ số VN30 là bao nhiêu?", a: "±7%", w: ["±10%", "±15%", "Không giới hạn"], e: "Biên độ tính theo giá tham chiếu của chính hợp đồng." },
+  { q: "Giá thanh toán cuối cùng của hợp đồng tương lai VN30 khi đáo hạn là gì?", a: "Giá trị đóng cửa của chỉ số VN30 ngày đáo hạn", w: ["Giá mở cửa của hợp đồng", "Giá trung bình 30 ngày", "Do công ty chứng khoán quyết định"], e: "Vị thế còn mở được thanh toán bằng tiền theo mức giá này." },
+  { q: "\"Roll\" (cuộn) vị thế phái sinh là gì?", a: "Đóng hợp đồng sắp đáo hạn và mở hợp đồng kỳ hạn tiếp theo", w: ["Tăng gấp đôi số hợp đồng", "Chuyển hợp đồng sang cổ phiếu", "Hủy vị thế không mất phí"], e: "Giúp duy trì vị thế khi muốn nắm giữ lâu hơn kỳ hạn hợp đồng." },
+  { q: "Ký quỹ cho giao dịch phái sinh được quản lý ở đâu?", a: "Nộp qua công ty chứng khoán và được quản lý tại Tổng công ty Lưu ký và Bù trừ Chứng khoán (VSDC)", w: ["Gửi trực tiếp cho người mua đối ứng", "Gửi vào tài khoản HOSE", "Không cần ký quỹ"], e: "VSDC đóng vai trò đối tác bù trừ trung tâm, bảo đảm thanh toán." },
+  { q: "Khi tỷ lệ sử dụng tài sản ký quỹ vượt ngưỡng cho phép mà không bổ sung, điều gì xảy ra?", a: "Vị thế có thể bị đóng bắt buộc", w: ["Được gia hạn vô thời hạn", "Được cộng thêm ký quỹ miễn phí", "Hợp đồng tự chuyển sang tháng sau"], e: "Rủi ro lớn khi thị trường biến động mạnh ngược hướng vị thế." },
+  { q: "Trên thị trường hợp đồng tương lai, tổng lãi của bên Long và tổng lỗ của bên Short có quan hệ gì (trước phí)?", a: "Bằng nhau: lãi của bên này là lỗ của bên kia", w: ["Cả hai bên đều lãi", "Cả hai bên đều lỗ", "Không liên quan"], e: "Phái sinh là trò chơi có tổng bằng 0 (trước phí và thuế)." },
+  { q: "Giá hợp đồng tương lai cao hơn chỉ số VN30 cơ sở. Basis lúc này như thế nào?", a: "Basis dương", w: ["Basis âm", "Basis bằng 0", "Không xác định"], e: "Basis dương thường cho thấy tâm lý lạc quan của bên Long." },
+  { q: "Chứng quyền mua: giá thực hiện 50.000đ, giá chứng quyền 1.000đ, tỷ lệ chuyển đổi 5:1. Điểm hòa vốn của cổ phiếu cơ sở là?", a: "55.000 đồng", w: ["51.000 đồng", "50.000 đồng", "60.000 đồng"], e: "Hòa vốn = Giá thực hiện + Giá chứng quyền × Tỷ lệ chuyển đổi = 50.000 + 1.000 × 5." },
+  { q: "Tỷ lệ chuyển đổi 5:1 của chứng quyền nghĩa là gì?", a: "5 chứng quyền tương ứng quyền với 1 cổ phiếu cơ sở", w: ["1 chứng quyền đổi được 5 cổ phiếu", "Chứng quyền có 5 tháng đáo hạn", "Lợi nhuận gấp 5 lần cổ phiếu"], e: "Tỷ lệ chuyển đổi dùng để tính giá trị chứng quyền từ giá cổ phiếu cơ sở." },
+  { q: "Vì sao giá chứng quyền thường biến động mạnh hơn (theo %) so với cổ phiếu cơ sở?", a: "Chứng quyền có tính đòn bẩy: vốn nhỏ nhưng phản ánh biến động của cổ phiếu cơ sở", w: ["Chứng quyền không có biên độ", "Chứng quyền được margin gấp 10", "Chứng quyền chỉ giao dịch phiên ATC"], e: "Đòn bẩy làm lãi lẫn lỗ tính theo % đều lớn hơn." }
+);
+
+/* ===== Phần 17: Kinh tế vĩ mô ===== */
+const MACRO = [
+  { q: "Ngân hàng Nhà nước giảm lãi suất điều hành thường tác động thế nào đến thị trường chứng khoán?", a: "Tích cực: chi phí vốn giảm, dòng tiền chuyển từ tiết kiệm sang kênh đầu tư", w: ["Tiêu cực: lợi nhuận doanh nghiệp giảm", "Không ảnh hưởng gì", "Thị trường bị tạm ngừng giao dịch"], e: "Lãi suất là biến số vĩ mô quan trọng nhất với định giá cổ phiếu." },
+  { q: "Lãi suất tiết kiệm tăng mạnh thường dẫn tới điều gì?", a: "Dòng tiền rời chứng khoán để gửi tiết kiệm, định giá cổ phiếu chịu áp lực", w: ["Dòng tiền đổ mạnh vào chứng khoán", "Doanh nghiệp vay vốn rẻ hơn", "Lạm phát tăng vọt"], e: "Kênh không rủi ro hấp dẫn hơn thì nhà đầu tư đòi hỏi lợi nhuận cổ phiếu cao hơn." },
+  { q: "Cục Dự trữ Liên bang Mỹ (Fed) tăng lãi suất mạnh thường gây áp lực gì cho Việt Nam?", a: "USD mạnh lên, áp lực tỷ giá, khối ngoại có xu hướng rút vốn khỏi thị trường mới nổi", w: ["VND tăng giá mạnh", "Khối ngoại đổ tiền vào Việt Nam", "Lãi suất trong nước tự động giảm"], e: "Năm 2022 là ví dụ điển hình về áp lực tỷ giá khi Fed tăng lãi suất nhanh." },
+  { q: "Lạm phát tăng cao thường khiến ngân hàng trung ương làm gì?", a: "Thắt chặt tiền tệ, tăng lãi suất", w: ["Hạ lãi suất về 0", "In thêm tiền", "Giảm dự trữ bắt buộc"], e: "Thắt chặt tiền tệ thường bất lợi cho thị trường chứng khoán trong ngắn hạn." },
+  { q: "CPI là chỉ số đo lường điều gì?", a: "Biến động giá của rổ hàng hóa, dịch vụ tiêu dùng (lạm phát)", w: ["Tổng sản phẩm quốc nội", "Sản lượng công nghiệp", "Chỉ số chứng khoán"], e: "Việt Nam thường đặt mục tiêu kiểm soát lạm phát quanh 4–4,5%/năm." },
+  { q: "Chỉ số PMI trên 50 cho biết điều gì?", a: "Lĩnh vực sản xuất đang mở rộng", w: ["Lĩnh vực sản xuất đang thu hẹp", "Lạm phát trên 50%", "Lãi suất trên 5%"], e: "PMI là chỉ báo sớm về sức khỏe ngành sản xuất." },
+  { q: "Ngân hàng Nhà nước phát hành tín phiếu nhằm mục đích gì?", a: "Hút bớt tiền đồng từ hệ thống ngân hàng (thắt chặt thanh khoản)", w: ["Bơm thêm tiền vào nền kinh tế", "Vay vốn cho ngân sách", "Hỗ trợ doanh nghiệp xuất khẩu"], e: "Thường dùng để hỗ trợ tỷ giá khi USD tăng mạnh." },
+  { q: "Ngân hàng Nhà nước \"bơm tiền\" qua kênh thị trường mở (OMO) có ý nghĩa gì?", a: "Cung cấp thêm thanh khoản cho các ngân hàng", w: ["Rút tiền khỏi hệ thống", "Tăng lãi suất huy động", "Bán ngoại tệ dự trữ"], e: "Thanh khoản hệ thống dồi dào thường có lợi cho thị trường chứng khoán." },
+  { q: "Lãi suất liên ngân hàng qua đêm tăng vọt cho thấy điều gì?", a: "Thanh khoản hệ thống ngân hàng đang căng thẳng", w: ["Ngân hàng dư thừa tiền", "Lạm phát giảm", "Chứng khoán sắp tăng mạnh"], e: "Thường là tín hiệu tiêu cực ngắn hạn với thị trường chứng khoán." },
+  { q: "Chính sách tài khóa khác chính sách tiền tệ thế nào?", a: "Tài khóa là thuế và chi tiêu của Chính phủ; tiền tệ là lãi suất và cung tiền của ngân hàng trung ương", w: ["Hai khái niệm giống nhau", "Tài khóa do NHNN điều hành", "Tiền tệ là thuế thu nhập doanh nghiệp"], e: "Đầu tư công, giảm thuế là công cụ tài khóa; giảm lãi suất là công cụ tiền tệ." },
+  { q: "Giải ngân đầu tư công mạnh có lợi trực tiếp cho nhóm cổ phiếu nào?", a: "Xây dựng hạ tầng và vật liệu xây dựng (thép, xi măng, đá)", w: ["Ngân hàng nước ngoài", "Bán lẻ trang sức", "Xuất khẩu thủy sản"], e: "Các dự án cao tốc, sân bay tạo nhu cầu lớn cho xây lắp và vật liệu." },
+  { q: "Thặng dư thương mại lớn, FDI và kiều hối dồi dào có tác động gì đến tỷ giá?", a: "Tăng nguồn cung ngoại tệ, hỗ trợ ổn định tỷ giá", w: ["Làm VND mất giá mạnh", "Không ảnh hưởng tỷ giá", "Làm lạm phát tăng vọt ngay"], e: "Dự trữ ngoại hối dồi dào giúp NHNN có dư địa điều hành tỷ giá." },
+  { q: "Chỉ số DXY đo lường điều gì?", a: "Sức mạnh của đồng USD so với rổ các đồng tiền chủ chốt", w: ["Giá dầu thế giới", "Chỉ số chứng khoán Mỹ", "Lạm phát của Mỹ"], e: "DXY tăng mạnh thường gây áp lực lên tỷ giá các nước mới nổi." },
+  { q: "Cổ phiếu \"phòng thủ\" là gì?", a: "Cổ phiếu doanh nghiệp có nhu cầu ổn định bất kể chu kỳ kinh tế (điện, nước, tiêu dùng thiết yếu, dược)", w: ["Cổ phiếu ngành quốc phòng", "Cổ phiếu tăng mạnh nhất khi kinh tế bùng nổ", "Cổ phiếu được Nhà nước bảo lãnh giá"], e: "Khi suy thoái, cổ phiếu phòng thủ thường giảm ít hơn thị trường." },
+  { q: "Cổ phiếu \"chu kỳ\" là gì?", a: "Cổ phiếu có lợi nhuận biến động mạnh theo chu kỳ kinh tế (thép, bất động sản, chứng khoán…)", w: ["Cổ phiếu trả cổ tức định kỳ", "Cổ phiếu giao dịch theo chu kỳ T+2", "Cổ phiếu có giá ổn định"], e: "Mua cổ phiếu chu kỳ ở đỉnh lợi nhuận (P/E thấp nhất) thường là sai lầm." },
+  { q: "Thị trường chứng khoán thường phản ánh nền kinh tế như thế nào về thời gian?", a: "Đi trước nền kinh tế vài tháng vì phản ánh kỳ vọng", w: ["Đi sau nền kinh tế vài năm", "Luôn trùng khớp từng tháng", "Không liên quan đến kinh tế"], e: "Thị trường có thể tăng khi tin kinh tế vẫn xấu, vì đã kỳ vọng phục hồi." },
+  { q: "\"Khối ngoại bán ròng\" nghĩa là gì?", a: "Nhà đầu tư nước ngoài bán ra nhiều hơn mua vào", w: ["Nhà đầu tư nước ngoài bị cấm mua", "Doanh nghiệp nước ngoài rút khỏi Việt Nam", "Ngân hàng nước ngoài bán ngoại tệ"], e: "Bán ròng kéo dài thường gây áp lực lên nhóm cổ phiếu vốn hóa lớn." },
+  { q: "Lợi suất trái phiếu Chính phủ Mỹ kỳ hạn 10 năm tăng mạnh thường tác động thế nào đến cổ phiếu toàn cầu?", a: "Gây áp lực giảm định giá, nhất là cổ phiếu tăng trưởng", w: ["Luôn đẩy cổ phiếu tăng", "Không ảnh hưởng", "Chỉ ảnh hưởng thị trường trái phiếu"], e: "Lãi suất phi rủi ro cao hơn làm giảm giá trị hiện tại của dòng tiền tương lai." },
+  { q: "Nới lỏng định lượng (QE) là gì?", a: "Ngân hàng trung ương mua tài sản (trái phiếu) quy mô lớn để bơm tiền vào nền kinh tế", w: ["Tăng thuế để giảm lạm phát", "Bán vàng dự trữ", "Cắt giảm chi tiêu công"], e: "QE giai đoạn 2020–2021 góp phần đẩy giá tài sản toàn cầu tăng mạnh." },
+  { q: "Cung tiền (M2) và tín dụng tăng trưởng chậm lại thường báo hiệu gì?", a: "Dòng tiền trong nền kinh tế thắt lại, bất lợi cho thị trường tài sản", w: ["Thị trường chắc chắn tăng mạnh", "Lạm phát tăng vọt", "Lãi suất về 0"], e: "Thị trường chứng khoán nhạy cảm với thanh khoản của hệ thống." },
+  { q: "Giá vàng trong nước tăng mạnh và chênh lệch cao với thế giới có thể ảnh hưởng thế nào đến chứng khoán?", a: "Thu hút một phần dòng tiền đầu cơ khỏi chứng khoán", w: ["Luôn làm chứng khoán tăng", "Không liên quan gì", "Làm lãi suất giảm"], e: "Vàng, bất động sản, tiết kiệm và chứng khoán là các kênh cạnh tranh dòng tiền." },
+  { q: "Tăng trưởng GDP cao và ổn định thường hỗ trợ thị trường chứng khoán thế nào?", a: "Lợi nhuận doanh nghiệp tăng, hỗ trợ giá cổ phiếu trong dài hạn", w: ["Làm cổ phiếu giảm vì lạm phát", "Không ảnh hưởng gì", "Làm thị trường tạm ngừng giao dịch"], e: "Tuy vậy, trong ngắn hạn thị trường còn phụ thuộc lãi suất, dòng tiền và tâm lý." },
+  { q: "Tỷ giá USD/VND tăng mạnh (VND mất giá) bất lợi nhất cho nhóm doanh nghiệp nào?", a: "Doanh nghiệp vay nợ lớn bằng USD hoặc nhập khẩu nhiều nguyên liệu", w: ["Doanh nghiệp xuất khẩu", "Doanh nghiệp có doanh thu bằng USD", "Doanh nghiệp không vay nợ"], e: "Lỗ chênh lệch tỷ giá có thể ăn mòn lợi nhuận của doanh nghiệp điện, hàng không, thép nhập quặng." },
+  { q: "\"Dự trữ bắt buộc\" của ngân hàng thương mại là gì?", a: "Tỷ lệ tiền gửi ngân hàng phải gửi tại ngân hàng trung ương, không được cho vay", w: ["Vốn tối thiểu để thành lập ngân hàng", "Số tiền dự phòng nợ xấu", "Quỹ bảo hiểm tiền gửi"], e: "Giảm tỷ lệ dự trữ bắt buộc là một cách nới lỏng tiền tệ." },
+  { q: "Suy thoái kinh tế toàn cầu ảnh hưởng thế nào đến Việt Nam, một nền kinh tế có độ mở lớn?", a: "Xuất khẩu và dòng vốn đầu tư suy giảm, ảnh hưởng tăng trưởng và lợi nhuận doanh nghiệp", w: ["Không ảnh hưởng vì Việt Nam ít giao thương", "Xuất khẩu tăng mạnh", "Lạm phát chắc chắn giảm về 0"], e: "Kim ngạch xuất nhập khẩu của Việt Nam lớn hơn GDP nhiều lần." },
+  { q: "Tin \"NHNN tăng room tín dụng giữa năm\" thường được nhóm cổ phiếu nào đón nhận tích cực nhất?", a: "Ngân hàng và các ngành cần vốn vay như bất động sản", w: ["Dược phẩm", "Điện nước", "Công nghệ phần mềm"], e: "Room tín dụng mới cho phép ngân hàng cho vay thêm, cải thiện lợi nhuận." }
+];
+
+/* ===== Phần 18: Định giá doanh nghiệp ===== */
+const VALUATION = [
+  { q: "\"Giá trị nội tại\" của một cổ phiếu là gì?", a: "Giá trị thực của doanh nghiệp ước tính từ khả năng tạo tiền trong tương lai", w: ["Giá đóng cửa hôm nay", "Mệnh giá 10.000 đồng", "Giá IPO"], e: "Mua khi giá thị trường thấp hơn đáng kể giá trị nội tại là nền tảng của đầu tư giá trị." },
+  { q: "\"Biên an toàn\" (margin of safety) trong đầu tư giá trị là gì?", a: "Khoảng chênh lệch giữa giá trị nội tại ước tính và giá mua, để phòng khi ước tính sai", w: ["Tỷ lệ ký quỹ tối thiểu", "Biên độ dao động giá", "Số tiền dự phòng trong tài khoản"], e: "Khái niệm do Benjamin Graham phổ biến." },
+  { q: "Phương pháp DCF định giá doanh nghiệp bằng cách nào?", a: "Chiết khấu các dòng tiền tự do dự kiến trong tương lai về giá trị hiện tại", w: ["Nhân lợi nhuận năm nay với 10", "Lấy tổng tài sản trừ nợ", "So sánh với giá cổ phiếu cùng ngành"], e: "DCF phụ thuộc mạnh vào các giả định tăng trưởng và tỷ lệ chiết khấu." },
+  { q: "Trong DCF, nếu tăng tỷ lệ chiết khấu thì giá trị doanh nghiệp thay đổi thế nào?", a: "Giảm", w: ["Tăng", "Không đổi", "Tăng gấp đôi"], e: "Đây là lý do lãi suất tăng làm định giá cổ phiếu giảm." },
+  { q: "Dòng tiền tự do (FCF) thường được tính thế nào?", a: "Dòng tiền từ hoạt động kinh doanh − Chi đầu tư tài sản cố định (capex)", w: ["Doanh thu − Giá vốn", "Lợi nhuận sau thuế + Cổ tức", "Tiền mặt cuối kỳ − Tiền mặt đầu kỳ"], e: "FCF là tiền thực sự doanh nghiệp có thể trả nợ, chia cổ tức hoặc tái đầu tư." },
+  { q: "Trong mô hình DCF, \"giá trị cuối kỳ\" (terminal value) thường có đặc điểm gì?", a: "Chiếm tỷ trọng lớn trong tổng giá trị và rất nhạy với giả định tăng trưởng dài hạn", w: ["Luôn bằng 0", "Chiếm tỷ trọng rất nhỏ", "Bằng giá trị sổ sách"], e: "Thay đổi nhỏ trong giả định tăng trưởng dài hạn có thể làm kết quả định giá thay đổi lớn." },
+  { q: "P/E 20 và EPS dự kiến tăng trưởng 20%/năm. PEG là bao nhiêu?", a: "1", w: ["20", "0,2", "400"], e: "PEG = P/E ÷ tốc độ tăng EPS (%) = 20 ÷ 20 = 1. PEG < 1 thường được xem là hấp dẫn." },
+  { q: "Giá trị doanh nghiệp (EV) được tính thế nào?", a: "Vốn hóa + Nợ vay − Tiền mặt", w: ["Vốn hóa + Tiền mặt", "Tổng tài sản − Nợ", "Doanh thu × P/E"], e: "EV phản ánh chi phí để mua lại toàn bộ doanh nghiệp, kể cả nợ." },
+  { q: "Từ bảng số liệu, EV/EBITDA của doanh nghiệp là bao nhiêu?", table: [["Vốn hóa thị trường", "10.000 tỷ"], ["Nợ vay", "3.000 tỷ"], ["Tiền mặt", "1.000 tỷ"], ["EBITDA", "1.200 tỷ"]], a: "10", w: ["8,3", "11,7", "12"], e: "EV = 10.000 + 3.000 − 1.000 = 12.000; EV/EBITDA = 12.000 ÷ 1.200 = 10." },
+  { q: "EV/EBITDA có lợi thế gì so với P/E khi so sánh doanh nghiệp?", a: "Loại bỏ khác biệt về cơ cấu nợ, khấu hao và thuế giữa các doanh nghiệp", w: ["Luôn cho kết quả thấp hơn", "Không cần số liệu tài chính", "Chỉ dùng được cho ngân hàng"], e: "Hay dùng cho ngành thâm dụng vốn như điện, cảng biển, viễn thông." },
+  { q: "EBITDA là gì?", a: "Lợi nhuận trước lãi vay, thuế và khấu hao", w: ["Lợi nhuận sau thuế", "Doanh thu thuần", "Dòng tiền tự do"], e: "EBITDA gần với khả năng tạo tiền từ hoạt động kinh doanh cốt lõi." },
+  { q: "Cổ phiếu có P/E rất thấp. Điều này luôn có nghĩa là rẻ?", a: "Không, có thể là \"bẫy giá trị\" do lợi nhuận sắp giảm hoặc lợi nhuận bất thường", w: ["Có, P/E thấp luôn là rẻ", "Có, nếu dưới 5", "Có, nếu là blue-chip"], e: "Cổ phiếu chu kỳ thường có P/E thấp nhất đúng lúc lợi nhuận ở đỉnh." },
+  { q: "Định giá bằng phương pháp so sánh (P/E, P/B ngang ngành) có nhược điểm gì?", a: "Nếu cả ngành đang bị định giá quá cao hoặc quá thấp, kết quả cũng bị sai lệch", w: ["Không cần dữ liệu", "Luôn chính xác tuyệt đối", "Chỉ dùng cho công ty chưa niêm yết"], e: "Nên kết hợp nhiều phương pháp định giá." },
+  { q: "P/E forward khác P/E trailing ở điểm nào?", a: "P/E forward dùng EPS dự phóng tương lai; P/E trailing dùng EPS 4 quý gần nhất", w: ["Hai chỉ số luôn bằng nhau", "P/E forward dùng giá tương lai", "P/E trailing chỉ dùng cho ngân hàng"], e: "P/E forward phụ thuộc vào độ chính xác của dự phóng." },
+  { q: "Theo mô hình chiết khấu cổ tức Gordon, cổ tức năm tới 2.000đ, lợi suất yêu cầu 12%, tăng trưởng cổ tức 4%/năm. Giá trị cổ phiếu là?", a: "25.000 đồng", w: ["16.667 đồng", "50.000 đồng", "12.500 đồng"], e: "P = D1 ÷ (r − g) = 2.000 ÷ (12% − 4%) = 25.000 đồng." },
+  { q: "P/E = 10 tương đương lợi suất lợi nhuận (earnings yield) bao nhiêu?", a: "10%", w: ["1%", "100%", "20%"], e: "Earnings yield = 1 ÷ P/E. Có thể so sánh với lãi suất tiết kiệm để xem cổ phiếu có hấp dẫn không." },
+  { q: "EPS dự phóng 5.000 đồng, P/E mục tiêu 12. Giá mục tiêu là?", a: "60.000 đồng", w: ["42.000 đồng", "17.000 đồng", "120.000 đồng"], e: "Giá mục tiêu = EPS × P/E mục tiêu = 5.000 × 12." },
+  { q: "Giá hiện tại 50.000 đồng, giá mục tiêu 60.000 đồng. Tiềm năng tăng giá (upside) là?", a: "20%", w: ["10%", "16,7%", "60%"], e: "(60.000 − 50.000) ÷ 50.000 = 20%." },
+  { q: "P/S (giá trên doanh thu) thường được dùng khi nào?", a: "Định giá doanh nghiệp chưa có lãi hoặc lợi nhuận biến động mạnh", w: ["Định giá ngân hàng", "Tính cổ tức", "Định giá trái phiếu"], e: "Phổ biến với doanh nghiệp công nghệ đang tăng trưởng nhanh." },
+  { q: "Vì sao ngân hàng có ROE cao thường được định giá P/B cao hơn?", a: "Mỗi đồng vốn chủ sở hữu tạo ra nhiều lợi nhuận hơn", w: ["Vì có nhiều chi nhánh hơn", "Vì có nhiều nhân viên hơn", "Vì giá cổ phiếu cao hơn"], e: "Quan hệ giữa P/B và ROE là nền tảng định giá ngành ngân hàng." },
+  { q: "Doanh nghiệp tăng trưởng lợi nhuận nhanh, bền vững thường được thị trường định giá thế nào?", a: "P/E cao hơn mặt bằng chung", w: ["P/E thấp hơn doanh nghiệp không tăng trưởng", "P/E luôn bằng 10", "Không được định giá"], e: "Nhà đầu tư trả giá cao hơn cho lợi nhuận tương lai lớn hơn." },
+  { q: "\"Lợi thế cạnh tranh bền vững\" (moat) là gì?", a: "Yếu tố giúp doanh nghiệp giữ lợi nhuận cao lâu dài trước đối thủ (thương hiệu, chi phí thấp, mạng lưới…)", w: ["Hào nước quanh nhà máy", "Số tiền mặt lớn", "Giá cổ phiếu cao"], e: "Khái niệm được Warren Buffett phổ biến." },
+  { q: "Yếu tố định tính nào thường được xem là quan trọng khi định giá doanh nghiệp?", a: "Năng lực và sự minh bạch của ban lãnh đạo", w: ["Màu logo công ty", "Số tầng của trụ sở", "Mã cổ phiếu dễ nhớ"], e: "Ban lãnh đạo kém minh bạch có thể khiến mọi con số định giá trở nên vô nghĩa." },
+  { q: "Lợi nhuận bất thường từ thoái vốn khiến P/E năm đó thấp. Nhà phân tích thường làm gì?", a: "Loại bỏ khoản bất thường, dùng lợi nhuận cốt lõi để tính P/E", w: ["Giữ nguyên vì đó là lợi nhuận thật", "Nhân đôi lợi nhuận", "Bỏ qua P/E, chỉ dùng giá"], e: "Định giá nên dựa trên khả năng sinh lời lặp lại được." },
+  { q: "Từ bảng số liệu, P/B của cổ phiếu là bao nhiêu?", table: [["Vốn chủ sở hữu", "8.000 tỷ"], ["Số cổ phiếu lưu hành", "400 triệu"], ["Giá cổ phiếu", "30.000 đồng"]], a: "1,5", w: ["0,67", "3", "20"], e: "BVPS = 8.000 tỷ ÷ 400 triệu = 20.000 đồng; P/B = 30.000 ÷ 20.000 = 1,5." }
+];
+
+/* ===== Phần 19: Quyền cổ đông & công bố thông tin ===== */
+const GOVERN = [
+  { q: "Cổ đông lớn là cổ đông sở hữu từ bao nhiêu % cổ phiếu có quyền biểu quyết?", a: "Từ 5% trở lên", w: ["Từ 1% trở lên", "Từ 10% trở lên", "Từ 51% trở lên"], e: "Cổ đông lớn phải báo cáo, công bố thông tin khi trở thành, không còn là cổ đông lớn hoặc khi thay đổi sở hữu qua các ngưỡng 1%." },
+  { q: "Đại hội đồng cổ đông thường niên phải họp trong thời hạn nào?", a: "Trong 4 tháng kể từ ngày kết thúc năm tài chính (có thể gia hạn nhưng không quá 6 tháng)", w: ["Bất cứ lúc nào trong năm", "Trong 1 tháng đầu năm", "2 năm một lần"], e: "Vì vậy mùa đại hội cổ đông thường rơi vào tháng 3 – tháng 4." },
+  { q: "Cuộc họp Đại hội đồng cổ đông lần thứ nhất được tiến hành khi nào?", a: "Có số cổ đông dự họp đại diện trên 50% tổng số phiếu biểu quyết", w: ["Có ít nhất 10 cổ đông", "Có đủ thành viên HĐQT", "Không cần điều kiện"], e: "Lần thứ hai cần từ 33%; lần thứ ba không phụ thuộc tỷ lệ dự họp." },
+  { q: "Một nghị quyết thông thường của Đại hội đồng cổ đông được thông qua khi nào?", a: "Được cổ đông sở hữu trên 50% tổng số phiếu biểu quyết của cổ đông dự họp tán thành", w: ["Được 100% cổ đông tán thành", "Được chủ tịch HĐQT đồng ý", "Được 10% cổ đông tán thành"], e: "Trừ khi Điều lệ công ty quy định tỷ lệ khác." },
+  { q: "Các vấn đề quan trọng (sửa điều lệ, tổ chức lại, bán tài sản lớn…) cần tỷ lệ tán thành bao nhiêu?", a: "Từ 65% tổng số phiếu biểu quyết của cổ đông dự họp", w: ["Trên 50%", "100%", "Từ 30%"], e: "Trừ khi Điều lệ công ty quy định tỷ lệ khác." },
+  { q: "Cổ đông phổ thông có những quyền cơ bản nào?", a: "Biểu quyết, nhận cổ tức, ưu tiên mua cổ phần mới tương ứng tỷ lệ sở hữu", w: ["Rút vốn trực tiếp từ công ty bất cứ lúc nào", "Được bảo đảm lợi nhuận tối thiểu", "Tự quyết định mức cổ tức"], e: "Cổ đông có thể chuyển nhượng cổ phần nhưng không được rút vốn trực tiếp." },
+  { q: "Cổ đông hoặc nhóm cổ đông sở hữu từ bao nhiêu % có quyền đề cử thành viên HĐQT, yêu cầu triệu tập họp ĐHCĐ?", a: "Từ 5% trở lên", w: ["Từ 1% trở lên", "Từ 20% trở lên", "Từ 51% trở lên"], e: "Luật Doanh nghiệp 2020 hạ ngưỡng này từ 10% xuống 5% để bảo vệ cổ đông nhỏ." },
+  { q: "Cổ đông hoặc nhóm cổ đông sở hữu từ bao nhiêu % có quyền khởi kiện thành viên HĐQT, giám đốc gây thiệt hại cho công ty?", a: "Từ 1% trở lên", w: ["Từ 5% trở lên", "Từ 10% trở lên", "Chỉ cổ đông sở hữu trên 50%"], e: "Đây là công cụ bảo vệ cổ đông thiểu số." },
+  { q: "Cổ tức tiền mặt phải được thanh toán đầy đủ trong thời hạn nào?", a: "6 tháng kể từ ngày kết thúc họp Đại hội đồng cổ đông thường niên", w: ["1 tháng", "Bất cứ lúc nào công ty muốn", "3 năm"], e: "Theo Luật Doanh nghiệp 2020." },
+  { q: "Người nội bộ (thành viên HĐQT, ban điều hành…) muốn giao dịch cổ phiếu công ty phải làm gì?", a: "Công bố thông tin trước ngày giao dịch ít nhất 3 ngày làm việc và báo cáo kết quả sau khi giao dịch", w: ["Không cần báo cáo", "Chỉ cần báo cho HĐQT", "Xin phép Ngân hàng Nhà nước"], e: "Giúp thị trường minh bạch, hạn chế lợi dụng thông tin nội bộ." },
+  { q: "\"Giao dịch nội gián\" là gì?", a: "Sử dụng thông tin nội bộ chưa công bố để mua bán chứng khoán", w: ["Người nội bộ mua cổ phiếu sau khi đã công bố thông tin", "Giao dịch lô lẻ", "Giao dịch thỏa thuận"], e: "Đây là hành vi bị nghiêm cấm và có thể bị xử lý hình sự." },
+  { q: "\"Thao túng giá chứng khoán\" là hành vi gì?", a: "Tạo cung cầu giả, mua bán qua lại giữa các tài khoản liên quan để làm giá", w: ["Phân tích kỹ thuật", "Đặt lệnh giới hạn", "Mua cổ phiếu dài hạn"], e: "Nhiều vụ thao túng đã bị xử lý hình sự trong những năm gần đây." },
+  { q: "Báo cáo tài chính năm đã kiểm toán của công ty niêm yết phải công bố trong thời hạn nào?", a: "90 ngày kể từ ngày kết thúc năm tài chính", w: ["20 ngày", "1 năm", "Không bắt buộc công bố"], e: "Chậm công bố có thể khiến cổ phiếu bị đưa vào diện cảnh báo." },
+  { q: "Báo cáo tài chính bán niên đã soát xét phải công bố trong thời hạn nào?", a: "45 ngày kể từ ngày kết thúc 6 tháng đầu năm tài chính", w: ["90 ngày", "10 ngày", "6 tháng"], e: "Báo cáo bán niên được soát xét, không phải kiểm toán đầy đủ." },
+  { q: "Công ty niêm yết phải công bố thông tin bất thường (vd: tài khoản bị phong tỏa, lãnh đạo bị bắt) trong thời hạn nào?", a: "Trong 24 giờ kể từ khi xảy ra sự kiện", w: ["Trong 30 ngày", "Trong báo cáo năm", "Không bắt buộc"], e: "Thông tin bất thường có thể ảnh hưởng lớn đến giá cổ phiếu." },
+  { q: "Mua cổ phiếu dẫn tới sở hữu từ 25% trở lên của công ty đại chúng thường bắt buộc phải làm gì?", a: "Chào mua công khai", w: ["Không cần làm gì", "Chỉ báo cho công ty chứng khoán", "Xin phép Thủ tướng"], e: "Quy định chào mua công khai nhằm bảo vệ cổ đông khi có thay đổi quyền kiểm soát." },
+  { q: "Doanh nghiệp bị lỗ 3 năm liên tiếp hoặc lỗ lũy kế vượt vốn góp có thể bị gì?", a: "Hủy niêm yết bắt buộc", w: ["Được miễn thuế", "Được nâng lên sàn HOSE", "Được Nhà nước mua lại"], e: "Sau khi hủy niêm yết, cổ phiếu thường chuyển sang giao dịch trên UPCoM." },
+  { q: "Cổ phiếu bị hủy niêm yết trên HOSE/HNX thì có còn giao dịch được không?", a: "Có, thường được đăng ký giao dịch trên UPCoM", w: ["Không, cổ phiếu trở thành vô giá trị", "Có, nhưng chỉ giao dịch ở nước ngoài", "Có, vẫn giao dịch trên HOSE"], e: "Tuy nhiên thanh khoản và giá thường giảm mạnh." },
+  { q: "Cổ phiếu bị đưa vào \"diện cảnh báo\" thường vì lý do nào sau đây?", a: "Chậm công bố báo cáo tài chính, lợi nhuận sau thuế chưa phân phối âm, ý kiến kiểm toán ngoại trừ…", w: ["Giá tăng trần 3 phiên", "Trả cổ tức cao", "Có nhiều cổ đông nước ngoài"], e: "Diện cảnh báo thường kéo theo việc bị loại khỏi danh sách cho vay margin." },
+  { q: "\"Giao dịch với bên liên quan\" cần được giám sát vì sao?", a: "Có thể bị dùng để chuyển lợi ích khỏi công ty, gây thiệt hại cho cổ đông thiểu số", w: ["Vì luôn bị cấm", "Vì làm tăng thuế", "Vì làm giảm số lượng cổ phiếu"], e: "Các giao dịch lớn với bên liên quan phải được HĐQT hoặc ĐHCĐ thông qua." },
+  { q: "Thành viên HĐQT độc lập có vai trò gì?", a: "Đưa ra ý kiến khách quan, bảo vệ lợi ích của tất cả cổ đông, không chịu chi phối bởi cổ đông lớn", w: ["Điều hành công việc hằng ngày", "Đại diện riêng cho cổ đông lớn nhất", "Quyết định giá cổ phiếu"], e: "Quản trị công ty tốt đòi hỏi HĐQT có đủ thành viên độc lập." },
+  { q: "\"Ngày đăng ký cuối cùng\" dùng để làm gì?", a: "Chốt danh sách cổ đông được hưởng quyền (cổ tức, dự họp ĐHCĐ…)", w: ["Ngày cuối cùng được bán cổ phiếu", "Ngày trả cổ tức", "Ngày cổ phiếu bị hủy niêm yết"], e: "Ngày GDKHQ diễn ra trước ngày đăng ký cuối cùng 1 ngày làm việc." },
+  { q: "Phát hành cổ phiếu ESOP cho người lao động cần được cơ quan nào thông qua?", a: "Đại hội đồng cổ đông", w: ["Chỉ cần tổng giám đốc ký", "Ngân hàng Nhà nước", "Sở Giao dịch Chứng khoán"], e: "Cổ đông nên xem xét kỹ vì ESOP giá thấp gây pha loãng." },
+  { q: "Ban kiểm soát (hoặc Ủy ban kiểm toán) trong công ty cổ phần có nhiệm vụ gì?", a: "Giám sát HĐQT, ban điều hành và kiểm tra tính trung thực của báo cáo tài chính", w: ["Bán hàng và marketing", "Quyết định chia cổ tức", "Điều hành sản xuất"], e: "Thay mặt cổ đông giám sát hoạt động quản lý công ty." },
+  { q: "Doanh nghiệp muốn chào bán cổ phiếu lần đầu ra công chúng (IPO) cần làm gì?", a: "Đăng ký chào bán với Ủy ban Chứng khoán Nhà nước và đáp ứng các điều kiện theo luật", w: ["Chỉ cần thông báo trên mạng xã hội", "Xin phép Ngân hàng Nhà nước", "Không cần thủ tục gì"], e: "Hồ sơ gồm bản cáo bạch, báo cáo tài chính kiểm toán, phương án sử dụng vốn…" },
+  { q: "Bản cáo bạch (prospectus) là gì?", a: "Tài liệu công bố thông tin về doanh nghiệp và đợt chào bán chứng khoán", w: ["Báo cáo thuế hằng năm", "Hợp đồng lao động", "Biên bản họp HĐQT"], e: "Nhà đầu tư nên đọc bản cáo bạch trước khi mua cổ phiếu IPO." }
+];
+
 /* ===== Tiện ích ===== */
 const $ = id => document.getElementById(id);
 const store = {
@@ -869,14 +1070,14 @@ function bizDistractors(s) {
 }
 /* Câu hỏi từ ngân hàng câu hỏi kiến thức */
 const bankQ = (label) => item => ({
-  label, main: item.q, cls: "big desc", chart: item.chart,
+  label, main: item.q, cls: "big desc", chart: item.chart, table: item.table,
   opts: shuffle([item.a, ...item.w]).map(x => ({ id: x, html: esc(x) })), ans: item.a,
   explain: ok => `<div>${ok ? "✓ Chính xác!" : `✗ Chưa đúng. Đáp án: <b>${esc(item.a)}</b>.`}</div><p>${esc(item.e)}</p>`,
   review: ["", `${item.q} → ${item.a}`]
 });
 const bankBoard = (bank, topics) => ({
   head: ["Câu hỏi", "Đáp án"],
-  rows: () => bank.map(x => [(topics && x.sec ? `<span class="tag">${topics[x.sec]}</span>` : "") + esc(x.q) + (x.chart ? `<span class="thumb">${chartSVG(x.chart, 200, 90)}</span>` : ""), `<b>${esc(x.a)}</b><small>${esc(x.e)}</small>`]),
+  rows: () => bank.map(x => [(topics && x.sec ? `<span class="tag">${topics[x.sec]}</span>` : "") + esc(x.q) + (x.chart ? `<span class="thumb">${chartSVG(x.chart, 200, 90)}</span>` : "") + (x.table ? `<small>${esc(tableText(x.table))}</small>` : ""), `<b>${esc(x.a)}</b><small>${esc(x.e)}</small>`]),
   search: "Tìm trong câu hỏi hoặc đáp án…", first: false
 });
 
@@ -1017,6 +1218,18 @@ const PARTS = [
     id: "sectors", hash: "nganh", title: "Đọc hiểu theo ngành", desc: "Chọn ngành để ôn: ngân hàng, BĐS, thép…",
     sectors: true, topics: SECTOR_TOPICS,
     items: () => SECTOR_Q, make: it => bankQ("Đọc hiểu ngành · " + SECTOR_TOPICS[it.sec])(it), board: bankBoard(SECTOR_Q, SECTOR_TOPICS)
+  },
+  {
+    id: "macro", hash: "vi-mo", title: "Kinh tế vĩ mô", desc: "Lãi suất, tỷ giá, lạm phát, Fed, dòng tiền.",
+    items: () => MACRO, make: bankQ("Kinh tế vĩ mô & thị trường"), board: bankBoard(MACRO)
+  },
+  {
+    id: "valuation", hash: "dinh-gia", title: "Định giá doanh nghiệp", desc: "DCF, PEG, EV/EBITDA, biên an toàn.",
+    items: () => VALUATION, make: bankQ("Định giá doanh nghiệp"), board: bankBoard(VALUATION)
+  },
+  {
+    id: "govern", hash: "co-dong", title: "Quyền cổ đông & công bố thông tin", desc: "ĐHCĐ, cổ đông lớn, nội bộ, hủy niêm yết.",
+    items: () => GOVERN, make: bankQ("Quyền cổ đông & công bố thông tin"), board: bankBoard(GOVERN)
   }
 ];
 const PART = Object.fromEntries(PARTS.map((p, i) => [p.id, Object.assign(p, { num: i + 1 })]));
@@ -1120,7 +1333,7 @@ function renderQ() {
   $("qLabel").textContent = q.label;
   $("qMain").textContent = q.main; $("qMain").className = q.cls;
   $("qSub").textContent = q.sub || ""; $("qSub").hidden = !q.sub;
-  $("qChart").innerHTML = q.chart ? chartSVG(q.chart) : ""; $("qChart").hidden = !q.chart;
+  $("qChart").innerHTML = q.chart ? chartSVG(q.chart) : q.table ? tableHTML(q.table) : ""; $("qChart").hidden = !q.chart && !q.table;
   $("typeForm").hidden = !q.type; $("opts").hidden = !!q.type;
   if (q.type) {
     const inp = $("typeInput"); inp.value = ""; inp.className = ""; inp.disabled = false; inp.focus();
