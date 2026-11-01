@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Quiz kiến thức chứng khoán Việt Nam: mã cổ phiếu và lĩnh vực hoạt động chính của các doanh nghiệp niêm yết trên HOSE, HNX, UPCoM.">
+<meta name="description" content="Quiz kiến thức chứng khoán Việt Nam: mã cổ phiếu, lĩnh vực kinh doanh, quy định giao dịch, chỉ số, báo cáo tài chính và lịch sử thị trường.">
 <title>Bảng Điện Quiz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,26 +13,24 @@
 :root {
   --bg: #f3f5f2; --card: #ffffff; --opt: #f7f9f6; --ink: #121815; --muted: #5f6b65; --line: #dde3de;
   --up: #11935a; --up-soft: #dcf3e7; --down: #d23b3b; --down-soft: #fbe2e0; --ref: #b88a00; --ceil: #8a3fc7; --floor: #1a8fb8;
-  --p1: #11935a; --p2: #8a3fc7;
-  --accent: var(--p1); --accent-ink: #ffffff;
+  --c1: #11935a; --c2: #8a3fc7; --c3: #2a72c9; --c4: #c2570c; --c5: #0e8a8a; --c6: #c2366b; --c7: #6d5bd0; --c8: #a07a00; --c9: #3d7a1f; --c10: #b8432b;
+  --accent: var(--c1); --accent-ink: #ffffff;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #0b0f0d; --card: #131916; --opt: #18201c; --ink: #e9efeb; --muted: #8d9a93; --line: #25302a;
     --up: #2fd47f; --up-soft: #12301f; --down: #ff6363; --down-soft: #3a1717; --ref: #f2c230; --ceil: #c98bff; --floor: #4fd1ff;
-    --p1: #2fd47f; --p2: #c98bff; --accent-ink: #06130c;
+    --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --accent-ink: #06130c;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #0b0f0d; --card: #131916; --opt: #18201c; --ink: #e9efeb; --muted: #8d9a93; --line: #25302a;
   --up: #2fd47f; --up-soft: #12301f; --down: #ff6363; --down-soft: #3a1717; --ref: #f2c230; --ceil: #c98bff; --floor: #4fd1ff;
-  --p1: #2fd47f; --p2: #c98bff; --accent-ink: #06130c;
+  --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --accent-ink: #06130c;
   color-scheme: dark;
 }
-body[data-part="ticker"] { --accent: var(--p1); }
-body[data-part="biz"] { --accent: var(--p2); }
 * { box-sizing: border-box; }
 html { background: var(--bg); }
 body {
@@ -65,15 +63,15 @@ h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; }
 .mast p { margin: 0; color: var(--muted); max-width: 60ch; }
 
 /* Chọn phần */
-.parts { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.parts { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr)); }
 .part { text-align: left; background: var(--card); border: 1.5px solid var(--line); border-radius: 16px; padding: 16px 18px; display: grid; gap: 6px; position: relative; overflow: hidden; transition: border-color .15s, transform .15s; }
 .part::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: var(--c); }
 .part:hover { transform: translateY(-1px); }
 .part[aria-selected="true"] { border-color: var(--c); box-shadow: inset 0 0 0 1px var(--c); }
 .part .num { font-family: "JetBrains Mono", monospace; font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--c); }
-.part h2 { font-size: 21px; }
+.part h2 { font-size: 17px; }
 .part p { margin: 0; font-size: 13px; color: var(--muted); }
-.part .meta { display: flex; gap: 16px; font-size: 13px; color: var(--muted); }
+.part .meta { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--muted); }
 .part .meta b { font-family: "JetBrains Mono", monospace; color: var(--ink); }
 
 /* Panel chung */
@@ -140,6 +138,11 @@ h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; }
 .board .sec { color: var(--muted); }
 @media (max-width: 540px) { .board .sec { display: none; } }
 .note { font-size: 13px; color: var(--muted); margin: 0; }
+.board.text td:first-child { font-family: inherit; font-weight: 500; color: var(--ink); width: auto; }
+.board.text td:first-child + td { width: 45%; }
+.board td .mono, .opt .mono { font-family: "JetBrains Mono", monospace; }
+.board td.empty { color: var(--muted); font-family: inherit; font-weight: 400; }
+.opt.tk span { font: inherit; }
 footer { text-align: center; font-size: 13px; color: var(--muted); }
 </style>
 </head>
@@ -153,7 +156,7 @@ footer { text-align: center; font-size: 13px; color: var(--muted); }
       <button class="theme" id="themeBtn" type="button">Giao diện: Tự động</button>
     </div>
     <h1>Bảng Điện <span>Quiz</span></h1>
-    <p>Ôn kiến thức về các doanh nghiệp niêm yết trên HOSE, HNX và UPCoM. Mỗi phần là một bộ câu hỏi riêng, chọn phần muốn ôn rồi bắt đầu.</p>
+    <p>Ôn kiến thức chứng khoán Việt Nam qua 10 phần: từ mã cổ phiếu, lĩnh vực kinh doanh của doanh nghiệp đến quy định giao dịch, chỉ số, báo cáo tài chính và lịch sử thị trường. Mỗi phần là một bộ câu hỏi riêng.</p>
   </header>
 
   <nav class="parts" id="parts" role="tablist" aria-label="Chọn phần"></nav>
@@ -163,12 +166,9 @@ footer { text-align: center; font-size: 13px; color: var(--muted); }
     <div class="panel-head">
       <span class="label" id="setupLabel"></span>
       <h2 id="setupTitle"></h2>
+      <p class="note" id="setupDesc"></p>
     </div>
-    <div class="field" id="modesField">
-      <span class="label">Kiểu câu hỏi</span>
-      <div class="modes" id="modes"></div>
-    </div>
-    <div class="field">
+    <div class="field" id="sectorsField">
       <span class="label">Ngành</span>
       <div class="chips" id="sectors"></div>
     </div>
@@ -222,14 +222,14 @@ footer { text-align: center; font-size: 13px; color: var(--muted); }
       <h2>Ôn lại trước khi chơi</h2>
     </div>
     <input class="search" id="search" type="search" aria-label="Tìm kiếm">
-    <table class="board">
+    <table class="board" id="board">
       <thead><tr id="boardHead"></tr></thead>
       <tbody id="boardBody"></tbody>
     </table>
     <p class="note">Dữ liệu dùng để ôn tập, không phải khuyến nghị đầu tư. Doanh nghiệp có thể đổi tên, chuyển sàn, hủy niêm yết hoặc mở rộng lĩnh vực kinh doanh; hãy kiểm tra lại trên website của sở giao dịch khi cần chính xác.</p>
   </section>
 
-  <footer>Kiến thức chứng khoán · Phần 1: Mã cổ phiếu · Phần 2: Lĩnh vực hoạt động chính</footer>
+  <footer>Bảng Điện Quiz · 10 phần kiến thức chứng khoán Việt Nam · Chỉ để ôn tập, không phải khuyến nghị đầu tư</footer>
 </main>
 
 <script>
@@ -441,22 +441,178 @@ const BY_T = Object.fromEntries(STOCKS.map(s => [s.t, s]));
 /* Tên thường gọi trùng mã (SHB, FPT, PV GAS…) sẽ lộ đáp án, nên khi hỏi thì dùng tên đầy đủ */
 const leaks = s => s.short.toUpperCase().replace(/\s/g, "").includes(s.t);
 
-/* ===== Hai phần, tách biệt hoàn toàn (thiết lập, điểm cao nhất, bảng tra cứu riêng) ===== */
-const PARTS = {
-  ticker: {
-    num: "Phần 1", title: "Mã cổ phiếu", desc: "Nhìn tên doanh nghiệp, gõ đúng mã cổ phiếu.", color: "var(--p1)",
-    modes: [
-      { id: "type", ex: "Vinamilk → V_ _", title: "Tự gõ mã", desc: "Nhìn tên doanh nghiệp, gõ chính xác mã cổ phiếu." }
-    ]
-  },
-  biz: {
-    num: "Phần 2", title: "Lĩnh vực hoạt động chính", desc: "Đọc lĩnh vực hoạt động, chọn đúng mã doanh nghiệp.", color: "var(--p2)",
-    modes: [
-      { id: "b2t", ex: "Sản xuất xi măng → ?", title: "Lĩnh vực → Mã", desc: "Đọc lĩnh vực hoạt động, chọn đúng mã cổ phiếu." }
-    ]
-  }
+/* ===== Phần 5: sàn niêm yết =====
+   Chỉ gồm các mã có sàn niêm yết ổn định nhiều năm. Mã từng/sắp chuyển sàn (BSR, ACV, VTP, MCH…) được bỏ ra. */
+const EXCH = {
+  HOSE: "VCB BID CTG TCB MBB VPB ACB HDB STB TPB VIB SHB SSB LPB EIB MSB OCB VIC VHM VRE NVL PDR KDH NLG DXG DIG KBC BCM SZC SSI VND HCM VCI FTS BVH MSN MWG FRT DGW PNJ VNM SAB KDC VHC ANV HPG HSG NKG DGC DPM DCM GVR PHR BMP REE CTD VCG GAS PLX PVD POW NT2 VJC HVN GMD HAH PVT FPT CMG DHG IMP TCM MSH GEX HHV CII PC1 GEG",
+  HNX: "SHS MBS PVS IDC CEO TNG VCS NTP LAS PVI HUT NVB DHT",
+  UPCoM: "VGI MML QNS FOX FOC VNZ DVN MPC LTG OIL VGT VGG MVN QTP"
 };
-const LENGTHS = [10, 20, 30, "all"];
+const EXCH_OF = {};
+for (const [ex, list] of Object.entries(EXCH)) for (const t of list.split(" ")) EXCH_OF[t] = ex;
+
+/* ===== Phần 6: tập đoàn & công ty con ===== */
+const GROUPS = [
+  { name: "Vingroup", members: ["VIC", "VHM", "VRE"], note: "VinFast niêm yết tại Mỹ (mã VFS), không có mã riêng trên sàn Việt Nam." },
+  { name: "Masan", members: ["MSN", "MCH", "MML"], note: "Masan còn sở hữu WinCommerce (WinMart) và Phúc Long, nhưng hai công ty này không niêm yết riêng." },
+  { name: "FPT", members: ["FPT", "FRT", "FOX", "FOC"], note: "FRT là FPT Retail, FOX là FPT Telecom, FOC là FPT Online." },
+  { name: "Viettel", members: ["VTP", "CTR", "VGI"], note: "Viettel Post, Viettel Construction và Viettel Global đều là công ty con của Tập đoàn Viettel." },
+  { name: "Petrovietnam (PVN)", members: ["GAS", "POW", "PVD", "PVS", "PVT", "BSR", "DPM", "DCM", "OIL", "NT2"], note: "Tập đoàn Dầu khí Việt Nam có nhiều công ty con niêm yết, phần lớn có chữ \"Dầu khí\" trong tên. NT2 là công ty con của PV Power (POW)." },
+  { name: "Petrolimex", members: ["PLX", "PGC"], note: "Gas Petrolimex (PGC) là công ty con của Tập đoàn Xăng dầu Việt Nam (PLX)." },
+  { name: "Cao su Việt Nam (VRG)", members: ["GVR", "PHR", "DPR"], note: "Phước Hòa và Đồng Phú là công ty con của Tập đoàn Công nghiệp Cao su Việt Nam (GVR)." },
+  { name: "GELEX", members: ["GEX", "VGC"], note: "GELEX nắm quyền chi phối Viglacera (VGC)." },
+  { name: "Đất Xanh", members: ["DXG", "DXS"], note: "DXS là công ty dịch vụ, môi giới bất động sản của Tập đoàn Đất Xanh." },
+  { name: "Thành Thành Công (TTC)", members: ["SBT", "SCR"], note: "TTC AgriS (SBT) và TTC Land (SCR) cùng thuộc hệ sinh thái Thành Thành Công." }
+];
+const GROUP_OF = {};
+GROUPS.forEach((g, i) => g.members.forEach(t => GROUP_OF[t] = i));
+/* Các mã có quan hệ sở hữu không rõ ràng với các tập đoàn trên — không dùng làm đáp án nhiễu */
+const GROUP_AMBIG = new Set("FTS PVI PGS EVF QTP PPC PGV PLC SIP TCM VGG HTG VGT PAN HAG DRC".split(" "));
+
+/* ===== Phần 7: thương hiệu → mã ===== */
+const BRANDS = [
+  ["Nhà thuốc Long Châu", "FRT"], ["FPT Shop", "FRT"], ["Điện Máy Xanh", "MWG"], ["Bách Hóa Xanh", "MWG"],
+  ["Nhà thuốc An Khang", "MWG"], ["TopZone (đại lý Apple)", "MWG"], ["Siêu thị WinMart, WinMart+", "MSN"], ["Trà & cà phê Phúc Long", "MSN"],
+  ["Nước mắm, tương ớt Chin-su", "MCH"], ["Mì Omachi, Kokomi", "MCH"], ["Nước tăng lực Wake-up 247", "MCH"], ["Cà phê Vinacafé", "MCH"],
+  ["Thịt mát MEATDeli", "MML"], ["Bia Sài Gòn, bia 333", "SAB"], ["Bia Hà Nội, bia Trúc Bạch", "BHN"], ["Sữa đặc Ông Thọ, sữa chua Probi", "VNM"],
+  ["Sữa đậu nành Vinasoy, Fami", "QNS"], ["Dầu ăn Tường An", "KDC"], ["Kem Merino, Celano", "KDC"], ["Bút bi Thiên Long, Điểm 10", "TLG"],
+  ["Zalo, ZaloPay", "VNZ"], ["Báo VnExpress", "FOC"], ["FPT Play", "FOX"], ["Hoạt huyết dưỡng não, Boganic", "TRA"],
+  ["Thuốc hạ sốt Hapacol", "DHG"], ["Xe điện VinFast", "VIC"], ["Bệnh viện Vinmec, trường Vinschool", "VIC"], ["Vincom Center, Vincom Plaza", "VRE"],
+  ["Vinhomes Ocean Park", "VHM"], ["Khu đô thị Aqua City", "NVL"], ["Tôn Hoa Sen", "HSG"], ["Điện lạnh Funiki", "HPG"],
+  ["Lốp xe Casumina", "CSM"], ["Dây cáp điện CADIVI", "GEX"], ["Phân bón Đầu Trâu", "BFC"], ["Gạo Hạt Ngọc Trời", "LTG"],
+  ["Bánh kẹo Bibica", "PAN"], ["Cảng Gemalink", "GMD"], ["Thu phí không dừng VETC", "HUT"], ["Nhà máy lọc dầu Dung Quất", "BSR"],
+  ["Sân bay Tân Sơn Nhất, Nội Bài (khai thác)", "ACV"], ["Gas Petrolimex (gas bình)", "PGC"], ["Trang sức Style by PNJ", "PNJ"], ["Bóng đèn, phích nước Rạng Đông", "RAL"],
+  ["Hầm Hải Vân, hầm Đèo Cả", "HHV"], ["Kính, sứ vệ sinh Viglacera", "VGC"], ["Đá thạch anh Vicostone", "VCS"], ["Ống nhựa Bình Minh", "BMP"]
+].map(([b, t]) => ({ b, t }));
+
+/* ===== Ngân hàng câu hỏi kiến thức: q câu hỏi, a đáp án đúng, w 3 đáp án sai, e giải thích ===== */
+const TERMS = [
+  { q: "Chỉ số nào cho biết nhà đầu tư đang trả bao nhiêu đồng cho mỗi 1 đồng lợi nhuận của doanh nghiệp?", a: "P/E", w: ["P/B", "ROE", "EPS"], e: "P/E = Giá cổ phiếu ÷ EPS. P/E = 10 nghĩa là trả 10 đồng cho 1 đồng lợi nhuận mỗi năm." },
+  { q: "EPS là gì?", a: "Lợi nhuận sau thuế (của cổ đông công ty mẹ) chia cho số cổ phiếu đang lưu hành", w: ["Giá cổ phiếu chia cho lợi nhuận", "Doanh thu chia cho số cổ phiếu", "Cổ tức tiền mặt trên mỗi cổ phiếu"], e: "EPS (Earnings Per Share) là lợi nhuận trên mỗi cổ phiếu." },
+  { q: "P/B so sánh giá cổ phiếu với gì?", a: "Giá trị sổ sách (vốn chủ sở hữu) trên mỗi cổ phiếu", w: ["Lợi nhuận trên mỗi cổ phiếu", "Doanh thu trên mỗi cổ phiếu", "Mệnh giá cổ phiếu"], e: "P/B < 1 nghĩa là thị trường định giá thấp hơn giá trị sổ sách. Chỉ số này hay dùng cho ngân hàng, chứng khoán." },
+  { q: "ROE đo lường điều gì?", a: "Lợi nhuận sau thuế tạo ra trên mỗi đồng vốn chủ sở hữu", w: ["Lợi nhuận trên tổng tài sản", "Tốc độ tăng doanh thu", "Tỷ lệ nợ trên vốn"], e: "ROE = LNST ÷ Vốn chủ sở hữu bình quân. ROE cao cho thấy doanh nghiệp dùng vốn cổ đông hiệu quả." },
+  { q: "ROA đo lường điều gì?", a: "Lợi nhuận sau thuế tạo ra trên mỗi đồng tổng tài sản", w: ["Lợi nhuận trên vốn chủ sở hữu", "Doanh thu trên tổng tài sản", "Tỷ lệ tài sản ngắn hạn trên nợ ngắn hạn"], e: "ROA = LNST ÷ Tổng tài sản bình quân." },
+  { q: "Vốn hóa thị trường của một công ty được tính thế nào?", a: "Giá cổ phiếu × số cổ phiếu đang lưu hành", w: ["Vốn điều lệ × 10", "Tổng tài sản − nợ phải trả", "Doanh thu × P/E"], e: "Vốn hóa phản ánh giá trị thị trường của toàn bộ cổ phần tại một thời điểm." },
+  { q: "Mệnh giá cổ phiếu phổ thông niêm yết ở Việt Nam là bao nhiêu?", a: "10.000 đồng", w: ["1.000 đồng", "100.000 đồng", "Bằng giá đóng cửa phiên đầu tiên"], e: "Mệnh giá thống nhất 10.000 đồng/cổ phiếu, khác hoàn toàn với giá giao dịch trên thị trường." },
+  { q: "Công ty trả cổ tức tiền mặt 15%. Mỗi cổ phiếu nhận bao nhiêu?", a: "1.500 đồng", w: ["15% giá thị trường", "15.000 đồng", "150 đồng"], e: "Ở Việt Nam, tỷ lệ cổ tức tính trên mệnh giá 10.000 đồng: 15% × 10.000 = 1.500 đồng." },
+  { q: "Thanh khoản của cổ phiếu là gì?", a: "Khả năng mua bán nhanh với khối lượng lớn mà giá không biến động nhiều", w: ["Lượng tiền mặt doanh nghiệp đang có", "Số cổ đông của công ty", "Mức cổ tức hàng năm"], e: "Cổ phiếu thanh khoản thấp thường khó bán khi cần và dễ bị trượt giá." },
+  { q: "Giao dịch ký quỹ (margin) là gì?", a: "Vay tiền công ty chứng khoán để mua thêm cổ phiếu, dùng cổ phiếu làm tài sản đảm bảo", w: ["Gửi tiết kiệm tại công ty chứng khoán", "Mua cổ phiếu trả góp từ doanh nghiệp", "Đặt cọc để tham gia IPO"], e: "Margin khuếch đại cả lãi lẫn lỗ và phải trả lãi vay." },
+  { q: "\"Call margin\" xảy ra khi nào?", a: "Tỷ lệ ký quỹ trong tài khoản xuống dưới mức duy trì, phải nộp thêm tiền hoặc bán bớt", w: ["Khi cổ phiếu tăng trần", "Khi công ty trả cổ tức", "Khi đặt lệnh sai giá"], e: "Nếu không bổ sung kịp, công ty chứng khoán sẽ bán giải chấp (force sell)." },
+  { q: "\"Room ngoại\" là gì?", a: "Tỷ lệ sở hữu tối đa nhà đầu tư nước ngoài được nắm giữ tại một doanh nghiệp", w: ["Phòng giao dịch dành cho người nước ngoài", "Hạn mức vay ngoại tệ của doanh nghiệp", "Số cổ phiếu được bán ra nước ngoài mỗi ngày"], e: "Khi \"hết room\", nhà đầu tư nước ngoài chỉ mua được khi có nhà đầu tư nước ngoài khác bán ra." },
+  { q: "Cổ phiếu blue-chip là gì?", a: "Cổ phiếu của doanh nghiệp lớn, uy tín, vốn hóa và thanh khoản cao", w: ["Cổ phiếu có giá dưới 10.000 đồng", "Cổ phiếu mới niêm yết", "Cổ phiếu ngành công nghệ"], e: "Ví dụ: VCB, FPT, HPG, VNM thường được xem là blue-chip." },
+  { q: "Cổ phiếu \"penny\" thường được hiểu là?", a: "Cổ phiếu thị giá thấp, vốn hóa nhỏ, biến động mạnh và rủi ro cao", w: ["Cổ phiếu trả cổ tức cao", "Cổ phiếu của ngân hàng", "Cổ phiếu chỉ giao dịch lô lẻ"], e: "Ở Việt Nam thường chỉ các mã giá dưới 10.000 đồng." },
+  { q: "Cổ phiếu quỹ là gì?", a: "Cổ phiếu do chính công ty phát hành mua lại", w: ["Cổ phiếu do quỹ đầu tư nắm giữ", "Cổ phiếu của các quỹ ETF", "Cổ phiếu thưởng cho nhân viên"], e: "Cổ phiếu quỹ không được chia cổ tức và không có quyền biểu quyết." },
+  { q: "Phát hành cổ phiếu thưởng hoặc chia tách cổ phiếu sẽ làm giá tham chiếu thế nào vào ngày GDKHQ?", a: "Điều chỉnh giảm tương ứng, tổng giá trị nắm giữ không đổi", w: ["Tăng lên do có thêm cổ phiếu", "Giữ nguyên", "Tăng gấp đôi"], e: "Số cổ phiếu tăng nhưng giá điều chỉnh giảm, nên tài sản của cổ đông không đổi tại thời điểm đó." },
+  { q: "Pha loãng cổ phiếu là hiện tượng gì?", a: "Số cổ phiếu tăng làm EPS và tỷ lệ sở hữu của cổ đông hiện hữu giảm", w: ["Giá cổ phiếu tăng do tin tốt", "Công ty mua lại cổ phiếu", "Cổ phiếu bị hủy niêm yết"], e: "Thường xảy ra khi phát hành thêm cổ phiếu, ESOP hoặc chuyển đổi trái phiếu." },
+  { q: "ESOP là gì?", a: "Cổ phiếu phát hành cho người lao động, thường với giá ưu đãi", w: ["Quỹ hoán đổi danh mục", "Hợp đồng tương lai chỉ số", "Lệnh mua giá thị trường"], e: "ESOP (Employee Stock Ownership Plan) gây pha loãng nếu phát hành nhiều với giá thấp." },
+  { q: "ETF là gì?", a: "Quỹ hoán đổi danh mục, mô phỏng biến động của một chỉ số và giao dịch như cổ phiếu", w: ["Quỹ tiết kiệm có kỳ hạn", "Trái phiếu doanh nghiệp", "Chứng chỉ tiền gửi"], e: "Ví dụ: E1VFVN30 mô phỏng chỉ số VN30." },
+  { q: "Chứng quyền có bảo đảm (CW) cho người sở hữu quyền gì?", a: "Quyền mua (hoặc bán) cổ phiếu cơ sở ở mức giá thực hiện vào thời điểm đáo hạn", w: ["Quyền nhận cổ tức gấp đôi", "Quyền biểu quyết tại đại hội cổ đông", "Quyền vay margin không lãi"], e: "Trên thị trường Việt Nam hiện mới có chứng quyền mua; mã chứng quyền bắt đầu bằng chữ C." },
+  { q: "IPO là gì?", a: "Lần đầu chào bán cổ phiếu ra công chúng", w: ["Chia cổ tức lần đầu", "Phát hành trái phiếu quốc tế", "Mua lại cổ phiếu quỹ"], e: "IPO = Initial Public Offering." },
+  { q: "Free float là gì?", a: "Lượng cổ phiếu tự do chuyển nhượng, không bị cổ đông chiến lược hay Nhà nước nắm giữ dài hạn", w: ["Cổ phiếu được tặng miễn phí", "Cổ phiếu không có mệnh giá", "Cổ phiếu chưa niêm yết"], e: "Free float thấp làm cổ phiếu dễ biến động và có tỷ trọng thấp hơn trong chỉ số." },
+  { q: "Cổ phiếu ưu đãi khác cổ phiếu phổ thông chủ yếu ở điểm nào?", a: "Có ưu đãi về cổ tức hoặc biểu quyết nhưng thường bị hạn chế quyền khác", w: ["Luôn có giá cao hơn", "Được giao dịch trên sàn riêng", "Không bao giờ được chia cổ tức"], e: "Cổ phiếu niêm yết trên sàn chủ yếu là cổ phiếu phổ thông." },
+  { q: "\"Bắt đáy\" là gì?", a: "Mua vào khi cho rằng giá đã giảm đến vùng thấp nhất", w: ["Bán ra khi giá lên đỉnh", "Đặt lệnh giá sàn để bán", "Vay margin tối đa"], e: "Rất khó xác định đáy chính xác; bắt đáy sớm có thể \"bắt dao rơi\"." },
+  { q: "\"Đu đỉnh\" là gì?", a: "Mua ở vùng giá cao rồi giá giảm mạnh sau đó", w: ["Bán đúng ở đỉnh giá", "Mua cổ phiếu tăng trần", "Giữ cổ phiếu dài hạn"], e: "Thường xảy ra khi mua theo đám đông lúc thị trường hưng phấn." },
+  { q: "Thị trường \"bò\" (bull market) là thị trường thế nào?", a: "Giá tăng kéo dài, tâm lý lạc quan", w: ["Giá giảm kéo dài", "Thanh khoản thấp", "Đi ngang trong biên độ hẹp"], e: "Ngược lại là thị trường \"gấu\" (bear market): giá giảm kéo dài." },
+  { q: "Trên bảng điện, \"dư mua\" thể hiện điều gì?", a: "Khối lượng đặt mua chưa được khớp ở các mức giá mua tốt nhất", w: ["Khối lượng đã khớp trong phiên", "Số cổ phiếu nhà đầu tư nước ngoài mua", "Số tiền còn dư trong tài khoản"], e: "Dư mua lớn hơn dư bán thường cho thấy lực cầu mạnh hơn." },
+  { q: "Hợp đồng tương lai chỉ số VN30 cho phép nhà đầu tư làm gì?", a: "Kiếm lời từ cả chiều tăng (Long) lẫn chiều giảm (Short) của chỉ số VN30", w: ["Mua cổ phiếu VN30 với giá chiết khấu", "Nhận cổ tức của 30 doanh nghiệp", "Vay tiền theo chỉ số VN30"], e: "Đây là sản phẩm phái sinh, có đòn bẩy và rủi ro cao." },
+  { q: "Tỷ suất cổ tức (dividend yield) được tính thế nào?", a: "Cổ tức mỗi cổ phiếu trong năm ÷ giá cổ phiếu", w: ["Cổ tức ÷ mệnh giá", "Lợi nhuận ÷ vốn điều lệ", "Cổ tức ÷ EPS"], e: "Ví dụ: cổ tức 2.000 đồng, giá 40.000 đồng → tỷ suất 5%." },
+  { q: "Tỷ lệ chi trả cổ tức (payout ratio) cho biết gì?", a: "Phần trăm lợi nhuận được dùng để trả cổ tức", w: ["Phần trăm cổ đông nhận cổ tức", "Phần trăm vốn dùng trả nợ", "Tỷ suất cổ tức trên giá"], e: "Payout ratio = Cổ tức ÷ EPS." }
+];
+
+const RULES = [
+  { q: "Biên độ dao động giá cổ phiếu trong ngày trên sàn HOSE là bao nhiêu?", a: "±7%", w: ["±10%", "±15%", "±5%"], e: "HOSE ±7%, HNX ±10%, UPCoM ±15% so với giá tham chiếu." },
+  { q: "Biên độ dao động giá cổ phiếu trên sàn HNX là bao nhiêu?", a: "±10%", w: ["±7%", "±15%", "±20%"], e: "HOSE ±7%, HNX ±10%, UPCoM ±15%." },
+  { q: "Biên độ dao động giá cổ phiếu trên UPCoM là bao nhiêu?", a: "±15%", w: ["±7%", "±10%", "±30%"], e: "UPCoM có biên độ rộng nhất trong ba sàn." },
+  { q: "Ngày giao dịch đầu tiên của cổ phiếu mới niêm yết trên HOSE có biên độ bao nhiêu?", a: "±20%", w: ["±7%", "±30%", "Không giới hạn"], e: "Ngày đầu niêm yết: HOSE ±20%, HNX ±30%, UPCoM ±40%." },
+  { q: "Giá tham chiếu một mã trên HOSE là 20.000 đồng. Giá trần là bao nhiêu?", a: "21.400 đồng", w: ["22.000 đồng", "21.000 đồng", "20.700 đồng"], e: "20.000 × 1,07 = 21.400. Giá sàn là 18.600 đồng." },
+  { q: "Lô chẵn trên sàn HOSE và HNX là bao nhiêu cổ phiếu?", a: "100 cổ phiếu", w: ["10 cổ phiếu", "1.000 cổ phiếu", "1 cổ phiếu"], e: "Giao dịch khớp lệnh lô chẵn theo bội số của 100 cổ phiếu." },
+  { q: "Trên HOSE, cổ phiếu giá 25.000 đồng có bước giá bao nhiêu?", a: "50 đồng", w: ["10 đồng", "100 đồng", "500 đồng"], e: "HOSE: dưới 10.000đ bước 10đ; 10.000–49.950đ bước 50đ; từ 50.000đ bước 100đ." },
+  { q: "Trên HOSE, cổ phiếu giá 8.500 đồng có bước giá bao nhiêu?", a: "10 đồng", w: ["50 đồng", "100 đồng", "1 đồng"], e: "Cổ phiếu dưới 10.000 đồng trên HOSE có bước giá 10 đồng." },
+  { q: "Trên HOSE, cổ phiếu giá 120.000 đồng có bước giá bao nhiêu?", a: "100 đồng", w: ["50 đồng", "500 đồng", "1.000 đồng"], e: "Từ 50.000 đồng trở lên, bước giá là 100 đồng." },
+  { q: "Bước giá cổ phiếu trên HNX và UPCoM là bao nhiêu?", a: "100 đồng cho mọi mức giá", w: ["10 đồng", "50 đồng", "Tùy mức giá như HOSE"], e: "HNX và UPCoM dùng một bước giá duy nhất là 100 đồng." },
+  { q: "Phiên khớp lệnh định kỳ mở cửa (ATO) trên HOSE diễn ra lúc nào?", a: "9:00 – 9:15", w: ["8:30 – 9:00", "9:15 – 9:30", "14:30 – 14:45"], e: "Sau ATO là phiên khớp lệnh liên tục buổi sáng đến 11:30." },
+  { q: "Phiên khớp lệnh định kỳ đóng cửa (ATC) diễn ra lúc nào?", a: "14:30 – 14:45", w: ["14:00 – 14:15", "14:45 – 15:00", "11:15 – 11:30"], e: "Giá khớp phiên ATC thường là giá đóng cửa của ngày." },
+  { q: "Thời gian nghỉ trưa của thị trường chứng khoán Việt Nam là?", a: "11:30 – 13:00", w: ["12:00 – 13:00", "11:00 – 13:30", "Không nghỉ trưa"], e: "Phiên chiều mở lại lúc 13:00." },
+  { q: "Phiên khớp lệnh định kỳ mở cửa (ATO) có trên sàn nào?", a: "Chỉ HOSE", w: ["Chỉ HNX", "Cả HOSE và HNX", "Cả ba sàn"], e: "HNX và UPCoM bắt đầu ngày bằng phiên khớp lệnh liên tục lúc 9:00." },
+  { q: "Lệnh PLO (khớp lệnh sau giờ đóng cửa) có trên sàn nào?", a: "HNX", w: ["HOSE", "UPCoM", "Cả ba sàn"], e: "PLO được đặt trong phiên 14:45 – 15:00 trên HNX và khớp ở giá đóng cửa." },
+  { q: "Lệnh LO là loại lệnh gì?", a: "Lệnh giới hạn: mua/bán tại mức giá chỉ định hoặc tốt hơn", w: ["Lệnh mua bán ngay ở giá thị trường", "Lệnh chỉ dùng trong phiên ATO", "Lệnh thỏa thuận giữa hai bên"], e: "LO (Limit Order) là loại lệnh phổ biến nhất, có hiệu lực đến hết ngày nếu chưa khớp." },
+  { q: "Chu kỳ thanh toán giao dịch cổ phiếu ở Việt Nam là?", a: "T+2", w: ["T+0", "T+1", "T+3"], e: "Cổ phiếu mua hôm nay (ngày T) về tài khoản vào ngày làm việc thứ 2 sau đó." },
+  { q: "Trên bảng điện, giá màu tím thể hiện điều gì?", a: "Giá trần", w: ["Giá sàn", "Giá tham chiếu", "Giá giảm"], e: "Tím = trần, xanh lơ = sàn, vàng = tham chiếu, xanh lá = tăng, đỏ = giảm." },
+  { q: "Trên bảng điện, giá màu xanh lơ (xanh dương nhạt) thể hiện điều gì?", a: "Giá sàn", w: ["Giá trần", "Giá tăng nhẹ", "Giá tham chiếu"], e: "Cổ phiếu \"nằm sàn\" là đã giảm hết biên độ cho phép trong ngày." },
+  { q: "Trên bảng điện, giá màu vàng thể hiện điều gì?", a: "Bằng giá tham chiếu", w: ["Giá trần", "Giá sàn", "Có tin tức mới"], e: "Màu vàng nghĩa là giá đứng bằng giá tham chiếu (không tăng, không giảm)." },
+  { q: "Trên bảng điện, giá ghi \"25,5\" nghĩa là?", a: "25.500 đồng", w: ["25,5 đồng", "255.000 đồng", "2.550 đồng"], e: "Giá trên bảng điện thường hiển thị theo đơn vị nghìn đồng." },
+  { q: "Giá tham chiếu cổ phiếu trên HOSE thường là giá nào?", a: "Giá đóng cửa của phiên giao dịch liền trước", w: ["Giá mở cửa hôm nay", "Giá trung bình 5 phiên", "Mệnh giá"], e: "Trừ các trường hợp điều chỉnh vì chia cổ tức, phát hành thêm." },
+  { q: "Giá tham chiếu cổ phiếu trên UPCoM được xác định thế nào?", a: "Bình quân gia quyền giá khớp lệnh của phiên liền trước", w: ["Giá đóng cửa phiên trước", "Giá mở cửa phiên trước", "Do doanh nghiệp tự công bố"], e: "Đây là điểm khác biệt của UPCoM so với HOSE." },
+  { q: "Ngày GDKHQ là gì?", a: "Ngày giao dịch không hưởng quyền: mua từ ngày này sẽ không nhận được quyền (cổ tức, cổ phiếu thưởng…)", w: ["Ngày công ty trả tiền cổ tức", "Ngày tổ chức đại hội cổ đông", "Ngày cổ phiếu bị tạm ngừng giao dịch"], e: "Muốn nhận quyền, phải mua chậm nhất vào phiên liền trước ngày GDKHQ." },
+  { q: "Để nhận cổ tức, nhà đầu tư phải mua cổ phiếu chậm nhất vào ngày nào?", a: "Phiên giao dịch liền trước ngày GDKHQ", w: ["Đúng ngày GDKHQ", "Ngày đăng ký cuối cùng", "Ngày thanh toán cổ tức"], e: "Do thanh toán T+2, mua trước ngày GDKHQ thì kịp có tên trong danh sách ngày đăng ký cuối cùng." },
+  { q: "Cổ phiếu thuộc diện \"hạn chế giao dịch\" trên HOSE được giao dịch khi nào?", a: "Chỉ trong phiên buổi chiều", w: ["Chỉ trong phiên ATO", "Không được giao dịch", "Chỉ giao dịch thỏa thuận"], e: "Diện cảnh báo vẫn giao dịch bình thường; diện kiểm soát, hạn chế giao dịch bị siết hơn." },
+  { q: "Thuế thu nhập cá nhân khi bán cổ phiếu (áp dụng nhiều năm nay) là bao nhiêu?", a: "0,1% trên giá trị bán", w: ["20% trên lợi nhuận", "1% trên giá trị bán", "Không phải nộp thuế"], e: "Thuế tính trên giá trị bán, kể cả khi bán lỗ. Quy định thuế có thể thay đổi, hãy kiểm tra văn bản mới nhất." },
+  { q: "Thuế thu nhập cá nhân đối với cổ tức bằng tiền là bao nhiêu?", a: "5%", w: ["0,1%", "10%", "Không phải nộp thuế"], e: "Công ty chứng khoán khấu trừ trước khi trả cổ tức vào tài khoản." },
+  { q: "Tỷ lệ sở hữu tối đa của nhà đầu tư nước ngoài tại ngân hàng thương mại Việt Nam thường là?", a: "30%", w: ["49%", "100%", "10%"], e: "Do đó nhiều cổ phiếu ngân hàng thường xuyên \"hết room\" ngoại." }
+];
+
+const INDEXES = [
+  { q: "VN-Index phản ánh biến động của nhóm cổ phiếu nào?", a: "Toàn bộ cổ phiếu niêm yết trên HOSE", w: ["30 cổ phiếu lớn nhất HOSE", "Cổ phiếu trên cả ba sàn", "Cổ phiếu trên HNX"], e: "VN-Index là chỉ số chung của Sở Giao dịch Chứng khoán TP. HCM." },
+  { q: "VN-Index có điểm cơ sở là bao nhiêu khi ra đời ngày 28/7/2000?", a: "100 điểm", w: ["1.000 điểm", "500 điểm", "10 điểm"], e: "VN-Index khởi đầu từ 100 điểm với chỉ 2 cổ phiếu là REE và SAM." },
+  { q: "Chỉ số VN30 gồm những cổ phiếu nào?", a: "30 cổ phiếu có vốn hóa và thanh khoản hàng đầu trên HOSE", w: ["30 cổ phiếu tăng mạnh nhất năm", "30 ngân hàng lớn nhất", "30 cổ phiếu trên HNX"], e: "Rổ VN30 là cơ sở của hợp đồng tương lai chỉ số và nhiều quỹ ETF." },
+  { q: "Rổ VN30 được xem xét định kỳ bao lâu một lần?", a: "6 tháng một lần (tháng 1 và tháng 7)", w: ["Mỗi tháng", "Mỗi năm", "Không bao giờ thay đổi"], e: "Vì vậy thành phần VN30 thay đổi theo thời gian." },
+  { q: "HNX30 là chỉ số của sàn nào?", a: "HNX (Hà Nội)", w: ["HOSE", "UPCoM", "Gồm cả HOSE và HNX"], e: "HNX30 gồm 30 cổ phiếu lớn và thanh khoản tốt nhất trên HNX." },
+  { q: "VN100 gồm những chỉ số thành phần nào?", a: "VN30 và VNMidcap", w: ["VN30 và HNX30", "VNMidcap và VNSmallcap", "VN-Index và UPCoM-Index"], e: "VN100 = 30 cổ phiếu vốn hóa lớn (VN30) + 70 cổ phiếu vốn hóa vừa (VNMidcap)." },
+  { q: "Chỉ số VNDiamond tập trung vào nhóm cổ phiếu nào?", a: "Cổ phiếu cơ bản tốt đã hết hoặc gần hết room ngoại", w: ["Cổ phiếu ngành vàng bạc đá quý", "Cổ phiếu penny", "Cổ phiếu mới IPO"], e: "Quỹ ETF FUEVFVND mô phỏng chỉ số VNDiamond." },
+  { q: "Hợp đồng tương lai chỉ số phổ biến nhất ở Việt Nam dựa trên chỉ số nào?", a: "VN30", w: ["VN-Index", "HNX30", "VN100"], e: "Hợp đồng tương lai VN30 ra đời ngày 10/8/2017." },
+  { q: "Quỹ ETF E1VFVN30 mô phỏng chỉ số nào?", a: "VN30", w: ["VNDiamond", "VN-Index", "HNX30"], e: "E1VFVN30 là một trong những ETF nội lâu đời nhất, giao dịch như một cổ phiếu trên HOSE." },
+  { q: "VN-Index được tính theo phương pháp nào?", a: "Theo vốn hóa thị trường (có điều chỉnh tỷ lệ free float)", w: ["Bình quân giá các cổ phiếu", "Theo số lượng nhà đầu tư", "Theo doanh thu doanh nghiệp"], e: "Cổ phiếu vốn hóa lớn có ảnh hưởng mạnh nhất đến chỉ số." },
+  { q: "\"Cổ phiếu trụ\" là gì?", a: "Cổ phiếu vốn hóa lớn, ảnh hưởng mạnh đến biến động của chỉ số", w: ["Cổ phiếu không bao giờ giảm giá", "Cổ phiếu của các công ty xây dựng", "Cổ phiếu được Nhà nước bảo lãnh"], e: "Ví dụ: VCB, VIC, VHM, BID, CTG thường được gọi là nhóm trụ." },
+  { q: "VN-Index tăng điểm nhưng phần lớn cổ phiếu giảm giá. Hiện tượng này thường do đâu?", a: "Một số cổ phiếu trụ vốn hóa lớn tăng mạnh kéo chỉ số", w: ["Lỗi tính toán của sàn", "Nhà đầu tư nước ngoài bán ròng", "Thanh khoản thấp"], e: "Vì vậy cần xem thêm độ rộng thị trường (số mã tăng/giảm), không chỉ nhìn điểm số." },
+  { q: "\"Độ rộng thị trường\" cho biết điều gì?", a: "Tương quan số mã tăng giá so với số mã giảm giá", w: ["Tổng vốn hóa của thị trường", "Số sàn giao dịch đang hoạt động", "Biên độ dao động của chỉ số"], e: "Thị trường tăng mà độ rộng hẹp (ít mã tăng) thường kém bền vững." },
+  { q: "UPCoM-Index phản ánh thị trường nào?", a: "Thị trường giao dịch cổ phiếu của công ty đại chúng chưa niêm yết (UPCoM)", w: ["Cổ phiếu niêm yết trên HOSE", "Thị trường trái phiếu", "Thị trường phái sinh"], e: "UPCoM do Sở Giao dịch Chứng khoán Hà Nội vận hành." },
+  { q: "Chỉ số VNMidcap đại diện cho nhóm nào?", a: "Cổ phiếu vốn hóa vừa trên HOSE", w: ["Cổ phiếu vốn hóa lớn", "Cổ phiếu vốn hóa siêu nhỏ", "Cổ phiếu trên HNX"], e: "VNMidcap gồm 70 cổ phiếu, cùng VN30 tạo thành VN100." },
+  { q: "Thanh khoản thị trường thường được đo bằng gì?", a: "Giá trị giao dịch (số tiền khớp lệnh) trong phiên", w: ["Số điểm tăng giảm của chỉ số", "Số mã tăng trần", "Tổng vốn hóa"], e: "Thanh khoản cao cho thấy dòng tiền tham gia mạnh." }
+];
+
+const FINANCE = [
+  { q: "Ba báo cáo tài chính chính của doanh nghiệp là gì?", a: "Bảng cân đối kế toán, Báo cáo kết quả kinh doanh, Báo cáo lưu chuyển tiền tệ", w: ["Báo cáo thuế, báo cáo nhân sự, báo cáo bán hàng", "Báo cáo thường niên, nghị quyết ĐHCĐ, điều lệ", "Bảng lương, sổ quỹ, hóa đơn"], e: "Kèm theo là thuyết minh báo cáo tài chính." },
+  { q: "Phương trình cơ bản của bảng cân đối kế toán là?", a: "Tổng tài sản = Nợ phải trả + Vốn chủ sở hữu", w: ["Doanh thu = Chi phí + Lợi nhuận", "Tài sản = Doanh thu − Chi phí", "Vốn chủ sở hữu = Tài sản + Nợ"], e: "Tài sản luôn được tài trợ bởi nợ hoặc vốn của chủ sở hữu." },
+  { q: "Doanh thu 1.000 tỷ, lợi nhuận sau thuế 100 tỷ. Biên lợi nhuận ròng là?", a: "10%", w: ["1%", "100%", "90%"], e: "Biên lợi nhuận ròng = LNST ÷ Doanh thu thuần." },
+  { q: "LNST của cổ đông công ty mẹ 50 tỷ đồng, có 10 triệu cổ phiếu lưu hành. EPS là?", a: "5.000 đồng", w: ["500 đồng", "50.000 đồng", "5 đồng"], e: "50.000.000.000 ÷ 10.000.000 = 5.000 đồng/cổ phiếu." },
+  { q: "Giá cổ phiếu 60.000 đồng, EPS 4.000 đồng. P/E là?", a: "15", w: ["6,7", "24", "1,5"], e: "P/E = 60.000 ÷ 4.000 = 15." },
+  { q: "Vốn chủ sở hữu 500 tỷ đồng, 50 triệu cổ phiếu. Giá trị sổ sách mỗi cổ phiếu (BVPS) là?", a: "10.000 đồng", w: ["1.000 đồng", "100.000 đồng", "25.000 đồng"], e: "BVPS = Vốn chủ sở hữu ÷ Số cổ phiếu lưu hành." },
+  { q: "Nợ phải trả 600 tỷ, vốn chủ sở hữu 400 tỷ. Hệ số D/E là?", a: "1,5", w: ["0,67", "0,6", "2,5"], e: "D/E = Nợ ÷ Vốn chủ sở hữu = 600 ÷ 400 = 1,5." },
+  { q: "LNST 80 tỷ, vốn chủ sở hữu bình quân 400 tỷ. ROE là?", a: "20%", w: ["5%", "8%", "32%"], e: "ROE = 80 ÷ 400 = 20%." },
+  { q: "Lợi nhuận gộp được tính thế nào?", a: "Doanh thu thuần − Giá vốn hàng bán", w: ["Doanh thu − Thuế", "Doanh thu − Toàn bộ chi phí", "LNST + Khấu hao"], e: "Biên lợi nhuận gộp cao cho thấy sản phẩm có lợi thế về giá hoặc chi phí." },
+  { q: "Doanh nghiệp báo lãi nhiều năm nhưng dòng tiền từ hoạt động kinh doanh liên tục âm. Đây là dấu hiệu gì?", a: "Cảnh báo về chất lượng lợi nhuận (lãi trên giấy, chưa thu được tiền)", w: ["Doanh nghiệp đang rất khỏe", "Doanh nghiệp sắp chia cổ tức lớn", "Không có ý nghĩa gì"], e: "Nên kiểm tra khoản phải thu và hàng tồn kho có đang tăng bất thường không." },
+  { q: "Khoản phải thu tăng nhanh hơn nhiều so với doanh thu có thể cho thấy điều gì?", a: "Doanh nghiệp bán chịu nhiều, rủi ro không thu hồi được tiền", w: ["Doanh nghiệp đang có nhiều tiền mặt", "Doanh nghiệp giảm nợ vay", "Giá cổ phiếu sắp tăng"], e: "Đây là điểm cần đọc kỹ trong thuyết minh BCTC." },
+  { q: "Lợi nhuận tăng mạnh chủ yếu nhờ bán tài sản hoặc thoái vốn. Nhà đầu tư nên đánh giá thế nào?", a: "Lợi nhuận bất thường, khó lặp lại, không phản ánh kinh doanh cốt lõi", w: ["Lợi nhuận bền vững, nên định giá cao hơn", "Doanh nghiệp đang mở rộng sản xuất", "Không ảnh hưởng gì đến định giá"], e: "Khi tính P/E nên loại bỏ các khoản lợi nhuận một lần." },
+  { q: "Hệ số thanh toán hiện hành được tính thế nào?", a: "Tài sản ngắn hạn ÷ Nợ ngắn hạn", w: ["Tổng tài sản ÷ Tổng nợ", "Tiền mặt ÷ Doanh thu", "Nợ ngắn hạn ÷ Vốn chủ sở hữu"], e: "Hệ số dưới 1 cho thấy áp lực trả nợ ngắn hạn." },
+  { q: "Với ngân hàng, chỉ số NIM thể hiện điều gì?", a: "Biên lãi ròng: chênh lệch giữa lãi cho vay và lãi huy động trên tài sản sinh lãi", w: ["Tỷ lệ nợ xấu", "Tỷ lệ an toàn vốn", "Số chi nhánh"], e: "NIM cao cho thấy ngân hàng kiếm lời tốt từ hoạt động tín dụng." },
+  { q: "Ở ngân hàng Việt Nam, nợ xấu (NPL) gồm các nhóm nợ nào?", a: "Nhóm 3, 4 và 5", w: ["Nhóm 1 và 2", "Chỉ nhóm 5", "Nhóm 2 đến 5"], e: "Nhóm 2 là nợ cần chú ý, chưa tính là nợ xấu." },
+  { q: "Tỷ lệ CASA của ngân hàng là gì?", a: "Tỷ lệ tiền gửi không kỳ hạn trên tổng tiền gửi", w: ["Tỷ lệ cho vay trên huy động", "Tỷ lệ nợ xấu", "Tỷ lệ vốn chủ sở hữu trên tài sản"], e: "CASA cao giúp ngân hàng có nguồn vốn rẻ, NIM tốt hơn." },
+  { q: "\"Lợi nhuận sau thuế của cổ đông công ty mẹ\" khác LNST hợp nhất ở điểm nào?", a: "Đã trừ phần lợi nhuận thuộc về cổ đông không kiểm soát (thiểu số) ở công ty con", w: ["Chưa trừ thuế thu nhập doanh nghiệp", "Chỉ tính lợi nhuận của công ty con", "Đã cộng thêm cổ tức"], e: "EPS được tính từ lợi nhuận của cổ đông công ty mẹ." },
+  { q: "Kiểm toán viên đưa ra \"ý kiến ngoại trừ\" trên BCTC có nghĩa là?", a: "BCTC trung thực hợp lý trừ một số khoản mục kiểm toán viên chưa đồng ý hoặc không kiểm tra được", w: ["BCTC hoàn toàn không đáng tin", "BCTC hoàn toàn chính xác", "Doanh nghiệp được miễn kiểm toán"], e: "Nhà đầu tư nên đọc kỹ khoản ngoại trừ vì có thể ảnh hưởng lớn đến lợi nhuận." },
+  { q: "Hàng tồn kho tăng mạnh trong khi doanh thu giảm có thể là dấu hiệu gì?", a: "Hàng bán chậm, có rủi ro phải trích lập giảm giá tồn kho", w: ["Doanh nghiệp sắp tăng trưởng mạnh", "Doanh nghiệp đang giảm nợ", "Dòng tiền đang rất tốt"], e: "Đặc biệt đáng chú ý ở ngành thép, bất động sản, bán lẻ." },
+  { q: "Chi phí lãi vay lớn hơn lợi nhuận trước lãi vay và thuế (EBIT) cho thấy điều gì?", a: "Doanh nghiệp không tạo đủ lợi nhuận để trả lãi vay", w: ["Doanh nghiệp vay rất ít", "Doanh nghiệp có nhiều tiền mặt", "Doanh nghiệp sắp chia cổ tức"], e: "Hệ số khả năng trả lãi = EBIT ÷ Chi phí lãi vay; dưới 1 là rất rủi ro." }
+];
+
+const HISTORY = [
+  { q: "Phiên giao dịch đầu tiên của thị trường chứng khoán Việt Nam diễn ra ngày nào?", a: "28/7/2000", w: ["20/7/2000", "1/1/2000", "14/7/2005"], e: "Trung tâm Giao dịch Chứng khoán TP. HCM khai trương ngày 20/7/2000, phiên đầu tiên diễn ra ngày 28/7/2000." },
+  { q: "Phiên giao dịch đầu tiên năm 2000 có bao nhiêu mã cổ phiếu?", a: "2 mã: REE và SAM", w: ["5 mã", "10 mã", "1 mã: VNM"], e: "REE (Cơ điện lạnh) và SAM (Cáp và vật liệu viễn thông) là hai cổ phiếu niêm yết đầu tiên." },
+  { q: "Ủy ban Chứng khoán Nhà nước được thành lập năm nào?", a: "1996", w: ["2000", "1986", "2006"], e: "UBCKNN ra đời năm 1996 để chuẩn bị xây dựng thị trường chứng khoán." },
+  { q: "Trung tâm Giao dịch Chứng khoán Hà Nội (nay là HNX) bắt đầu hoạt động năm nào?", a: "2005", w: ["2000", "2009", "2010"], e: "Phiên giao dịch đầu tiên tại Hà Nội diễn ra tháng 7/2005." },
+  { q: "Thị trường UPCoM ra đời năm nào?", a: "2009", w: ["2005", "2000", "2015"], e: "UPCoM là nơi giao dịch cổ phiếu của công ty đại chúng chưa niêm yết, khai trương tháng 6/2009." },
+  { q: "Đỉnh cao nhất của VN-Index giai đoạn bong bóng 2006–2007 là khoảng bao nhiêu điểm?", a: "Khoảng 1.170 điểm (tháng 3/2007)", w: ["Khoảng 500 điểm", "Khoảng 1.500 điểm", "Khoảng 2.000 điểm"], e: "VN-Index đạt 1.170,67 điểm ngày 12/3/2007, sau đó lao dốc." },
+  { q: "Sau khủng hoảng 2008, VN-Index chạm đáy khoảng bao nhiêu điểm (đầu năm 2009)?", a: "Khoảng 235 điểm", w: ["Khoảng 500 điểm", "Khoảng 100 điểm", "Khoảng 800 điểm"], e: "VN-Index mất khoảng 80% từ đỉnh 2007 xuống đáy tháng 2/2009." },
+  { q: "VN-Index lập đỉnh khoảng 1.528 điểm vào thời điểm nào?", a: "Cuối tháng 11/2021", w: ["Tháng 3/2007", "Tháng 4/2018", "Tháng 1/2020"], e: "Làn sóng nhà đầu tư mới sau Covid đưa VN-Index lên 1.528,57 điểm ngày 25/11/2021." },
+  { q: "Vào tháng 3/2020 (Covid-19), VN-Index giảm xuống vùng nào?", a: "Khoảng 650 – 660 điểm", w: ["Khoảng 300 điểm", "Khoảng 900 điểm", "Khoảng 1.100 điểm"], e: "Sau đáy Covid, thị trường bước vào chu kỳ tăng mạnh nhất lịch sử đến cuối 2021." },
+  { q: "Năm 2022, VN-Index giảm từ vùng 1.500 xuống vùng nào?", a: "Khoảng 900 điểm (tháng 11/2022)", w: ["Khoảng 1.200 điểm", "Khoảng 600 điểm", "Khoảng 300 điểm"], e: "Áp lực từ lãi suất tăng, khủng hoảng trái phiếu doanh nghiệp và bất động sản." },
+  { q: "Hợp đồng tương lai chỉ số VN30 chính thức giao dịch từ khi nào?", a: "Tháng 8/2017", w: ["Tháng 7/2000", "Tháng 1/2021", "Tháng 6/2009"], e: "Thị trường chứng khoán phái sinh khai trương ngày 10/8/2017." },
+  { q: "Chứng quyền có bảo đảm (CW) bắt đầu giao dịch tại Việt Nam năm nào?", a: "2019", w: ["2017", "2012", "2023"], e: "Những mã chứng quyền đầu tiên lên sàn HOSE tháng 6/2019." },
+  { q: "Năm 2021, sàn HOSE nổi tiếng với sự cố gì?", a: "Nghẽn lệnh do thanh khoản tăng vượt sức chịu tải của hệ thống", w: ["Mất điện toàn bộ một tuần", "Đóng cửa vì Covid nhiều tháng", "Hủy toàn bộ giao dịch một ngày"], e: "Sự cố này thúc đẩy việc triển khai hệ thống giao dịch mới KRX." },
+  { q: "Hệ thống giao dịch mới KRX chính thức vận hành tại HOSE vào thời gian nào?", a: "Tháng 5/2025", w: ["Tháng 1/2021", "Tháng 7/2023", "Chưa từng vận hành"], e: "KRX (công nghệ của Sở Giao dịch Hàn Quốc) vận hành từ ngày 5/5/2025, mở đường cho các sản phẩm mới." },
+  { q: "Luật Chứng khoán hiện hành (thay thế luật năm 2006) có hiệu lực từ khi nào?", a: "1/1/2021", w: ["1/1/2007", "1/7/2015", "1/1/2025"], e: "Luật Chứng khoán 2019 có hiệu lực từ ngày 1/1/2021." },
+  { q: "Sở Giao dịch Chứng khoán Việt Nam (VNX) có vai trò gì?", a: "Công ty mẹ của HOSE và HNX", w: ["Cơ quan quản lý thay UBCKNN", "Sàn giao dịch thứ tư", "Trung tâm lưu ký chứng khoán"], e: "VNX được thành lập để hợp nhất quản lý hai sở giao dịch." },
+  { q: "Tháng 10/2025, FTSE Russell công bố quyết định gì với thị trường Việt Nam?", a: "Nâng hạng lên Thị trường mới nổi thứ cấp (Secondary Emerging)", w: ["Hạ hạng xuống thị trường độc lập", "Loại khỏi danh sách theo dõi", "Nâng hạng lên Thị trường phát triển"], e: "Việc nâng hạng dự kiến có hiệu lực từ tháng 9/2026, mở ra dòng vốn ngoại từ các quỹ theo chỉ số FTSE." },
+  { q: "Biên độ dao động trên HOSE khi thị trường mới mở cửa năm 2000 là bao nhiêu?", a: "±2%", w: ["±7%", "±10%", "Không giới hạn"], e: "Biên độ được nới dần qua các năm, hiện là ±7%." }
+];
 
 /* ===== Tiện ích ===== */
 const $ = id => document.getElementById(id);
@@ -466,14 +622,12 @@ const store = {
 };
 const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const lc = s => s.charAt(0).toLowerCase() + s.slice(1);
 const show = id => ["setup", "play", "result"].forEach(x => $(x).hidden = x !== id);
 const companyName = s => leaks(s) ? s.full : s.short;
+const tk = t => `<b class="t">${t}</b>`;
+const tkOpt = t => ({ id: t, html: t, tk: true });
 
-/* Phần 1: đáp án nhiễu ưu tiên mã cùng ngành và mã trông giống nhau */
-function tickerDistractors(s) {
-  const score = o => (o.sec === s.sec ? 2 : 0) + [...o.t].filter((c, i) => s.t[i] === c).length * 1.5 + Math.random() * 2.5;
-  return STOCKS.filter(o => o.t !== s.t).map(o => [score(o), o]).sort((a, b) => b[0] - a[0]).slice(0, 3).map(x => x[1]);
-}
 /* Phần 2: đáp án nhiễu lấy từ ngành khác để không có hai đáp án cùng đúng; mỗi mô tả chỉ xuất hiện một lần */
 function bizDistractors(s) {
   const seen = new Set([s.biz]), out = [];
@@ -484,6 +638,135 @@ function bizDistractors(s) {
   }
   return out;
 }
+/* Câu hỏi từ ngân hàng câu hỏi kiến thức */
+const bankQ = (label) => item => ({
+  label, main: item.q, cls: "big desc",
+  opts: shuffle([item.a, ...item.w]).map(x => ({ id: x, html: esc(x) })), ans: item.a,
+  explain: ok => `<div>${ok ? "✓ Chính xác!" : `✗ Chưa đúng. Đáp án: <b>${esc(item.a)}</b>.`}</div><p>${esc(item.e)}</p>`,
+  review: ["", `${item.q} → ${item.a}`]
+});
+const bankBoard = bank => ({
+  head: ["Câu hỏi", "Đáp án"],
+  rows: () => bank.map(x => [esc(x.q), `<b>${esc(x.a)}</b><small>${esc(x.e)}</small>`]),
+  search: "Tìm trong câu hỏi hoặc đáp án…", first: false
+});
+
+/* ===== Các phần — tách biệt hoàn toàn (thiết lập, điểm cao nhất, bảng tra cứu riêng) ===== */
+const PARTS = [
+  {
+    id: "ticker", hash: "ma", title: "Mã cổ phiếu", desc: "Nhìn tên doanh nghiệp, gõ đúng mã.", sectors: true,
+    items: () => STOCKS,
+    make: s => ({
+      label: "Mã cổ phiếu là gì?", main: companyName(s), cls: "big", sub: leaks(s) ? SECTORS[s.sec] : s.full,
+      type: true, ans: s.t,
+      explain: (ok, t) => `<div>${ok ? "✓ Chính xác!" : "✗ Chưa đúng."} ${tk(s.t)} — ${esc(s.full)}.${ok ? "" : BY_T[t] ? ` ${tk(t)} là mã của ${esc(companyName(BY_T[t]))}.` : ` Bạn trả lời ${tk(esc(t))}.`}</div>${s.note ? `<p>${esc(s.note)}</p>` : ""}`,
+      review: [s.t, `${companyName(s)} · ${s.full}`]
+    }),
+    board: { head: ["Mã", "Doanh nghiệp", "Ngành"], rows: () => STOCKS.map(s => [s.t, `${esc(s.short)}<small>${esc(s.full)}</small>`, SECTORS[s.sec]]), search: "Tìm theo mã hoặc tên công ty…" }
+  },
+  {
+    id: "biz", hash: "linh-vuc", title: "Lĩnh vực hoạt động", desc: "Đọc lĩnh vực, chọn đúng mã.", sectors: true,
+    items: () => STOCKS,
+    make: s => ({
+      label: "Doanh nghiệp nào hoạt động chính trong lĩnh vực này?", main: s.biz, cls: "big desc",
+      opts: shuffle([s, ...bizDistractors(s)]).map(o => tkOpt(o.t)), ans: s.t,
+      explain: (ok, t) => `<div>${ok ? "✓ Chính xác!" : "✗ Chưa đúng."} ${tk(s.t)} (${esc(s.full)}): ${esc(lc(s.biz))}.${!ok && BY_T[t] ? ` ${tk(t)} hoạt động chính ở lĩnh vực: ${esc(lc(BY_T[t].biz))}.` : ""}</div>${s.note ? `<p>${esc(s.note)}</p>` : ""}`,
+      review: [s.t, `${companyName(s)} · ${s.biz}`]
+    }),
+    board: { head: ["Mã", "Lĩnh vực hoạt động chính"], rows: () => STOCKS.map(s => [s.t, `${esc(s.biz)}<small>${esc(s.full)}</small>`]), search: "Tìm theo mã, tên hoặc lĩnh vực (vd: thép, cá tra)…" }
+  },
+  {
+    id: "terms", hash: "thuat-ngu", title: "Thuật ngữ & chỉ số", desc: "P/E, EPS, ROE, margin, room ngoại…",
+    items: () => TERMS, make: bankQ("Thuật ngữ & chỉ số cơ bản"), board: bankBoard(TERMS)
+  },
+  {
+    id: "rules", hash: "quy-dinh", title: "Quy định giao dịch", desc: "Biên độ, bước giá, giờ giao dịch, T+2…",
+    items: () => RULES, make: bankQ("Quy định giao dịch"), board: bankBoard(RULES)
+  },
+  {
+    id: "exch", hash: "san", title: "Sàn niêm yết", desc: "Mã này ở HOSE, HNX hay UPCoM?", sectors: true,
+    items: () => STOCKS.filter(s => EXCH_OF[s.t]),
+    make: s => ({
+      label: "Cổ phiếu này giao dịch trên sàn nào?", main: s.t, cls: "big mono", sub: s.full,
+      opts: Object.keys(EXCH).map(e => ({ id: e, html: e, tk: true })), ans: EXCH_OF[s.t],
+      explain: ok => `<div>${ok ? "✓ Chính xác!" : "✗ Chưa đúng."} ${tk(s.t)} (${esc(companyName(s))}) giao dịch trên sàn <b>${EXCH_OF[s.t]}</b>.</div>`,
+      review: [s.t, `${companyName(s)} · ${EXCH_OF[s.t]}`]
+    }),
+    board: { head: ["Mã", "Doanh nghiệp", "Sàn"], rows: () => STOCKS.filter(s => EXCH_OF[s.t]).map(s => [s.t, `${esc(s.short)}<small>${esc(s.full)}</small>`, EXCH_OF[s.t]]), search: "Tìm theo mã, tên hoặc sàn (HOSE, HNX, UPCoM)…" }
+  },
+  {
+    id: "groups", hash: "tap-doan", title: "Tập đoàn & công ty con", desc: "Mã nào thuộc hệ sinh thái nào?",
+    items: () => [
+      ...GROUPS.flatMap((g, i) => g.members.map(t => ({ kind: "of", g: i, t }))),
+      ...GROUPS.map((g, i) => ({ kind: "in", g: i })),
+      ...GROUPS.flatMap((g, i) => g.members.length >= 3 ? [{ kind: "notin", g: i }] : [])
+    ],
+    make: it => {
+      const g = GROUPS[it.g];
+      const outsiders = () => shuffle(STOCKS.filter(s => GROUP_OF[s.t] === undefined && !GROUP_AMBIG.has(s.t)).map(s => s.t));
+      const done = ok => ok ? "✓ Chính xác!" : "✗ Chưa đúng.";
+      const members = `Hệ sinh thái ${esc(g.name)} gồm: ${g.members.map(tk).join(", ")}.`;
+      if (it.kind === "of") {
+        const names = shuffle(GROUPS.filter((_, i) => i !== it.g)).slice(0, 3).map(x => x.name);
+        return {
+          label: "Mã này thuộc tập đoàn / hệ sinh thái nào?", main: it.t, cls: "big mono", sub: BY_T[it.t].full,
+          opts: shuffle([g.name, ...names]).map(n => ({ id: n, html: `<b>${esc(n)}</b>` })), ans: g.name,
+          explain: ok => `<div>${done(ok)} ${tk(it.t)} thuộc <b>${esc(g.name)}</b>. ${members}</div><p>${esc(g.note)}</p>`,
+          review: [it.t, g.name]
+        };
+      }
+      if (it.kind === "in") {
+        const ans = shuffle(g.members)[0];
+        return {
+          label: `Mã nào thuộc hệ sinh thái ${g.name}?`, main: g.name, cls: "big",
+          opts: shuffle([ans, ...outsiders().slice(0, 3)]).map(tkOpt), ans,
+          explain: ok => `<div>${done(ok)} ${members}</div><p>${esc(g.note)}</p>`,
+          review: [ans, g.name]
+        };
+      }
+      const ans = outsiders()[0];
+      return {
+        label: `Mã nào KHÔNG thuộc hệ sinh thái ${g.name}?`, main: g.name, cls: "big",
+        opts: shuffle([ans, ...shuffle(g.members).slice(0, 3)]).map(tkOpt), ans,
+        explain: ok => `<div>${done(ok)} ${tk(ans)} (${esc(companyName(BY_T[ans]))}) không thuộc ${esc(g.name)}. ${members}</div><p>${esc(g.note)}</p>`,
+        review: [ans, `không thuộc ${g.name}`]
+      };
+    },
+    board: { head: ["Tập đoàn", "Các mã niêm yết"], rows: () => GROUPS.map(g => [esc(g.name), `${g.members.map(t => `<b class="mono">${t}</b>`).join(", ")}<small>${esc(g.note)}</small>`]), search: "Tìm theo tên tập đoàn hoặc mã…", first: false }
+  },
+  {
+    id: "brands", hash: "thuong-hieu", title: "Thương hiệu → Mã", desc: "Long Châu, bia 333, Zalo… mã gì?",
+    items: () => BRANDS,
+    make: x => {
+      const s = BY_T[x.t], grp = GROUP_OF[x.t];
+      const owners = new Set(BRANDS.filter(y => y.b === x.b).map(y => y.t));
+      const pool = shuffle(STOCKS.filter(o => !owners.has(o.t) && (grp === undefined || GROUP_OF[o.t] !== grp)));
+      const same = pool.filter(o => o.sec === s.sec), other = pool.filter(o => o.sec !== s.sec);
+      const wrong = [...same.slice(0, 2), ...other].slice(0, 3);
+      return {
+        label: "Thương hiệu này thuộc doanh nghiệp có mã nào?", main: x.b, cls: "big",
+        opts: shuffle([s, ...wrong]).map(o => tkOpt(o.t)), ans: x.t,
+        explain: (ok, t) => `<div>${ok ? "✓ Chính xác!" : "✗ Chưa đúng."} ${esc(x.b)} thuộc ${tk(x.t)} — ${esc(s.full)}.${!ok && BY_T[t] ? ` ${tk(t)} là ${esc(companyName(BY_T[t]))}.` : ""}</div>`,
+        review: [x.t, x.b]
+      };
+    },
+    board: { head: ["Thương hiệu", "Mã"], rows: () => BRANDS.map(x => [esc(x.b), `<b class="mono">${x.t}</b><small>${esc(BY_T[x.t].full)}</small>`]), search: "Tìm theo thương hiệu hoặc mã…", first: false }
+  },
+  {
+    id: "index", hash: "chi-so", title: "Chỉ số thị trường", desc: "VN-Index, VN30, VN100, ETF…",
+    items: () => INDEXES, make: bankQ("Chỉ số & rổ chỉ số"), board: bankBoard(INDEXES)
+  },
+  {
+    id: "finance", hash: "bctc", title: "Đọc báo cáo tài chính", desc: "Tính EPS, ROE, D/E và nhận diện rủi ro.",
+    items: () => FINANCE, make: bankQ("Đọc báo cáo tài chính"), board: bankBoard(FINANCE)
+  },
+  {
+    id: "history", hash: "lich-su", title: "Lịch sử thị trường", desc: "Các mốc từ 2000 đến nay.",
+    items: () => HISTORY, make: bankQ("Lịch sử thị trường chứng khoán Việt Nam"), board: bankBoard(HISTORY)
+  }
+];
+const PART = Object.fromEntries(PARTS.map((p, i) => [p.id, Object.assign(p, { num: i + 1 })]));
+const LENGTHS = [10, 20, 30, "all"];
 
 /* ===== Theme ===== */
 const THEMES = ["auto", "light", "dark"], THEME_NAME = { auto: "Tự động", light: "Sáng", dark: "Tối" };
@@ -510,50 +793,53 @@ applyTheme();
 
 /* ===== Trạng thái từng phần ===== */
 const cfg = {};
-for (const p of Object.keys(PARTS)) {
-  const len = store.get(`bdq-${p}-len`);
-  cfg[p] = {
-    mode: PARTS[p].modes.some(m => m.id === store.get(`bdq-${p}-mode`)) ? store.get(`bdq-${p}-mode`) : PARTS[p].modes[0].id,
-    secs: new Set(), len: len === "all" ? "all" : (+len || 10)
-  };
+for (const p of PARTS) {
+  const len = store.get(`bdq-${p.id}-len`);
+  cfg[p.id] = { secs: new Set(), len: len === "all" ? "all" : (+len || 10) };
 }
 /* Điểm cao nhất của Phần 1 trước đây lưu ở "bdq-best" */
 if (!store.get("bdq-ticker-best") && store.get("bdq-best")) store.set("bdq-ticker-best", store.get("bdq-best"));
 
-let part = location.hash === "#linh-vuc" ? "biz" : (location.hash === "#ma" ? "ticker" : (store.get("bdq-part") || "ticker"));
-if (!PARTS[part]) part = "ticker";
+const fromHash = () => PARTS.find(p => "#" + p.hash === location.hash);
+let part = (fromHash() || PART[store.get("bdq-part")] || PARTS[0]).id;
 let game = null;
 
 function renderParts() {
-  $("parts").innerHTML = Object.entries(PARTS).map(([k, p]) => {
-    const best = store.get(`bdq-${k}-best`);
-    return `<button type="button" class="part" role="tab" data-p="${k}" aria-selected="${k === part}" style="--c:${p.color}">
-      <span class="num">${p.num}</span><h2>${p.title}</h2><p>${p.desc}</p>
-      <span class="meta"><span><b>${STOCKS.length}</b> doanh nghiệp</span><span>Cao nhất <b>${best ? best + "%" : "–"}</b></span></span></button>`;
+  $("parts").innerHTML = PARTS.map(p => {
+    const best = store.get(`bdq-${p.id}-best`);
+    return `<button type="button" class="part" role="tab" data-p="${p.id}" aria-selected="${p.id === part}" style="--c:var(--c${p.num})">
+      <span class="num">Phần ${p.num}</span><h2>${p.title}</h2><p>${p.desc}</p>
+      <span class="meta"><span><b>${p.items().length}</b> câu</span><span>Cao nhất <b>${best ? best + "%" : "–"}</b></span></span></button>`;
   }).join("");
 }
-function setPart(p) {
-  part = p; store.set("bdq-part", p);
-  history.replaceState(null, "", p === "biz" ? "#linh-vuc" : "#ma");
-  document.body.dataset.part = p;
-  game = null;
-  renderParts(); renderSetup(); renderBoardHead(); renderBoard();
+function setPart(id) {
+  part = id; store.set("bdq-part", id);
+  history.replaceState(null, "", "#" + PART[id].hash);
+  document.body.style.setProperty("--accent", `var(--c${PART[id].num})`);
+  game = null; $("search").value = "";
+  renderParts(); renderSetup(); renderBoard();
   show("setup");
 }
-$("parts").onclick = e => { const b = e.target.closest("[data-p]"); if (b && b.dataset.p !== part) setPart(b.dataset.p); else if (b) show("setup"); };
+$("parts").onclick = e => {
+  const b = e.target.closest("[data-p]"); if (!b) return;
+  if (b.dataset.p !== part) setPart(b.dataset.p); else show("setup");
+  $("setup").scrollIntoView({ behavior: "smooth", block: "start" });
+};
+window.addEventListener("hashchange", () => { const p = fromHash(); if (p && p.id !== part) setPart(p.id); });
 
 /* ===== Thiết lập ===== */
 function renderSetup() {
-  const P = PARTS[part], c = cfg[part];
-  $("setupLabel").textContent = P.num; $("setupTitle").textContent = P.title;
-  $("modesField").hidden = P.modes.length < 2;
-  $("modes").innerHTML = P.modes.map(m => `<button type="button" class="mode" data-m="${m.id}" aria-pressed="${c.mode === m.id}">
-    <span class="ex">${esc(m.ex)}</span><h3>${m.title}</h3><p>${m.desc}</p></button>`).join("");
-  $("sectors").innerHTML = `<button type="button" class="chip" data-s="" aria-pressed="${c.secs.size === 0}">Tất cả<small>${STOCKS.length}</small></button>` +
-    Object.entries(SECTORS).map(([k, v]) => `<button type="button" class="chip" data-s="${k}" aria-pressed="${c.secs.has(k)}">${v}<small>${STOCKS.filter(s => s.sec === k).length}</small></button>`).join("");
-  $("lengths").innerHTML = LENGTHS.map(n => `<button type="button" class="chip" data-l="${n}" aria-pressed="${c.len === n}">${n === "all" ? "Tất cả" : n + " câu"}</button>`).join("");
+  const P = PART[part], c = cfg[part], all = P.items();
+  $("setupLabel").textContent = "Phần " + P.num; $("setupTitle").textContent = P.title; $("setupDesc").textContent = P.desc;
+  $("sectorsField").hidden = !P.sectors;
+  if (P.sectors) {
+    $("sectors").innerHTML = `<button type="button" class="chip" data-s="" aria-pressed="${c.secs.size === 0}">Tất cả<small>${all.length}</small></button>` +
+      Object.entries(SECTORS).map(([k, v]) => [k, v, all.filter(s => s.sec === k).length]).filter(x => x[2])
+        .map(([k, v, n]) => `<button type="button" class="chip" data-s="${k}" aria-pressed="${c.secs.has(k)}">${v}<small>${n}</small></button>`).join("");
+  }
+  $("lengths").innerHTML = LENGTHS.filter(n => n === "all" || n < all.length).map(n =>
+    `<button type="button" class="chip" data-l="${n}" aria-pressed="${c.len === n || (n === "all" && c.len !== "all" && c.len >= all.length)}">${n === "all" ? `Tất cả (${all.length})` : n + " câu"}</button>`).join("");
 }
-$("modes").onclick = e => { const b = e.target.closest("[data-m]"); if (!b) return; cfg[part].mode = b.dataset.m; store.set(`bdq-${part}-mode`, b.dataset.m); renderSetup(); };
 $("sectors").onclick = e => {
   const b = e.target.closest("[data-s]"); if (!b) return;
   const k = b.dataset.s, secs = cfg[part].secs;
@@ -564,101 +850,66 @@ $("lengths").onclick = e => { const b = e.target.closest("[data-l]"); if (!b) re
 
 /* ===== Chơi ===== */
 function start() {
-  const c = cfg[part];
-  const pool = STOCKS.filter(s => c.secs.size === 0 || c.secs.has(s.sec));
-  const qs = shuffle(pool).slice(0, c.len === "all" ? pool.length : c.len);
-  game = { part, qs, i: 0, right: 0, misses: [], mode: c.mode, answered: false };
+  const P = PART[part], c = cfg[part];
+  const pool = P.items().filter(s => !P.sectors || c.secs.size === 0 || c.secs.has(s.sec));
+  const items = shuffle(pool).slice(0, c.len === "all" ? pool.length : c.len);
+  game = { part, items, i: 0, right: 0, misses: [], answered: false, q: null };
   show("play"); renderQ();
 }
 function renderQ() {
-  const g = game, s = g.qs[g.i];
+  const g = game, q = g.q = PART[g.part].make(g.items[g.i]);
   g.answered = false;
-  $("hudPos").textContent = `${PARTS[g.part].num} · Câu ${g.i + 1}/${g.qs.length}`;
+  $("hudPos").textContent = `Phần ${PART[g.part].num} · Câu ${g.i + 1}/${g.items.length}`;
   $("hudScore").textContent = `Đúng ${g.right}`;
-  $("hudBar").style.width = (g.i / g.qs.length * 100) + "%";
+  $("hudBar").style.width = (g.i / g.items.length * 100) + "%";
   $("explain").hidden = true; $("nextBtn").hidden = true;
-  const main = $("qMain"), sub = $("qSub");
-  const isType = g.mode === "type";
-  $("typeForm").hidden = !isType; $("opts").hidden = isType;
-
-  if (g.mode === "c2t" || isType) {
-    $("qLabel").textContent = "Mã cổ phiếu là gì?";
-    main.textContent = companyName(s); main.className = "big";
-    sub.textContent = leaks(s) ? SECTORS[s.sec] : s.full;
-  } else if (g.mode === "t2c") {
-    $("qLabel").textContent = "Mã này của doanh nghiệp nào?";
-    main.textContent = s.t; main.className = "big mono";
-    sub.textContent = SECTORS[s.sec];
-  } else if (g.mode === "t2b") {
-    $("qLabel").textContent = "Lĩnh vực hoạt động chính là gì?";
-    main.textContent = s.t; main.className = "big mono";
-    sub.textContent = s.full;
-  } else {
-    $("qLabel").textContent = "Doanh nghiệp nào hoạt động chính trong lĩnh vực này?";
-    main.textContent = s.biz; main.className = "big desc";
-    sub.textContent = "";
-  }
-
-  if (isType) {
+  $("qLabel").textContent = q.label;
+  $("qMain").textContent = q.main; $("qMain").className = q.cls;
+  $("qSub").textContent = q.sub || ""; $("qSub").hidden = !q.sub;
+  $("typeForm").hidden = !q.type; $("opts").hidden = !!q.type;
+  if (q.type) {
     const inp = $("typeInput"); inp.value = ""; inp.className = ""; inp.disabled = false; inp.focus();
     return;
   }
-  const opts = shuffle([s, ...(g.part === "biz" ? bizDistractors(s) : tickerDistractors(s))]);
-  $("opts").innerHTML = opts.map((o, k) => {
-    if (g.mode === "c2t") return `<button type="button" class="opt tk" data-t="${o.t}">${o.t}</button>`;
-    if (g.mode === "t2b") return `<button type="button" class="opt" data-t="${o.t}"><kbd>${k + 1}</kbd><span>${esc(o.biz)}</span></button>`;
-    /* Chỉ hiện mã, không kèm tên công ty — tên thường đã lộ ngành nghề */
-    if (g.mode === "b2t") return `<button type="button" class="opt tk" data-t="${o.t}">${o.t}</button>`;
-    return `<button type="button" class="opt" data-t="${o.t}"><kbd>${k + 1}</kbd><span>${leaks(o) ? `<b>${esc(o.full)}</b>` : `<b>${esc(o.short)}</b><br><small>${esc(o.full)}</small>`}</span></button>`;
-  }).join("");
+  $("opts").innerHTML = q.opts.map((o, k) => `<button type="button" class="opt${o.tk ? " tk" : ""}" data-i="${k}"><kbd>${k + 1}</kbd><span>${o.html}</span></button>`).join("");
 }
-function answer(t) {
+function answer(id) {
   const g = game; if (!g || g.answered) return;
   g.answered = true;
-  const s = g.qs[g.i], ok = t === s.t;
-  if (ok) g.right++; else g.misses.push(s);
-  if (g.mode === "type") {
+  const q = g.q, ok = id === q.ans;
+  if (ok) g.right++; else g.misses.push(q.review);
+  if (q.type) {
     const inp = $("typeInput"); inp.disabled = true; inp.className = ok ? "right" : "wrong";
   } else {
-    document.querySelectorAll("#opts .opt").forEach(b => {
+    [...$("opts").children].forEach((b, k) => {
       b.disabled = true;
-      if (b.dataset.t === s.t) b.classList.add("right");
-      else if (b.dataset.t === t) b.classList.add("wrong");
+      if (q.opts[k].id === q.ans) b.classList.add("right");
+      else if (q.opts[k].id === id) b.classList.add("wrong");
     });
   }
   const ex = $("explain");
   ex.className = "explain" + (ok ? "" : " bad");
-  let body, extra = "";
-  if (g.part === "ticker") {
-    body = `<b class="t">${s.t}</b> — ${esc(s.full)}.`;
-    if (!ok) extra = BY_T[t] ? ` Bạn chọn <b class="t">${t}</b> là mã của ${esc(companyName(BY_T[t]))}.` : ` Bạn trả lời <b class="t">${esc(t)}</b>.`;
-  } else {
-    body = `<b class="t">${s.t}</b> (${esc(s.full)}): ${esc(s.biz.charAt(0).toLowerCase() + s.biz.slice(1))}.`;
-    if (!ok && BY_T[t]) extra = g.mode === "t2b"
-      ? ` Lĩnh vực bạn chọn là của <b class="t">${t}</b> (${esc(companyName(BY_T[t]))}).`
-      : ` <b class="t">${t}</b> hoạt động chính ở lĩnh vực: ${esc(BY_T[t].biz.charAt(0).toLowerCase() + BY_T[t].biz.slice(1))}.`;
-  }
-  ex.innerHTML = `<div>${ok ? "✓ Chính xác!" : "✗ Chưa đúng."} ${body}${extra}</div>${s.note ? `<p>${esc(s.note)}</p>` : ""}`;
+  ex.innerHTML = q.explain(ok, id);
   ex.hidden = false;
   $("hudScore").textContent = `Đúng ${g.right}`;
-  $("nextBtn").textContent = g.i + 1 < g.qs.length ? "Câu tiếp →" : "Xem kết quả";
+  $("nextBtn").textContent = g.i + 1 < g.items.length ? "Câu tiếp →" : "Xem kết quả";
   $("nextBtn").hidden = false; $("nextBtn").focus();
 }
-function next() { if (++game.i < game.qs.length) renderQ(); else finish(); }
+function next() { if (++game.i < game.items.length) renderQ(); else finish(); }
 function finish() {
-  const g = game, pct = Math.round(g.right / g.qs.length * 100);
+  const g = game, P = PART[g.part], pct = Math.round(g.right / g.items.length * 100);
   const key = `bdq-${g.part}-best`;
-  if (g.qs.length >= 10 && pct > (+store.get(key) || 0)) store.set(key, pct);
+  if (g.items.length >= 10 && pct > (+store.get(key) || 0)) store.set(key, pct);
   renderParts();
-  $("rLabel").textContent = `Kết quả · ${PARTS[g.part].num}: ${PARTS[g.part].title}`;
-  $("rScore").textContent = `${g.right}/${g.qs.length}`;
+  $("rLabel").textContent = `Kết quả · Phần ${P.num}: ${P.title}`;
+  $("rScore").textContent = `${g.right}/${g.items.length}`;
   $("rScore").className = "score " + (pct >= 80 ? "up" : pct >= 50 ? "ref" : "down");
-  $("rMsg").textContent = pct === 100 ? "Tăng trần! Bạn thuộc bảng điện như lòng bàn tay." :
-    pct >= 80 ? "Xanh rực. Chỉ còn vài mã cần ôn lại." :
-    pct >= 50 ? "Đứng giá tham chiếu. Ôn lại các mã dưới đây nhé." : "Đỏ sàn rồi. Xem bảng tra cứu rồi thử lại!";
+  $("rMsg").textContent = pct === 100 ? "Tăng trần! Bạn nắm phần này như lòng bàn tay." :
+    pct >= 80 ? "Xanh rực. Chỉ còn vài câu cần ôn lại." :
+    pct >= 50 ? "Đứng giá tham chiếu. Ôn lại các câu dưới đây nhé." : "Đỏ sàn rồi. Xem bảng tra cứu rồi thử lại!";
   $("rReview").innerHTML = g.misses.length
-    ? `<span class="label">Các mã cần ôn (${g.misses.length})</span>` + g.misses.map(s =>
-        `<div><b>${s.t}</b><span>${esc(companyName(s))} · ${esc(g.part === "biz" ? s.biz : s.full)}</span></div>`).join("")
+    ? `<span class="label">Cần ôn lại (${g.misses.length})</span>` + g.misses.map(([code, text]) =>
+        `<div>${code ? `<b>${esc(code)}</b>` : ""}<span>${esc(text)}</span></div>`).join("")
     : "";
   show("result");
 }
@@ -668,36 +919,30 @@ $("setupBtn").onclick = () => show("setup");
 $("quitBtn").onclick = () => {
   const done = game.i + (game.answered ? 1 : 0);
   if (!done) return show("setup");
-  game.qs = game.qs.slice(0, done); finish();
+  game.items = game.items.slice(0, done); finish();
 };
 $("nextBtn").onclick = next;
-$("opts").onclick = e => { const b = e.target.closest(".opt"); if (b) answer(b.dataset.t); };
+$("opts").onclick = e => { const b = e.target.closest(".opt"); if (b) answer(game.q.opts[+b.dataset.i].id); };
 $("typeForm").onsubmit = e => { e.preventDefault(); if (game.answered) return next(); const v = $("typeInput").value.trim().toUpperCase(); if (v) answer(v); };
 document.addEventListener("keydown", e => {
   if ($("play").hidden || !game || e.target.tagName === "INPUT") return;
-  if (!game.answered && game.mode !== "type" && /^[1-4]$/.test(e.key)) { const b = $("opts").children[+e.key - 1]; if (b) answer(b.dataset.t); }
+  if (!game.answered && !game.q.type && /^[1-4]$/.test(e.key)) { const b = $("opts").children[+e.key - 1]; if (b) b.click(); }
   else if (game.answered && e.key === "Enter" && document.activeElement !== $("nextBtn")) next();
 });
 
 /* ===== Bảng tra cứu (nội dung theo phần đang chọn) ===== */
-const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/gi, "d").toLowerCase();
-function renderBoardHead() {
-  $("boardLabel").textContent = `Bảng tra cứu · ${PARTS[part].num}`;
-  $("search").placeholder = part === "biz" ? "Tìm theo mã, tên hoặc lĩnh vực (vd: thép, cá tra)…" : "Tìm theo mã hoặc tên công ty…";
-  $("boardHead").innerHTML = part === "biz"
-    ? `<th>Mã</th><th>Lĩnh vực hoạt động chính</th>`
-    : `<th>Mã</th><th>Doanh nghiệp</th><th class="sec">Ngành</th>`;
-}
+const norm = s => s.replace(/<[^>]+>/g, " ").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/gi, "d").toLowerCase();
 function renderBoard() {
+  const P = PART[part], B = P.board;
+  $("boardLabel").textContent = `Bảng tra cứu · Phần ${P.num}`;
+  $("search").placeholder = B.search;
+  $("board").classList.toggle("text", B.first === false);
+  $("boardHead").innerHTML = B.head.map((h, i) => `<th${i === 2 ? ' class="sec"' : ""}>${h}</th>`).join("");
   const q = norm($("search").value.trim());
-  const rows = STOCKS.filter(s => !q || norm(`${s.t} ${s.short} ${s.full} ${part === "biz" ? s.biz : ""}`).includes(q))
-    .sort((a, b) => a.t.localeCompare(b.t));
-  const cols = part === "biz" ? 2 : 3;
+  const rows = B.rows().filter(r => !q || norm(r.join(" ")).includes(q));
   $("boardBody").innerHTML = rows.length
-    ? rows.map(s => part === "biz"
-        ? `<tr><td>${s.t}</td><td>${esc(s.biz)}<small>${esc(s.full)}</small></td></tr>`
-        : `<tr><td>${s.t}</td><td>${esc(s.short)}<small>${esc(s.full)}</small></td><td class="sec">${SECTORS[s.sec]}</td></tr>`).join("")
-    : `<tr><td colspan="${cols}" style="color:var(--muted);font-family:inherit;font-weight:400">Không tìm thấy kết quả phù hợp.</td></tr>`;
+    ? rows.map(r => `<tr>${r.map((c, i) => `<td${i === 2 ? ' class="sec"' : ""}>${c}</td>`).join("")}</tr>`).join("")
+    : `<tr><td colspan="${B.head.length}" class="empty">Không tìm thấy kết quả phù hợp.</td></tr>`;
 }
 $("search").oninput = renderBoard;
 
