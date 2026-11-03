@@ -6,8 +6,8 @@ Quiz kiến thức chứng khoán Việt Nam gồm **20 phần tách biệt**. M
 |---|---|---|---|
 | 1. Mã cổ phiếu | `#ma` | Nhìn tên doanh nghiệp, tự gõ mã | 184 |
 | 2. Lĩnh vực hoạt động | `#linh-vuc` | Đọc lĩnh vực hoạt động chính, chọn đúng mã | 184 |
-| 3. Thuật ngữ & chỉ số | `#thuat-ngu` | P/E, EPS, ROE, margin, room ngoại, ETF, chứng quyền… | 32 |
-| 4. Quy định giao dịch | `#quy-dinh` | Biên độ, bước giá, lô chẵn, giờ giao dịch, T+2, GDKHQ, thuế | 29 |
+| 3. Thuật ngữ & chỉ số | `#thuat-ngu` | P/E, EPS, ROE, margin, room ngoại, ETF, chứng quyền… | 38 |
+| 4. Quy định giao dịch | `#quy-dinh` | Biên độ, bước giá, lô chẵn, giờ giao dịch, T+2, GDKHQ, thuế | 35 |
 | 5. Sàn niêm yết | `#san` | Mã này ở HOSE, HNX hay UPCoM? | 105 |
 | 6. Tập đoàn & công ty con | `#tap-doan` | Vingroup, Masan, FPT, Viettel, PVN… gồm những mã nào | 50 |
 | 7. Thương hiệu → Mã | `#thuong-hieu` | Long Châu, bia 333, Zalo… thuộc mã nào | 48 |
@@ -20,10 +20,14 @@ Quiz kiến thức chứng khoán Việt Nam gồm **20 phần tách biệt**. M
 | 14. Quỹ đầu tư & ETF | `#quy` | NAV, quỹ mở/đóng, ETF nội và ngoại, DCA | 28 |
 | 15. Quản trị rủi ro & tâm lý | `#rui-ro` | Cắt lỗ, R:R, quy mô vị thế, margin, FOMO và các thiên kiến | 28 |
 | 16. Đọc hiểu theo ngành | `#nganh` | Chia 9 ngành, chọn ngành để ôn riêng: ngân hàng, chứng khoán & bảo hiểm, bất động sản & KCN, thép & vật liệu, bán lẻ, dầu khí & điện, vận tải, xuất khẩu, công nghệ | 66 |
-| 17. Kinh tế vĩ mô | `#vi-mo` | Lãi suất, tỷ giá, lạm phát, Fed, chính sách tiền tệ, cổ phiếu chu kỳ/phòng thủ | 26 |
-| 18. Định giá doanh nghiệp | `#dinh-gia` | Giá trị nội tại, DCF, PEG, EV/EBITDA, mô hình cổ tức, giá mục tiêu | 25 |
-| 19. Quyền cổ đông & công bố thông tin | `#co-dong` | ĐHCĐ, cổ đông lớn, giao dịch nội bộ, thời hạn công bố BCTC, hủy niêm yết | 26 |
-| 20. Lý thuyết thị trường tài chính | `#ly-thuyet` | Cơ chế chuyển thời hạn vốn, sơ cấp/thứ cấp, thị trường hiệu quả (EMH), lý thuyết quả chanh | 15 |
+| 17. Kinh tế vĩ mô | `#vi-mo` | Lãi suất, tỷ giá, lạm phát, Fed, chính sách tiền tệ, cổ phiếu chu kỳ/phòng thủ | 35 |
+| 18. Định giá doanh nghiệp | `#dinh-gia` | Giá trị nội tại, DCF, PEG, EV/EBITDA, mô hình cổ tức, giá mục tiêu | 33 |
+| 19. Quyền cổ đông & công bố thông tin | `#co-dong` | ĐHCĐ, cổ đông lớn, giao dịch nội bộ, thời hạn công bố BCTC, hủy niêm yết | 34 |
+| 20. Lý thuyết thị trường tài chính | `#ly-thuyet` | Cơ chế chuyển thời hạn vốn, sơ cấp/thứ cấp, thị trường hiệu quả (EMH), lý thuyết quả chanh | 25 |
+
+Sau mỗi lượt có nút **Ôn lại câu sai** để chơi lại riêng các câu vừa trả lời sai.
+
+Các đáp án sai được viết dài tương đương đáp án đúng, để không thể đoán bằng cách chọn phương án dài nhất.
 
 Dữ liệu chỉ để ôn tập, không phải khuyến nghị đầu tư. Quy định, sàn niêm yết và cơ cấu sở hữu có thể thay đổi, nên kiểm tra lại với nguồn chính thức.
 
