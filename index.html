@@ -1193,6 +1193,27 @@ SECTOR_Q.push(
   { sec: "mat", q: "Ngành thép suy thoái, giá thép thấp, nhưng doanh nghiệp cung cấp thiết bị luyện thép vẫn có thể tăng trưởng. Vì sao?", a: "Doanh thu phụ thuộc chu kỳ đầu tư, nâng cấp nhà máy", w: ["Doanh thu phụ thuộc giá thép bán ra", "Được Nhà nước bao tiêu thiết bị", "Thiết bị luyện thép không có đối thủ"], e: "Ví dụ Danieli năm 2025: sản lượng thép thế giới giảm nhưng đơn hàng thép xanh, giảm phát thải vẫn tăng (CafeF, 11/2026)." }
 );
 
+/* Phần 21 – chủ đề: FPT & chip bán dẫn */
+STORY_TOPICS.fptchip = "FPT & chip bán dẫn";
+const SRC_FPTCHIP = "Nguồn: CafeF – Nhịp sống thị trường, \"Bên trong nhà máy Kiểm thử và Đóng gói chip bán dẫn FPT vừa đưa vào vận hành\" (03/11/2026).";
+STORIES.push(
+  { sec: "fptchip", q: "Nhà máy Kiểm thử và Đóng gói chip bán dẫn của FPT đặt ở đâu?", a: "KCN Yên Phong II-C, Bắc Ninh", w: ["Khu công nghệ cao Hòa Lạc, Hà Nội", "Khu công nghệ cao TP. Hồ Chí Minh", "KCN VSIP Hải Phòng"], e: "Nhà máy do công ty FPT Analysis Technologies vận hành, diện tích 1.600 m². " + SRC_FPTCHIP },
+  { sec: "fptchip", q: "Trong giai đoạn vận hành thử nghiệm, nhà máy chip của FPT có công suất tối đa bao nhiêu?", a: "300 triệu chip mỗi năm", w: ["30 triệu chip mỗi năm", "3 tỷ chip mỗi năm", "100 triệu chip mỗi năm"], e: "Nhà máy có 6 dây chuyền. " + SRC_FPTCHIP },
+  { sec: "fptchip", q: "Nhà máy kiểm thử chip của FPT có bao nhiêu dây chuyền trong giai đoạn đầu?", a: "6 dây chuyền", w: ["2 dây chuyền", "12 dây chuyền", "24 dây chuyền"], e: "Công suất thiết kế tối đa 300 triệu chip mỗi năm. " + SRC_FPTCHIP },
+  { sec: "fptchip", q: "Diện tích nhà máy Kiểm thử và Đóng gói chip của FPT là bao nhiêu?", a: "1.600 m²", w: ["16.000 m²", "16 ha", "160 m²"], e: SRC_FPTCHIP },
+  { sec: "fptchip", q: "Đơn hàng kiểm thử chip đầu tiên của nhà máy FPT dự kiến dành cho đối tác nước nào?", a: "Hàn Quốc", w: ["Nhật Bản", "Mỹ", "Đài Loan"], e: "Đây là bước khởi đầu trong hoạt động cung cấp dịch vụ kiểm thử chip của FPT. " + SRC_FPTCHIP },
+  { sec: "fptchip", q: "Trong nhà máy chip của FPT, thiết bị Handler có vai trò gì?", a: "Đưa chip vào vị trí kiểm tra và phân loại đạt/không đạt", w: ["Kiểm tra chức năng và khả năng hoạt động của chip", "Thiết kế mạch điện cho các dòng chip mới", "Đúc vỏ nhựa bảo vệ cho chip thành phẩm"], e: "Máy kiểm thử tự động (ATE Tester) mới là thiết bị kiểm tra chức năng của chip. " + SRC_FPTCHIP },
+  { sec: "fptchip", q: "Khu vực kiểm thử chip của FPT được bố trí trong phòng sạch tiêu chuẩn nào?", a: "Class 10.000 (ISO Class 7)", w: ["Class 100 (ISO Class 5)", "Class 1 (ISO Class 3)", "Không cần phòng sạch"], e: "Phòng sạch giúp kiểm soát bụi và các yếu tố môi trường. " + SRC_FPTCHIP },
+  { sec: "fptchip", q: "Trong các tiêu chuẩn nhà máy chip FPT áp dụng, ISO 14001 là tiêu chuẩn về gì?", a: "Quản lý môi trường", w: ["Quản lý chất lượng", "An toàn, sức khỏe nghề nghiệp", "Phòng sạch, kiểm soát bụi"], e: "ISO 9001: chất lượng; ISO 45001: an toàn và sức khỏe nghề nghiệp; ISO 14644: phòng sạch. " + SRC_FPTCHIP },
+  { sec: "fptchip", q: "Đội ngũ chuyên gia vận hành nhà máy chip của FPT có nhiều người từng làm việc tại đâu?", a: "Nhà máy Intel Việt Nam", w: ["Nhà máy Samsung Việt Nam", "Nhà máy LG Hải Phòng", "Nhà máy Foxconn Bắc Giang"], e: "Đội ngũ này xây dựng quy trình kỹ thuật, vận hành thiết bị và đào tạo nhân sự. " + SRC_FPTCHIP },
+  { sec: "fptchip", q: "Vì sao chip được cho chạy ở nhiệt độ cao, thay đổi nhiệt độ liên tục hoặc tiếp xúc độ ẩm?", a: "Để phát hiện nguy cơ hư hỏng, đánh giá độ tin cậy", w: ["Để tăng tốc độ xử lý của chip", "Để làm sạch bụi trên bề mặt chip", "Để chip đạt chuẩn tiết kiệm điện"], e: "Đây là các phép thử độ bền, độ tin cậy, bên cạnh kiểm thử chức năng. " + SRC_FPTCHIP },
+  { sec: "fptchip", q: "Từ tháng 12/2026, nhà máy chip FPT phối hợp với trường nào để sinh viên thực hành trên dây chuyền?", a: "Cao đẳng FPT Polytechnic", w: ["Đại học Bách khoa Hà Nội", "Đại học Quốc gia TP.HCM", "Đại học FPT Cần Thơ"], e: "Chương trình thí điểm giúp sinh viên tiếp cận thiết bị và quy trình làm việc thực tế. " + SRC_FPTCHIP },
+  { sec: "fptchip", q: "Nhà máy của FPT ở Bắc Ninh tham gia khâu nào trong chuỗi giá trị bán dẫn?", a: "Kiểm thử và đóng gói chip", w: ["Thiết kế kiến trúc chip", "Chế tạo tấm wafer silicon", "Khai thác nguyên liệu silicon"], e: "FPT cho biết có hơn 10 năm kinh nghiệm trong bán dẫn và đặt mục tiêu phát triển hệ sinh thái đóng gói, kiểm thử chip. " + SRC_FPTCHIP }
+);
+SECTOR_Q.push(
+  { sec: "tech", q: "Chuỗi giá trị sản xuất chip bán dẫn gồm các khâu chính nào?", a: "Thiết kế – chế tạo wafer – đóng gói, kiểm thử", w: ["Khai thác – tinh luyện – bán lẻ", "Nghiên cứu – quảng cáo – phân phối", "Lắp ráp – sửa chữa – tái chế"], e: "Khâu chế tạo wafer đòi hỏi vốn rất lớn; Việt Nam hiện mạnh hơn ở thiết kế và đóng gói, kiểm thử (ví dụ nhà máy của FPT, Intel, Amkor)." }
+);
+
 /* ===== Tiện ích ===== */
 const $ = id => document.getElementById(id);
 const store = {

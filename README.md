@@ -19,12 +19,12 @@ Quiz kiến thức chứng khoán Việt Nam gồm **21 phần tách biệt**. M
 | 13. Trái phiếu & chứng khoán hóa | `#trai-phieu` | Coupon, lợi suất, lãi suất và giá, rủi ro, phương thức trả nợ, xếp hạng tín nhiệm, đấu thầu kiểu Hà Lan, bài học 2022; chứng khoán hóa: ABS, MBS, SPV, phân tầng, khủng hoảng 2008 | 47 |
 | 14. Quỹ đầu tư & ETF | `#quy` | NAV, quỹ mở/đóng, ETF nội và ngoại, DCA | 28 |
 | 15. Quản trị rủi ro & tâm lý | `#rui-ro` | Cắt lỗ, R:R, quy mô vị thế, margin, FOMO và các thiên kiến | 28 |
-| 16. Đọc hiểu theo ngành | `#nganh` | Chia 9 ngành, chọn ngành để ôn riêng: ngân hàng, chứng khoán & bảo hiểm, bất động sản & KCN, thép & vật liệu, bán lẻ, dầu khí & điện, vận tải, xuất khẩu, công nghệ | 67 |
+| 16. Đọc hiểu theo ngành | `#nganh` | Chia 9 ngành, chọn ngành để ôn riêng: ngân hàng, chứng khoán & bảo hiểm, bất động sản & KCN, thép & vật liệu, bán lẻ, dầu khí & điện, vận tải, xuất khẩu, công nghệ | 68 |
 | 17. Kinh tế vĩ mô | `#vi-mo` | Lãi suất, tỷ giá, lạm phát, Fed, chính sách tiền tệ, cổ phiếu chu kỳ/phòng thủ | 35 |
 | 18. Định giá doanh nghiệp | `#dinh-gia` | Giá trị nội tại, DCF, PEG, EV/EBITDA, mô hình cổ tức, giá mục tiêu | 33 |
 | 19. Quyền cổ đông & công bố thông tin | `#co-dong` | ĐHCĐ, cổ đông lớn, giao dịch nội bộ, thời hạn công bố BCTC, hủy niêm yết | 34 |
 | 20. Lý thuyết thị trường tài chính | `#ly-thuyet` | Cơ chế chuyển thời hạn vốn, sơ cấp/thứ cấp, thị trường hiệu quả (EMH), lý thuyết quả chanh | 25 |
-| 21. Doanh nhân & thương vụ | `#doanh-nhan` | Câu chuyện doanh nghiệp từ báo chí, mỗi bài là một chủ đề lọc riêng. Bài đầu: Danieli & ngành thép Việt (Hòa Phát, VinMetal, Xuân Thiện, Tôn Đông Á) | 16 |
+| 21. Doanh nhân & thương vụ | `#doanh-nhan` | Câu chuyện doanh nghiệp từ báo chí, mỗi bài là một chủ đề lọc riêng: Danieli & ngành thép Việt; FPT & chip bán dẫn | 28 |
 
 Sau mỗi lượt có nút **Ôn lại câu sai** để chơi lại riêng các câu vừa trả lời sai.
 
