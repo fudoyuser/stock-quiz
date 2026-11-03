@@ -1,28 +1,29 @@
 # Bảng Điện Quiz
 
-Quiz kiến thức chứng khoán Việt Nam gồm **19 phần tách biệt**. Mỗi phần có thiết lập, điểm cao nhất và bảng tra cứu riêng, có link riêng (`#ma`, `#linh-vuc`…).
+Quiz kiến thức chứng khoán Việt Nam gồm **20 phần tách biệt**. Mỗi phần có thiết lập, điểm cao nhất và bảng tra cứu riêng, có link riêng (`#ma`, `#linh-vuc`…).
 
 | Phần | Link | Nội dung | Số câu |
 |---|---|---|---|
 | 1. Mã cổ phiếu | `#ma` | Nhìn tên doanh nghiệp, tự gõ mã | 184 |
 | 2. Lĩnh vực hoạt động | `#linh-vuc` | Đọc lĩnh vực hoạt động chính, chọn đúng mã | 184 |
-| 3. Thuật ngữ & chỉ số | `#thuat-ngu` | P/E, EPS, ROE, margin, room ngoại, ETF, chứng quyền… | 30 |
+| 3. Thuật ngữ & chỉ số | `#thuat-ngu` | P/E, EPS, ROE, margin, room ngoại, ETF, chứng quyền… | 32 |
 | 4. Quy định giao dịch | `#quy-dinh` | Biên độ, bước giá, lô chẵn, giờ giao dịch, T+2, GDKHQ, thuế | 29 |
 | 5. Sàn niêm yết | `#san` | Mã này ở HOSE, HNX hay UPCoM? | 105 |
 | 6. Tập đoàn & công ty con | `#tap-doan` | Vingroup, Masan, FPT, Viettel, PVN… gồm những mã nào | 50 |
 | 7. Thương hiệu → Mã | `#thuong-hieu` | Long Châu, bia 333, Zalo… thuộc mã nào | 48 |
 | 8. Chỉ số thị trường | `#chi-so` | VN-Index, VN30, VN100, VNDiamond, ETF, cổ phiếu trụ | 28 |
-| 9. Đọc báo cáo tài chính | `#bctc` | Tính EPS, P/E, ROE, D/E (có bảng số liệu) và nhận diện rủi ro | 28 |
+| 9. Đọc báo cáo tài chính | `#bctc` | Tính EPS, P/E, ROE, D/E (có bảng số liệu) và nhận diện rủi ro | 30 |
 | 10. Lịch sử thị trường | `#lich-su` | Các mốc từ năm 2000 đến nay | 28 |
 | 11. Phân tích kỹ thuật | `#ky-thuat` | Mô hình nến, mô hình giá, RSI, phân kỳ, MACD, khối lượng (có biểu đồ minh họa) | 33 |
 | 12. Thị trường phái sinh | `#phai-sinh` | Hợp đồng tương lai VN30, chứng quyền có bảo đảm | 29 |
-| 13. Trái phiếu & chứng khoán hóa | `#trai-phieu` | Coupon, lợi suất, lãi suất và giá, rủi ro, bài học 2022; chứng khoán hóa: ABS, MBS, SPV, phân tầng, khủng hoảng 2008 | 38 |
+| 13. Trái phiếu & chứng khoán hóa | `#trai-phieu` | Coupon, lợi suất, lãi suất và giá, rủi ro, phương thức trả nợ, xếp hạng tín nhiệm, đấu thầu kiểu Hà Lan, bài học 2022; chứng khoán hóa: ABS, MBS, SPV, phân tầng, khủng hoảng 2008 | 47 |
 | 14. Quỹ đầu tư & ETF | `#quy` | NAV, quỹ mở/đóng, ETF nội và ngoại, DCA | 28 |
 | 15. Quản trị rủi ro & tâm lý | `#rui-ro` | Cắt lỗ, R:R, quy mô vị thế, margin, FOMO và các thiên kiến | 28 |
 | 16. Đọc hiểu theo ngành | `#nganh` | Chia 9 ngành, chọn ngành để ôn riêng: ngân hàng, chứng khoán & bảo hiểm, bất động sản & KCN, thép & vật liệu, bán lẻ, dầu khí & điện, vận tải, xuất khẩu, công nghệ | 66 |
 | 17. Kinh tế vĩ mô | `#vi-mo` | Lãi suất, tỷ giá, lạm phát, Fed, chính sách tiền tệ, cổ phiếu chu kỳ/phòng thủ | 26 |
 | 18. Định giá doanh nghiệp | `#dinh-gia` | Giá trị nội tại, DCF, PEG, EV/EBITDA, mô hình cổ tức, giá mục tiêu | 25 |
 | 19. Quyền cổ đông & công bố thông tin | `#co-dong` | ĐHCĐ, cổ đông lớn, giao dịch nội bộ, thời hạn công bố BCTC, hủy niêm yết | 26 |
+| 20. Lý thuyết thị trường tài chính | `#ly-thuyet` | Cơ chế chuyển thời hạn vốn, sơ cấp/thứ cấp, thị trường hiệu quả (EMH), lý thuyết quả chanh | 15 |
 
 Dữ liệu chỉ để ôn tập, không phải khuyến nghị đầu tư. Quy định, sàn niêm yết và cơ cấu sở hữu có thể thay đổi, nên kiểm tra lại với nguồn chính thức.
 
@@ -32,7 +33,7 @@ Dữ liệu chỉ để ôn tập, không phải khuyến nghị đầu tư. Quy
 - **Sàn niêm yết** (Phần 5): object `EXCH`, chỉ gồm những mã có sàn ổn định.
 - **Tập đoàn** (Phần 6): mảng `GROUPS`.
 - **Thương hiệu** (Phần 7): mảng `BRANDS`.
-- **Câu hỏi kiến thức** (Phần 3, 4, 8–19): mảng `TERMS`, `RULES`, `INDEXES`, `FINANCE`, `HISTORY`, `TECH`, `DERIV`, `BONDS`, `FUNDS`, `RISK`, `SECTOR_Q`, `MACRO`, `VALUATION`, `GOVERN`. Mỗi câu có `q` (câu hỏi), `a` (đáp án đúng), `w` (3 đáp án sai), `e` (giải thích).
+- **Câu hỏi kiến thức** (Phần 3, 4, 8–20): mảng `TERMS`, `RULES`, `INDEXES`, `FINANCE`, `HISTORY`, `TECH`, `DERIV`, `BONDS`, `FUNDS`, `RISK`, `SECTOR_Q`, `MACRO`, `VALUATION`, `GOVERN`, `THEORY`. Mỗi câu có `q` (câu hỏi), `a` (đáp án đúng), `w` (3 đáp án sai), `e` (giải thích).
 - **Biểu đồ minh họa** (Phần 11): thêm `chart` vào câu hỏi, dạng `{ candles: [[mở, cao, thấp, đóng], …] }` hoặc `{ lines: [{ d: [...], dash, label }], hline: [giá] }`, thêm `lower: { title, lines, bars, hline }` để vẽ khung chỉ báo (RSI, khối lượng).
 - **Bảng số liệu** (câu tính toán): thêm `table: [["Doanh thu", "2.000 tỷ"], …]`.
 - **Thêm phần mới**: thêm một object vào mảng `PARTS` và một màu `--cN` trong CSS.

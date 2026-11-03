@@ -13,7 +13,7 @@
 :root {
   --bg: #f3f5f2; --card: #ffffff; --opt: #f7f9f6; --ink: #121815; --muted: #5f6b65; --line: #dde3de;
   --up: #11935a; --up-soft: #dcf3e7; --down: #d23b3b; --down-soft: #fbe2e0; --ref: #b88a00; --ceil: #8a3fc7; --floor: #1a8fb8;
-  --c1: #11935a; --c2: #8a3fc7; --c3: #2a72c9; --c4: #c2570c; --c5: #0e8a8a; --c6: #c2366b; --c7: #6d5bd0; --c8: #a07a00; --c9: #3d7a1f; --c10: #b8432b; --c11: #1f7fae; --c12: #9a3fb0; --c13: #7a6a12; --c14: #2f7f5f; --c15: #c0392b; --c16: #4a5fc1; --c17: #a8481e; --c18: #1d7f8f; --c19: #7a4fa3;
+  --c1: #11935a; --c2: #8a3fc7; --c3: #2a72c9; --c4: #c2570c; --c5: #0e8a8a; --c6: #c2366b; --c7: #6d5bd0; --c8: #a07a00; --c9: #3d7a1f; --c10: #b8432b; --c11: #1f7fae; --c12: #9a3fb0; --c13: #7a6a12; --c14: #2f7f5f; --c15: #c0392b; --c16: #4a5fc1; --c17: #a8481e; --c18: #1d7f8f; --c19: #7a4fa3; --c20: #2e6f9e;
   --accent: var(--c1); --accent-ink: #ffffff;
   color-scheme: light;
 }
@@ -21,14 +21,14 @@
   :root:not([data-theme="light"]) {
     --bg: #0b0f0d; --card: #131916; --opt: #18201c; --ink: #e9efeb; --muted: #8d9a93; --line: #25302a;
     --up: #2fd47f; --up-soft: #12301f; --down: #ff6363; --down-soft: #3a1717; --ref: #f2c230; --ceil: #c98bff; --floor: #4fd1ff;
-    --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --c11: #5cc3f2; --c12: #e08cff; --c13: #e0c95a; --c14: #6fd6a8; --c15: #ff7b6b; --c16: #93a3ff; --c17: #ff9e6b; --c18: #5fd3e3; --c19: #c7a0ff; --accent-ink: #06130c;
+    --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --c11: #5cc3f2; --c12: #e08cff; --c13: #e0c95a; --c14: #6fd6a8; --c15: #ff7b6b; --c16: #93a3ff; --c17: #ff9e6b; --c18: #5fd3e3; --c19: #c7a0ff; --c20: #7ec4ff; --accent-ink: #06130c;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #0b0f0d; --card: #131916; --opt: #18201c; --ink: #e9efeb; --muted: #8d9a93; --line: #25302a;
   --up: #2fd47f; --up-soft: #12301f; --down: #ff6363; --down-soft: #3a1717; --ref: #f2c230; --ceil: #c98bff; --floor: #4fd1ff;
-  --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --c11: #5cc3f2; --c12: #e08cff; --c13: #e0c95a; --c14: #6fd6a8; --c15: #ff7b6b; --c16: #93a3ff; --c17: #ff9e6b; --c18: #5fd3e3; --c19: #c7a0ff; --accent-ink: #06130c;
+  --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --c11: #5cc3f2; --c12: #e08cff; --c13: #e0c95a; --c14: #6fd6a8; --c15: #ff7b6b; --c16: #93a3ff; --c17: #ff9e6b; --c18: #5fd3e3; --c19: #c7a0ff; --c20: #7ec4ff; --accent-ink: #06130c;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -165,7 +165,7 @@ footer { text-align: center; font-size: 13px; color: var(--muted); }
       <button class="theme" id="themeBtn" type="button">Giao diện: Tự động</button>
     </div>
     <h1>Bảng Điện <span>Quiz</span></h1>
-    <p>Ôn kiến thức chứng khoán Việt Nam qua 19 phần: từ mã cổ phiếu, lĩnh vực kinh doanh, quy định giao dịch, báo cáo tài chính, định giá, vĩ mô đến phân tích kỹ thuật, phái sinh, trái phiếu, quỹ và quản trị rủi ro. Mỗi phần là một bộ câu hỏi riêng.</p>
+    <p>Ôn kiến thức chứng khoán Việt Nam qua 20 phần: từ mã cổ phiếu, lĩnh vực kinh doanh, quy định giao dịch, báo cáo tài chính, định giá, vĩ mô, lý thuyết thị trường đến phân tích kỹ thuật, phái sinh, trái phiếu, quỹ và quản trị rủi ro. Mỗi phần là một bộ câu hỏi riêng.</p>
   </header>
 
   <nav class="parts" id="parts" role="tablist" aria-label="Chọn phần"></nav>
@@ -239,7 +239,7 @@ footer { text-align: center; font-size: 13px; color: var(--muted); }
     <p class="note">Dữ liệu dùng để ôn tập, không phải khuyến nghị đầu tư. Doanh nghiệp có thể đổi tên, chuyển sàn, hủy niêm yết hoặc mở rộng lĩnh vực kinh doanh; hãy kiểm tra lại trên website của sở giao dịch khi cần chính xác.</p>
   </section>
 
-  <footer>Bảng Điện Quiz · 19 phần kiến thức chứng khoán Việt Nam · Chỉ để ôn tập, không phải khuyến nghị đầu tư</footer>
+  <footer>Bảng Điện Quiz · 20 phần kiến thức chứng khoán Việt Nam · Chỉ để ôn tập, không phải khuyến nghị đầu tư</footer>
 </main>
 
 <script>
@@ -976,6 +976,46 @@ BONDS.push(
   { q: "Thị trường chứng khoán hóa tài sản ở Việt Nam hiện nay như thế nào?", a: "Còn sơ khai, rất ít đợt phát hành, khung pháp lý chưa hoàn thiện", w: ["Lớn nhất châu Á", "Là kênh huy động vốn chính của ngân hàng", "Đã bị cấm hoàn toàn"], e: "Chứng khoán hóa được kỳ vọng là kênh giúp ngân hàng và doanh nghiệp đa dạng hóa nguồn vốn trong tương lai." }
 );
 
+/* ===== Bổ sung: xếp hạng tín nhiệm, phương thức trả nợ, đấu thầu (Phần 13); cổ phiếu lưu hành (Phần 3); thặng dư vốn (Phần 9) ===== */
+BONDS.push(
+  { q: "Tổ chức nào sau đây là doanh nghiệp xếp hạng tín nhiệm hoạt động tại Việt Nam?", a: "FiinRatings", w: ["VSDC", "HOSE", "Vietcombank"], e: "Các doanh nghiệp xếp hạng tín nhiệm được Bộ Tài chính cấp phép, tiêu biểu như FiinRatings, VIS Rating (có Moody's góp vốn) và Saigon Ratings." },
+  { q: "Vì sao nhiều ý kiến cho rằng xếp hạng tín nhiệm ở Việt Nam còn mang tính hình thức?", a: "Số doanh nghiệp được xếp hạng ít, dữ liệu lịch sử vỡ nợ ngắn, nhà đầu tư chưa thực sự dựa vào kết quả xếp hạng", w: ["Vì bị cấm hoạt động", "Vì chỉ xếp hạng cổ phiếu", "Vì kết quả do Ngân hàng Nhà nước quyết định"], e: "Thị trường còn non trẻ; các quy định mới đang dần yêu cầu xếp hạng tín nhiệm trong một số trường hợp phát hành trái phiếu." },
+  { q: "Mô hình \"tổ chức phát hành trả phí xếp hạng\" có rủi ro gì?", a: "Xung đột lợi ích: tổ chức xếp hạng có động cơ chấm điểm dễ dãi cho khách hàng trả phí", w: ["Làm lãi suất trái phiếu bằng 0", "Khiến trái phiếu không thể giao dịch", "Không có rủi ro gì"], e: "Đây cũng là một nguyên nhân khiến các chứng khoán dưới chuẩn được xếp hạng AAA trước khủng hoảng 2008." },
+  { q: "Trái phiếu trả lãi định kỳ, trả gốc một lần khi đáo hạn. Với tổ chức phát hành, điểm bất lợi chính là gì?", a: "Áp lực trả gốc rất lớn tập trung vào ngày đáo hạn (rủi ro tái tài trợ)", w: ["Phải trả gốc mỗi tháng", "Không được trả lãi", "Lãi suất tự động tăng"], e: "Năm 2022–2023, nhiều doanh nghiệp bất động sản gặp khó vì áp lực đáo hạn gốc dồn dập." },
+  { q: "Trái phiếu trả gốc dần theo từng kỳ. Với nhà đầu tư, đặc điểm nào đúng?", a: "Thu hồi vốn dần nên giảm rủi ro tín dụng, nhưng phải tái đầu tư phần gốc nhận sớm", w: ["Rủi ro tín dụng dồn hết vào cuối kỳ", "Không nhận được tiền cho đến khi đáo hạn", "Lãi suất luôn cao hơn trái phiếu trả gốc cuối kỳ"], e: "Với tổ chức phát hành, cách này giảm áp lực cuối kỳ nhưng dòng tiền trả nợ mỗi kỳ nặng hơn." },
+  { q: "Trái phiếu trả cả gốc và lãi một lần khi đáo hạn phù hợp với tổ chức phát hành nào?", a: "Doanh nghiệp có dự án chưa tạo ra dòng tiền trong nhiều năm đầu", w: ["Doanh nghiệp có dòng tiền đều đặn hàng tháng", "Ngân hàng cần thanh khoản ngắn hạn", "Doanh nghiệp sắp giải thể"], e: "Ngược lại, nhà đầu tư không có thu nhập định kỳ và chịu toàn bộ rủi ro tín dụng vào cuối kỳ." },
+  { q: "Đấu thầu trái phiếu theo kiểu Hà Lan (đơn giá) hoạt động thế nào?", a: "Tất cả nhà thầu trúng đều hưởng chung một mức lãi suất là lãi suất trúng thầu cao nhất được chấp nhận", w: ["Mỗi nhà thầu trúng theo đúng lãi suất mình đặt", "Nhà thầu đặt lãi suất cao nhất được ưu tiên", "Lãi suất do tổ chức phát hành tự quyết, không cần đặt thầu"], e: "Kiểu đa giá (kiểu Mỹ) thì ngược lại: mỗi người trúng thầu ở mức lãi suất mình đã đặt." },
+  { q: "Cần huy động 300 tỷ đồng. Theo kiểu Hà Lan, các nhà thầu trúng hưởng lãi suất bao nhiêu?", table: [["Nhà thầu A", "100 tỷ @ 3,0%"], ["Nhà thầu B", "150 tỷ @ 3,2%"], ["Nhà thầu C", "100 tỷ @ 3,4%"]], a: "3,4% cho tất cả", w: ["Mỗi người theo mức mình đặt", "3,2% cho tất cả", "3,0% cho tất cả"], e: "Xét từ lãi suất thấp lên: A 100 + B 150 + C 50 = 300 tỷ. Lãi suất cắt (cut-off) 3,4% áp dụng chung cho cả A, B, C." },
+  { q: "Ưu điểm chính của đấu thầu kiểu Hà Lan so với đa giá là gì?", a: "Khuyến khích nhà thầu đặt đúng mức lãi suất mong muốn, giảm \"lời nguyền người thắng\"", w: ["Tổ chức phát hành luôn vay được rẻ nhất", "Không cần nhà thầu đặt lãi suất", "Chỉ một nhà thầu được trúng"], e: "Đổi lại, chi phí vốn của tổ chức phát hành có thể cao hơn vì mọi người hưởng mức lãi suất cắt." }
+);
+TERMS.push(
+  { q: "Cổ phiếu đang lưu hành khác cổ phiếu đã phát hành ở điểm nào?", a: "Cổ phiếu lưu hành = cổ phiếu đã phát hành − cổ phiếu quỹ", w: ["Hai khái niệm hoàn toàn giống nhau", "Cổ phiếu lưu hành gồm cả cổ phiếu chưa phát hành", "Cổ phiếu lưu hành chỉ tính cổ phiếu của cổ đông lớn"], e: "EPS, vốn hóa, tỷ lệ sở hữu đều tính trên số cổ phiếu đang lưu hành." },
+  { q: "Công ty đã phát hành 100 triệu cổ phiếu, trong đó mua lại 5 triệu làm cổ phiếu quỹ. Số cổ phiếu đang lưu hành là?", a: "95 triệu", w: ["100 triệu", "105 triệu", "5 triệu"], e: "Cổ phiếu quỹ vẫn là cổ phiếu đã phát hành nhưng không còn lưu hành." }
+);
+FINANCE.push(
+  { q: "Thặng dư vốn cổ phần là gì?", a: "Chênh lệch giữa giá phát hành cổ phiếu và mệnh giá", w: ["Lợi nhuận chưa phân phối", "Tiền mặt dư thừa cuối năm", "Phần vốn vay vượt hạn mức"], e: "Thặng dư vốn thuộc vốn chủ sở hữu và có thể dùng để phát hành cổ phiếu thưởng tăng vốn điều lệ." },
+  { q: "Công ty phát hành 10 triệu cổ phiếu mệnh giá 10.000đ với giá 30.000đ. Vốn điều lệ và thặng dư vốn tăng bao nhiêu?", a: "Vốn điều lệ +100 tỷ, thặng dư vốn +200 tỷ", w: ["Vốn điều lệ +300 tỷ, thặng dư 0", "Vốn điều lệ +200 tỷ, thặng dư +100 tỷ", "Vốn điều lệ +100 tỷ, thặng dư +300 tỷ"], e: "Vốn điều lệ = 10 triệu × 10.000; thặng dư = 10 triệu × (30.000 − 10.000)." }
+);
+
+/* ===== Phần 20: Lý thuyết thị trường tài chính ===== */
+const THEORY = [
+  { q: "Cơ chế chuyển thời hạn vốn là gì?", a: "Biến nguồn vốn ngắn hạn của người tiết kiệm thành vốn dài hạn cho người cần vốn", w: ["Đổi trái phiếu ngắn hạn sang dài hạn khi đáo hạn", "Gia hạn khoản vay quá hạn", "Chuyển tiền từ tài khoản này sang tài khoản khác"], e: "Ngân hàng làm điều này bằng cách huy động ngắn hạn để cho vay dài hạn; thị trường chứng khoán làm bằng thị trường thứ cấp." },
+  { q: "Vì sao thị trường chứng khoán là thị trường vốn dài hạn dù nhiều nhà đầu tư chỉ nắm cổ phiếu vài ngày?", a: "Nhờ thị trường thứ cấp: nhà đầu tư rút vốn bằng cách bán cho người khác, còn doanh nghiệp vẫn giữ nguyên vốn dài hạn", w: ["Vì nhà đầu tư bị cấm bán trước 1 năm", "Vì doanh nghiệp phải hoàn vốn sau mỗi phiên", "Vì cổ phiếu có kỳ hạn tối thiểu 5 năm"], e: "Đó là cơ chế chuyển thời hạn vốn: ngắn hạn với từng nhà đầu tư, dài hạn (thậm chí vĩnh viễn) với doanh nghiệp." },
+  { q: "Thị trường vốn khác thị trường tiền tệ ở điểm nào?", a: "Thị trường vốn giao dịch công cụ kỳ hạn trên 1 năm; thị trường tiền tệ dưới 1 năm", w: ["Thị trường vốn chỉ giao dịch ngoại tệ", "Thị trường tiền tệ chỉ có cổ phiếu", "Hai thị trường giống nhau"], e: "Cổ phiếu, trái phiếu dài hạn thuộc thị trường vốn; tín phiếu, thương phiếu, vay liên ngân hàng thuộc thị trường tiền tệ." },
+  { q: "Ở thị trường sơ cấp, tiền của nhà đầu tư chảy về đâu?", a: "Về tổ chức phát hành (doanh nghiệp, Chính phủ)", w: ["Về nhà đầu tư khác", "Về sở giao dịch chứng khoán", "Về công ty chứng khoán"], e: "Ở thị trường thứ cấp, tiền chỉ chuyển giữa các nhà đầu tư, doanh nghiệp không nhận thêm vốn." },
+  { q: "Thị trường thứ cấp có vai trò gì với thị trường sơ cấp?", a: "Tạo thanh khoản và cơ chế định giá, giúp nhà đầu tư sẵn sàng mua chứng khoán phát hành mới", w: ["Không có vai trò gì", "Thay thế hoàn toàn thị trường sơ cấp", "Cung cấp vốn trực tiếp cho doanh nghiệp"], e: "Không ai muốn mua cổ phiếu IPO nếu sau đó không có nơi bán lại." },
+  { q: "Lý thuyết thị trường hiệu quả (EMH) gắn với nhà kinh tế học nào?", a: "Eugene Fama", w: ["George Akerlof", "Benjamin Graham", "John Maynard Keynes"], e: "Fama nhận giải Nobel Kinh tế năm 2013." },
+  { q: "Theo EMH dạng yếu, giá cổ phiếu đã phản ánh thông tin gì? Hàm ý là gì?", a: "Toàn bộ thông tin giá và khối lượng quá khứ; phân tích kỹ thuật không mang lại lợi nhuận vượt trội", w: ["Mọi thông tin nội bộ; không ai kiếm lời được", "Không thông tin nào; giá hoàn toàn ngẫu nhiên vô nghĩa", "Chỉ thông tin báo cáo tài chính; phân tích cơ bản vô dụng"], e: "Ba dạng EMH: yếu, trung bình (bán mạnh) và mạnh." },
+  { q: "Theo EMH dạng trung bình (bán mạnh), giá đã phản ánh những gì?", a: "Mọi thông tin công khai, nên cả phân tích kỹ thuật lẫn phân tích cơ bản đều khó tạo lợi nhuận vượt trội", w: ["Chỉ thông tin giá quá khứ", "Cả thông tin nội bộ chưa công bố", "Không phản ánh thông tin nào"], e: "Giá phản ứng gần như tức thì khi có thông tin mới được công bố." },
+  { q: "Theo EMH dạng mạnh, giá phản ánh những thông tin nào?", a: "Tất cả thông tin, kể cả thông tin nội bộ chưa công bố", w: ["Chỉ thông tin giá quá khứ", "Chỉ thông tin công khai", "Chỉ tin đồn trên mạng"], e: "Trên thực tế, các vụ giao dịch nội gián cho thấy dạng mạnh khó tồn tại." },
+  { q: "Hàm ý thực tiễn quan trọng nhất của EMH với nhà đầu tư cá nhân là gì?", a: "Khó đánh bại thị trường lâu dài, nên đầu tư thụ động chi phí thấp (quỹ chỉ số, ETF) là lựa chọn hợp lý", w: ["Nên giao dịch càng nhiều càng tốt", "Nên dùng margin tối đa", "Nên mua theo tin đồn"], e: "Những người phản biện EMH (như trường phái tài chính hành vi) chỉ ra các bong bóng và hoảng loạn là bằng chứng thị trường không luôn hiệu quả." },
+  { q: "\"Lý thuyết quả chanh\" (The Market for Lemons) do ai đưa ra?", a: "George Akerlof (năm 1970)", w: ["Eugene Fama", "Warren Buffett", "Harry Markowitz"], e: "Akerlof nhận giải Nobel Kinh tế năm 2001 nhờ các nghiên cứu về thông tin bất cân xứng." },
+  { q: "Nội dung cốt lõi của lý thuyết quả chanh là gì?", a: "Thông tin bất cân xứng khiến người mua chỉ trả giá trung bình, hàng tốt rút khỏi thị trường, chỉ còn hàng xấu", w: ["Giá luôn phản ánh đúng giá trị thật", "Hàng tốt luôn bán được giá cao", "Người bán biết ít thông tin hơn người mua"], e: "Ví dụ gốc là thị trường xe cũ: \"quả chanh\" là xe xấu." },
+  { q: "Áp dụng lý thuyết quả chanh vào thị trường chứng khoán, hiện tượng nào có thể xảy ra?", a: "Doanh nghiệp tốt bị định giá thấp nên ngại phát hành, doanh nghiệp kém lại tích cực huy động vốn", w: ["Mọi doanh nghiệp đều được định giá cao", "Chỉ doanh nghiệp tốt được niêm yết", "Nhà đầu tư luôn phân biệt được doanh nghiệp tốt xấu"], e: "Kết quả là chất lượng hàng hóa trên thị trường giảm và niềm tin suy yếu." },
+  { q: "Giải pháp nào giúp giảm vấn đề \"quả chanh\" trên thị trường chứng khoán?", a: "Công bố thông tin minh bạch, kiểm toán độc lập, xếp hạng tín nhiệm, bảo lãnh phát hành uy tín", w: ["Cấm doanh nghiệp công bố thông tin", "Giảm biên độ giao dịch", "Tăng thuế giao dịch"], e: "Đây là lý do pháp luật chứng khoán đặt nặng nghĩa vụ công bố thông tin." },
+  { q: "\"Lựa chọn ngược\" khác \"rủi ro đạo đức\" ở điểm nào?", a: "Lựa chọn ngược xảy ra trước giao dịch; rủi ro đạo đức xảy ra sau giao dịch", w: ["Hai khái niệm giống nhau", "Lựa chọn ngược chỉ có ở ngân hàng", "Rủi ro đạo đức xảy ra trước khi ký hợp đồng"], e: "Ví dụ rủi ro đạo đức: doanh nghiệp huy động vốn xong dùng sai mục đích đã công bố." }
+];
+
 /* ===== Phần 17: Kinh tế vĩ mô ===== */
 const MACRO = [
   { q: "Ngân hàng Nhà nước giảm lãi suất điều hành thường tác động thế nào đến thị trường chứng khoán?", a: "Tích cực: chi phí vốn giảm, dòng tiền chuyển từ tiết kiệm sang kênh đầu tư", w: ["Tiêu cực: lợi nhuận doanh nghiệp giảm", "Không ảnh hưởng gì", "Thị trường bị tạm ngừng giao dịch"], e: "Lãi suất là biến số vĩ mô quan trọng nhất với định giá cổ phiếu." },
@@ -1251,6 +1291,10 @@ const PARTS = [
   {
     id: "govern", hash: "co-dong", title: "Quyền cổ đông & công bố thông tin", desc: "ĐHCĐ, cổ đông lớn, nội bộ, hủy niêm yết.",
     items: () => GOVERN, make: bankQ("Quyền cổ đông & công bố thông tin"), board: bankBoard(GOVERN)
+  },
+  {
+    id: "theory", hash: "ly-thuyet", title: "Lý thuyết thị trường tài chính", desc: "Chuyển thời hạn vốn, EMH, quả chanh.",
+    items: () => THEORY, make: bankQ("Lý thuyết thị trường tài chính"), board: bankBoard(THEORY)
   }
 ];
 const PART = Object.fromEntries(PARTS.map((p, i) => [p.id, Object.assign(p, { num: i + 1 })]));
