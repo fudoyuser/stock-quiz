@@ -955,6 +955,27 @@ DERIV.push(
   { q: "Vì sao giá chứng quyền thường biến động mạnh hơn (theo %) so với cổ phiếu cơ sở?", a: "Chứng quyền có tính đòn bẩy: vốn nhỏ nhưng phản ánh biến động của cổ phiếu cơ sở", w: ["Chứng quyền không có biên độ", "Chứng quyền được margin gấp 10", "Chứng quyền chỉ giao dịch phiên ATC"], e: "Đòn bẩy làm lãi lẫn lỗ tính theo % đều lớn hơn." }
 );
 
+BONDS.push(
+  { q: "Trái phiếu xanh (green bond) là gì?", a: "Trái phiếu huy động vốn cho các dự án có lợi cho môi trường (năng lượng tái tạo, xử lý chất thải…)", w: ["Trái phiếu in trên giấy màu xanh", "Trái phiếu của ngân hàng nông nghiệp", "Trái phiếu không trả lãi"], e: "Tổ chức phát hành phải báo cáo việc sử dụng vốn đúng mục đích xanh." },
+  { q: "Trái phiếu có quyền mua lại (callable bond) cho phép điều gì?", a: "Tổ chức phát hành được mua lại trái phiếu trước hạn theo điều kiện định trước", w: ["Nhà đầu tư được bán lại cho tổ chức phát hành bất cứ lúc nào", "Trái phiếu tự chuyển thành cổ phiếu", "Lãi suất tăng gấp đôi khi đáo hạn"], e: "Tổ chức phát hành thường mua lại khi lãi suất thị trường giảm, nên nhà đầu tư thường đòi lãi cao hơn để bù rủi ro này." },
+  { q: "\"Chênh lệch tín dụng\" (credit spread) là gì?", a: "Chênh lệch lợi suất giữa trái phiếu doanh nghiệp và trái phiếu Chính phủ cùng kỳ hạn", w: ["Chênh lệch giữa giá mua và giá bán", "Phí phát hành trái phiếu", "Chênh lệch lãi suất giữa hai ngân hàng"], e: "Spread càng rộng, thị trường đánh giá rủi ro tín dụng của doanh nghiệp càng cao." },
+  { q: "Đường cong lợi suất đảo ngược (lợi suất ngắn hạn cao hơn dài hạn) thường được xem là dấu hiệu gì?", a: "Cảnh báo nguy cơ suy thoái kinh tế", w: ["Kinh tế tăng trưởng nóng chắc chắn", "Lạm phát bằng 0", "Thị trường trái phiếu đóng cửa"], e: "Ở Mỹ, đường cong lợi suất đảo ngược nhiều lần xuất hiện trước các cuộc suy thoái." },
+  { q: "Trái phiếu kèm chứng quyền khác trái phiếu thông thường ở điểm nào?", a: "Kèm quyền mua cổ phiếu của tổ chức phát hành ở mức giá định trước", w: ["Không trả lãi định kỳ", "Không có ngày đáo hạn", "Được Nhà nước bảo lãnh"], e: "Chứng quyền đi kèm giúp tổ chức phát hành có thể trả lãi suất thấp hơn." },
+  { q: "Chứng khoán hóa tài sản là gì?", a: "Gom các tài sản tạo ra dòng tiền (khoản vay, khoản phải thu…) thành chứng khoán để bán cho nhà đầu tư", w: ["Niêm yết cổ phiếu lần đầu", "Chuyển trái phiếu thành cổ phiếu", "Mua lại cổ phiếu quỹ"], e: "Nhà đầu tư nhận lãi và gốc từ dòng tiền trả nợ của nhóm tài sản gốc." },
+  { q: "MBS là loại chứng khoán gì?", a: "Chứng khoán được đảm bảo bằng các khoản vay thế chấp nhà ở", w: ["Cổ phiếu ngân hàng", "Chứng chỉ quỹ bất động sản", "Trái phiếu Chính phủ"], e: "MBS = Mortgage-Backed Securities." },
+  { q: "ABS là loại chứng khoán gì?", a: "Chứng khoán được đảm bảo bằng các tài sản như khoản vay mua ô tô, thẻ tín dụng, khoản phải thu", w: ["Cổ phiếu ưu đãi", "Chứng quyền có bảo đảm", "Hợp đồng tương lai chỉ số"], e: "ABS = Asset-Backed Securities." },
+  { q: "Trong chứng khoán hóa, công ty mục đích đặc biệt (SPV) có vai trò gì?", a: "Nhận chuyển giao tài sản và phát hành chứng khoán, tách rủi ro tài sản khỏi bên khởi tạo", w: ["Thu thuế từ nhà đầu tư", "Xếp hạng tín nhiệm cho chứng khoán", "Cho vay trực tiếp người mua nhà"], e: "Nếu bên khởi tạo phá sản, tài sản đã chuyển cho SPV vẫn được dùng để trả nhà đầu tư." },
+  { q: "Ngân hàng chứng khoán hóa các khoản cho vay của mình nhằm mục đích chính nào?", a: "Thu hồi vốn sớm, chuyển bớt rủi ro và có thêm nguồn để cho vay tiếp", w: ["Tăng nợ xấu", "Được miễn thuế vĩnh viễn", "Tránh phải công bố báo cáo tài chính"], e: "Khoản vay dài hạn được \"biến\" thành tiền mặt ngay." },
+  { q: "Trong cấu trúc phân tầng (tranche), tầng ưu tiên (senior) có đặc điểm gì?", a: "Được trả lãi, gốc trước tiên; rủi ro thấp nhất nên lãi suất thấp nhất", w: ["Chịu lỗ đầu tiên", "Lãi suất cao nhất", "Không được trả gốc"], e: "Dòng tiền chảy từ trên xuống: tầng ưu tiên nhận trước, tầng thấp hơn nhận phần còn lại." },
+  { q: "Tầng thấp nhất (equity/first-loss tranche) trong chứng khoán hóa có đặc điểm gì?", a: "Chịu lỗ đầu tiên khi người vay vỡ nợ, đổi lại kỳ vọng lợi nhuận cao nhất", w: ["An toàn nhất", "Được trả trước tiên", "Được Nhà nước bảo lãnh"], e: "Tầng này đóng vai trò \"tấm đệm\" bảo vệ các tầng phía trên." },
+  { q: "Rủi ro trả nợ trước hạn của MBS xảy ra khi nào?", a: "Lãi suất giảm, người vay tái cấp vốn và trả nợ sớm, nhà đầu tư phải tái đầu tư ở lãi suất thấp hơn", w: ["Lãi suất tăng mạnh", "Giá nhà tăng", "Ngân hàng tăng vốn điều lệ"], e: "Đây là rủi ro đặc thù của chứng khoán đảm bảo bằng khoản vay thế chấp." },
+  { q: "Khủng hoảng tài chính toàn cầu 2008 bắt nguồn từ đâu?", a: "Các khoản vay mua nhà dưới chuẩn (subprime) ở Mỹ được chứng khoán hóa thành MBS, CDO và bán rộng rãi", w: ["Khủng hoảng giá dầu", "Một sàn chứng khoán bị tấn công mạng", "Trái phiếu Chính phủ Việt Nam vỡ nợ"], e: "Khi giá nhà giảm, người vay vỡ nợ hàng loạt và các chứng khoán được xếp hạng cao mất giá nghiêm trọng." },
+  { q: "CDO là gì?", a: "Chứng khoán gom nhiều chứng khoán nợ (kể cả các tầng MBS) rồi phân tầng thêm một lần nữa", w: ["Một loại cổ phiếu ưu đãi", "Quỹ ETF trái phiếu", "Hợp đồng tương lai lãi suất"], e: "Cấu trúc phức tạp khiến rủi ro thật bị che giấu, góp phần gây ra khủng hoảng 2008." },
+  { q: "\"Tăng cường tín dụng\" (credit enhancement) trong chứng khoán hóa là gì?", a: "Các cơ chế giảm rủi ro cho nhà đầu tư như thế chấp vượt mức, tầng thứ cấp hấp thụ lỗ, bảo lãnh", w: ["Tăng lãi suất cho người vay", "Cho vay thêm cho nhà đầu tư", "Tăng hạn mức thẻ tín dụng"], e: "Giúp các tầng ưu tiên đạt xếp hạng tín nhiệm cao hơn tài sản gốc." },
+  { q: "Bên phục vụ (servicer) trong một giao dịch chứng khoán hóa làm gì?", a: "Thu nợ từ người vay và chuyển dòng tiền cho SPV, nhà đầu tư", w: ["Mua toàn bộ chứng khoán phát hành", "Xếp hạng tín nhiệm", "Giám sát thị trường chứng khoán"], e: "Thường chính ngân hàng khởi tạo tiếp tục đảm nhận vai trò này." },
+  { q: "Thị trường chứng khoán hóa tài sản ở Việt Nam hiện nay như thế nào?", a: "Còn sơ khai, rất ít đợt phát hành, khung pháp lý chưa hoàn thiện", w: ["Lớn nhất châu Á", "Là kênh huy động vốn chính của ngân hàng", "Đã bị cấm hoàn toàn"], e: "Chứng khoán hóa được kỳ vọng là kênh giúp ngân hàng và doanh nghiệp đa dạng hóa nguồn vốn trong tương lai." }
+);
+
 /* ===== Phần 17: Kinh tế vĩ mô ===== */
 const MACRO = [
   { q: "Ngân hàng Nhà nước giảm lãi suất điều hành thường tác động thế nào đến thị trường chứng khoán?", a: "Tích cực: chi phí vốn giảm, dòng tiền chuyển từ tiết kiệm sang kênh đầu tư", w: ["Tiêu cực: lợi nhuận doanh nghiệp giảm", "Không ảnh hưởng gì", "Thị trường bị tạm ngừng giao dịch"], e: "Lãi suất là biến số vĩ mô quan trọng nhất với định giá cổ phiếu." },
@@ -1203,8 +1224,8 @@ const PARTS = [
     items: () => DERIV, make: bankQ("Thị trường phái sinh"), board: bankBoard(DERIV)
   },
   {
-    id: "bonds", hash: "trai-phieu", title: "Trái phiếu", desc: "Coupon, lợi suất, rủi ro, bài học 2022.",
-    items: () => BONDS, make: bankQ("Trái phiếu"), board: bankBoard(BONDS)
+    id: "bonds", hash: "trai-phieu", title: "Trái phiếu & chứng khoán hóa", desc: "Coupon, lợi suất, rủi ro, ABS/MBS, phân tầng.",
+    items: () => BONDS, make: bankQ("Trái phiếu & chứng khoán hóa"), board: bankBoard(BONDS)
   },
   {
     id: "funds", hash: "quy", title: "Quỹ đầu tư & ETF", desc: "NAV, quỹ mở, quỹ đóng, ETF, DCA.",

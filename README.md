@@ -16,7 +16,7 @@ Quiz kiến thức chứng khoán Việt Nam gồm **19 phần tách biệt**. M
 | 10. Lịch sử thị trường | `#lich-su` | Các mốc từ năm 2000 đến nay | 28 |
 | 11. Phân tích kỹ thuật | `#ky-thuat` | Mô hình nến, mô hình giá, RSI, phân kỳ, MACD, khối lượng (có biểu đồ minh họa) | 33 |
 | 12. Thị trường phái sinh | `#phai-sinh` | Hợp đồng tương lai VN30, chứng quyền có bảo đảm | 29 |
-| 13. Trái phiếu | `#trai-phieu` | Coupon, lợi suất, lãi suất và giá, rủi ro, bài học 2022 | 20 |
+| 13. Trái phiếu & chứng khoán hóa | `#trai-phieu` | Coupon, lợi suất, lãi suất và giá, rủi ro, bài học 2022; chứng khoán hóa: ABS, MBS, SPV, phân tầng, khủng hoảng 2008 | 38 |
 | 14. Quỹ đầu tư & ETF | `#quy` | NAV, quỹ mở/đóng, ETF nội và ngoại, DCA | 28 |
 | 15. Quản trị rủi ro & tâm lý | `#rui-ro` | Cắt lỗ, R:R, quy mô vị thế, margin, FOMO và các thiên kiến | 28 |
 | 16. Đọc hiểu theo ngành | `#nganh` | Chia 9 ngành, chọn ngành để ôn riêng: ngân hàng, chứng khoán & bảo hiểm, bất động sản & KCN, thép & vật liệu, bán lẻ, dầu khí & điện, vận tải, xuất khẩu, công nghệ | 66 |
