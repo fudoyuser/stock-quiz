@@ -13,7 +13,7 @@
 :root {
   --bg: #f3f5f2; --card: #ffffff; --opt: #f7f9f6; --ink: #121815; --muted: #5f6b65; --line: #dde3de;
   --up: #11935a; --up-soft: #dcf3e7; --down: #d23b3b; --down-soft: #fbe2e0; --ref: #b88a00; --ceil: #8a3fc7; --floor: #1a8fb8;
-  --c1: #11935a; --c2: #8a3fc7; --c3: #2a72c9; --c4: #c2570c; --c5: #0e8a8a; --c6: #c2366b; --c7: #6d5bd0; --c8: #a07a00; --c9: #3d7a1f; --c10: #b8432b; --c11: #1f7fae; --c12: #9a3fb0; --c13: #7a6a12; --c14: #2f7f5f; --c15: #c0392b; --c16: #4a5fc1; --c17: #a8481e; --c18: #1d7f8f; --c19: #7a4fa3; --c20: #2e6f9e;
+  --c1: #11935a; --c2: #8a3fc7; --c3: #2a72c9; --c4: #c2570c; --c5: #0e8a8a; --c6: #c2366b; --c7: #6d5bd0; --c8: #a07a00; --c9: #3d7a1f; --c10: #b8432b; --c11: #1f7fae; --c12: #9a3fb0; --c13: #7a6a12; --c14: #2f7f5f; --c15: #c0392b; --c16: #4a5fc1; --c17: #a8481e; --c18: #1d7f8f; --c19: #7a4fa3; --c20: #2e6f9e; --c21: #8f5b1c;
   --accent: var(--c1); --accent-ink: #ffffff;
   color-scheme: light;
 }
@@ -21,14 +21,14 @@
   :root:not([data-theme="light"]) {
     --bg: #0b0f0d; --card: #131916; --opt: #18201c; --ink: #e9efeb; --muted: #8d9a93; --line: #25302a;
     --up: #2fd47f; --up-soft: #12301f; --down: #ff6363; --down-soft: #3a1717; --ref: #f2c230; --ceil: #c98bff; --floor: #4fd1ff;
-    --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --c11: #5cc3f2; --c12: #e08cff; --c13: #e0c95a; --c14: #6fd6a8; --c15: #ff7b6b; --c16: #93a3ff; --c17: #ff9e6b; --c18: #5fd3e3; --c19: #c7a0ff; --c20: #7ec4ff; --accent-ink: #06130c;
+    --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --c11: #5cc3f2; --c12: #e08cff; --c13: #e0c95a; --c14: #6fd6a8; --c15: #ff7b6b; --c16: #93a3ff; --c17: #ff9e6b; --c18: #5fd3e3; --c19: #c7a0ff; --c20: #7ec4ff; --c21: #f0b46a; --accent-ink: #06130c;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #0b0f0d; --card: #131916; --opt: #18201c; --ink: #e9efeb; --muted: #8d9a93; --line: #25302a;
   --up: #2fd47f; --up-soft: #12301f; --down: #ff6363; --down-soft: #3a1717; --ref: #f2c230; --ceil: #c98bff; --floor: #4fd1ff;
-  --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --c11: #5cc3f2; --c12: #e08cff; --c13: #e0c95a; --c14: #6fd6a8; --c15: #ff7b6b; --c16: #93a3ff; --c17: #ff9e6b; --c18: #5fd3e3; --c19: #c7a0ff; --c20: #7ec4ff; --accent-ink: #06130c;
+  --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --c11: #5cc3f2; --c12: #e08cff; --c13: #e0c95a; --c14: #6fd6a8; --c15: #ff7b6b; --c16: #93a3ff; --c17: #ff9e6b; --c18: #5fd3e3; --c19: #c7a0ff; --c20: #7ec4ff; --c21: #f0b46a; --accent-ink: #06130c;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -165,7 +165,7 @@ footer { text-align: center; font-size: 13px; color: var(--muted); }
       <button class="theme" id="themeBtn" type="button">Giao diện: Tự động</button>
     </div>
     <h1>Bảng Điện <span>Quiz</span></h1>
-    <p>Ôn kiến thức chứng khoán Việt Nam qua 20 phần: từ mã cổ phiếu, lĩnh vực kinh doanh, quy định giao dịch, báo cáo tài chính, định giá, vĩ mô, lý thuyết thị trường đến phân tích kỹ thuật, phái sinh, trái phiếu, quỹ và quản trị rủi ro. Mỗi phần là một bộ câu hỏi riêng.</p>
+    <p>Ôn kiến thức chứng khoán Việt Nam qua 21 phần: từ mã cổ phiếu, lĩnh vực kinh doanh, quy định giao dịch, báo cáo tài chính, định giá, vĩ mô, lý thuyết thị trường đến phân tích kỹ thuật, phái sinh, trái phiếu, quỹ và quản trị rủi ro. Mỗi phần là một bộ câu hỏi riêng.</p>
   </header>
 
   <nav class="parts" id="parts" role="tablist" aria-label="Chọn phần"></nav>
@@ -240,7 +240,7 @@ footer { text-align: center; font-size: 13px; color: var(--muted); }
     <p class="note">Dữ liệu dùng để ôn tập, không phải khuyến nghị đầu tư. Doanh nghiệp có thể đổi tên, chuyển sàn, hủy niêm yết hoặc mở rộng lĩnh vực kinh doanh; hãy kiểm tra lại trên website của sở giao dịch khi cần chính xác.</p>
   </section>
 
-  <footer>Bảng Điện Quiz · 20 phần kiến thức chứng khoán Việt Nam · Chỉ để ôn tập, không phải khuyến nghị đầu tư</footer>
+  <footer>Bảng Điện Quiz · 21 phần kiến thức chứng khoán Việt Nam · Chỉ để ôn tập, không phải khuyến nghị đầu tư</footer>
 </main>
 
 <script>
@@ -1167,6 +1167,32 @@ THEORY.push(
   { q: "\"Tín hiệu\" (signaling) trong tài chính là gì? Ví dụ nào đúng?", a: "Hành động truyền đạt thông tin; vd: lãnh đạo mua cổ phiếu công ty", w: ["Đèn báo trên bảng điện; vd: màu tím", "Lệnh đặt tự động; vd: lệnh ATO", "Chỉ báo kỹ thuật; vd: đường MA20"], e: "Lý thuyết tín hiệu là một cách khắc phục thông tin bất cân xứng, như trong lý thuyết quả chanh." }
 );
 
+/* ===== Phần 21: Doanh nhân & thương vụ — mỗi bài viết là một chủ đề (sec) =====
+   Chỉ dùng thông tin có trong bài nguồn; ghi nguồn ở phần giải thích. */
+const STORY_TOPICS = { danieli: "Danieli & ngành thép Việt" };
+const SRC_DANIELI = "Nguồn: CafeF – Nhịp sống thị trường, \"Phía sau những nhà máy thép tỷ USD\" (11/2026).";
+const STORIES = [
+  { sec: "danieli", q: "Năm 2001, khi chuyển từ thương mại sang sản xuất thép, Hòa Phát mua dây chuyền cán thép của tập đoàn nào?", a: "Danieli (Italy)", w: ["SMS Group (Đức)", "Primetals Technologies", "MCC (Trung Quốc)"], e: "Khi đó nhiều nhà sản xuất trong nước dùng thiết bị Đài Loan, Trung Quốc, còn Hòa Phát chọn công nghệ Italy. " + SRC_DANIELI },
+  { sec: "danieli", q: "Dây chuyền cán thép Hòa Phát mua của Danieli năm 2001 có giá trị bao nhiêu?", a: "8 triệu euro", w: ["2 triệu euro", "80 triệu euro", "800.000 euro"], e: "Giá trị này vượt khả năng tài chính của Hòa Phát lúc bấy giờ. " + SRC_DANIELI },
+  { sec: "danieli", q: "Để mua dây chuyền Danieli năm 2001, tỷ lệ vốn vay trong dự án của Hòa Phát lên tới khoảng bao nhiêu?", a: "90%", w: ["30%", "50%", "10%"], e: "Hòa Phát phải tìm ngân hàng chấp nhận mở thư tín dụng nhập khẩu thiết bị; nhờ nhu cầu thép tăng nhanh, dự án hoàn vốn sớm hơn dự kiến. " + SRC_DANIELI },
+  { sec: "danieli", q: "Bài học ông Trần Đình Long rút ra từ quyết định mua dây chuyền Danieli là gì?", a: "Muốn cạnh tranh tốt thì máy móc phải tốt", w: ["Nên chọn thiết bị rẻ nhất để hoàn vốn nhanh", "Không nên vay ngân hàng để mua thiết bị", "Chỉ nên làm thương mại, không nên sản xuất"], e: "Chọn thiết bị hiện đại dù chi phí ban đầu cao là một trong những quyết định khó của Hòa Phát khi mới vào ngành thép. " + SRC_DANIELI },
+  { sec: "danieli", q: "Tháng 5/2020, giữa dịch Covid-19, Hòa Phát thuê chuyên cơ đưa 15 chuyên gia Danieli đến Dung Quất để làm gì?", a: "Hoàn thiện dây chuyền thép cuộn cán nóng", w: ["Khởi công lò cao số 1 của khu liên hợp", "Chạy thử nhà máy tôn mạ tại Hưng Yên", "Lắp đặt dây chuyền thép ray đường sắt"], e: "Chuyến bay từ Croatia hạ cánh Đà Nẵng ngày 24/5/2020; chi phí thuê chuyên cơ hơn 200.000 USD theo Hòa Phát công bố. " + SRC_DANIELI },
+  { sec: "danieli", q: "Hợp đồng Hòa Phát ký với Danieli năm 2017 cho Dung Quất giúp Hòa Phát tiến vào sản phẩm nào?", a: "Thép cuộn cán nóng (HRC)", w: ["Thép không gỉ (inox)", "Thép ray đường sắt", "Ống thép mạ kẽm"], e: "Tổ hợp đúc phôi tấm mỏng và cán nóng thép dải; HRC là nguyên liệu để làm ống thép, tôn mạ, cơ khí. " + SRC_DANIELI },
+  { sec: "danieli", q: "Ngày 15/10/2026, VinMetal (Vingroup) ký hợp đồng với Danieli cho dây chuyền sản xuất gì?", a: "Thép ray đường sắt và thép hình tại Hà Tĩnh", w: ["Thép cuộn cán nóng tại Quảng Ngãi", "Tôn mạ màu tại Hưng Yên", "Thép không gỉ tại Bà Rịa – Vũng Tàu"], e: "Công suất hơn 700.000 tấn/năm, hướng tới đường sắt tốc độ cao, đường sắt đô thị và kết cấu công nghiệp. " + SRC_DANIELI },
+  { sec: "danieli", q: "Tổ hợp thép xanh của Tập đoàn Xuân Thiện (ông Nguyễn Văn Thiện) đặt ở đâu, công suất thiết kế bao nhiêu?", a: "Ninh Bình, 9,5 triệu tấn/năm", w: ["Hà Tĩnh, 7 triệu tấn/năm", "Quảng Ngãi, 5,6 triệu tấn/năm", "Thanh Hóa, 2,5 triệu tấn/năm"], e: "Tổng vốn đầu tư dự kiến gần 100.000 tỷ đồng; hợp đồng với Danieli ngày 25/10/2026 là dây chuyền thép thanh, thép dây 2,5 triệu tấn/năm. " + SRC_DANIELI },
+  { sec: "danieli", q: "Ông Nguyễn Thành Trung gắn với doanh nghiệp thép nào, một khách hàng lâu năm của Danieli?", a: "Tôn Đông Á", w: ["Thép Nam Kim", "Tập đoàn Hoa Sen", "Thép Pomina"], e: "Tháng 7/2025, Danieli nhận đơn cung cấp dây chuyền cán nguội 400.000 tấn/năm cho tổ hợp mới của Tôn Đông Á tại Phú Mỹ – dây chuyền thứ ba cho doanh nghiệp này. " + SRC_DANIELI },
+  { sec: "danieli", q: "Doanh nghiệp nào sau đây là KHÁCH HÀNG chứ không phải nhà cung cấp công nghệ luyện thép?", a: "POSCO Yamato Vina", w: ["Primetals Technologies", "SMS Group", "MCC (Trung Quốc)"], e: "Danieli cung cấp hệ thống luyện, cán thép cho POSCO Yamato Vina; Primetals, SMS Group và MCC là các đối thủ cung cấp công nghệ. " + SRC_DANIELI },
+  { sec: "danieli", q: "Năm 2025, sản lượng thép thế giới giảm nhưng cổ phiếu Danieli tăng gần 110%. Lý do chính là gì?", a: "Doanh thu phụ thuộc quyết định đầu tư thiết bị, không phải giá thép", w: ["Danieli là nhà sản xuất thép lớn nhất châu Âu", "Giá thép thế giới tăng gấp đôi trong năm", "Danieli được Chính phủ Italy mua lại"], e: "Khách hàng vẫn đầu tư để giảm phát thải và nâng chất lượng; khoảng 60% giá trị đơn hàng gắn với thép xanh (Websim Intermonte, 4/2026). " + SRC_DANIELI },
+  { sec: "danieli", q: "Cổ phiếu Danieli tăng từ 24,15 euro (đầu 2025) lên 50,60 euro (cuối 2025). Mức tăng khoảng bao nhiêu?", a: "Khoảng 110%", w: ["Khoảng 52%", "Khoảng 210%", "Khoảng 26%"], e: "(50,60 − 24,15) ÷ 24,15 ≈ 109,5%. " + SRC_DANIELI },
+  { sec: "danieli", q: "Cổ phiếu Danieli từ đỉnh 77,50 euro (15/6/2026) giảm còn 51,10 euro (30/10/2026). Mức giảm từ đỉnh khoảng bao nhiêu?", a: "Khoảng 34%", w: ["Khoảng 26%", "Khoảng 51%", "Khoảng 15%"], e: "(77,50 − 51,10) ÷ 77,50 ≈ 34%, dù tập đoàn có đơn hàng chưa thực hiện hơn 6 tỷ euro. " + SRC_DANIELI },
+  { sec: "danieli", q: "Danieli có lượng đơn hàng chưa thực hiện (backlog) hơn 6 tỷ euro nhưng cổ phiếu vẫn giảm 34% từ đỉnh. Bài học là gì?", a: "Backlog lớn không ngăn được giá giảm khi kỳ vọng đã phản ánh vào giá", w: ["Backlog lớn luôn khiến giá cổ phiếu tăng", "Backlog không có ý nghĩa với doanh nghiệp thiết bị", "Cổ phiếu giảm chứng tỏ backlog là số liệu sai"], e: "Thị trường còn lo khách hàng trì hoãn đầu tư khi ngành thép dư công suất (640 triệu tấn theo OECD). " + SRC_DANIELI },
+  { sec: "danieli", q: "Trong niên độ 2025–2026, mảng nào đóng góp phần lớn doanh thu của Danieli?", a: "Thiết kế, chế tạo, cung cấp nhà máy luyện kim (~72,4%)", w: ["Tự sản xuất và bán thép thành phẩm (~72,4%)", "Dịch vụ tài chính cho khách hàng (~50%)", "Khai thác quặng sắt tại châu Phi (~60%)"], e: "Mảng tự sản xuất thép của Danieli vẫn lỗ ròng 7,5 triệu euro trong niên độ. " + SRC_DANIELI },
+  { sec: "danieli", q: "Vì sao các tập đoàn thép Việt Nam dùng công nghệ của nhiều nhà cung cấp (Danieli, Primetals, SMS, MCC) cho cùng một dự án?", a: "Chọn nhà cung cấp mạnh nhất cho từng công đoạn sản xuất", w: ["Luật bắt buộc dùng ít nhất bốn nhà cung cấp", "Để được miễn thuế nhập khẩu thiết bị", "Vì Danieli không bán dây chuyền hoàn chỉnh"], e: "Danieli mạnh ở giải pháp chuyên biệt đã thương mại hóa; các tập đoàn Trung Quốc mạnh về tổng thầu, chế tạo quy mô lớn. " + SRC_DANIELI }
+];
+SECTOR_Q.push(
+  { sec: "mat", q: "Ngành thép suy thoái, giá thép thấp, nhưng doanh nghiệp cung cấp thiết bị luyện thép vẫn có thể tăng trưởng. Vì sao?", a: "Doanh thu phụ thuộc chu kỳ đầu tư, nâng cấp nhà máy", w: ["Doanh thu phụ thuộc giá thép bán ra", "Được Nhà nước bao tiêu thiết bị", "Thiết bị luyện thép không có đối thủ"], e: "Ví dụ Danieli năm 2025: sản lượng thép thế giới giảm nhưng đơn hàng thép xanh, giảm phát thải vẫn tăng (CafeF, 11/2026)." }
+);
+
 /* ===== Tiện ích ===== */
 const $ = id => document.getElementById(id);
 const store = {
@@ -1357,6 +1383,11 @@ const PARTS = [
   {
     id: "theory", hash: "ly-thuyet", title: "Lý thuyết thị trường tài chính", desc: "Chuyển thời hạn vốn, EMH, quả chanh.",
     items: () => THEORY, make: bankQ("Lý thuyết thị trường tài chính"), board: bankBoard(THEORY)
+  },
+  {
+    id: "stories", hash: "doanh-nhan", title: "Doanh nhân & thương vụ", desc: "Câu chuyện doanh nghiệp từ báo chí, mỗi bài một chủ đề.",
+    sectors: true, topics: STORY_TOPICS,
+    items: () => STORIES, make: it => bankQ("Doanh nhân & thương vụ · " + STORY_TOPICS[it.sec])(it), board: bankBoard(STORIES, STORY_TOPICS)
   }
 ];
 const PART = Object.fromEntries(PARTS.map((p, i) => [p.id, Object.assign(p, { num: i + 1 })]));

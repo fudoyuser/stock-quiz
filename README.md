@@ -1,6 +1,6 @@
 # Bảng Điện Quiz
 
-Quiz kiến thức chứng khoán Việt Nam gồm **20 phần tách biệt**. Mỗi phần có thiết lập, điểm cao nhất và bảng tra cứu riêng, có link riêng (`#ma`, `#linh-vuc`…).
+Quiz kiến thức chứng khoán Việt Nam gồm **21 phần tách biệt**. Mỗi phần có thiết lập, điểm cao nhất và bảng tra cứu riêng, có link riêng (`#ma`, `#linh-vuc`…).
 
 | Phần | Link | Nội dung | Số câu |
 |---|---|---|---|
@@ -19,11 +19,12 @@ Quiz kiến thức chứng khoán Việt Nam gồm **20 phần tách biệt**. M
 | 13. Trái phiếu & chứng khoán hóa | `#trai-phieu` | Coupon, lợi suất, lãi suất và giá, rủi ro, phương thức trả nợ, xếp hạng tín nhiệm, đấu thầu kiểu Hà Lan, bài học 2022; chứng khoán hóa: ABS, MBS, SPV, phân tầng, khủng hoảng 2008 | 47 |
 | 14. Quỹ đầu tư & ETF | `#quy` | NAV, quỹ mở/đóng, ETF nội và ngoại, DCA | 28 |
 | 15. Quản trị rủi ro & tâm lý | `#rui-ro` | Cắt lỗ, R:R, quy mô vị thế, margin, FOMO và các thiên kiến | 28 |
-| 16. Đọc hiểu theo ngành | `#nganh` | Chia 9 ngành, chọn ngành để ôn riêng: ngân hàng, chứng khoán & bảo hiểm, bất động sản & KCN, thép & vật liệu, bán lẻ, dầu khí & điện, vận tải, xuất khẩu, công nghệ | 66 |
+| 16. Đọc hiểu theo ngành | `#nganh` | Chia 9 ngành, chọn ngành để ôn riêng: ngân hàng, chứng khoán & bảo hiểm, bất động sản & KCN, thép & vật liệu, bán lẻ, dầu khí & điện, vận tải, xuất khẩu, công nghệ | 67 |
 | 17. Kinh tế vĩ mô | `#vi-mo` | Lãi suất, tỷ giá, lạm phát, Fed, chính sách tiền tệ, cổ phiếu chu kỳ/phòng thủ | 35 |
 | 18. Định giá doanh nghiệp | `#dinh-gia` | Giá trị nội tại, DCF, PEG, EV/EBITDA, mô hình cổ tức, giá mục tiêu | 33 |
 | 19. Quyền cổ đông & công bố thông tin | `#co-dong` | ĐHCĐ, cổ đông lớn, giao dịch nội bộ, thời hạn công bố BCTC, hủy niêm yết | 34 |
 | 20. Lý thuyết thị trường tài chính | `#ly-thuyet` | Cơ chế chuyển thời hạn vốn, sơ cấp/thứ cấp, thị trường hiệu quả (EMH), lý thuyết quả chanh | 25 |
+| 21. Doanh nhân & thương vụ | `#doanh-nhan` | Câu chuyện doanh nghiệp từ báo chí, mỗi bài là một chủ đề lọc riêng. Bài đầu: Danieli & ngành thép Việt (Hòa Phát, VinMetal, Xuân Thiện, Tôn Đông Á) | 16 |
 
 Sau mỗi lượt có nút **Ôn lại câu sai** để chơi lại riêng các câu vừa trả lời sai.
 
@@ -37,7 +38,9 @@ Dữ liệu chỉ để ôn tập, không phải khuyến nghị đầu tư. Quy
 - **Sàn niêm yết** (Phần 5): object `EXCH`, chỉ gồm những mã có sàn ổn định.
 - **Tập đoàn** (Phần 6): mảng `GROUPS`.
 - **Thương hiệu** (Phần 7): mảng `BRANDS`.
-- **Câu hỏi kiến thức** (Phần 3, 4, 8–20): mảng `TERMS`, `RULES`, `INDEXES`, `FINANCE`, `HISTORY`, `TECH`, `DERIV`, `BONDS`, `FUNDS`, `RISK`, `SECTOR_Q`, `MACRO`, `VALUATION`, `GOVERN`, `THEORY`. Mỗi câu có `q` (câu hỏi), `a` (đáp án đúng), `w` (3 đáp án sai), `e` (giải thích).
+- **Câu hỏi kiến thức** (Phần 3, 4, 8–21): mảng `TERMS`, `RULES`, `INDEXES`, `FINANCE`, `HISTORY`, `TECH`, `DERIV`, `BONDS`, `FUNDS`, `RISK`, `SECTOR_Q`, `MACRO`, `VALUATION`, `GOVERN`, `THEORY`, `STORIES`. Mỗi câu có `q` (câu hỏi), `a` (đáp án đúng), `w` (3 đáp án sai), `e` (giải thích).
 - **Biểu đồ minh họa** (Phần 11): thêm `chart` vào câu hỏi, dạng `{ candles: [[mở, cao, thấp, đóng], …] }` hoặc `{ lines: [{ d: [...], dash, label }], hline: [giá] }`, thêm `lower: { title, lines, bars, hline }` để vẽ khung chỉ báo (RSI, khối lượng).
 - **Bảng số liệu** (câu tính toán): thêm `table: [["Doanh thu", "2.000 tỷ"], …]`.
 - **Thêm phần mới**: thêm một object vào mảng `PARTS` và một màu `--cN` trong CSS.
+
+- **Thêm bài báo vào Phần 21**: thêm một khóa vào `STORY_TOPICS`, rồi thêm câu hỏi vào `STORIES` với `sec` là khóa đó. Chỉ dùng thông tin có trong bài và ghi nguồn trong `e`.
