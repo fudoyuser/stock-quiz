@@ -32,6 +32,11 @@ Các câu tính toán (có bảng số liệu hoặc số liệu cần tính) c�
 
 Sau mỗi lượt có nút **Ôn lại câu sai** để chơi lại riêng các câu vừa trả lời sai.
 
+**Cách tính điểm:**
+- Mỗi lượt mới, tỷ lệ đúng ("Lượt này") bắt đầu từ 0% và tăng theo số câu trả lời đúng ÷ tổng số câu của lượt.
+- Chỉ lượt **ôn tổng hợp** (không lọc ngành, chủ đề, dạng câu) mới được tính % và điểm cao nhất; điểm cao nhất cần lượt từ 10 câu.
+- Lượt ôn theo mục nhỏ và lượt "Ôn lại câu sai" không tính vào % hay số câu đúng.
+
 Các đáp án sai được viết dài tương đương đáp án đúng, để không thể đoán bằng cách chọn phương án dài nhất.
 
 Dữ liệu chỉ để ôn tập, không phải khuyến nghị đầu tư. Quy định, sàn niêm yết và cơ cấu sở hữu có thể thay đổi, nên kiểm tra lại với nguồn chính thức.

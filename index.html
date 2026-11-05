@@ -212,6 +212,7 @@ footer { text-align: center; font-size: 13px; color: var(--muted); }
     <div class="field">
       <span class="label">Số câu mỗi lượt</span>
       <div class="chips" id="lengths"></div>
+      <p class="note" id="countNote"></p>
     </div>
     <button class="go" id="startBtn" type="button">Bắt đầu</button>
   </section>
@@ -1814,10 +1815,10 @@ let game = null;
 
 function renderParts() {
   $("parts").innerHTML = PARTS.map(p => {
-    const best = store.get(`bdq-${p.id}-best`);
+    const best = store.get(`bdq-${p.id}-best`), cur = store.get(`bdq-${p.id}-cur`);
     return `<button type="button" class="part" role="tab" data-p="${p.id}" aria-selected="${p.id === part}" style="--c:var(--c${p.num})">
       <span class="num">Phần ${p.num}</span><h2>${p.title}</h2><p>${p.desc}</p>
-      <span class="meta"><span><b>${p.items().length}</b> câu</span><span>Cao nhất <b>${best ? best + "%" : "–"}</b></span></span></button>`;
+      <span class="meta"><span><b>${p.items().length}</b> câu</span><span>Lượt này <b>${cur !== null ? cur + "%" : "–"}</b></span><span>Cao nhất <b>${best ? best + "%" : "–"}</b></span></span></button>`;
   }).join("");
 }
 function setPart(id) {
@@ -1836,6 +1837,8 @@ $("parts").onclick = e => {
 window.addEventListener("hashchange", () => { const p = fromHash(); if (p && p.id !== part) setPart(p.id); });
 
 /* ===== Thiết lập ===== */
+/* Chỉ lượt ôn tổng hợp (không lọc ngành/chủ đề/dạng câu) mới được tính điểm */
+const isFullReview = id => cfg[id].secs.size === 0 && cfg[id].kinds.size === 0;
 function renderSetup() {
   const P = PART[part], c = cfg[part], every = P.items();
   const kindOf = it => it.kind || Object.keys(P.kinds || { _: 1 })[0];
@@ -1854,6 +1857,10 @@ function renderSetup() {
   }
   $("lengths").innerHTML = LENGTHS.filter(n => n === "all" || n < all.length).map(n =>
     `<button type="button" class="chip" data-l="${n}" aria-pressed="${c.len === n || (n === "all" && c.len !== "all" && c.len >= all.length)}">${n === "all" ? `Tất cả (${all.length})` : n + " câu"}</button>`).join("");
+  const nlen = c.len === "all" ? all.length : Math.min(c.len, all.length);
+  $("countNote").textContent = !isFullReview(part)
+    ? "Đang ôn theo mục nhỏ: lượt này không tính phần trăm. Chọn \"Tất cả\" để ôn tổng hợp và được tính điểm."
+    : nlen < 10 ? "Lượt dưới 10 câu không tính điểm cao nhất." : "Ôn tổng hợp: lượt này được tính phần trăm đúng và điểm cao nhất.";
 }
 $("kinds").onclick = e => {
   const b = e.target.closest("[data-k]"); if (!b) return;
@@ -1875,14 +1882,21 @@ function start() {
   const kindOf = it => it.kind || Object.keys(P.kinds || { _: 1 })[0];
   const pool = P.items().filter(s => (!P.kinds || c.kinds.size === 0 || c.kinds.has(kindOf(s))) && (!P.sectors || c.secs.size === 0 || c.secs.has(s.sec)));
   const items = shuffle(pool).slice(0, c.len === "all" ? pool.length : c.len);
-  game = { part, items, i: 0, right: 0, misses: [], missItems: [], answered: false, q: null };
+  const counted = isFullReview(part);
+  game = { part, items, i: 0, right: 0, misses: [], missItems: [], answered: false, q: null, counted };
+  if (counted) { store.set(`bdq-${part}-cur`, 0); renderParts(); }
   show("play"); renderQ();
+}
+function hudText(g) {
+  if (g.retry) return `Ôn lại câu sai · không tính điểm`;
+  if (!g.counted) return `Đúng ${g.right} · ôn theo mục, không tính %`;
+  return `Đúng ${g.right}/${g.items.length} · ${Math.round(g.right / g.items.length * 100)}%`;
 }
 function renderQ() {
   const g = game, q = g.q = PART[g.part].make(g.items[g.i]);
   g.answered = false;
   $("hudPos").textContent = `Phần ${PART[g.part].num} · Câu ${g.i + 1}/${g.items.length}`;
-  $("hudScore").textContent = `Đúng ${g.right}`;
+  $("hudScore").textContent = hudText(g);
   $("hudBar").style.width = (g.i / g.items.length * 100) + "%";
   $("explain").hidden = true; $("nextBtn").hidden = true;
   $("qLabel").textContent = q.label;
@@ -1903,6 +1917,7 @@ function answer(id) {
   g.answered = true;
   const q = g.q, ok = id === q.ans;
   if (ok) g.right++; else { g.misses.push(q.review); g.missItems.push(g.items[g.i]); }
+  if (g.counted && !g.retry) { store.set(`bdq-${g.part}-cur`, Math.round(g.right / g.items.length * 100)); renderParts(); }
   if (q.type) {
     const inp = $("typeInput"); inp.disabled = true; inp.className = ok ? "right" : "wrong";
   } else {
@@ -1916,7 +1931,7 @@ function answer(id) {
   ex.className = "explain" + (ok ? "" : " bad");
   ex.innerHTML = q.explain(ok, id);
   ex.hidden = false;
-  $("hudScore").textContent = `Đúng ${g.right}`;
+  $("hudScore").textContent = hudText(g);
   $("nextBtn").textContent = g.i + 1 < g.items.length ? "Câu tiếp →" : "Xem kết quả";
   $("nextBtn").hidden = false; $("nextBtn").focus();
 }
@@ -1924,9 +1939,12 @@ function next() { if (++game.i < game.items.length) renderQ(); else finish(); }
 function finish() {
   const g = game, P = PART[g.part], pct = Math.round(g.right / g.items.length * 100);
   const key = `bdq-${g.part}-best`;
-  if (!g.retry && g.items.length >= 10 && pct > (+store.get(key) || 0)) store.set(key, pct);
+  if (g.counted && !g.retry) {
+    store.set(`bdq-${g.part}-cur`, pct);
+    if (g.items.length >= 10 && pct > (+store.get(key) || 0)) store.set(key, pct);
+  }
   renderParts();
-  $("rLabel").textContent = `Kết quả · Phần ${P.num}: ${P.title}`;
+  $("rLabel").textContent = `Kết quả · Phần ${P.num}: ${P.title}` + (g.retry ? " · Ôn lại câu sai (không tính điểm)" : !g.counted ? " · Ôn theo mục (không tính %)" : "");
   $("rScore").textContent = `${g.right}/${g.items.length}`;
   $("rScore").className = "score " + (pct >= 80 ? "up" : pct >= 50 ? "ref" : "down");
   $("rMsg").textContent = pct === 100 ? "Tăng trần! Bạn nắm phần này như lòng bàn tay." :
@@ -1942,7 +1960,7 @@ function finish() {
 }
 function retry() {
   const g = game;
-  game = { part: g.part, items: shuffle(g.missItems), i: 0, right: 0, misses: [], missItems: [], answered: false, q: null, retry: true };
+  game = { part: g.part, items: shuffle(g.missItems), i: 0, right: 0, misses: [], missItems: [], answered: false, q: null, retry: true, counted: false };
   show("play"); renderQ();
 }
 $("startBtn").onclick = start;
