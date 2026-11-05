@@ -18,7 +18,7 @@ Kiến thức chứng khoán gồm **22 phần tách biệt**. Mỗi phần có 
 | 7. Thương hiệu → Mã | `#thuong-hieu` | Long Châu, bia 333, Zalo… thuộc mã nào | 48 |
 | 8. Chỉ số thị trường | `#chi-so` | VN-Index, VN30, VN100, VNDiamond, ETF, cổ phiếu trụ | 28 |
 | 9. Lịch sử thị trường | `#lich-su` | Các mốc từ năm 2000 đến nay | 28 |
-| 10. Phân tích kỹ thuật | `#ky-thuat` | Nến đơn và nến đảo chiều (búa, búa ngược, người treo cổ, sao băng…), mẫu hình đảo chiều/tiếp diễn (hai đỉnh, hai đáy, VĐV, VĐV ngược, cờ, tam giác tăng, nền giá), tính mục tiêu giá, phá vỡ thật/giả, MA – MACD(12,26,9) – RSI(14), đa khung thời gian (có biểu đồ minh họa) | 67 |
+| 10. Phân tích kỹ thuật | `#ky-thuat` | 5 chủ đề lọc riêng: xu hướng & đa khung; nến Nhật; mẫu hình & kênh xu hướng; MA – MACD – RSI – phân kỳ (thường, ẩn); công thức giao dịch & quản trị vốn (3 điều kiện, giải ngân 2 lần, cắt lỗ 7%, rủi ro 2%). Có biểu đồ minh họa và câu tính | 130 |
 | 11. Thị trường phái sinh | `#phai-sinh` | Hợp đồng tương lai VN30, chứng quyền có bảo đảm | 29 |
 | 12. Trái phiếu & chứng khoán hóa | `#trai-phieu` | Coupon, lợi suất, lãi suất và giá, rủi ro, phương thức trả nợ, xếp hạng tín nhiệm, đấu thầu kiểu Hà Lan, bài học 2022; chứng khoán hóa: ABS, MBS, SPV, phân tầng, khủng hoảng 2008 | 47 |
 | 13. Quỹ đầu tư & ETF | `#quy` | NAV, quỹ mở/đóng, ETF nội và ngoại, DCA | 28 |

@@ -1783,6 +1783,96 @@ TECH.push(
   { q: "Vì sao các mẫu hình giá trên biểu đồ thường lặp lại?", a: "Vì tâm lý đám đông lặp lại", w: ["Vì sàn giao dịch cài đặt sẵn", "Vì doanh nghiệp công bố tin định kỳ", "Vì biên độ giá cố định mỗi ngày"], e: "Mục tiêu giá theo mẫu hình chỉ là vùng tham khảo, không phải cam kết." }
 );
 
+/* Phần PTKT – bổ sung theo tài liệu Buổi 2 (Xu hướng, MA, MACD, RSI) và Buổi 3 (Phân kỳ, Kênh, Công thức) */
+const TECH_TOPICS = { xuhuong: "Xu hướng & đa khung", nen: "Nến Nhật", mauhinh: "Mẫu hình & kênh", chibao: "MA · MACD · RSI · phân kỳ", congthuc: "Công thức & quản trị vốn" };
+const T = (sec, arr) => arr.map(x => ({ ...x, sec }));
+TECH.push(
+  ...T("xuhuong", [
+    { q: "Xu hướng giảm được nhận diện thế nào?", a: "Đỉnh sau thấp hơn, đáy sau thấp hơn", w: ["Đỉnh sau cao hơn, đáy sau cao hơn", "Đỉnh và đáy gần bằng nhau", "Đỉnh sau cao hơn, đáy sau thấp hơn"], e: "Xu hướng đi ngang: đỉnh và đáy gần bằng nhau." },
+    { q: "Một xu hướng tăng được xem là kết thúc khi nào?", a: "Khi giá thủng đáy gần nhất", w: ["Khi giá vượt đỉnh gần nhất", "Khi RSI vừa lên trên 70", "Khi có một phiên giảm bất kỳ"], e: "Ngược lại, xu hướng giảm kết thúc khi giá vượt đỉnh gần nhất. Trước khi đảo chiều, giá thường đi ngang một thời gian." },
+    { q: "Xu hướng trung hạn thường được xem trên khung nào, với đường MA nào?", a: "Khung tuần, đường MA50", w: ["Khung tháng, đường MA200", "Khung giờ, đường MA10", "Khung ngày, đường MA5"], e: "Dài hạn: khung tháng, MA200 (khung ngày); ngắn hạn: khung ngày/giờ, MA10, MA20." },
+    { q: "Nhà đầu tư dự định nắm giữ vài tuần (lướt sóng) nên quan tâm cấp độ xu hướng nào?", a: "Ngắn hạn: khung ngày, MA10 – MA20", w: ["Dài hạn: khung tháng, MA200", "Trung hạn: khung tuần, MA50", "Chỉ cần xem khung tháng"], e: "Khách hỏi \"tăng hay giảm?\" thì nên hỏi lại: \"Anh/chị định giữ bao lâu?\"." },
+    { q: "Khung tháng, tuần và ngày cùng xu hướng tăng (đồng pha tăng). Đây là trạng thái gì?", a: "Cơ hội mua tốt nhất", w: ["Chỉ là nhịp hồi, dễ bị bán", "Nên đứng ngoài hoàn toàn", "Tín hiệu bán khống"], e: "Đồng pha giảm (cả 3 khung giảm): đứng ngoài, không bắt đáy." },
+    { q: "Khung tuần đang giảm nhưng khung ngày đang hồi lên (lệch pha). Nên hiểu thế nào?", a: "Chỉ là nhịp hồi, dễ bị bán", w: ["Xu hướng tăng dài hạn đã bắt đầu", "Cơ hội mua mạnh nhất", "Thị trường chắc chắn tạo đáy"], e: "Khi các khung lệch pha, chưa phải lúc mua mạnh." },
+    { q: "Theo tài liệu, một pha tăng dài hạn có thể chứa những gì bên trong?", a: "Nhịp trung hạn đi ngang, nhịp ngắn hạn điều chỉnh", w: ["Chỉ toàn những phiên tăng điểm liên tiếp", "Không có bất kỳ nhịp điều chỉnh nào", "Chỉ các nhịp giảm của xu hướng dài hạn"], e: "Xu hướng lớn chứa nhiều xu hướng nhỏ." }
+  ]),
+  ...T("chibao", [
+    { q: "Giá đóng cửa 5 phiên gần nhất lần lượt là 10.000, 11.000, 12.000, 13.000, 14.000 đồng. MA5 bằng bao nhiêu?", a: "12.000 đồng", w: ["14.000 đồng", "60.000 đồng", "11.000 đồng"], e: "MA5 = (C1 + C2 + C3 + C4 + C5) ÷ 5 = 60.000 ÷ 5 = 12.000 đồng." },
+    { q: "Ngoài ý nghĩa giá trung bình, đường MA của N phiên còn được hiểu là gì?", a: "Giá vốn trung bình của người mua N phiên", w: ["Giá cao nhất trong N phiên gần nhất", "Giá mục tiêu cho N phiên giao dịch tới", "Giá tham chiếu của phiên giao dịch kế tiếp"], e: "Mỗi phiên mới, phiên cũ nhất bị bỏ ra nên đường MA \"trượt\" theo giá." },
+    { q: "So với EMA, đường SMA có đặc điểm gì?", a: "Mọi phiên trọng số bằng nhau, mượt và ít nhiễu", w: ["Ưu tiên phiên gần, phản ứng nhanh hơn", "Chỉ tính giá mở cửa của các phiên", "Luôn nằm trên đường giá"], e: "EMA ưu tiên phiên gần nên phản ứng nhanh hơn nhưng dễ nhiễu; MACD dùng EMA." },
+    { q: "Trên khung ngày, đường MA nào được xem là ranh giới tăng – giảm dài hạn (khoảng 1 năm)?", a: "MA200", w: ["MA50", "MA20", "MA10"], e: "MA10 ≈ 2 tuần, MA20 ≈ 1 tháng, MA50 ≈ 1 quý, MA200 ≈ 1 năm." },
+    { q: "Đường MA50 trên khung ngày tương ứng khoảng thời gian nào và phản ánh xu hướng gì?", a: "Khoảng 1 quý, xu hướng trung hạn", w: ["Khoảng 2 tuần, nhịp lướt sóng", "Khoảng 1 năm, xu hướng dài hạn", "Khoảng 1 tháng, xu hướng ngắn hạn"], e: "MA20 khoảng 1 tháng (xu hướng ngắn hạn)." },
+    { q: "Theo tài liệu, khi dùng MA xác định xu hướng, điều kiện nào cho thấy \"tăng thật\"?", a: "Đường MA dốc lên", w: ["Đường MA đi ngang", "Giá nằm dưới MA", "MA nằm giữa hai đường khác"], e: "Ngoài vị trí giá so với MA, cần xem độ dốc của MA." },
+    { q: "Giá điều chỉnh về MA20 hoặc MA50 rồi bật lên. Đường MA lúc này đóng vai trò gì?", a: "Hỗ trợ động", w: ["Kháng cự động", "Đường cổ của mẫu hình", "Đường tín hiệu MACD"], e: "Ngược lại, giá hồi lên MA20 rồi bị bán xuống thì MA là kháng cự động." },
+    { q: "Vì sao tín hiệu từ đường MA luôn cần thêm xác nhận?", a: "Vì MA luôn trễ hơn giá", w: ["Vì MA thay đổi theo tin tức", "Vì MA chỉ dùng cho khung tháng", "Vì MA không tính được khi giá giảm"], e: "MA càng dài càng chắc nhưng càng trễ." },
+    { q: "Cách nào giúp khắc phục độ trễ của đường MA?", a: "Bỏ qua giao cắt khi MA đi ngang, chờ xác nhận", w: ["Mua đuổi ngay khi hai đường MA vừa cắt nhau", "Chỉ dùng đường MA dài nhất là MA200", "Thay MA bằng giá mở cửa của mỗi phiên"], e: "Xác nhận: khối lượng tăng, đóng cửa trên MA, MACD cùng chiều." },
+    { q: "Đường Signal trong MACD (12, 26, 9) được tính thế nào?", a: "EMA9 của đường MACD", w: ["EMA12 − EMA26", "MACD − Histogram", "MA9 của giá đóng cửa"], e: "Đường MACD = EMA12 − EMA26; Histogram = MACD − Signal." },
+    { q: "Histogram trong chỉ báo MACD được tính thế nào?", a: "MACD − Signal", w: ["EMA12 − EMA26", "EMA9 của MACD", "Giá − MA20"], e: "Đường 0 là ranh giới tăng/giảm của MACD." },
+    { q: "MACD cắt lên đường Signal khi đang ở dưới mức 0 nên được hiểu thế nào?", a: "Tín hiệu sớm, rủi ro còn cao", w: ["Xu hướng tăng đã chắc chắn", "Tín hiệu bán mạnh nhất", "Không có ý nghĩa gì"], e: "MACD vượt lên trên đường 0 mới cho thấy xu hướng tăng hình thành." },
+    { q: "Histogram MACD màu xanh ngắn dần cho thấy điều gì?", a: "Lực mua đang yếu đi", w: ["Lực mua đang mạnh lên", "Xu hướng giảm vừa kết thúc", "Khối lượng tăng đột biến"], e: "Thường xuất hiện trước khi MACD cắt xuống đường Signal." },
+    { q: "MA10 cắt lên MA20 đồng thời MACD cắt lên Signal. Tín hiệu này thế nào?", a: "Tín hiệu mua đáng tin hơn", w: ["Tín hiệu bán, nên thoát hàng", "Hai chỉ báo mâu thuẫn, đứng ngoài", "Chỉ có ý nghĩa với khung tháng"], e: "Giá trên MA50 và MACD trên 0: xu hướng trung hạn khỏe. Hai chỉ báo ngược chiều: đứng ngoài, chờ thêm." },
+    { q: "Khi nào chỉ báo MACD cho tín hiệu kém tin cậy nhất?", a: "Giá đi ngang hẹp, MACD cắt liên tục quanh 0", w: ["Xu hướng tăng rõ ràng, giá tạo đỉnh mới", "Giá vượt đỉnh cũ với khối lượng lớn", "MACD nằm xa phía trên đường 0"], e: "MA cũng yếu khi giá đi ngang; RSI lại yếu khi xu hướng rất mạnh." },
+    { q: "RSI được tính theo công thức nào?", a: "RSI = 100 − 100 ÷ (1 + RS), RS = tăng TB ÷ giảm TB", w: ["RSI = (Giá − MA14) ÷ MA14 × 100", "RSI = EMA12 − EMA26 của giá đóng cửa", "RSI = Khối lượng ÷ Khối lượng TB × 100"], e: "So sánh mức tăng và mức giảm trung bình trong 14 phiên; RSI dao động 0 – 100." },
+    { q: "Mức tăng trung bình bằng 3 lần mức giảm trung bình (RS = 3). RSI bằng bao nhiêu?", a: "75", w: ["25", "66,7", "3"], e: "RSI = 100 − 100 ÷ (1 + 3) = 100 − 25 = 75." },
+    { q: "RSI nằm trong vùng 50 – 70 thường được hiểu là gì?", a: "Động lượng tăng khỏe, nắm giữ theo xu hướng", w: ["Quá mua, nên bán ngay toàn bộ", "Quá bán, nên mua ngay lập tức", "Động lượng yếu, chưa vội mua vào"], e: "30 – 50: động lượng yếu, quan sát; dưới 30: quá bán, chờ nến đảo chiều rồi mới mua." },
+    { q: "RSI dưới 30 (quá bán). Theo tài liệu nên hành động thế nào?", a: "Chờ nến đảo chiều rồi mới mua", w: ["Mua ngay toàn bộ vốn", "Bán khống để kiếm lời", "Bỏ qua, RSI không có ý nghĩa"], e: "Tín hiệu hay dùng: RSI từ dưới 30 quay lên trên 30, hoặc RSI cắt lên 50." },
+    { q: "Trong xu hướng tăng mạnh, RSI có thể ở trên 70 nhiều tuần mà giá vẫn tăng. Bài học là gì?", a: "Quá mua chưa phải lúc bán; xem xu hướng trước", w: ["Luôn bán ngay khi RSI vượt mức 70", "RSI trên 70 luôn báo đỉnh chính xác", "Nên bán khống ngay khi RSI trên 70"], e: "Mẹo: xu hướng tăng RSI thường dao động 40 – 80; xu hướng giảm 20 – 60." },
+    { q: "Trong xu hướng giảm, RSI thường dao động trong vùng nào?", a: "20 – 60", w: ["40 – 80", "50 – 100", "0 – 30"], e: "Trong xu hướng tăng, RSI thường dao động 40 – 80." },
+    { q: "Thứ tự đọc một cổ phiếu theo 4 bước của tài liệu là gì?", a: "Xu hướng → MA → MACD → RSI", w: ["RSI → MACD → MA → Xu hướng", "MACD → RSI → Xu hướng → MA", "MA → RSI → Xu hướng → MACD"], e: "Xem xu hướng và MA trước, RSI sau." },
+    { q: "Phân kỳ dương thường cảnh báo điều gì?", a: "Đáy: lực bán đang cạn dần", w: ["Đỉnh: lực mua đang cạn dần", "Xu hướng giảm sẽ còn tiếp diễn", "Thị trường sẽ đi ngang kéo dài"], e: "Phân kỳ dương: giá tạo đáy sau thấp hơn, MACD/RSI tạo đáy sau cao hơn." },
+    { q: "Điều kiện để phân kỳ dương trên MACD có giá trị là gì?", a: "MACD đang nằm dưới đường 0", w: ["MACD đang nằm trên đường 0", "MACD vừa cắt xuống Signal", "Histogram đang tăng"], e: "Ngược lại, phân kỳ âm nên xảy ra khi MACD nằm trên 0." },
+    { q: "Khi vẽ phân kỳ, hai đỉnh (hoặc hai đáy) nên cách nhau khoảng bao nhiêu phiên?", a: "10 – 60 phiên", w: ["1 – 3 phiên", "100 – 200 phiên", "Đúng 14 phiên"], e: "Quá gần dễ nhiễu, quá xa mất ý nghĩa. Phân kỳ 3 đỉnh/3 đáy mạnh hơn 2." },
+    { q: "Phân kỳ ẩn tăng có đặc điểm gì?", a: "Đáy giá cao hơn, đáy chỉ báo thấp hơn → tăng tiếp", w: ["Đáy giá thấp hơn, đáy chỉ báo cao hơn → đảo chiều", "Đỉnh giá cao hơn, đỉnh chỉ báo thấp hơn → giảm", "Giá và chỉ báo cùng tạo đáy cao hơn"], e: "Phân kỳ ẩn là tín hiệu tiếp diễn xu hướng, hợp với công thức mua khi chỉnh về MA20." },
+    { q: "Phân kỳ ẩn giảm có đặc điểm gì?", a: "Đỉnh giá thấp hơn, đỉnh chỉ báo cao hơn → giảm tiếp", w: ["Đỉnh giá cao hơn, đỉnh chỉ báo thấp hơn → đảo chiều", "Đáy giá cao hơn, đáy chỉ báo thấp hơn → tăng", "Giá và chỉ báo cùng tạo đỉnh thấp hơn"], e: "Phân kỳ thường (âm/dương) báo đảo chiều; phân kỳ ẩn báo tiếp diễn." },
+    { q: "Phân kỳ dương được xem là đã thành sự thật khi có những xác nhận nào?", a: "Vượt MA20, MACD cắt lên Signal, RSI lên 50", w: ["RSI xuống dưới 20 và giá thủng đáy cũ", "Khối lượng giảm dần và giá đi ngang", "MACD cắt xuống Signal khi dưới đường 0"], e: "Với phân kỳ âm thì ngược lại: thủng MA20, MA10 cắt xuống MA20." },
+    { q: "Theo tài liệu, khi nào tín hiệu phân kỳ mạnh hơn?", a: "Xuất hiện cùng lúc trên cả MACD và RSI", w: ["Chỉ xuất hiện trên khối lượng", "Hai đỉnh cách nhau dưới 3 phiên", "Xảy ra khi thị trường đi ngang"], e: "Ví dụ VN-Index T10/2025: phân kỳ âm trên cả MACD và RSI." },
+    { q: "Phân kỳ dương lần đầu thất bại (giá thủng tiếp đáy 2). Bài học rút ra là gì?", a: "Bắt đáy tỷ trọng nhỏ, cắt lỗ dưới đáy 2", w: ["Phân kỳ luôn đúng, nên mua thêm ngay", "Bỏ hẳn chỉ báo MACD khỏi biểu đồ", "Dồn toàn bộ vốn vào lần phân kỳ sau"], e: "Lần phân kỳ 3 đáy kèm xác nhận mới thành công (VN-Index T11/2022)." }
+  ]),
+  ...T("mauhinh", [
+    { q: "Kênh xu hướng là gì?", a: "Hai đường song song bao quanh giá", w: ["Một đường MA dài hạn", "Vùng giữa giá trần và giá sàn", "Khoảng cách giữa MACD và Signal"], e: "Gồm đường xu hướng chính và đường song song đối diện; giá chạy trong \"đường ray\"." },
+    { q: "Một kênh xu hướng cần bao nhiêu điểm chạm để được xem là đáng tin?", a: "3 điểm trở lên", w: ["1 điểm", "Đúng 2 điểm", "Không cần điểm chạm"], e: "Tối thiểu 2 điểm mới vẽ được kênh; 3 điểm trở lên mới đáng tin." },
+    { q: "Khi vẽ kênh, nến có râu quá dài thì nên xử lý thế nào?", a: "Nối theo giá đóng cửa hoặc thân nến", w: ["Luôn nối theo đỉnh râu nến", "Bỏ qua cây nến đó và mọi nến lân cận", "Đổi sang khung thời gian giờ"], e: "Vẽ trên khung ngày, kiểm tra lại trên khung tuần." },
+    { q: "Kênh xu hướng dốc hơn 45° thường có đặc điểm gì?", a: "Thường không bền", w: ["Bền vững nhất", "Báo hiệu đảo chiều chắc chắn", "Không thể bị phá vỡ"], e: "Xu hướng quá dốc dễ gãy." },
+    { q: "Trong kênh tăng, chiến lược giao dịch hợp lý là gì?", a: "Mua gần biên dưới, chốt dần gần biên trên", w: ["Mua gần biên trên, bán gần biên dưới", "Mua ở bất kỳ vị trí nào trong kênh", "Không giao dịch khi giá trong kênh tăng"], e: "Biên dưới là hỗ trợ, biên trên là kháng cự. Với kênh giảm: không mua." },
+    { q: "Trong kênh giảm, đáy mới không chạm nổi biên dưới. Đây là dấu hiệu gì?", a: "Lực bán yếu, giá có thể sắp vượt kênh", w: ["Xu hướng giảm sẽ mạnh hơn", "Kênh giảm chắc chắn tiếp diễn", "Nên bán khống ngay lập tức"], e: "Ví dụ VN-Index T11/2022: không chạm biên dưới, kèm phân kỳ dương, rồi vượt biên trên." },
+    { q: "Giá vượt biên trên kênh giảm, sau đó quay lại kiểm tra (retest) và giữ được. Đây là gì?", a: "Điểm mua thứ hai, rủi ro thấp", w: ["Phá vỡ giả, phải cắt lỗ", "Tín hiệu bán mạnh", "Kênh giảm đã quay lại"], e: "Nếu giá rơi ngược vào trong kênh thì là phá vỡ giả: cắt lỗ." }
+  ]),
+  ...T("congthuc", [
+    { q: "Một công thức giao dịch đầy đủ gồm những phần nào?", a: "Bộ lọc, điều kiện mua, điểm mua, cắt lỗ, chốt lời, quản trị vốn", w: ["Tin tức, tin đồn, cảm xúc, may mắn, thời điểm, giá", "Mã cổ phiếu, giá mua, giá bán", "Chỉ cần điều kiện mua và giá bán"], e: "6 phần: mã nào được xem; tín hiệu phải đủ; giá nào, mấy lần; sai thoát ở đâu; đúng thoát ở đâu; mua bao nhiêu." },
+    { q: "Công thức chính trên khung ngày yêu cầu đủ 3 điều kiện nào?", a: "MA10 cắt MA20, MA10 cắt MA50, vượt kênh giảm", w: ["RSI trên 70, MACD dưới 0, giá nằm dưới MA200", "MA50 cắt lên MA200, RSI dưới 30, khối lượng giảm", "Giá tăng trần 3 phiên liên tiếp, khối lượng thấp"], e: "Đủ cả 3 mới mua; bước 2 và 3 có thể đảo thứ tự." },
+    { q: "Theo công thức MA (công thức 1), MA10 cắt lên MA20 cần xác nhận gì?", a: "Khối lượng lớn hơn trung bình 20 phiên", w: ["RSI phải đang nằm dưới 30", "Giá phải nằm dưới đường MA20", "MACD phải nằm dưới đường 0"], e: "Cắt lỗ khi đóng cửa dưới MA20; chốt lời khi MA10 cắt xuống MA20." },
+    { q: "\"MA xếp tầng\" (MA10 > MA20 > MA50, cùng dốc lên) cho biết điều gì?", a: "Xu hướng khỏe, nên theo dõi", w: ["Thị trường đi ngang, bỏ qua", "Xu hướng giảm mạnh", "Sắp có Death Cross"], e: "Các MA đan chéo, đi ngang thì nên bỏ qua." },
+    { q: "Theo tài liệu, Golden Cross / Death Cross (MA50 – MA200) nên dùng để làm gì?", a: "Giữ hàng theo xu hướng lớn, không bắt đáy", w: ["Bắt đáy chính xác nhất cho mọi cổ phiếu", "Lướt sóng trong ngày với khung giờ", "Thay thế hoàn toàn chỉ báo RSI"], e: "Đây là tín hiệu trễ nhất, phù hợp VN-Index và cổ phiếu cơ bản tốt." },
+    { q: "Nhà đầu tư nắm giữ trung hạn nên dùng đường MA nào làm điểm chốt lời – cắt lỗ động?", a: "Giữ khi giá còn trên MA50", w: ["Giữ khi giá còn trên MA10", "Giữ khi giá còn trên MA200", "Giữ khi giá còn trên MA5"], e: "Ngắn hạn: MA10/MA20; trung hạn: MA50; dài hạn: MA200. Bán khi đóng cửa dưới đường đã chọn." },
+    { q: "Trong công thức giải ngân 2 lần, lần mua đầu tiên (50%) thực hiện khi nào?", a: "Đóng cửa vượt kênh, KL ≥ 1,5 lần TB20", w: ["Ngay khi MA10 vừa cắt lên MA20", "Khi RSI giảm xuống dưới mức 30", "Khi giá giảm 7% so với đỉnh cũ"], e: "Lần 2 (50%): khi retest biên kênh hoặc MA20 và giữ được. Đi thẳng không retest thì giữ 50%, không mua đuổi." },
+    { q: "Theo tài liệu, RSI ở vùng nào được xem là xác nhận tốt cho điểm mua?", a: "Từ 50 đến 75", w: ["Dưới 30", "Trên 90", "Đúng bằng 50"], e: "Xác nhận thêm: MACD cắt lên Signal (tốt nhất vượt 0), nến thân dài đóng cửa gần giá cao nhất, có phân kỳ dương trước đó." },
+    { q: "Quy tắc cắt lỗ \"không thương lượng\" trong công thức là gì?", a: "Phá vỡ giả hoặc giảm 7% từ giá mua", w: ["Giảm 30% so với giá mua mới bán", "Mua thêm để bình quân giá xuống", "Chờ giá hòa vốn rồi mới bán ra"], e: "Phá vỡ giả: đóng cửa quay lại trong kênh và dưới MA20. Điều kiện nào đến trước làm trước." },
+    { q: "Có mấy cách chốt lời trong công thức giao dịch của tài liệu?", a: "3 cách: theo kênh, theo kháng cự, gồng theo MA20", w: ["1 cách: bán khi lãi 10%", "2 cách: bán sáng hoặc bán chiều", "4 cách: theo tin tức, tin đồn, cảm xúc, may mắn"], e: "Theo kênh: độ rộng kênh cộng từ điểm phá vỡ (chốt 1/2); gồng MA20: bán khi MA10 cắt xuống MA20." },
+    { q: "Vốn 500 triệu, rủi ro tối đa 2%/lệnh, giá mua 30.000đ, giá cắt lỗ 28.000đ. Nên mua bao nhiêu cổ phiếu?", a: "5.000 cổ phiếu", w: ["10.000 cổ phiếu", "2.500 cổ phiếu", "16.666 cổ phiếu"], e: "Số CP = (2% × 500 triệu) ÷ (30.000 − 28.000) = 10 triệu ÷ 2.000 = 5.000 cổ phiếu (khoảng 150 triệu)." },
+    { q: "Mua 30.000đ, cắt lỗ 28.000đ. Với tỷ lệ lợi nhuận/rủi ro tối thiểu 2:1, mục tiêu giá tối thiểu là bao nhiêu?", a: "34.000 đồng", w: ["32.000 đồng", "36.000 đồng", "31.000 đồng"], e: "Rủi ro 2.000đ/cp → lợi nhuận tối thiểu 4.000đ/cp → mục tiêu 34.000đ." },
+    { q: "Trường hợp nào theo tài liệu là KHÔNG nên vào lệnh dù giá vượt kênh?", a: "Giá cách MA20 trên 10% hoặc RSI trên 75", w: ["Khối lượng phiên vượt kênh lớn gấp 2 lần TB", "MACD vừa cắt lên Signal trên 0", "MA10 vừa cắt lên MA50"], e: "Đứng ngoài cả khi: KL thấp, VN-Index thủng MA50 với KL lớn, lợi nhuận/rủi ro dưới 2:1." },
+    { q: "Bộ lọc trước khi áp dụng công thức gồm những điều kiện nào?", a: "VN-Index ổn, thanh khoản đủ, ngành có dòng tiền", w: ["Chỉ cần giá cổ phiếu dưới 10.000 đồng", "Chỉ chọn cổ phiếu tăng trần phiên trước", "Chỉ chọn mã có tên doanh nghiệp quen thuộc"], e: "Tin xấu lớn: bị cảnh báo, kiểm soát, kết quả kinh doanh sụt mạnh." },
+    { q: "Công thức phụ \"mua khi giá chỉnh về MA20\" đặt điểm cắt lỗ ở đâu?", a: "Thủng MA20 khoảng 3%", w: ["Giảm 20% so với giá mua", "Giá thủng đường MA200", "Không cần đặt điểm cắt lỗ"], e: "Điều kiện: đã vượt kênh, MA xếp tầng, MA20 dốc lên; điểm mua có nến rút chân/búa, KL giảm." },
+    { q: "Theo công thức bán, khi nào nên bán hết và đứng ngoài?", a: "Khi MA10 cắt xuống MA50", w: ["Khi xuất hiện phân kỳ âm lần đầu", "Khi MA10 vừa cắt xuống MA20", "Khi RSI vừa lên 60"], e: "3 điểm bán: phân kỳ âm vùng giá cao (chốt từng phần) → MA10 cắt xuống MA20 (bán thêm) → MA10 cắt xuống MA50 (bán hết)." },
+    { q: "Ví dụ HPG: mua bình quân 12.050đ, bán 13.900đ. Lợi nhuận khoảng bao nhiêu?", a: "Khoảng 15%", w: ["Khoảng 12%", "Khoảng 18%", "Khoảng 1,85%"], e: "(13.900 − 12.050) ÷ 12.050 ≈ 15,4%." },
+    { q: "Theo tài liệu, sai lầm nào sau đây thường gặp khi giao dịch theo công thức?", a: "Mua khi mới có 1 – 2 điều kiện", w: ["Ghi nhật ký mọi lệnh", "Tính số cổ phiếu theo rủi ro 2%", "Chờ đủ 3 điều kiện mới mua"], e: "5 sai lầm: mua khi chưa đủ điều kiện; mua đuổi; không cắt lỗ hoặc dời cắt lỗ; dồn toàn bộ vốn; bỏ qua xu hướng VN-Index." },
+    { q: "Nhật ký giao dịch nên ghi lại những lệnh nào?", a: "Mọi lệnh, kể cả lệnh lỗ", w: ["Chỉ các lệnh có lãi", "Chỉ các lệnh lớn trên 100 triệu", "Chỉ lệnh cuối mỗi tháng"], e: "Cuối tháng xem lại: tỷ lệ thắng, lãi trung bình, lỗ trung bình." }
+  ])
+);
+/* Gán chủ đề cho các câu PTKT cũ theo từ khóa (một số câu gán tay) */
+const TECH_FIX = { "Bứt phá có dòng tiền xác nhận": "mauhinh", "HOSE:HPG": "xuhuong", "Xác định xu hướng trước đó": "mauhinh", "Giá đóng cửa": "mauhinh",
+  "Đà tăng thiếu xác nhận, kém bền": "chibao", "Chốt lời một phần hoặc nâng điểm cắt lỗ": "nen" };
+TECH.forEach(x => { if (!x.sec && TECH_FIX[x.a]) x.sec = TECH_FIX[x.a]; });
+TECH.forEach(x => {
+  if (x.sec) return;
+  const s = (x.q + " " + x.a).toLowerCase();
+  x.sec = /checklist|cắt lỗ|chốt lời/.test(s) ? "congthuc"
+    : /nến|doji|marubozu|búa|sao băng|sao mai|sao hôm|nhấn chìm|treo cổ|bóng|râu|thân/.test(s) ? "nen"
+    : /rsi|macd|\bma\d*|ema|sma|bollinger|fibonacci|phân kỳ|chỉ báo|giao cắt/.test(s) ? "chibao"
+    : /khung|xu hướng tăng|ohlc|mở cửa – cao/.test(s) ? "xuhuong"
+    : "mauhinh";
+});
+
 /* ===== Tiện ích ===== */
 const $ = id => document.getElementById(id);
 const store = {
@@ -1967,7 +2057,8 @@ const PARTS = [
   },
   {
     id: "tech", hash: "ky-thuat", title: "Phân tích kỹ thuật", desc: "Mô hình nến, mô hình giá, RSI, MACD…",
-    items: () => TECH, make: bankQ("Phân tích kỹ thuật"), board: bankBoard(TECH)
+    sectors: true, topics: TECH_TOPICS,
+    items: () => TECH, make: it => bankQ("Phân tích kỹ thuật · " + TECH_TOPICS[it.sec])(it), board: bankBoard(TECH, TECH_TOPICS)
   },
   {
     id: "deriv", hash: "phai-sinh", title: "Thị trường phái sinh", desc: "Hợp đồng tương lai VN30, chứng quyền.",
