@@ -477,12 +477,62 @@ const GROUPS = [
   { name: "Cao su Việt Nam (VRG)", members: ["GVR", "PHR", "DPR"], note: "Phước Hòa và Đồng Phú là công ty con của Tập đoàn Công nghiệp Cao su Việt Nam (GVR)." },
   { name: "GELEX", members: ["GEX", "VGC"], note: "GELEX nắm quyền chi phối Viglacera (VGC)." },
   { name: "Đất Xanh", members: ["DXG", "DXS"], note: "DXS là công ty dịch vụ, môi giới bất động sản của Tập đoàn Đất Xanh." },
-  { name: "Thành Thành Công (TTC)", members: ["SBT", "SCR"], note: "TTC AgriS (SBT) và TTC Land (SCR) cùng thuộc hệ sinh thái Thành Thành Công." }
+  { name: "Thành Thành Công (TTC)", members: ["SBT", "SCR"], note: "TTC AgriS (SBT) và TTC Land (SCR) cùng thuộc hệ sinh thái Thành Thành Công." },
+  { name: "Sovico", members: ["VJC", "HDB"], note: "Hệ sinh thái Sovico gắn với bà Nguyễn Thị Phương Thảo, gồm hàng không Vietjet và ngân hàng HDBank." },
+  { name: "T&T Group", members: ["SHB", "SHS"], note: "Hệ sinh thái gắn với ông Đỗ Quang Hiển, gồm ngân hàng SHB và Chứng khoán Sài Gòn – Hà Nội (SHS)." },
+  { name: "Phenikaa", members: ["VCS"], note: "Tập đoàn Phenikaa của ông Hồ Xuân Năng nắm quyền chi phối Vicostone (VCS), nhà sản xuất đá thạch anh nhân tạo." },
+  { name: "ThaiBev (Thái Lan)", members: ["SAB"], note: "ThaiBev nắm quyền chi phối Sabeco sau thương vụ năm 2017." },
+  { name: "SCG (Thái Lan)", members: ["BMP"], note: "Tập đoàn SCG của Thái Lan nắm quyền chi phối Nhựa Bình Minh." },
+  { name: "Taisho (Nhật Bản)", members: ["DHG"], note: "Taisho Pharmaceutical nắm hơn 50% Dược Hậu Giang." },
+  { name: "SK (Hàn Quốc)", members: ["IMP"], note: "SK trở thành cổ đông lớn nhất của Imexpharm." },
+  { name: "Abbott (Mỹ)", members: ["DMC"], note: "Abbott sở hữu Domesco thông qua việc mua lại CFR International." },
+  { name: "E-Land (Hàn Quốc)", members: ["TCM"], note: "E-Land là cổ đông lớn của Dệt may Thành Công." }
 ];
+/* Ai đứng sau doanh nghiệp: người sáng lập hoặc lãnh đạo gắn bó lâu năm (chức danh có thể thay đổi theo thời gian) */
+const PEOPLE = [
+  ["Phạm Nhật Vượng", ["VIC", "VHM", "VRE"], "Nhà sáng lập, Chủ tịch Tập đoàn Vingroup"],
+  ["Trần Đình Long", ["HPG"], "Nhà sáng lập, Chủ tịch Tập đoàn Hòa Phát"],
+  ["Nguyễn Đăng Quang", ["MSN", "MCH", "MML"], "Chủ tịch Tập đoàn Masan"],
+  ["Trương Gia Bình", ["FPT", "FRT", "FOX", "FOC"], "Nhà sáng lập, Chủ tịch Tập đoàn FPT"],
+  ["Hồ Xuân Năng", ["VCS"], "Chủ tịch Tập đoàn Phenikaa, đứng sau Vicostone"],
+  ["Nguyễn Thị Phương Thảo", ["VJC", "HDB"], "Nhà sáng lập Vietjet, hệ sinh thái Sovico – HDBank"],
+  ["Đỗ Quang Hiển", ["SHB", "SHS"], "Chủ tịch Tập đoàn T&T và Ngân hàng SHB"],
+  ["Nguyễn Văn Tuấn", ["GEX", "VGC"], "Chủ tịch Tập đoàn GELEX"],
+  ["Lương Trí Thìn", ["DXG", "DXS"], "Chủ tịch Tập đoàn Đất Xanh"],
+  ["Đặng Văn Thành", ["SBT", "SCR"], "Nhà sáng lập hệ sinh thái Thành Thành Công (TTC)"],
+  ["Nguyễn Đức Tài", ["MWG"], "Nhà sáng lập, Chủ tịch Thế Giới Di Động"],
+  ["Bùi Thành Nhơn", ["NVL"], "Nhà sáng lập, Chủ tịch Novaland"],
+  ["Lê Phước Vũ", ["HSG"], "Nhà sáng lập Tập đoàn Hoa Sen"],
+  ["Đoàn Nguyên Đức (bầu Đức)", ["HAG"], "Nhà sáng lập Hoàng Anh Gia Lai"],
+  ["Đặng Thành Tâm", ["KBC"], "Chủ tịch Tổng Công ty Phát triển Đô thị Kinh Bắc"],
+  ["Nguyễn Thị Mai Thanh", ["REE"], "Chủ tịch Cơ Điện Lạnh REE"],
+  ["Nguyễn Duy Hưng", ["SSI"], "Nhà sáng lập, Chủ tịch Chứng khoán SSI"],
+  ["Cao Thị Ngọc Dung", ["PNJ"], "Chủ tịch Vàng bạc Đá quý Phú Nhuận"],
+  ["Trương Thị Lệ Khanh", ["VHC"], "Nhà sáng lập Vĩnh Hoàn, \"nữ hoàng cá tra\""],
+  ["Nguyễn Xuân Quang", ["NLG"], "Nhà sáng lập, Chủ tịch Nam Long"],
+  ["Lý Điền Sơn", ["KDH"], "Nhà sáng lập Nhà Khang Điền"],
+  ["Hồ Minh Hoàng", ["HHV"], "Chủ tịch Tập đoàn Đèo Cả"],
+  ["Lê Văn Quang", ["MPC"], "Chủ tịch Thủy sản Minh Phú, \"vua tôm\""],
+  ["Ngô Chí Dũng", ["VPB"], "Chủ tịch VPBank"],
+  ["Trần Hùng Huy", ["ACB"], "Chủ tịch Ngân hàng Á Châu"],
+  ["Đặng Khắc Vỹ", ["VIB"], "Chủ tịch Ngân hàng Quốc tế VIB"],
+  ["Hồ Hùng Anh", ["TCB"], "Chủ tịch Techcombank"],
+  ["Dương Công Minh", ["STB"], "Chủ tịch Sacombank, nhà sáng lập Him Lam"],
+  ["Nguyễn Đức Thụy (bầu Thụy)", ["LPB"], "Chủ tịch LPBank"],
+  ["Nguyễn Như So", ["DBC"], "Nhà sáng lập, Chủ tịch Dabaco"],
+  ["Cô Gia Thọ", ["TLG"], "Nhà sáng lập Tập đoàn Thiên Long"],
+  ["Trần Kim Thành", ["KDC"], "Chủ tịch Tập đoàn KIDO"],
+  ["Đỗ Hữu Hạ", ["TCH"], "Chủ tịch Tập đoàn Hoàng Huy"],
+  ["Đào Hữu Huyền", ["DGC"], "Chủ tịch Hóa chất Đức Giang"],
+  ["Trịnh Văn Tuấn", ["PC1"], "Chủ tịch Tập đoàn PC1"],
+  ["Nguyễn Trọng Thông", ["HDG"], "Chủ tịch Tập đoàn Hà Đô"],
+  ["Mai Kiều Liên", ["VNM"], "Lãnh đạo Vinamilk trong nhiều thập kỷ"],
+  ["Nguyễn Bá Dương", ["CTD"], "Nhà sáng lập Coteccons"]
+].map(([name, tickers, role]) => ({ name, tickers, role }));
 const GROUP_OF = {};
 GROUPS.forEach((g, i) => g.members.forEach(t => GROUP_OF[t] = i));
 /* Các mã có quan hệ sở hữu không rõ ràng với các tập đoàn trên — không dùng làm đáp án nhiễu */
-const GROUP_AMBIG = new Set("FTS PVI PGS EVF QTP PPC PGV PLC SIP TCM VGG HTG VGT PAN HAG DRC".split(" "));
+const GROUP_AMBIG = new Set("FTS PVI PGS EVF QTP PPC PGV PLC SIP VGG HTG VGT PAN HAG DRC".split(" "));
 
 /* ===== Phần 7: thương hiệu → mã ===== */
 const BRANDS = [
@@ -1492,13 +1542,36 @@ const PARTS = [
     board: { head: ["Mã", "Doanh nghiệp", "Sàn"], rows: () => STOCKS.filter(s => EXCH_OF[s.t]).map(s => [s.t, `${esc(s.short)}<small>${esc(s.full)}</small>`, EXCH_OF[s.t]]), search: "Tìm theo mã, tên hoặc sàn (HOSE, HNX, UPCoM)…" }
   },
   {
-    id: "groups", hash: "tap-doan", title: "Tập đoàn & công ty con", desc: "Mã nào thuộc hệ sinh thái nào?",
+    id: "groups", hash: "tap-doan", title: "Tập đoàn & doanh nhân", desc: "Hệ sinh thái nào, ai đứng sau?",
     items: () => [
       ...GROUPS.flatMap((g, i) => g.members.map(t => ({ kind: "of", g: i, t }))),
       ...GROUPS.map((g, i) => ({ kind: "in", g: i })),
-      ...GROUPS.flatMap((g, i) => g.members.length >= 3 ? [{ kind: "notin", g: i }] : [])
+      ...GROUPS.flatMap((g, i) => g.members.length >= 3 ? [{ kind: "notin", g: i }] : []),
+      ...PEOPLE.flatMap((p, i) => [{ kind: "who", p: i }, { kind: "whose", p: i }])
     ],
     make: it => {
+      if (it.kind === "who" || it.kind === "whose") {
+        const P = PEOPLE[it.p], others = shuffle(PEOPLE.filter((_, i) => i !== it.p));
+        const done = ok => ok ? "✓ Chính xác!" : "✗ Chưa đúng.";
+        const info = `<b>${esc(P.name)}</b>: ${esc(P.role)} (${P.tickers.map(tk).join(", ")}).`;
+        if (it.kind === "who") {
+          const t = shuffle(P.tickers)[0];
+          return {
+            label: "Ai là người đứng sau doanh nghiệp này?", main: t, cls: "big mono", sub: BY_T[t].full,
+            opts: shuffle([P.name, ...others.slice(0, 3).map(o => o.name)]).map(n => ({ id: n, html: `<b>${esc(n)}</b>` })), ans: P.name,
+            explain: ok => `<div>${done(ok)} ${info}</div><p>Chức danh có thể thay đổi theo thời gian.</p>`,
+            review: [t, P.name]
+          };
+        }
+        const ans = shuffle(P.tickers)[0];
+        const wrong = shuffle(others.flatMap(o => o.tickers).filter(t => !P.tickers.includes(t))).filter((t, i, a) => a.indexOf(t) === i).slice(0, 3);
+        return {
+          label: "Doanh nghiệp nào gắn với doanh nhân này?", main: P.name, cls: "big",
+          opts: shuffle([ans, ...wrong]).map(tkOpt), ans,
+          explain: (ok, t) => `<div>${done(ok)} ${info}${!ok && BY_T[t] ? ` ${tk(t)} là ${esc(companyName(BY_T[t]))}.` : ""}</div><p>Chức danh có thể thay đổi theo thời gian.</p>`,
+          review: [ans, P.name]
+        };
+      }
       const g = GROUPS[it.g];
       const outsiders = () => shuffle(STOCKS.filter(s => GROUP_OF[s.t] === undefined && !GROUP_AMBIG.has(s.t)).map(s => s.t));
       const done = ok => ok ? "✓ Chính xác!" : "✗ Chưa đúng.";
@@ -1529,7 +1602,10 @@ const PARTS = [
         review: [ans, `không thuộc ${g.name}`]
       };
     },
-    board: { head: ["Tập đoàn", "Các mã niêm yết"], rows: () => GROUPS.map(g => [esc(g.name), `${g.members.map(t => `<b class="mono">${t}</b>`).join(", ")}<small>${esc(g.note)}</small>`]), search: "Tìm theo tên tập đoàn hoặc mã…", first: false }
+    board: { head: ["Tập đoàn / Doanh nhân", "Các mã niêm yết"], rows: () => [
+      ...GROUPS.map(g => [esc(g.name), `${g.members.map(t => `<b class="mono">${t}</b>`).join(", ")}<small>${esc(g.note)}</small>`]),
+      ...PEOPLE.map(p => [esc(p.name), `${p.tickers.map(t => `<b class="mono">${t}</b>`).join(", ")}<small>${esc(p.role)}</small>`])
+    ], search: "Tìm theo tên tập đoàn, doanh nhân hoặc mã…", first: false }
   },
   {
     id: "brands", hash: "thuong-hieu", title: "Thương hiệu → Mã", desc: "Long Châu, bia 333, Zalo… mã gì?",

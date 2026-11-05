@@ -9,7 +9,7 @@ Quiz kiến thức chứng khoán Việt Nam gồm **22 phần tách biệt**. M
 | 3. Thuật ngữ & chỉ số | `#thuat-ngu` | P/E, EPS, ROE, margin, room ngoại, ETF, chứng quyền… | 68 |
 | 4. Quy định giao dịch | `#quy-dinh` | Biên độ, bước giá, lô chẵn, giờ giao dịch, T+2, GDKHQ, thuế | 35 |
 | 5. Sàn niêm yết | `#san` | Mã này ở HOSE, HNX hay UPCoM? | 105 |
-| 6. Tập đoàn & công ty con | `#tap-doan` | Vingroup, Masan, FPT, Viettel, PVN… gồm những mã nào | 50 |
+| 6. Tập đoàn & doanh nhân | `#tap-doan` | 19 hệ sinh thái (Vingroup, Masan, FPT, Viettel, PVN, Sovico, T&T, Phenikaa, ThaiBev, SCG…) và 38 doanh nhân đứng sau doanh nghiệp, hỏi 2 chiều | 146 |
 | 7. Thương hiệu → Mã | `#thuong-hieu` | Long Châu, bia 333, Zalo… thuộc mã nào | 48 |
 | 8. Chỉ số thị trường | `#chi-so` | VN-Index, VN30, VN100, VNDiamond, ETF, cổ phiếu trụ | 28 |
 | 9. Đọc báo cáo tài chính | `#bctc` | Tính EPS, P/E, ROE, D/E (có bảng số liệu) và nhận diện rủi ro | 30 |
@@ -37,7 +37,7 @@ Dữ liệu chỉ để ôn tập, không phải khuyến nghị đầu tư. Quy
 
 - **Doanh nghiệp** (Phần 1, 2): chuỗi `RAW`, mỗi dòng `MÃ|Tên thường gọi|Tên đầy đủ|ngành|Lĩnh vực hoạt động chính|Ghi chú`. Các công ty làm cùng một việc nên dùng đúng cùng một câu mô tả (hằng `BANK`, `RE`, `KCN`, `SEC`, `INS`).
 - **Sàn niêm yết** (Phần 5): object `EXCH`, chỉ gồm những mã có sàn ổn định.
-- **Tập đoàn** (Phần 6): mảng `GROUPS`.
+- **Tập đoàn & doanh nhân** (Phần 6): mảng `GROUPS` (hệ sinh thái) và `PEOPLE` (`[tên, [mã], vai trò]`).
 - **Thương hiệu** (Phần 7): mảng `BRANDS`.
 - **Câu hỏi kiến thức** (Phần 3, 4, 8–21): mảng `TERMS`, `RULES`, `INDEXES`, `FINANCE`, `HISTORY`, `TECH`, `DERIV`, `BONDS`, `FUNDS`, `RISK`, `SECTOR_Q`, `MACRO`, `VALUATION`, `GOVERN`, `THEORY`, `STORIES`. Mỗi câu có `q` (câu hỏi), `a` (đáp án đúng), `w` (3 đáp án sai), `e` (giải thích).
 - **Biểu đồ minh họa** (Phần 11): thêm `chart` vào câu hỏi, dạng `{ candles: [[mở, cao, thấp, đóng], …] }` hoặc `{ lines: [{ d: [...], dash, label }], hline: [giá] }`, thêm `lower: { title, lines, bars, hline }` để vẽ khung chỉ báo (RSI, khối lượng).
