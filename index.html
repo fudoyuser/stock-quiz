@@ -177,6 +177,10 @@ footer { text-align: center; font-size: 13px; color: var(--muted); }
       <h2 id="setupTitle"></h2>
       <p class="note" id="setupDesc"></p>
     </div>
+    <div class="field" id="kindsField" hidden>
+      <span class="label">Dạng câu hỏi</span>
+      <div class="chips" id="kinds"></div>
+    </div>
     <div class="field" id="sectorsField">
       <span class="label">Ngành</span>
       <div class="chips" id="sectors"></div>
@@ -1214,6 +1218,67 @@ SECTOR_Q.push(
   { sec: "tech", q: "Chuỗi giá trị sản xuất chip bán dẫn gồm các khâu chính nào?", a: "Thiết kế – chế tạo wafer – đóng gói, kiểm thử", w: ["Khai thác – tinh luyện – bán lẻ", "Nghiên cứu – quảng cáo – phân phối", "Lắp ráp – sửa chữa – tái chế"], e: "Khâu chế tạo wafer đòi hỏi vốn rất lớn; Việt Nam hiện mạnh hơn ở thiết kế và đóng gói, kiểm thử (ví dụ nhà máy của FPT, Intel, Amkor)." }
 );
 
+/* ===== Phần 2 – dạng "Phân biệt cùng ngành" =====
+   Câu hỏi nêu một đặc điểm riêng (cổ đông chiến lược, mảng mạnh, khách hàng mục tiêu, dự án…);
+   4 đáp án đều là mã cùng ngành, đáp án nhiễu được chọn tay để không trùng đặc điểm. */
+const DIFF = [
+  /* Ngân hàng */
+  { t: "VCB", w: ["CTG", "BID", "VPB"], q: "Ngân hàng nào có cổ đông chiến lược là ngân hàng Mizuho (Nhật Bản)?", e: "Mizuho nắm khoảng 15% Vietcombank. VCB cũng nổi tiếng mạnh về thanh toán quốc tế, ngoại hối và tài trợ xuất nhập khẩu." },
+  { t: "CTG", w: ["VCB", "BID", "OCB"], q: "Ngân hàng nào có cổ đông chiến lược là tập đoàn tài chính MUFG (Nhật Bản)?", e: "MUFG nắm gần 20% VietinBank. Ngoài ra Mizuho gắn với VCB, SMBC gắn với VPB, Aozora gắn với OCB." },
+  { t: "BID", w: ["VCB", "CTG", "SHB"], q: "Ngân hàng nào có cổ đông chiến lược là KEB Hana Bank (Hàn Quốc)?", e: "KEB Hana mua khoảng 15% BIDV năm 2019." },
+  { t: "VPB", w: ["TCB", "HDB", "MBB"], q: "Ngân hàng nào có cổ đông chiến lược SMBC (Nhật Bản) và sở hữu công ty tài chính tiêu dùng FE Credit?", e: "SMBC mua 15% VPBank năm 2023. FE Credit là một trong những công ty tài chính tiêu dùng lớn nhất Việt Nam." },
+  { t: "OCB", w: ["VCB", "CTG", "TPB"], q: "Ngân hàng nào có cổ đông chiến lược là Aozora Bank (Nhật Bản)?", e: "Aozora Bank sở hữu khoảng 15% OCB (Ngân hàng Phương Đông)." },
+  { t: "BID", w: ["CTG", "VCB", "ACB"], q: "Ngân hàng nào có tiền thân là Ngân hàng Kiến thiết Việt Nam (1957), chuyên cấp vốn xây dựng cơ bản?", e: "BIDV có truyền thống tài trợ dự án đầu tư phát triển, hạ tầng." },
+  { t: "MBB", w: ["TCB", "VPB", "ACB"], q: "Ngân hàng nào do các doanh nghiệp quân đội góp vốn thành lập, có cổ đông lớn là Viettel?", e: "MB (Ngân hàng TMCP Quân đội) có nền khách hàng gắn với các doanh nghiệp quân đội, đồng thời phát triển mạnh ứng dụng ngân hàng số." },
+  { t: "HDB", w: ["VPB", "TCB", "SHB"], q: "Ngân hàng nào thuộc hệ sinh thái Sovico cùng Vietjet và sở hữu công ty tài chính HD Saison?", e: "HDBank và Vietjet cùng gắn với hệ sinh thái của bà Nguyễn Thị Phương Thảo." },
+  { t: "SHB", w: ["MBB", "LPB", "STB"], q: "Ngân hàng nào có Chủ tịch là ông Đỗ Quang Hiển (\"bầu Hiển\"), gắn với Tập đoàn T&T?", e: "SHB (Ngân hàng TMCP Sài Gòn – Hà Nội)." },
+  { t: "STB", w: ["SHB", "EIB", "LPB"], q: "Ngân hàng nào trải qua đề án tái cơ cấu kéo dài sau khi sáp nhập Ngân hàng Phương Nam năm 2015?", e: "Sacombank xử lý lượng lớn nợ xấu và tài sản tồn đọng sau sáp nhập." },
+  { t: "LPB", w: ["MSB", "ABB", "VAB"], q: "Ngân hàng nào từng tận dụng mạng lưới hàng nghìn phòng giao dịch bưu điện để phục vụ khách hàng nông thôn?", e: "Tiền thân là LienVietPostBank, có quan hệ hợp tác với Tổng công ty Bưu điện Việt Nam." },
+  { t: "TPB", w: ["VIB", "MSB", "OCB"], q: "Ngân hàng nào nổi tiếng với mô hình ngân hàng tự động LiveBank hoạt động 24/7?", e: "TPBank định vị là ngân hàng số, đầu tư mạnh vào công nghệ." },
+  { t: "VIB", w: ["TPB", "BID", "SHB"], q: "Ngân hàng bán lẻ nào nổi tiếng với mảng cho vay mua ô tô và thẻ tín dụng?", e: "VIB (Ngân hàng TMCP Quốc tế) tập trung khách hàng cá nhân, đặc biệt là cho vay mua ô tô và thẻ." },
+  { t: "TCB", w: ["MBB", "BID", "LPB"], q: "Ngân hàng nào nổi tiếng với tỷ lệ CASA thuộc nhóm cao nhất ngành, tập trung khách hàng cá nhân có thu nhập cao?", e: "Techcombank theo đuổi chiến lược khách hàng cá nhân giàu có và gắn với các hệ sinh thái lớn như Masan, Vinhomes." },
+  { t: "MSB", w: ["EIB", "OCB", "NAB"], q: "Ngân hàng nào ra đời với định hướng ban đầu là phục vụ ngành hàng hải?", e: "MSB tiền thân là Ngân hàng TMCP Hàng Hải Việt Nam (Maritime Bank)." },
+  /* Chứng khoán & bảo hiểm */
+  { t: "BSI", w: ["CTS", "MBS", "AGR"], q: "Công ty chứng khoán nào là công ty con của BIDV?", e: "CTS thuộc VietinBank, MBS thuộc MB, AGR (Agriseco) thuộc Agribank." },
+  { t: "CTS", w: ["BSI", "MBS", "AGR"], q: "Công ty chứng khoán nào là công ty con của VietinBank?", e: "CTS = Chứng khoán Ngân hàng Công Thương Việt Nam." },
+  { t: "MBS", w: ["CTS", "BSI", "AGR"], q: "Công ty chứng khoán nào là công ty con của Ngân hàng Quân đội (MB)?", e: "MBS = Chứng khoán MB." },
+  { t: "AGR", w: ["CTS", "BSI", "MBS"], q: "Công ty chứng khoán nào là công ty con của Agribank?", e: "AGR = Agriseco (Chứng khoán Agribank)." },
+  { t: "VCI", w: ["VND", "SSI", "FTS"], q: "Công ty chứng khoán nào, tên cũ là Bản Việt, nổi tiếng mạnh về ngân hàng đầu tư và khách hàng tổ chức?", e: "Vietcap có thế mạnh tư vấn phát hành, M&A và môi giới cho nhà đầu tư tổ chức." },
+  { t: "SSI", w: ["VND", "HCM", "SHS"], q: "Công ty chứng khoán nào có Chủ tịch là ông Nguyễn Duy Hưng?", e: "SSI là một trong những công ty chứng khoán lâu đời và có thị phần môi giới thuộc nhóm dẫn đầu." },
+  { t: "VND", w: ["VCI", "HCM", "BSI"], q: "Công ty chứng khoán nào được biết đến là đơn vị tiên phong giao dịch trực tuyến, tập trung nhà đầu tư cá nhân?", e: "VNDirect phát triển mạnh nền tảng giao dịch trực tuyến cho khách hàng cá nhân." },
+  { t: "BIC", w: ["MIG", "PVI", "BMI"], q: "Doanh nghiệp bảo hiểm phi nhân thọ nào là công ty con của BIDV?", e: "BIC = Bảo hiểm Ngân hàng Đầu tư và Phát triển Việt Nam; bán nhiều sản phẩm qua kênh ngân hàng." },
+  { t: "MIG", w: ["BIC", "PVI", "BMI"], q: "Doanh nghiệp bảo hiểm phi nhân thọ nào thuộc hệ sinh thái Ngân hàng Quân đội (MB)?", e: "MIC = Tổng CTCP Bảo hiểm Quân đội, mã MIG." },
+  { t: "PVI", w: ["BIC", "MIG", "BMI"], q: "Doanh nghiệp bảo hiểm nào mạnh về bảo hiểm năng lượng, dầu khí và có cổ đông lớn là HDI Global (Đức)?", e: "PVI xuất thân từ ngành dầu khí." },
+  /* Bất động sản & KCN */
+  { t: "NVL", w: ["NLG", "KDH", "DXG"], q: "Doanh nghiệp bất động sản nào là chủ đầu tư Aqua City (Đồng Nai) và NovaWorld Phan Thiết?", e: "Novaland từng tái cấu trúc nợ lớn giai đoạn 2022–2023." },
+  { t: "NLG", w: ["NVL", "KDH", "PDR"], q: "Doanh nghiệp nào định vị nhà ở vừa túi tiền cho người thu nhập trung bình, với các thương hiệu EHome, Flora, Valora?", e: "Nam Long có các đối tác Nhật Bản trong nhiều dự án." },
+  { t: "KDH", w: ["NVL", "DIG", "CEO"], q: "Doanh nghiệp nào nổi tiếng với quỹ đất nhà phố, biệt thự tập trung ở khu Đông TP.HCM (TP Thủ Đức) và pháp lý thận trọng?", e: "Khang Điền chủ yếu phát triển dự án thấp tầng tại khu Đông." },
+  { t: "DXG", w: ["NVL", "NLG", "KDH"], q: "Doanh nghiệp nào xuất phát từ môi giới bất động sản và sở hữu công ty dịch vụ niêm yết DXS?", e: "Đất Xanh vừa phát triển dự án, vừa có mảng dịch vụ, môi giới lớn." },
+  { t: "CEO", w: ["PDR", "DIG", "NTL"], q: "Doanh nghiệp nào nổi tiếng với bất động sản nghỉ dưỡng tại Phú Quốc (Sonasea)?", e: "Tập đoàn C.E.O có nhiều dự án du lịch nghỉ dưỡng tại Phú Quốc." },
+  { t: "TCH", w: ["NTL", "VPI", "AGG"], q: "Doanh nghiệp nào có các dự án nhà ở tập trung tại Hải Phòng?", e: "Hoàng Huy (TCH) phát triển chuỗi dự án Hoàng Huy tại Hải Phòng." },
+  { t: "KBC", w: ["BCM", "SZC", "LHG"], q: "Doanh nghiệp KCN nào có các khu công nghiệp chủ yếu ở phía Bắc như Quế Võ (Bắc Ninh), Tràng Duệ (Hải Phòng)?", e: "Kinh Bắc thu hút nhiều tập đoàn điện tử FDI lớn." },
+  { t: "BCM", w: ["KBC", "IDC", "SIP"], q: "Doanh nghiệp nào gắn với các KCN VSIP (liên doanh với Sembcorp) và thành phố mới tại Bình Dương?", e: "Becamex IDC là doanh nghiệp hạ tầng chủ lực của Bình Dương." },
+  { t: "SZC", w: ["KBC", "BCM", "IDC"], q: "Doanh nghiệp nào phát triển KCN Châu Đức tại Bà Rịa – Vũng Tàu?", e: "SZC thuộc hệ thống Sonadezi." },
+  /* Thủy sản, đồ uống */
+  { t: "VHC", w: ["ANV", "IDI", "FMC"], q: "Doanh nghiệp cá tra nào mở rộng sang collagen, gelatin từ da cá và bánh phồng tôm Sa Giang?", e: "Vĩnh Hoàn là doanh nghiệp cá tra lớn nhất, đa dạng hóa sản phẩm giá trị gia tăng." },
+  { t: "IDI", w: ["VHC", "ANV", "MPC"], q: "Doanh nghiệp cá tra nào là công ty con của Tập đoàn Sao Mai?", e: "I.D.I thuộc hệ sinh thái Sao Mai (ASM)." },
+  { t: "MPC", w: ["FMC", "VHC", "ANV"], q: "Doanh nghiệp nào được mệnh danh là \"vua tôm\", quy mô xuất khẩu tôm lớn nhất Việt Nam?", e: "Minh Phú có trụ sở tại Cà Mau." },
+  { t: "SAB", w: ["BHN", "VNM", "QNS"], q: "Doanh nghiệp bia nào có cổ đông chi phối là ThaiBev (Thái Lan) sau thương vụ năm 2017?", e: "ThaiBev mua hơn 53% Sabeco qua công ty Vietnam Beverage." },
+  { t: "BHN", w: ["SAB", "VNM", "MCH"], q: "Doanh nghiệp bia nào có Carlsberg (Đan Mạch) là cổ đông lớn?", e: "Habeco nắm thương hiệu bia Hà Nội, Trúc Bạch." },
+  /* Thép, vận tải, điện */
+  { t: "HSG", w: ["NKG", "HPG", "BMP"], q: "Doanh nghiệp tôn mạ nào có Chủ tịch là ông Lê Phước Vũ và hệ thống hàng trăm chi nhánh bán lẻ?", e: "Tập đoàn Hoa Sen sở hữu mạng lưới phân phối, bán lẻ rộng khắp." },
+  { t: "VJC", w: ["HVN", "ACV", "SGN"], q: "Hãng hàng không tư nhân nào theo mô hình giá rẻ, do bà Nguyễn Thị Phương Thảo điều hành?", e: "Vietnam Airlines (HVN) là hãng hàng không quốc gia, dịch vụ đầy đủ." },
+  { t: "GMD", w: ["VSC", "PHP", "MVN"], q: "Doanh nghiệp cảng nào sở hữu cảng nước sâu Gemalink tại Cái Mép?", e: "Gemadept liên doanh với CMA CGM ở Gemalink." },
+  { t: "POW", w: ["NT2", "PGV", "GEG"], q: "Doanh nghiệp điện nào sở hữu nhiều nhà máy điện khí (Cà Mau, Nhơn Trạch) và là công ty mẹ của NT2?", e: "PV Power thuộc Tập đoàn Dầu khí Việt Nam." },
+  /* Dệt may, dược */
+  { t: "TCM", w: ["TNG", "MSH", "VGG"], q: "Doanh nghiệp dệt may nào có cổ đông lớn là tập đoàn E-Land (Hàn Quốc)?", e: "Thành Công là doanh nghiệp dệt may khép kín từ sợi đến may." },
+  { t: "VGG", w: ["TCM", "TNG", "GIL"], q: "Doanh nghiệp may nào sở hữu thương hiệu thời trang công sở nổi tiếng trong nước mang chính tên doanh nghiệp?", e: "May Việt Tiến vừa may xuất khẩu, vừa có thương hiệu thời trang nội địa." },
+  { t: "TNG", w: ["MSH", "TCM", "HTG"], q: "Doanh nghiệp may xuất khẩu nào có trụ sở và nhà máy chủ yếu tại Thái Nguyên?", e: "TNG là một trong những doanh nghiệp may lớn ở miền Bắc." },
+  { t: "DHG", w: ["IMP", "DMC", "DBD"], q: "Doanh nghiệp dược nào có cổ đông chi phối là Taisho Pharmaceutical (Nhật Bản)?", e: "Taisho nắm hơn 50% Dược Hậu Giang." },
+  { t: "IMP", w: ["DHG", "DMC", "TRA"], q: "Doanh nghiệp dược nào có cổ đông chi phối là tập đoàn SK (Hàn Quốc)?", e: "SK trở thành cổ đông lớn nhất của Imexpharm." },
+  { t: "DMC", w: ["DHG", "IMP", "DBD"], q: "Doanh nghiệp dược nào có cổ đông chi phối thuộc tập đoàn Abbott (Mỹ)?", e: "Abbott sở hữu Domesco thông qua việc mua lại CFR International." }
+].map(d => ({ ...d, kind: "diff", sec: BY_T[d.t].sec }));
+
 /* ===== Tiện ích ===== */
 const $ = id => document.getElementById(id);
 const store = {
@@ -1265,15 +1330,21 @@ const PARTS = [
     board: { head: ["Mã", "Doanh nghiệp", "Ngành"], rows: () => STOCKS.map(s => [s.t, `${esc(s.short)}<small>${esc(s.full)}</small>`, SECTORS[s.sec]]), search: "Tìm theo mã hoặc tên công ty…" }
   },
   {
-    id: "biz", hash: "linh-vuc", title: "Lĩnh vực hoạt động", desc: "Đọc lĩnh vực, chọn đúng mã.", sectors: true,
-    items: () => STOCKS,
-    make: s => ({
+    id: "biz", hash: "linh-vuc", title: "Lĩnh vực hoạt động", desc: "Đọc lĩnh vực, chọn đúng mã; phân biệt các mã cùng ngành.", sectors: true,
+    kinds: { biz: "Lĩnh vực → Mã", diff: "Phân biệt cùng ngành" },
+    items: () => [...STOCKS, ...DIFF],
+    make: s => s.kind === "diff" ? {
+      label: "Phân biệt cùng ngành · " + SECTORS[s.sec], main: s.q, cls: "big desc",
+      opts: shuffle([s.t, ...s.w]).map(tkOpt), ans: s.t,
+      explain: (ok, t) => `<div>${ok ? "✓ Chính xác!" : "✗ Chưa đúng."} Đáp án: ${tk(s.t)} – ${esc(BY_T[s.t].full)}.${!ok && BY_T[t] ? ` ${tk(t)} là ${esc(companyName(BY_T[t]))}.` : ""}</div><p>${esc(s.e)}</p>`,
+      review: [s.t, s.q]
+    } : ({
       label: "Doanh nghiệp nào hoạt động chính trong lĩnh vực này?", main: s.biz, cls: "big desc",
       opts: shuffle([s, ...bizDistractors(s)]).map(o => tkOpt(o.t)), ans: s.t,
       explain: (ok, t) => `<div>${ok ? "✓ Chính xác!" : "✗ Chưa đúng."} ${tk(s.t)} (${esc(s.full)}): ${esc(lc(s.biz))}.${!ok && BY_T[t] ? ` ${tk(t)} hoạt động chính ở lĩnh vực: ${esc(lc(BY_T[t].biz))}.` : ""}</div>${s.note ? `<p>${esc(s.note)}</p>` : ""}`,
       review: [s.t, `${companyName(s)} · ${s.biz}`]
     }),
-    board: { head: ["Mã", "Lĩnh vực hoạt động chính"], rows: () => STOCKS.map(s => [s.t, `${esc(s.biz)}<small>${esc(s.full)}</small>`]), search: "Tìm theo mã, tên hoặc lĩnh vực (vd: thép, cá tra)…" }
+    board: { head: ["Mã", "Lĩnh vực hoạt động chính"], rows: () => STOCKS.map(s => [s.t, `${esc(s.biz)}<small>${esc(s.full)}</small>${DIFF.filter(d => d.t === s.t).map(d => `<small>• ${esc(d.e)}</small>`).join("")}`]), search: "Tìm theo mã, tên, lĩnh vực hoặc đặc điểm (vd: Mizuho, cá tra)…" }
   },
   {
     id: "terms", hash: "thuat-ngu", title: "Thuật ngữ & chỉ số", desc: "P/E, EPS, ROE, margin, room ngoại…",
@@ -1441,7 +1512,7 @@ applyTheme();
 const cfg = {};
 for (const p of PARTS) {
   const len = store.get(`bdq-${p.id}-len`);
-  cfg[p.id] = { secs: new Set(), len: len === "all" ? "all" : (+len || 10) };
+  cfg[p.id] = { secs: new Set(), kinds: new Set(), len: len === "all" ? "all" : (+len || 10) };
 }
 /* Điểm cao nhất của Phần 1 trước đây lưu ở "bdq-best" */
 if (!store.get("bdq-ticker-best") && store.get("bdq-best")) store.set("bdq-ticker-best", store.get("bdq-best"));
@@ -1475,7 +1546,14 @@ window.addEventListener("hashchange", () => { const p = fromHash(); if (p && p.i
 
 /* ===== Thiết lập ===== */
 function renderSetup() {
-  const P = PART[part], c = cfg[part], all = P.items();
+  const P = PART[part], c = cfg[part], every = P.items();
+  const kindOf = it => it.kind || Object.keys(P.kinds || { _: 1 })[0];
+  const all = every.filter(it => !P.kinds || c.kinds.size === 0 || c.kinds.has(kindOf(it)));
+  $("kindsField").hidden = !P.kinds;
+  if (P.kinds) {
+    $("kinds").innerHTML = `<button type="button" class="chip" data-k="" aria-pressed="${c.kinds.size === 0}">Tất cả<small>${every.length}</small></button>` +
+      Object.entries(P.kinds).map(([k, v]) => `<button type="button" class="chip" data-k="${k}" aria-pressed="${c.kinds.has(k)}">${v}<small>${every.filter(it => kindOf(it) === k).length}</small></button>`).join("");
+  }
   $("setupLabel").textContent = "Phần " + P.num; $("setupTitle").textContent = P.title; $("setupDesc").textContent = P.desc;
   $("sectorsField").hidden = !P.sectors;
   if (P.sectors) {
@@ -1486,6 +1564,12 @@ function renderSetup() {
   $("lengths").innerHTML = LENGTHS.filter(n => n === "all" || n < all.length).map(n =>
     `<button type="button" class="chip" data-l="${n}" aria-pressed="${c.len === n || (n === "all" && c.len !== "all" && c.len >= all.length)}">${n === "all" ? `Tất cả (${all.length})` : n + " câu"}</button>`).join("");
 }
+$("kinds").onclick = e => {
+  const b = e.target.closest("[data-k]"); if (!b) return;
+  const k = b.dataset.k, ks = cfg[part].kinds;
+  if (!k) ks.clear(); else { ks.clear(); ks.add(k); }
+  renderSetup();
+};
 $("sectors").onclick = e => {
   const b = e.target.closest("[data-s]"); if (!b) return;
   const k = b.dataset.s, secs = cfg[part].secs;
@@ -1497,7 +1581,8 @@ $("lengths").onclick = e => { const b = e.target.closest("[data-l]"); if (!b) re
 /* ===== Chơi ===== */
 function start() {
   const P = PART[part], c = cfg[part];
-  const pool = P.items().filter(s => !P.sectors || c.secs.size === 0 || c.secs.has(s.sec));
+  const kindOf = it => it.kind || Object.keys(P.kinds || { _: 1 })[0];
+  const pool = P.items().filter(s => (!P.kinds || c.kinds.size === 0 || c.kinds.has(kindOf(s))) && (!P.sectors || c.secs.size === 0 || c.secs.has(s.sec)));
   const items = shuffle(pool).slice(0, c.len === "all" ? pool.length : c.len);
   game = { part, items, i: 0, right: 0, misses: [], missItems: [], answered: false, q: null };
   show("play"); renderQ();

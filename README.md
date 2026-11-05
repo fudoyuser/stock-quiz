@@ -5,7 +5,7 @@ Quiz kiến thức chứng khoán Việt Nam gồm **21 phần tách biệt**. M
 | Phần | Link | Nội dung | Số câu |
 |---|---|---|---|
 | 1. Mã cổ phiếu | `#ma` | Nhìn tên doanh nghiệp, tự gõ mã | 184 |
-| 2. Lĩnh vực hoạt động | `#linh-vuc` | Đọc lĩnh vực hoạt động chính, chọn đúng mã | 184 |
+| 2. Lĩnh vực hoạt động | `#linh-vuc` | Đọc lĩnh vực, chọn đúng mã; dạng **Phân biệt cùng ngành**: phân biệt các mã cùng lĩnh vực qua cổ đông chiến lược, mảng mạnh, khách hàng mục tiêu, dự án | 233 |
 | 3. Thuật ngữ & chỉ số | `#thuat-ngu` | P/E, EPS, ROE, margin, room ngoại, ETF, chứng quyền… | 38 |
 | 4. Quy định giao dịch | `#quy-dinh` | Biên độ, bước giá, lô chẵn, giờ giao dịch, T+2, GDKHQ, thuế | 35 |
 | 5. Sàn niêm yết | `#san` | Mã này ở HOSE, HNX hay UPCoM? | 105 |
@@ -44,3 +44,4 @@ Dữ liệu chỉ để ôn tập, không phải khuyến nghị đầu tư. Quy
 - **Thêm phần mới**: thêm một object vào mảng `PARTS` và một màu `--cN` trong CSS.
 
 - **Thêm bài báo vào Phần 21**: thêm một khóa vào `STORY_TOPICS`, rồi thêm câu hỏi vào `STORIES` với `sec` là khóa đó. Chỉ dùng thông tin có trong bài và ghi nguồn trong `e`.
+- **Phân biệt cùng ngành** (Phần 2): mảng `DIFF`, mỗi câu có `t` (mã đúng), `w` (3 mã cùng ngành không trùng đặc điểm), `q` (đặc điểm), `e` (giải thích).
