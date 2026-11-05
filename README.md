@@ -6,7 +6,7 @@ Quiz kiến thức chứng khoán Việt Nam gồm **21 phần tách biệt**. M
 |---|---|---|---|
 | 1. Mã cổ phiếu | `#ma` | Nhìn tên doanh nghiệp, tự gõ mã | 184 |
 | 2. Lĩnh vực hoạt động | `#linh-vuc` | Đọc lĩnh vực, chọn đúng mã; dạng **Phân biệt cùng ngành**: phân biệt các mã cùng lĩnh vực qua cổ đông chiến lược, mảng mạnh, khách hàng mục tiêu, dự án | 233 |
-| 3. Thuật ngữ & chỉ số | `#thuat-ngu` | P/E, EPS, ROE, margin, room ngoại, ETF, chứng quyền… | 38 |
+| 3. Thuật ngữ & chỉ số | `#thuat-ngu` | P/E, EPS, ROE, margin, room ngoại, ETF, chứng quyền… | 68 |
 | 4. Quy định giao dịch | `#quy-dinh` | Biên độ, bước giá, lô chẵn, giờ giao dịch, T+2, GDKHQ, thuế | 35 |
 | 5. Sàn niêm yết | `#san` | Mã này ở HOSE, HNX hay UPCoM? | 105 |
 | 6. Tập đoàn & công ty con | `#tap-doan` | Vingroup, Masan, FPT, Viettel, PVN… gồm những mã nào | 50 |
