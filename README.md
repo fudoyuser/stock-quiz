@@ -1,6 +1,6 @@
 # Bảng Điện Quiz
 
-Quiz kiến thức chứng khoán Việt Nam gồm **22 phần tách biệt**. Mỗi phần có thiết lập, điểm cao nhất và bảng tra cứu riêng, có link riêng (`#ma`, `#linh-vuc`…).
+Quiz kiến thức chứng khoán Việt Nam gồm **23 phần tách biệt**. Mỗi phần có thiết lập, điểm cao nhất và bảng tra cứu riêng, có link riêng (`#ma`, `#linh-vuc`…).
 
 | Phần | Link | Nội dung | Số câu |
 |---|---|---|---|
@@ -12,7 +12,7 @@ Quiz kiến thức chứng khoán Việt Nam gồm **22 phần tách biệt**. M
 | 6. Tập đoàn & doanh nhân | `#tap-doan` | 19 hệ sinh thái (Vingroup, Masan, FPT, Viettel, PVN, Sovico, T&T, Phenikaa, ThaiBev, SCG…) và 38 doanh nhân đứng sau doanh nghiệp, hỏi 2 chiều | 146 |
 | 7. Thương hiệu → Mã | `#thuong-hieu` | Long Châu, bia 333, Zalo… thuộc mã nào | 48 |
 | 8. Chỉ số thị trường | `#chi-so` | VN-Index, VN30, VN100, VNDiamond, ETF, cổ phiếu trụ | 28 |
-| 9. Đọc báo cáo tài chính | `#bctc` | Tính EPS, P/E, ROE, D/E (có bảng số liệu) và nhận diện rủi ro | 30 |
+| 9. Đọc báo cáo tài chính | `#bctc` | Tính EPS, P/E, ROE, D/E (có bảng số liệu) và nhận diện rủi ro | 29 |
 | 10. Lịch sử thị trường | `#lich-su` | Các mốc từ năm 2000 đến nay | 28 |
 | 11. Phân tích kỹ thuật | `#ky-thuat` | Mô hình nến, mô hình giá, RSI, phân kỳ, MACD, khối lượng (có biểu đồ minh họa) | 33 |
 | 12. Thị trường phái sinh | `#phai-sinh` | Hợp đồng tương lai VN30, chứng quyền có bảo đảm | 29 |
@@ -26,6 +26,7 @@ Quiz kiến thức chứng khoán Việt Nam gồm **22 phần tách biệt**. M
 | 20. Lý thuyết thị trường tài chính | `#ly-thuyet` | Cơ chế chuyển thời hạn vốn, sơ cấp/thứ cấp, thị trường hiệu quả (EMH), lý thuyết quả chanh | 25 |
 | 21. Doanh nhân & thương vụ | `#doanh-nhan` | Câu chuyện doanh nghiệp từ báo chí, mỗi bài là một chủ đề lọc riêng: Danieli & ngành thép Việt; FPT & chip bán dẫn | 28 |
 | 22. Trụ sở chính | `#tru-so` | Doanh nghiệp đặt trụ sở ở tỉnh/thành nào (tên 34 tỉnh/thành sau sáp nhập 7/2025, ghi kèm tỉnh cũ) | 78 |
+| 23. Kiểm toán | `#kiem-toan` | 4 loại ý kiến kiểm toán, vấn đề cần nhấn mạnh, hoạt động liên tục, soát xét, Big4 và doanh nghiệp kiểm toán Việt Nam, quy định, hệ quả với cổ phiếu, bê bối Enron, Wirecard | 30 |
 
 Sau mỗi lượt có nút **Ôn lại câu sai** để chơi lại riêng các câu vừa trả lời sai.
 
@@ -39,7 +40,7 @@ Dữ liệu chỉ để ôn tập, không phải khuyến nghị đầu tư. Quy
 - **Sàn niêm yết** (Phần 5): object `EXCH`, chỉ gồm những mã có sàn ổn định.
 - **Tập đoàn & doanh nhân** (Phần 6): mảng `GROUPS` (hệ sinh thái) và `PEOPLE` (`[tên, [mã], vai trò]`).
 - **Thương hiệu** (Phần 7): mảng `BRANDS`.
-- **Câu hỏi kiến thức** (Phần 3, 4, 8–21): mảng `TERMS`, `RULES`, `INDEXES`, `FINANCE`, `HISTORY`, `TECH`, `DERIV`, `BONDS`, `FUNDS`, `RISK`, `SECTOR_Q`, `MACRO`, `VALUATION`, `GOVERN`, `THEORY`, `STORIES`. Mỗi câu có `q` (câu hỏi), `a` (đáp án đúng), `w` (3 đáp án sai), `e` (giải thích).
+- **Câu hỏi kiến thức** (Phần 3, 4, 8–21): mảng `TERMS`, `RULES`, `INDEXES`, `FINANCE`, `HISTORY`, `TECH`, `DERIV`, `BONDS`, `FUNDS`, `RISK`, `SECTOR_Q`, `MACRO`, `VALUATION`, `GOVERN`, `THEORY`, `STORIES`, `AUDIT`. Mỗi câu có `q` (câu hỏi), `a` (đáp án đúng), `w` (3 đáp án sai), `e` (giải thích).
 - **Biểu đồ minh họa** (Phần 11): thêm `chart` vào câu hỏi, dạng `{ candles: [[mở, cao, thấp, đóng], …] }` hoặc `{ lines: [{ d: [...], dash, label }], hline: [giá] }`, thêm `lower: { title, lines, bars, hline }` để vẽ khung chỉ báo (RSI, khối lượng).
 - **Bảng số liệu** (câu tính toán): thêm `table: [["Doanh thu", "2.000 tỷ"], …]`.
 - **Thêm phần mới**: thêm một object vào mảng `PARTS` và một màu `--cN` trong CSS.

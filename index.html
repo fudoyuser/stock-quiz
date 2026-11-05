@@ -13,7 +13,7 @@
 :root {
   --bg: #f3f5f2; --card: #ffffff; --opt: #f7f9f6; --ink: #121815; --muted: #5f6b65; --line: #dde3de;
   --up: #11935a; --up-soft: #dcf3e7; --down: #d23b3b; --down-soft: #fbe2e0; --ref: #b88a00; --ceil: #8a3fc7; --floor: #1a8fb8;
-  --c1: #11935a; --c2: #8a3fc7; --c3: #2a72c9; --c4: #c2570c; --c5: #0e8a8a; --c6: #c2366b; --c7: #6d5bd0; --c8: #a07a00; --c9: #3d7a1f; --c10: #b8432b; --c11: #1f7fae; --c12: #9a3fb0; --c13: #7a6a12; --c14: #2f7f5f; --c15: #c0392b; --c16: #4a5fc1; --c17: #a8481e; --c18: #1d7f8f; --c19: #7a4fa3; --c20: #2e6f9e; --c21: #8f5b1c; --c22: #2b7a78;
+  --c1: #11935a; --c2: #8a3fc7; --c3: #2a72c9; --c4: #c2570c; --c5: #0e8a8a; --c6: #c2366b; --c7: #6d5bd0; --c8: #a07a00; --c9: #3d7a1f; --c10: #b8432b; --c11: #1f7fae; --c12: #9a3fb0; --c13: #7a6a12; --c14: #2f7f5f; --c15: #c0392b; --c16: #4a5fc1; --c17: #a8481e; --c18: #1d7f8f; --c19: #7a4fa3; --c20: #2e6f9e; --c21: #8f5b1c; --c22: #2b7a78; --c23: #7b3f61;
   --accent: var(--c1); --accent-ink: #ffffff;
   color-scheme: light;
 }
@@ -21,14 +21,14 @@
   :root:not([data-theme="light"]) {
     --bg: #0b0f0d; --card: #131916; --opt: #18201c; --ink: #e9efeb; --muted: #8d9a93; --line: #25302a;
     --up: #2fd47f; --up-soft: #12301f; --down: #ff6363; --down-soft: #3a1717; --ref: #f2c230; --ceil: #c98bff; --floor: #4fd1ff;
-    --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --c11: #5cc3f2; --c12: #e08cff; --c13: #e0c95a; --c14: #6fd6a8; --c15: #ff7b6b; --c16: #93a3ff; --c17: #ff9e6b; --c18: #5fd3e3; --c19: #c7a0ff; --c20: #7ec4ff; --c21: #f0b46a; --c22: #5fd6cf; --accent-ink: #06130c;
+    --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --c11: #5cc3f2; --c12: #e08cff; --c13: #e0c95a; --c14: #6fd6a8; --c15: #ff7b6b; --c16: #93a3ff; --c17: #ff9e6b; --c18: #5fd3e3; --c19: #c7a0ff; --c20: #7ec4ff; --c21: #f0b46a; --c22: #5fd6cf; --c23: #e79ac4; --accent-ink: #06130c;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #0b0f0d; --card: #131916; --opt: #18201c; --ink: #e9efeb; --muted: #8d9a93; --line: #25302a;
   --up: #2fd47f; --up-soft: #12301f; --down: #ff6363; --down-soft: #3a1717; --ref: #f2c230; --ceil: #c98bff; --floor: #4fd1ff;
-  --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --c11: #5cc3f2; --c12: #e08cff; --c13: #e0c95a; --c14: #6fd6a8; --c15: #ff7b6b; --c16: #93a3ff; --c17: #ff9e6b; --c18: #5fd3e3; --c19: #c7a0ff; --c20: #7ec4ff; --c21: #f0b46a; --c22: #5fd6cf; --accent-ink: #06130c;
+  --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --c11: #5cc3f2; --c12: #e08cff; --c13: #e0c95a; --c14: #6fd6a8; --c15: #ff7b6b; --c16: #93a3ff; --c17: #ff9e6b; --c18: #5fd3e3; --c19: #c7a0ff; --c20: #7ec4ff; --c21: #f0b46a; --c22: #5fd6cf; --c23: #e79ac4; --accent-ink: #06130c;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -165,7 +165,7 @@ footer { text-align: center; font-size: 13px; color: var(--muted); }
       <button class="theme" id="themeBtn" type="button">Giao diện: Tự động</button>
     </div>
     <h1>Bảng Điện <span>Quiz</span></h1>
-    <p>Ôn kiến thức chứng khoán Việt Nam qua 22 phần: từ mã cổ phiếu, lĩnh vực kinh doanh, quy định giao dịch, báo cáo tài chính, định giá, vĩ mô, lý thuyết thị trường đến phân tích kỹ thuật, phái sinh, trái phiếu, quỹ và quản trị rủi ro. Mỗi phần là một bộ câu hỏi riêng.</p>
+    <p>Ôn kiến thức chứng khoán Việt Nam qua 23 phần: từ mã cổ phiếu, lĩnh vực kinh doanh, quy định giao dịch, báo cáo tài chính, định giá, vĩ mô, lý thuyết thị trường đến phân tích kỹ thuật, phái sinh, trái phiếu, quỹ và quản trị rủi ro. Mỗi phần là một bộ câu hỏi riêng.</p>
   </header>
 
   <nav class="parts" id="parts" role="tablist" aria-label="Chọn phần"></nav>
@@ -244,7 +244,7 @@ footer { text-align: center; font-size: 13px; color: var(--muted); }
     <p class="note">Dữ liệu dùng để ôn tập, không phải khuyến nghị đầu tư. Doanh nghiệp có thể đổi tên, chuyển sàn, hủy niêm yết hoặc mở rộng lĩnh vực kinh doanh; hãy kiểm tra lại trên website của sở giao dịch khi cần chính xác.</p>
   </section>
 
-  <footer>Bảng Điện Quiz · 22 phần kiến thức chứng khoán Việt Nam · Chỉ để ôn tập, không phải khuyến nghị đầu tư</footer>
+  <footer>Bảng Điện Quiz · 23 phần kiến thức chứng khoán Việt Nam · Chỉ để ôn tập, không phải khuyến nghị đầu tư</footer>
 </main>
 
 <script>
@@ -653,7 +653,6 @@ const FINANCE = [
   { q: "Ở ngân hàng Việt Nam, nợ xấu (NPL) gồm các nhóm nợ nào?", a: "Nhóm 3, 4 và 5", w: ["Nhóm 1 và 2", "Chỉ nhóm 5", "Nhóm 2 đến 5"], e: "Nhóm 2 là nợ cần chú ý, chưa tính là nợ xấu." },
   { q: "Tỷ lệ CASA của ngân hàng là gì?", a: "Tiền gửi không kỳ hạn trên tổng tiền gửi", w: ["Tỷ lệ cho vay trên tổng huy động", "Tỷ lệ nợ xấu trên tổng dư nợ", "Tỷ lệ vốn chủ sở hữu trên tài sản"], e: "CASA cao giúp ngân hàng có nguồn vốn rẻ, NIM tốt hơn." },
   { q: "\"Lợi nhuận sau thuế của cổ đông công ty mẹ\" khác LNST hợp nhất ở điểm nào?", a: "Đã trừ phần lợi ích của cổ đông thiểu số", w: ["Chưa trừ thuế thu nhập doanh nghiệp", "Chỉ tính lợi nhuận của các công ty con", "Đã cộng thêm cổ tức nhận từ công ty con"], e: "EPS được tính từ lợi nhuận của cổ đông công ty mẹ." },
-  { q: "Kiểm toán viên đưa ra \"ý kiến ngoại trừ\" trên BCTC có nghĩa là?", a: "Trung thực, hợp lý trừ một số khoản mục bị ngoại trừ", w: ["Báo cáo tài chính hoàn toàn không đáng tin cậy", "Báo cáo tài chính chính xác tuyệt đối, không sai sót", "Doanh nghiệp được miễn kiểm toán năm đó"], e: "Nhà đầu tư nên đọc kỹ khoản ngoại trừ vì có thể ảnh hưởng lớn đến lợi nhuận." },
   { q: "Hàng tồn kho tăng mạnh trong khi doanh thu giảm có thể là dấu hiệu gì?", a: "Hàng bán chậm, rủi ro trích lập", w: ["Doanh nghiệp sắp tăng trưởng mạnh", "Doanh nghiệp đang giảm nợ vay", "Dòng tiền kinh doanh đang rất tốt"], e: "Đặc biệt đáng chú ý ở ngành thép, bất động sản, bán lẻ." },
   { q: "Chi phí lãi vay lớn hơn lợi nhuận trước lãi vay và thuế (EBIT) cho thấy điều gì?", a: "Lợi nhuận không đủ trả lãi vay", w: ["Doanh nghiệp vay nợ rất ít", "Doanh nghiệp có nhiều tiền mặt", "Doanh nghiệp sắp chia cổ tức lớn"], e: "Hệ số khả năng trả lãi = EBIT ÷ Chi phí lãi vay; dưới 1 là rất rủi ro." }
 ];
@@ -1455,6 +1454,40 @@ const hqName = h => { const s = BY_T[h.t]; return [s.full, s.short].find(n => !n
 const HQ_POOL = ["Hà Nội", "TP. Hồ Chí Minh", "Hải Phòng", "Đà Nẵng", "Cần Thơ", "Bắc Ninh", "Hưng Yên", "Quảng Ninh", "Đồng Nai", "Tây Ninh",
   "Đồng Tháp", "An Giang", "Cà Mau", "Gia Lai", "Khánh Hòa", "Quảng Ngãi", "Thanh Hóa", "Nghệ An", "Thái Nguyên", "Ninh Bình", "Vĩnh Long", "Phú Thọ"];
 
+/* ===== Phần 23: Kiểm toán ===== */
+const AUDIT = [
+  { q: "Theo chuẩn mực kiểm toán, có mấy loại ý kiến kiểm toán về báo cáo tài chính?", a: "4 loại: toàn phần, ngoại trừ, trái ngược, từ chối", w: ["2 loại: đạt yêu cầu và không đạt yêu cầu", "3 loại: tốt, khá và trung bình", "5 loại: xếp hạng từ AAA xuống D"], e: "Ý kiến ngoại trừ, trái ngược và từ chối gọi chung là ý kiến kiểm toán không phải dạng chấp nhận toàn phần." },
+  { q: "Ý kiến \"chấp nhận toàn phần\" có nghĩa là gì?", a: "BCTC trung thực, hợp lý trên khía cạnh trọng yếu", w: ["Doanh nghiệp làm ăn có lãi, tài chính an toàn", "Kiểm toán viên cam kết không có sai sót nào", "Cổ phiếu của doanh nghiệp đáng để đầu tư"], e: "Đây là ý kiến về độ tin cậy của số liệu, không phải đánh giá doanh nghiệp tốt hay xấu." },
+  { q: "Doanh nghiệp lỗ nặng nhưng nhận ý kiến chấp nhận toàn phần. Điều này có mâu thuẫn không?", a: "Không, ý kiến chỉ xác nhận số lỗ là trung thực", w: ["Có, kiểm toán viên chắc chắn đã làm sai", "Có, đã lỗ thì không thể chấp nhận toàn phần", "Không, vì kiểm toán viên được bỏ qua khoản lỗ"], e: "Kiểm toán đánh giá tính trung thực của số liệu, không đánh giá hiệu quả kinh doanh." },
+  { q: "Ý kiến \"ngoại trừ\" thường được đưa ra khi nào?", a: "Sai sót trọng yếu nhưng không lan tỏa", w: ["Báo cáo tài chính sai lệch trên diện rộng", "Kiểm toán viên không kiểm tra được khoản nào", "Doanh nghiệp bị lỗ trong năm tài chính"], e: "Ví dụ: một khoản phải thu lớn chưa được trích lập dự phòng, còn các khoản mục khác trình bày hợp lý." },
+  { q: "Ý kiến \"trái ngược\" (không chấp nhận) có nghĩa là gì?", a: "Sai sót trọng yếu và lan tỏa toàn báo cáo", w: ["Chỉ một khoản mục nhỏ bị sai lệch", "Doanh nghiệp từ chối trả phí kiểm toán", "Kiểm toán viên đồng ý nhưng có lưu ý"], e: "Đây là ý kiến nghiêm trọng nhất về chất lượng số liệu." },
+  { q: "Kiểm toán viên \"từ chối đưa ra ý kiến\" khi nào?", a: "Không đủ bằng chứng, ảnh hưởng lan tỏa", w: ["Kiểm toán viên không đồng ý mức phí", "Báo cáo đã trung thực, không cần ý kiến", "Doanh nghiệp đã hủy niêm yết từ trước"], e: "Nhà đầu tư không thể dựa vào số liệu của báo cáo bị từ chối đưa ra ý kiến." },
+  { q: "Kiểm toán viên đưa ra \"ý kiến ngoại trừ\" trên BCTC có nghĩa là?", a: "Trung thực, hợp lý trừ một số khoản mục bị ngoại trừ", w: ["Báo cáo tài chính hoàn toàn không đáng tin cậy", "Báo cáo tài chính chính xác tuyệt đối, không sai sót", "Doanh nghiệp được miễn kiểm toán năm đó"], e: "Nhà đầu tư nên đọc kỹ khoản ngoại trừ vì có thể ảnh hưởng lớn đến lợi nhuận." },
+  { q: "Đoạn \"vấn đề cần nhấn mạnh\" trong báo cáo kiểm toán có nghĩa là gì?", a: "Lưu ý người đọc, ý kiến vẫn là toàn phần", w: ["Ý kiến kiểm toán đã chuyển sang ngoại trừ", "Doanh nghiệp bị phạt vì vi phạm kế toán", "Kiểm toán viên từ chối ký báo cáo năm nay"], e: "Ví dụ: nhấn mạnh về một vụ kiện đang chờ phán quyết, đã được thuyết minh đầy đủ." },
+  { q: "Báo cáo kiểm toán nêu \"yếu tố không chắc chắn trọng yếu liên quan đến khả năng hoạt động liên tục\". Điều đó cảnh báo gì?", a: "Doanh nghiệp có thể gặp khó khăn để tiếp tục hoạt động", w: ["Doanh nghiệp sắp chia cổ tức tiền mặt lớn", "Doanh nghiệp đang mở rộng quy mô quá nhanh", "Doanh nghiệp vừa đổi công ty kiểm toán mới"], e: "Thường gặp khi lỗ lũy kế lớn, nợ ngắn hạn vượt tài sản ngắn hạn, nợ quá hạn." },
+  { q: "\"Trọng yếu\" (materiality) trong kiểm toán là gì?", a: "Mức sai sót đủ ảnh hưởng quyết định người đọc", w: ["Mọi sai sót dù nhỏ đến một đồng", "Các khoản mục có giá trị trên 1 tỷ đồng", "Những khoản doanh nghiệp tự đánh dấu quan trọng"], e: "Kiểm toán viên xác định mức trọng yếu, thường theo % lợi nhuận, doanh thu hoặc tổng tài sản." },
+  { q: "Báo cáo tài chính bán niên được \"soát xét\" khác \"kiểm toán\" BCTC năm thế nào?", a: "Soát xét có mức đảm bảo hạn chế hơn", w: ["Soát xét kỹ và tốn kém hơn kiểm toán năm", "Soát xét do chính kế toán trưởng thực hiện", "Hai khái niệm hoàn toàn giống nhau"], e: "Kết luận soát xét thường ở dạng \"không thấy vấn đề gì khiến chúng tôi cho rằng…\"." },
+  { q: "Công ty niêm yết phải giải trình khi lợi nhuận sau thuế trước và sau kiểm toán chênh lệch thế nào?", a: "Từ 5% trở lên, hoặc chuyển từ lãi sang lỗ", w: ["Bất kỳ chênh lệch nào, dù chỉ một đồng", "Chỉ khi chênh lệch lớn hơn 50%", "Không bao giờ phải giải trình chênh lệch"], e: "Chênh lệch lớn sau kiểm toán là tín hiệu cần chú ý về chất lượng số liệu tự lập." },
+  { q: "Ai thường quyết định lựa chọn công ty kiểm toán cho công ty niêm yết?", a: "ĐHCĐ, hoặc ủy quyền cho HĐQT chọn", w: ["Tổng giám đốc tự quyết định hằng năm", "Sở Giao dịch Chứng khoán chỉ định", "Kế toán trưởng lựa chọn theo năm"], e: "Thường ĐHCĐ thông qua danh sách công ty kiểm toán và ủy quyền HĐQT chọn một đơn vị." },
+  { q: "Công ty kiểm toán muốn kiểm toán cho công ty niêm yết cần điều kiện gì?", a: "Được UBCKNN chấp thuận kiểm toán đơn vị lợi ích công chúng", w: ["Chỉ cần có giấy phép kinh doanh dịch vụ kế toán", "Phải là công ty có 100% vốn nước ngoài", "Phải được Ngân hàng Nhà nước cấp phép riêng"], e: "Danh sách tổ chức kiểm toán được chấp thuận được công bố định kỳ." },
+  { q: "Một kiểm toán viên được ký báo cáo kiểm toán cho cùng một đơn vị có lợi ích công chúng tối đa bao nhiêu năm liên tục?", a: "3 năm", w: ["1 năm", "5 năm", "Không giới hạn"], e: "Quy định luân chuyển kiểm toán viên nhằm bảo đảm tính độc lập." },
+  { q: "\"Big4\" trong ngành kiểm toán gồm những hãng nào?", a: "Deloitte, PwC, EY, KPMG", w: ["Deloitte, PwC, EY, Grant Thornton", "KPMG, BDO, RSM, Mazars", "PwC, EY, A&C, AASC"], e: "Big4 kiểm toán phần lớn các doanh nghiệp vốn hóa lớn trên thế giới và tại Việt Nam." },
+  { q: "Hãng nào sau đây KHÔNG thuộc nhóm Big4?", a: "Grant Thornton", w: ["Deloitte (Mỹ/Anh)", "PwC (Anh)", "KPMG (Hà Lan/Anh)"], e: "Grant Thornton, BDO, RSM, Forvis Mazars… là các mạng lưới kiểm toán quốc tế lớn ngoài Big4." },
+  { q: "AASC và A&C là những doanh nghiệp kiểm toán thuộc loại nào?", a: "Doanh nghiệp kiểm toán có gốc Việt Nam", w: ["Thành viên của nhóm Big4", "Cơ quan kiểm toán của Nhà nước", "Bộ phận kiểm toán nội bộ ngân hàng"], e: "AASC thành lập năm 1991, thuộc nhóm doanh nghiệp kiểm toán đầu tiên của Việt Nam." },
+  { q: "Kiểm toán Nhà nước khác kiểm toán độc lập ở điểm nào?", a: "Kiểm toán Nhà nước kiểm tra tài chính, tài sản công", w: ["Kiểm toán Nhà nước kiểm toán mọi công ty niêm yết", "Kiểm toán độc lập do Bộ Tài chính trực tiếp làm", "Hai cơ quan làm việc giống hệt nhau"], e: "Công ty niêm yết do doanh nghiệp kiểm toán độc lập được chấp thuận kiểm toán." },
+  { q: "Kiểm toán nội bộ khác kiểm toán độc lập ở điểm nào?", a: "Bộ phận bên trong, phục vụ quản trị doanh nghiệp", w: ["Kiểm toán nội bộ ký báo cáo kiểm toán năm", "Kiểm toán nội bộ do UBCKNN cử xuống doanh nghiệp", "Kiểm toán nội bộ chỉ có ở ngân hàng nước ngoài"], e: "Ý kiến về BCTC năm phải do kiểm toán viên độc lập bên ngoài đưa ra." },
+  { q: "Ý kiến kiểm toán ngoại trừ trên BCTC năm thường khiến cổ phiếu niêm yết bị gì?", a: "Đưa vào diện cảnh báo, thường mất margin", w: ["Được đưa vào rổ VN30 kỳ sau", "Tăng trần ngay phiên giao dịch sau", "Được miễn công bố thông tin định kỳ"], e: "Các công ty chứng khoán thường loại cổ phiếu diện cảnh báo khỏi danh sách cho vay ký quỹ." },
+  { q: "Kiểm toán từ chối đưa ra ý kiến hoặc ý kiến trái ngược nhiều năm liên tiếp có thể dẫn tới đâu?", a: "Cổ phiếu bị hủy niêm yết bắt buộc", w: ["Cổ phiếu được tăng biên độ giao dịch", "Doanh nghiệp được hoãn nộp báo cáo", "Không có hệ quả gì với cổ phiếu"], e: "Quy định hủy niêm yết bắt buộc áp dụng khi tình trạng này kéo dài 3 năm liên tiếp." },
+  { q: "\"Thư quản lý\" (management letter) của kiểm toán viên là gì?", a: "Thư nêu yếu kém kiểm soát nội bộ, kiến nghị", w: ["Thư mời doanh nghiệp ký hợp đồng kiểm toán", "Thư công bố ý kiến kiểm toán ra công chúng", "Thư phạt doanh nghiệp vì chậm nộp báo cáo"], e: "Thư quản lý thường không công bố công khai nhưng rất hữu ích cho doanh nghiệp." },
+  { q: "Kiểm toán viên gửi \"thư xác nhận\" đến khách hàng, ngân hàng của doanh nghiệp nhằm mục đích gì?", a: "Kiểm tra số dư công nợ, tiền gửi có thật", w: ["Mời khách hàng mua cổ phiếu doanh nghiệp", "Thông báo doanh nghiệp đổi công ty kiểm toán", "Đề nghị ngân hàng cho doanh nghiệp vay thêm"], e: "Xác nhận từ bên thứ ba là bằng chứng kiểm toán có độ tin cậy cao." },
+  { q: "Sự kiện quan trọng xảy ra sau ngày kết thúc năm tài chính nhưng trước khi phát hành báo cáo kiểm toán được xử lý thế nào?", a: "Điều chỉnh hoặc thuyết minh tùy tính chất", w: ["Bỏ qua vì đã sang năm tài chính mới", "Chỉ công bố trong nghị quyết ĐHCĐ", "Luôn chuyển sang báo cáo của năm sau"], e: "Ví dụ: khách hàng lớn phá sản ngay sau ngày khóa sổ có thể phải điều chỉnh dự phòng." },
+  { q: "Vụ bê bối Enron (2001) dẫn đến sự sụp đổ của hãng kiểm toán nào?", a: "Arthur Andersen", w: ["KPMG", "Deloitte", "Ernst & Young"], e: "Sự sụp đổ của Arthur Andersen khiến nhóm \"Big5\" chỉ còn \"Big4\"." },
+  { q: "Bê bối Wirecard (Đức, 2020) liên quan đến điều gì?", a: "Khoảng 1,9 tỷ euro tiền mặt không tồn tại", w: ["Hãng kiểm toán bị tin tặc tấn công dữ liệu", "Doanh nghiệp bị cấm giao dịch vì trốn thuế", "Ngân hàng trung ương Đức bị phá sản"], e: "Hãng kiểm toán EY bị chỉ trích vì nhiều năm không phát hiện sai phạm." },
+  { q: "Vì sao nhà đầu tư nên đọc báo cáo kiểm toán trước các con số lợi nhuận?", a: "Ý kiến kiểm toán cho biết số liệu có đáng tin", w: ["Báo cáo kiểm toán luôn có lợi nhuận cao hơn", "Báo cáo kiểm toán dự báo giá cổ phiếu", "Báo cáo kiểm toán thay thế bản cáo bạch"], e: "Một ý kiến ngoại trừ hay từ chối có thể khiến mọi chỉ số P/E, ROE trở nên vô nghĩa." },
+  { q: "Doanh nghiệp thường xuyên thay công ty kiểm toán, nhất là sau khi nhận ý kiến không tốt. Đây là dấu hiệu gì?", a: "Cảnh báo quản trị, có thể đang chọn kiểm toán dễ dãi", w: ["Doanh nghiệp đang tiết kiệm chi phí hiệu quả", "Doanh nghiệp vừa được nâng hạng tín nhiệm", "Hoàn toàn bình thường, không cần quan tâm"], e: "Việc \"mua ý kiến\" (opinion shopping) là rủi ro mà nhà đầu tư cần để ý." },
+  { q: "Ủy ban kiểm toán trực thuộc HĐQT xuất hiện trong mô hình quản trị nào?", a: "Công ty cổ phần không có Ban kiểm soát", w: ["Mọi doanh nghiệp tư nhân một thành viên", "Công ty có vốn nhà nước 100%", "Công ty hợp danh"], e: "Luật Doanh nghiệp cho phép lựa chọn mô hình có Ban kiểm soát hoặc có Ủy ban kiểm toán thuộc HĐQT." }
+];
+
 /* ===== Tiện ích ===== */
 const $ = id => document.getElementById(id);
 const store = {
@@ -1693,6 +1726,10 @@ const PARTS = [
       review: [h.t, `${companyName(BY_T[h.t])} · ${h.p}`]
     }),
     board: { head: ["Mã", "Doanh nghiệp", "Trụ sở"], rows: () => HQ.map(h => [h.t, `${esc(BY_T[h.t].short)}<small>${esc(BY_T[h.t].full)}</small>`, `${esc(h.p)}${h.note ? `<small>${esc(h.note)}</small>` : ""}`]), search: "Tìm theo mã, tên hoặc tỉnh/thành (vd: Đồng Tháp, Bình Dương)…" }
+  },
+  {
+    id: "audit", hash: "kiem-toan", title: "Kiểm toán", desc: "Ý kiến kiểm toán, Big4, quy định, bê bối.",
+    items: () => AUDIT, make: bankQ("Kiểm toán"), board: bankBoard(AUDIT)
   }
 ];
 const PART = Object.fromEntries(PARTS.map((p, i) => [p.id, Object.assign(p, { num: i + 1 })]));
