@@ -28,6 +28,8 @@ Quiz kiến thức chứng khoán Việt Nam gồm **23 phần tách biệt**. M
 | 22. Trụ sở chính | `#tru-so` | Doanh nghiệp đặt trụ sở ở tỉnh/thành nào (tên 34 tỉnh/thành sau sáp nhập 7/2025, ghi kèm tỉnh cũ) | 78 |
 | 23. Kiểm toán | `#kiem-toan` | 4 loại ý kiến kiểm toán, vấn đề cần nhấn mạnh, hoạt động liên tục, soát xét, Big4 và doanh nghiệp kiểm toán Việt Nam, quy định, hệ quả với cổ phiếu, bê bối Enron, Wirecard | 30 |
 
+Các câu tính toán (có bảng số liệu hoặc số liệu cần tính) có nút **Máy tính**: bàn phím ảo hoặc gõ trực tiếp, hiểu cách viết số Việt Nam (`50.000`, `1,5`), có ngoặc và %.
+
 Sau mỗi lượt có nút **Ôn lại câu sai** để chơi lại riêng các câu vừa trả lời sai.
 
 Các đáp án sai được viết dài tương đương đáp án đúng, để không thể đoán bằng cách chọn phương án dài nhất.
