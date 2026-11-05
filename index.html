@@ -13,7 +13,7 @@
 :root {
   --bg: #f3f5f2; --card: #ffffff; --opt: #f7f9f6; --ink: #121815; --muted: #5f6b65; --line: #dde3de;
   --up: #11935a; --up-soft: #dcf3e7; --down: #d23b3b; --down-soft: #fbe2e0; --ref: #b88a00; --ceil: #8a3fc7; --floor: #1a8fb8;
-  --c1: #11935a; --c2: #8a3fc7; --c3: #2a72c9; --c4: #c2570c; --c5: #0e8a8a; --c6: #c2366b; --c7: #6d5bd0; --c8: #a07a00; --c9: #3d7a1f; --c10: #b8432b; --c11: #1f7fae; --c12: #9a3fb0; --c13: #7a6a12; --c14: #2f7f5f; --c15: #c0392b; --c16: #4a5fc1; --c17: #a8481e; --c18: #1d7f8f; --c19: #7a4fa3; --c20: #2e6f9e; --c21: #8f5b1c;
+  --c1: #11935a; --c2: #8a3fc7; --c3: #2a72c9; --c4: #c2570c; --c5: #0e8a8a; --c6: #c2366b; --c7: #6d5bd0; --c8: #a07a00; --c9: #3d7a1f; --c10: #b8432b; --c11: #1f7fae; --c12: #9a3fb0; --c13: #7a6a12; --c14: #2f7f5f; --c15: #c0392b; --c16: #4a5fc1; --c17: #a8481e; --c18: #1d7f8f; --c19: #7a4fa3; --c20: #2e6f9e; --c21: #8f5b1c; --c22: #2b7a78;
   --accent: var(--c1); --accent-ink: #ffffff;
   color-scheme: light;
 }
@@ -21,14 +21,14 @@
   :root:not([data-theme="light"]) {
     --bg: #0b0f0d; --card: #131916; --opt: #18201c; --ink: #e9efeb; --muted: #8d9a93; --line: #25302a;
     --up: #2fd47f; --up-soft: #12301f; --down: #ff6363; --down-soft: #3a1717; --ref: #f2c230; --ceil: #c98bff; --floor: #4fd1ff;
-    --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --c11: #5cc3f2; --c12: #e08cff; --c13: #e0c95a; --c14: #6fd6a8; --c15: #ff7b6b; --c16: #93a3ff; --c17: #ff9e6b; --c18: #5fd3e3; --c19: #c7a0ff; --c20: #7ec4ff; --c21: #f0b46a; --accent-ink: #06130c;
+    --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --c11: #5cc3f2; --c12: #e08cff; --c13: #e0c95a; --c14: #6fd6a8; --c15: #ff7b6b; --c16: #93a3ff; --c17: #ff9e6b; --c18: #5fd3e3; --c19: #c7a0ff; --c20: #7ec4ff; --c21: #f0b46a; --c22: #5fd6cf; --accent-ink: #06130c;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #0b0f0d; --card: #131916; --opt: #18201c; --ink: #e9efeb; --muted: #8d9a93; --line: #25302a;
   --up: #2fd47f; --up-soft: #12301f; --down: #ff6363; --down-soft: #3a1717; --ref: #f2c230; --ceil: #c98bff; --floor: #4fd1ff;
-  --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --c11: #5cc3f2; --c12: #e08cff; --c13: #e0c95a; --c14: #6fd6a8; --c15: #ff7b6b; --c16: #93a3ff; --c17: #ff9e6b; --c18: #5fd3e3; --c19: #c7a0ff; --c20: #7ec4ff; --c21: #f0b46a; --accent-ink: #06130c;
+  --c1: #2fd47f; --c2: #c98bff; --c3: #6aa8ff; --c4: #ff9a4d; --c5: #3fd6d0; --c6: #ff7aa8; --c7: #a99bff; --c8: #f2c230; --c9: #9bdc5a; --c10: #ff8a6b; --c11: #5cc3f2; --c12: #e08cff; --c13: #e0c95a; --c14: #6fd6a8; --c15: #ff7b6b; --c16: #93a3ff; --c17: #ff9e6b; --c18: #5fd3e3; --c19: #c7a0ff; --c20: #7ec4ff; --c21: #f0b46a; --c22: #5fd6cf; --accent-ink: #06130c;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -165,7 +165,7 @@ footer { text-align: center; font-size: 13px; color: var(--muted); }
       <button class="theme" id="themeBtn" type="button">Giao diện: Tự động</button>
     </div>
     <h1>Bảng Điện <span>Quiz</span></h1>
-    <p>Ôn kiến thức chứng khoán Việt Nam qua 21 phần: từ mã cổ phiếu, lĩnh vực kinh doanh, quy định giao dịch, báo cáo tài chính, định giá, vĩ mô, lý thuyết thị trường đến phân tích kỹ thuật, phái sinh, trái phiếu, quỹ và quản trị rủi ro. Mỗi phần là một bộ câu hỏi riêng.</p>
+    <p>Ôn kiến thức chứng khoán Việt Nam qua 22 phần: từ mã cổ phiếu, lĩnh vực kinh doanh, quy định giao dịch, báo cáo tài chính, định giá, vĩ mô, lý thuyết thị trường đến phân tích kỹ thuật, phái sinh, trái phiếu, quỹ và quản trị rủi ro. Mỗi phần là một bộ câu hỏi riêng.</p>
   </header>
 
   <nav class="parts" id="parts" role="tablist" aria-label="Chọn phần"></nav>
@@ -244,7 +244,7 @@ footer { text-align: center; font-size: 13px; color: var(--muted); }
     <p class="note">Dữ liệu dùng để ôn tập, không phải khuyến nghị đầu tư. Doanh nghiệp có thể đổi tên, chuyển sàn, hủy niêm yết hoặc mở rộng lĩnh vực kinh doanh; hãy kiểm tra lại trên website của sở giao dịch khi cần chính xác.</p>
   </section>
 
-  <footer>Bảng Điện Quiz · 21 phần kiến thức chứng khoán Việt Nam · Chỉ để ôn tập, không phải khuyến nghị đầu tư</footer>
+  <footer>Bảng Điện Quiz · 22 phần kiến thức chứng khoán Việt Nam · Chỉ để ôn tập, không phải khuyến nghị đầu tư</footer>
 </main>
 
 <script>
@@ -1313,6 +1313,98 @@ TERMS.push(
   { q: "\"Gồng lỗ\" là hành vi gì?", a: "Tiếp tục giữ cổ phiếu đang lỗ, chờ giá hồi về", w: ["Mua thêm cổ phiếu đang tăng mạnh nhất", "Bán ngay khi cổ phiếu vừa có lãi nhẹ", "Chuyển cổ phiếu sang tài khoản ở công ty khác"], e: "Gồng lỗ không có kế hoạch có thể khiến khoản lỗ nhỏ trở thành lỗ lớn." }
 );
 
+/* ===== Phần 22: Trụ sở chính =====
+   Dùng tên 34 tỉnh/thành sau sáp nhập (từ 7/2025); tỉnh cũ ghi kèm sau dấu "<" nếu có thay đổi. */
+const PROVINCES = ["Hà Nội", "TP. Hồ Chí Minh", "Hải Phòng", "Đà Nẵng", "Cần Thơ", "Huế", "Bắc Ninh", "Hưng Yên", "Quảng Ninh",
+  "Thái Nguyên", "Phú Thọ", "Ninh Bình", "Thanh Hóa", "Nghệ An", "Hà Tĩnh", "Quảng Trị", "Quảng Ngãi", "Gia Lai", "Khánh Hòa",
+  "Lâm Đồng", "Đắk Lắk", "Đồng Nai", "Tây Ninh", "Đồng Tháp", "Vĩnh Long", "An Giang", "Cà Mau", "Lào Cai", "Tuyên Quang",
+  "Lạng Sơn", "Cao Bằng", "Sơn La", "Điện Biên", "Lai Châu"];
+const HQ_RAW = `
+VCB|Hà Nội
+BID|Hà Nội
+CTG|Hà Nội
+TCB|Hà Nội
+MBB|Hà Nội
+VPB|Hà Nội
+VIC|Hà Nội
+FPT|Hà Nội
+PLX|Hà Nội
+HVN|Hà Nội
+VTP|Hà Nội
+VCS|Hà Nội|Nhà máy và trụ sở tại KCN Bắc Phú Cát, Thạch Thất.
+DHT|Hà Nội|Trước 2008 thuộc tỉnh Hà Tây (nay là Hà Nội).
+ACB|TP. Hồ Chí Minh
+STB|TP. Hồ Chí Minh
+HDB|TP. Hồ Chí Minh
+EIB|TP. Hồ Chí Minh
+VNM|TP. Hồ Chí Minh
+MSN|TP. Hồ Chí Minh
+MWG|TP. Hồ Chí Minh
+PNJ|TP. Hồ Chí Minh
+SAB|TP. Hồ Chí Minh
+SSI|TP. Hồ Chí Minh
+GMD|TP. Hồ Chí Minh
+REE|TP. Hồ Chí Minh
+GAS|TP. Hồ Chí Minh
+DPM|TP. Hồ Chí Minh
+PVD|TP. Hồ Chí Minh
+PVS|TP. Hồ Chí Minh
+GVR|TP. Hồ Chí Minh
+HSG|TP. Hồ Chí Minh|Trước 7/2025 thuộc tỉnh Bình Dương.
+NKG|TP. Hồ Chí Minh|Trước 7/2025 thuộc tỉnh Bình Dương.
+BCM|TP. Hồ Chí Minh|Trước 7/2025 thuộc tỉnh Bình Dương.
+PHR|TP. Hồ Chí Minh|Trước 7/2025 thuộc tỉnh Bình Dương.
+TDM|TP. Hồ Chí Minh|Trước 7/2025 thuộc tỉnh Bình Dương (Thủ Dầu Một).
+BWE|TP. Hồ Chí Minh|Trước 7/2025 thuộc tỉnh Bình Dương.
+KSB|TP. Hồ Chí Minh|Trước 7/2025 thuộc tỉnh Bình Dương.
+SZC|TP. Hồ Chí Minh|Trước 7/2025 thuộc tỉnh Bà Rịa – Vũng Tàu (KCN Châu Đức).
+DIG|TP. Hồ Chí Minh|Trước 7/2025 thuộc tỉnh Bà Rịa – Vũng Tàu (TP Vũng Tàu).
+HPG|Hưng Yên|Trụ sở đăng ký tại KCN Phố Nối A; văn phòng điều hành đặt tại Hà Nội.
+DCM|Cà Mau
+MPC|Cà Mau
+BSR|Quảng Ngãi|Nhà máy lọc dầu Dung Quất.
+QNS|Quảng Ngãi
+NT2|Đồng Nai|Nhà máy điện tại Nhơn Trạch.
+DPR|Đồng Nai|Trước 7/2025 thuộc tỉnh Bình Phước.
+DRC|Đà Nẵng
+HTG|Đà Nẵng
+DHG|Cần Thơ
+FMC|Cần Thơ|Trước 7/2025 thuộc tỉnh Sóc Trăng.
+IMP|Đồng Tháp|Trụ sở tại Cao Lãnh.
+DMC|Đồng Tháp|Trụ sở tại Cao Lãnh.
+VHC|Đồng Tháp|Trụ sở tại Cao Lãnh.
+IDI|Đồng Tháp
+ANV|An Giang|Trụ sở tại Long Xuyên.
+LTG|An Giang|Trụ sở tại Long Xuyên.
+LSS|Thanh Hóa
+HAG|Gia Lai|Trụ sở tại Pleiku.
+DBD|Gia Lai|Trước 7/2025 thuộc tỉnh Bình Định (Quy Nhơn).
+PTB|Gia Lai|Trước 7/2025 thuộc tỉnh Bình Định.
+VSH|Gia Lai|Trước 7/2025 thuộc tỉnh Bình Định (Quy Nhơn).
+DBC|Bắc Ninh
+KBC|Bắc Ninh|Trụ sở tại KCN Quế Võ.
+HAH|Hải Phòng
+VSC|Hải Phòng
+PHP|Hải Phòng
+NTP|Hải Phòng
+VOS|Hải Phòng
+PPC|Hải Phòng|Trước 7/2025 thuộc tỉnh Hải Dương (Phả Lại, Chí Linh).
+AAA|Hải Phòng|Trước 7/2025 thuộc tỉnh Hải Dương.
+TNG|Thái Nguyên
+MSH|Ninh Bình|Trước 7/2025 thuộc tỉnh Nam Định.
+QTP|Quảng Ninh
+C4G|Nghệ An|Trụ sở tại TP Vinh.
+LAS|Phú Thọ|Trụ sở tại Lâm Thao.
+SBT|Tây Ninh
+DHC|Vĩnh Long|Trước 7/2025 thuộc tỉnh Bến Tre.
+DCL|Vĩnh Long
+`;
+const HQ = HQ_RAW.trim().split("\n").map(l => { const [t, p, note] = l.split("|"); return { t, p, note: note || "", sec: BY_T[t].sec }; });
+/* Tên đầy đủ có chứa tên tỉnh (vd "Cao su Đà Nẵng") sẽ lộ đáp án nên chỉ hiện tên thường gọi khi cần */
+const hqName = h => { const s = BY_T[h.t]; return [s.full, s.short].find(n => !n.includes(h.p.replace("TP. ", ""))) || ""; };
+const HQ_POOL = ["Hà Nội", "TP. Hồ Chí Minh", "Hải Phòng", "Đà Nẵng", "Cần Thơ", "Bắc Ninh", "Hưng Yên", "Quảng Ninh", "Đồng Nai", "Tây Ninh",
+  "Đồng Tháp", "An Giang", "Cà Mau", "Gia Lai", "Khánh Hòa", "Quảng Ngãi", "Thanh Hóa", "Nghệ An", "Thái Nguyên", "Ninh Bình", "Vĩnh Long", "Phú Thọ"];
+
 /* ===== Tiện ích ===== */
 const $ = id => document.getElementById(id);
 const store = {
@@ -1514,6 +1606,17 @@ const PARTS = [
     id: "stories", hash: "doanh-nhan", title: "Doanh nhân & thương vụ", desc: "Câu chuyện doanh nghiệp từ báo chí, mỗi bài một chủ đề.",
     sectors: true, topics: STORY_TOPICS,
     items: () => STORIES, make: it => bankQ("Doanh nhân & thương vụ · " + STORY_TOPICS[it.sec])(it), board: bankBoard(STORIES, STORY_TOPICS)
+  },
+  {
+    id: "hq", hash: "tru-so", title: "Trụ sở chính", desc: "Doanh nghiệp đặt trụ sở ở tỉnh/thành nào?", sectors: true,
+    items: () => HQ,
+    make: h => ({
+      label: "Trụ sở chính của doanh nghiệp này ở tỉnh/thành nào?", main: h.t, cls: "big mono", sub: hqName(h),
+      opts: shuffle([h.p, ...shuffle(HQ_POOL.filter(x => x !== h.p)).slice(0, 3)]).map(x => ({ id: x, html: `<b>${esc(x)}</b>` })), ans: h.p,
+      explain: ok => `<div>${ok ? "✓ Chính xác!" : "✗ Chưa đúng."} ${tk(h.t)} (${esc(BY_T[h.t].full)}) đặt trụ sở chính tại <b>${esc(h.p)}</b>.</div>${h.note ? `<p>${esc(h.note)}</p>` : ""}<p>Tên tỉnh/thành theo đơn vị hành chính sau sáp nhập (34 tỉnh/thành, từ 7/2025).</p>`,
+      review: [h.t, `${companyName(BY_T[h.t])} · ${h.p}`]
+    }),
+    board: { head: ["Mã", "Doanh nghiệp", "Trụ sở"], rows: () => HQ.map(h => [h.t, `${esc(BY_T[h.t].short)}<small>${esc(BY_T[h.t].full)}</small>`, `${esc(h.p)}${h.note ? `<small>${esc(h.note)}</small>` : ""}`]), search: "Tìm theo mã, tên hoặc tỉnh/thành (vd: Đồng Tháp, Bình Dương)…" }
   }
 ];
 const PART = Object.fromEntries(PARTS.map((p, i) => [p.id, Object.assign(p, { num: i + 1 })]));

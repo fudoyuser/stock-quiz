@@ -1,6 +1,6 @@
 # Bảng Điện Quiz
 
-Quiz kiến thức chứng khoán Việt Nam gồm **21 phần tách biệt**. Mỗi phần có thiết lập, điểm cao nhất và bảng tra cứu riêng, có link riêng (`#ma`, `#linh-vuc`…).
+Quiz kiến thức chứng khoán Việt Nam gồm **22 phần tách biệt**. Mỗi phần có thiết lập, điểm cao nhất và bảng tra cứu riêng, có link riêng (`#ma`, `#linh-vuc`…).
 
 | Phần | Link | Nội dung | Số câu |
 |---|---|---|---|
@@ -25,6 +25,7 @@ Quiz kiến thức chứng khoán Việt Nam gồm **21 phần tách biệt**. M
 | 19. Quyền cổ đông & công bố thông tin | `#co-dong` | ĐHCĐ, cổ đông lớn, giao dịch nội bộ, thời hạn công bố BCTC, hủy niêm yết | 34 |
 | 20. Lý thuyết thị trường tài chính | `#ly-thuyet` | Cơ chế chuyển thời hạn vốn, sơ cấp/thứ cấp, thị trường hiệu quả (EMH), lý thuyết quả chanh | 25 |
 | 21. Doanh nhân & thương vụ | `#doanh-nhan` | Câu chuyện doanh nghiệp từ báo chí, mỗi bài là một chủ đề lọc riêng: Danieli & ngành thép Việt; FPT & chip bán dẫn | 28 |
+| 22. Trụ sở chính | `#tru-so` | Doanh nghiệp đặt trụ sở ở tỉnh/thành nào (tên 34 tỉnh/thành sau sáp nhập 7/2025, ghi kèm tỉnh cũ) | 78 |
 
 Sau mỗi lượt có nút **Ôn lại câu sai** để chơi lại riêng các câu vừa trả lời sai.
 
@@ -45,3 +46,4 @@ Dữ liệu chỉ để ôn tập, không phải khuyến nghị đầu tư. Quy
 
 - **Thêm bài báo vào Phần 21**: thêm một khóa vào `STORY_TOPICS`, rồi thêm câu hỏi vào `STORIES` với `sec` là khóa đó. Chỉ dùng thông tin có trong bài và ghi nguồn trong `e`.
 - **Phân biệt cùng ngành** (Phần 2): mảng `DIFF`, mỗi câu có `t` (mã đúng), `w` (3 mã cùng ngành không trùng đặc điểm), `q` (đặc điểm), `e` (giải thích).
+- **Trụ sở chính** (Phần 22): chuỗi `HQ_RAW`, mỗi dòng `MÃ|Tỉnh/thành mới|Ghi chú (vd tỉnh cũ)`.
