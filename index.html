@@ -62,6 +62,23 @@ h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; }
 .mast h1 span { color: var(--accent); }
 .mast p { margin: 0; color: var(--muted); max-width: 60ch; }
 
+/* Thống kê học tập */
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+@media (max-width: 640px) { .stats { grid-template-columns: 1fr 1fr; } }
+.stat { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; display: grid; gap: 5px; align-content: start; min-width: 0; text-align: left; font: inherit; color: inherit; }
+button.stat { cursor: pointer; }
+button.stat:hover { border-color: var(--muted); }
+.stat b { font-family: "JetBrains Mono", monospace; font-size: 22px; font-weight: 800; line-height: 1.1; overflow-wrap: anywhere; }
+.stat b small { font-size: 13px; color: var(--muted); font-weight: 500; }
+.stat > small { color: var(--muted); font-size: 12px; line-height: 1.35; }
+.stat.done b { color: var(--up); }
+.stat .bar { height: 6px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.stat .bar i { display: block; height: 100%; background: var(--up); border-radius: inherit; transition: width .3s; }
+.week { display: flex; gap: 3px; align-items: flex-end; height: 20px; }
+.week i { flex: 1; background: var(--line); border-radius: 2px; min-height: 3px; }
+.week i.on { background: var(--accent); }
+.toast { position: fixed; left: 50%; top: 14px; transform: translateX(-50%); z-index: 60; background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 99px; font-weight: 700; font-size: 14px; max-width: calc(100% - 32px); text-align: center; box-shadow: 0 6px 24px rgba(0,0,0,.18); }
+
 /* Chọn nhóm (tag) */
 .subjects { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 6px; margin-bottom: -14px; }
 .subject { border: 0; background: transparent; border-radius: 12px; padding: 10px 12px; font-weight: 700; font-size: 15px; display: grid; gap: 2px; text-align: center; color: var(--muted); }
@@ -197,6 +214,9 @@ footer { text-align: center; font-size: 13px; color: var(--muted); }
     <p id="mastIntro"></p>
   </header>
 
+  <section class="stats" id="stats" aria-label="Thống kê học tập"></section>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
   <nav class="subjects" id="subjects" role="tablist" aria-label="Chọn nhóm kiến thức"></nav>
   <nav class="parts" id="parts" role="tablist" aria-label="Chọn phần"></nav>
 
@@ -256,6 +276,7 @@ footer { text-align: center; font-size: 13px; color: var(--muted); }
     <span class="label" id="rLabel">Kết quả phiên</span>
     <div class="score" id="rScore"></div>
     <p id="rMsg" style="margin:0"></p>
+    <p class="note" id="rTotal" style="margin:0"></p>
     <div class="review" id="rReview"></div>
     <div class="actions">
       <button class="go" id="retryBtn" type="button" hidden>Ôn lại câu sai</button>
@@ -2478,10 +2499,58 @@ function renderQ() {
   }
   $("opts").innerHTML = q.opts.map((o, k) => `<button type="button" class="opt${o.tk ? " tk" : ""}" data-i="${k}"><kbd>${k + 1}</kbd><span>${o.html}</span></button>`).join("");
 }
+/* ===== Thống kê học tập: đếm mọi câu đã trả lời (kể cả ôn lại), lưu trong trình duyệt ===== */
+const GOALS = [20, 50, 100, 200];
+const MILESTONES = [10, 50, 100, 200, 300, 500, 750, 1000, 1500, 2000, 3000, 4000, 5000, 7500, 10000, 15000, 20000, 30000, 50000];
+const fmtN = n => n.toLocaleString("vi-VN");
+const dayKey = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+function loadStats() {
+  try { const x = JSON.parse(store.get("bdq-stats")); if (x && typeof x.total === "number") return { right: 0, days: {}, best: 0, ...x }; } catch {}
+  return { total: 0, right: 0, days: {}, best: 0 };
+}
+let stats = loadStats();
+const goal = () => GOALS.includes(+store.get("bdq-goal")) ? +store.get("bdq-goal") : 50;
+function streakNow() {
+  const d = new Date(); let n = 0;
+  if (!stats.days[dayKey(d)]) d.setDate(d.getDate() - 1); // hôm nay chưa học thì chuỗi vẫn giữ từ hôm qua
+  while (stats.days[dayKey(d)]) { n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
+let toastTimer;
+function toast(msg) {
+  const t = $("toast"); t.textContent = msg; t.hidden = false;
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.hidden = true, 3200);
+}
+function recordAnswer(ok) {
+  const k = dayKey();
+  stats.total++; if (ok) stats.right++;
+  stats.days[k] = (stats.days[k] || 0) + 1;
+  const keys = Object.keys(stats.days).sort(); if (keys.length > 400) keys.slice(0, keys.length - 400).forEach(d => delete stats.days[d]);
+  const st = streakNow(); if (st > stats.best) stats.best = st;
+  store.set("bdq-stats", JSON.stringify(stats));
+  if (MILESTONES.includes(stats.total)) toast(`🎉 Cột mốc ${fmtN(stats.total)} câu đã trả lời!`);
+  else if (stats.days[k] === goal()) toast(`✅ Hoàn thành mục tiêu hôm nay: ${goal()} câu!`);
+  renderStats();
+}
+function renderStats() {
+  const today = stats.days[dayKey()] || 0, g = goal(), st = streakNow();
+  const nextM = MILESTONES.find(m => m > stats.total);
+  const acc = stats.total ? Math.round(stats.right / stats.total * 100) : 0;
+  const week = [...Array(7)].map((_, i) => { const d = new Date(); d.setDate(d.getDate() - 6 + i); return stats.days[dayKey(d)] || 0; });
+  const max = Math.max(g, ...week);
+  $("stats").innerHTML = `
+    <div class="stat"><span class="label">Tổng đã trả lời</span><b>${fmtN(stats.total)}</b><small>${stats.total ? `Đúng ${fmtN(stats.right)} câu · ${acc}%` : "Trả lời câu đầu tiên để bắt đầu"}</small></div>
+    <button type="button" class="stat${today >= g ? " done" : ""}" id="goalBtn" title="Bấm để đổi mục tiêu mỗi ngày"><span class="label">Hôm nay</span><b>${fmtN(today)}<small>/${g}</small></b><span class="bar"><i style="width:${Math.min(100, today / g * 100)}%"></i></span><small>${today >= g ? "Đạt mục tiêu ✓" : `Mục tiêu ${g} câu`} · bấm để đổi</small></button>
+    <div class="stat"><span class="label">Chuỗi ngày học</span><b>${st}<small> ngày</small></b><span class="week" title="7 ngày gần nhất">${week.map(n => `<i class="${n ? "on" : ""}" style="height:${n ? Math.max(15, n / max * 100) : 15}%"></i>`).join("")}</span></div>
+    <div class="stat"><span class="label">Mốc tiếp theo</span><b>${nextM ? fmtN(nextM) : "🏆"}</b><small>${nextM ? `Còn ${fmtN(nextM - stats.total)} câu` : "Đã vượt mọi cột mốc"} · Kỷ lục chuỗi ${Math.max(stats.best, st)} ngày</small></div>`;
+  $("goalBtn").onclick = () => { store.set("bdq-goal", GOALS[(GOALS.indexOf(g) + 1) % GOALS.length]); renderStats(); };
+}
+
 function answer(id) {
   const g = game; if (!g || g.answered) return;
   g.answered = true;
   const q = g.q, ok = id === q.ans;
+  g.done = (g.done || 0) + 1; recordAnswer(ok);
   if (ok) g.right++; else { g.misses.push(q.review); g.missItems.push(g.items[g.i]); }
   if (g.counted && !g.retry) { store.set(`bdq-${g.part}-cur`, Math.round(g.right / g.items.length * 100)); renderParts(); }
   if (q.type) {
@@ -2520,6 +2589,7 @@ function finish() {
     ? `<span class="label">Cần ôn lại (${g.misses.length})</span>` + g.misses.map(([code, text]) =>
         `<div>${code ? `<b>${esc(code)}</b>` : ""}<span>${esc(text)}</span></div>`).join("")
     : "";
+  $("rTotal").textContent = `+${g.done || 0} câu trong lượt này · Tổng cộng ${fmtN(stats.total)} câu đã trả lời · Hôm nay ${fmtN(stats.days[dayKey()] || 0)}/${goal()} câu.`;
   $("retryBtn").hidden = !g.missItems.length;
   $("retryBtn").textContent = `Ôn lại ${g.missItems.length} câu sai`;
   show("result");
@@ -2626,6 +2696,7 @@ function renderBoard() {
 }
 $("search").oninput = renderBoard;
 
+renderStats();
 setPart(part);
 </script>
 </body>

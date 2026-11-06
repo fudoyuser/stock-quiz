@@ -55,6 +55,12 @@ Sau mỗi lượt có nút **Ôn lại câu sai** để chơi lại riêng các 
 - Chỉ lượt **ôn tổng hợp** (không lọc ngành, chủ đề, dạng câu) mới được tính % và điểm cao nhất; điểm cao nhất cần lượt từ 10 câu.
 - Lượt ôn theo mục nhỏ và lượt "Ôn lại câu sai" không tính vào % hay số câu đúng.
 
+**Thống kê học tập** (dải thẻ dưới tiêu đề, lưu trong trình duyệt):
+- Tổng số câu đã trả lời (tính mọi câu, kể cả ôn theo mục và ôn lại câu sai) và tỷ lệ đúng tích lũy.
+- Số câu hôm nay so với mục tiêu ngày (bấm thẻ để đổi 20 / 50 / 100 / 200 câu).
+- Chuỗi ngày học liên tiếp, biểu đồ 7 ngày gần nhất và kỷ lục chuỗi.
+- Cột mốc tiếp theo (100, 500, 1.000… câu), có thông báo khi đạt mốc hoặc hoàn thành mục tiêu ngày.
+
 Các đáp án sai được viết dài tương đương đáp án đúng, để không thể đoán bằng cách chọn phương án dài nhất.
 
 Dữ liệu chỉ để ôn tập, không phải khuyến nghị đầu tư. Quy định, sàn niêm yết và cơ cấu sở hữu có thể thay đổi, nên kiểm tra lại với nguồn chính thức.
