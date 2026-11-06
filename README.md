@@ -35,6 +35,7 @@ Kiến thức chứng khoán gồm **22 phần tách biệt**. Mỗi phần có 
 | 24. Chuẩn mực quốc tế IFRS | `#ifrs` | Đề án 345, IFRS 9/13/15/16/17, IAS 36/41, khác biệt VAS – IFRS | 30 |
 | 25. Các quỹ đầu tư lớn tại Việt Nam | `#quy-lon` | Dragon Capital, VinaCapital, Mekong, PYN Elite, ETF ngoại, ETF nội | 27 |
 | 26. MSCI và FTSE | `#msci-ftse` | So sánh thang xếp hạng, lịch rà soát, tiêu chí, lộ trình nâng hạng của Việt Nam | 25 |
+| 27. Công ty chứng khoán & app | `#cong-ty-chung-khoan` | Ngân hàng/tập đoàn mẹ của các CTCK, app (SmartOne, TCInvest, Entrade X, iBoard), tính năng (ứng trước, lệnh điều kiện, eKYC, lô lẻ), phí, thuế, VSDC, KRX | 33 |
 
 ### Môn: Phân tích tài chính
 
@@ -45,6 +46,18 @@ Kiến thức chứng khoán gồm **22 phần tách biệt**. Mỗi phần có 
 | Thực hành | `#bctc` | Thực hành đọc BCTC (chuyển từ Phần 9 cũ): tính EPS, P/E, ROE, D/E, nhận diện rủi ro | 29 |
 
 Câu hỏi các chương bám theo nội dung giáo trình; khi giáo trình bổ sung chương mới sẽ thêm tab tương ứng.
+
+### Tiếng Anh chuyên ngành
+
+Nhóm thứ ba, độc lập với hai nhóm trên. Mỗi bộ từ vựng có hai chiều **Anh → Việt** và **Việt → Anh** (chọn ở "Dạng câu hỏi"), phương án sai lấy từ cùng bộ.
+
+| Bộ | Đường dẫn | Nội dung | Số từ |
+|---|---|---|---|
+| Thị trường | `#en-thi-truong` | Thị trường & giao dịch: IPO, margin call, ceiling price, order book… | 52 |
+| BCTC | `#en-bctc` | Báo cáo tài chính & kế toán: balance sheet, retained earnings, goodwill… | 50 |
+| Đầu tư | `#en-dau-tu` | Phân tích, định giá & đầu tư: P/E, intrinsic value, support level, hedging… | 56 |
+| Vĩ mô | `#en-vi-mo` | Ngân hàng, trái phiếu & vĩ mô: coupon rate, NPL, policy rate, FDI… | 50 |
+| Đọc tin | `#en-doc-tin` | Đọc hiểu câu tiếng Anh thường gặp trên bản tin, báo cáo phân tích | 21 câu |
 
 Các câu tính toán (có bảng số liệu hoặc số liệu cần tính) có nút **Máy tính**: bàn phím ảo hoặc gõ trực tiếp, hiểu cách viết số Việt Nam (`50.000`, `1,5`), có ngoặc và %.
 
