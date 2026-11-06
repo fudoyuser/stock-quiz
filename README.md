@@ -36,14 +36,15 @@ Kiến thức chứng khoán gồm **22 phần tách biệt**. Mỗi phần có 
 | 25. Các quỹ đầu tư lớn tại Việt Nam | `#quy-lon` | Dragon Capital, VinaCapital, Mekong, PYN Elite, ETF ngoại, ETF nội | 27 |
 | 26. MSCI và FTSE | `#msci-ftse` | So sánh thang xếp hạng, lịch rà soát, tiêu chí, lộ trình nâng hạng của Việt Nam | 25 |
 | 27. Công ty chứng khoán & app | `#cong-ty-chung-khoan` | Ngân hàng/tập đoàn mẹ của các CTCK, app (SmartOne, TCInvest, Entrade X, iBoard), tính năng (ứng trước, lệnh điều kiện, eKYC, lô lẻ), phí, thuế, VSDC, KRX | 33 |
+| 28. PMI & rổ CPI Việt Nam | `#pmi-cpi` | PMI ngành sản xuất (ngưỡng 50, thành phần, chỉ số khuếch tán, chỉ báo sớm), rổ CPI 11 nhóm và quyền số, lạm phát cơ bản, mục tiêu lạm phát, tác động tới chứng khoán | 29 |
 
 ### Môn: Phân tích tài chính
 
 | Tab | Link | Nội dung | Số câu |
 |---|---|---|---|
 | Viết tắt | `#ptc-viet-tat` | 62 từ viết tắt trong giáo trình, hỏi 2 chiều (viết tắt → nghĩa, nghĩa → viết tắt) | 124 |
-| Chương 1 | `#ptc-chuong-1` | Toàn bộ Chương 1, lọc theo mục: 1.1 Tổng quan (29), 1.2 Quy trình phân tích 6 bước (14), 1.3 Phương pháp ngang – dọc – chéo – tỷ số (23), 1.4 Thông tin sử dụng: 5 áp lực Porter, MD&A, hệ thống BCTC, hợp nhất, báo cáo thường niên, phát triển bền vững, kiểm toán, cáo bạch (45) | 111 |
-| Chương 2 | `#ptc-chuong-2` | Giới thiệu về BCTC (trang 77–106), lọc theo mục: 2.1 Bảng cân đối kế toán (37), 2.2 Báo cáo KQHĐKD (30), 2.3 Lưu chuyển tiền tệ trực tiếp – gián tiếp (27), 2.4 Thuyết minh BCTC (4); có câu tính toán theo số liệu ví dụ CTCP ABC, Bình Minh, Doanh nghiệp A (ô bị che trong sách được ước lượng cho khớp dòng tổng) | 98 |
+| Chương 1 | `#ptc-chuong-1` | Toàn bộ Chương 1, lọc theo mục: 1.1 Tổng quan (29), 1.2 Quy trình phân tích 6 bước (14), 1.3 Phương pháp ngang – dọc – chéo – tỷ số (23), 1.4 Thông tin sử dụng: 5 áp lực Porter, MD&A, hệ thống BCTC, hợp nhất, báo cáo thường niên, phát triển bền vững, kiểm toán, cáo bạch (45), Dễ nhầm lẫn (8) | 119 |
+| Chương 2 | `#ptc-chuong-2` | Giới thiệu về BCTC (trang 77–106), lọc theo mục: 2.1 Bảng cân đối kế toán (37), 2.2 Báo cáo KQHĐKD (30), 2.3 Lưu chuyển tiền tệ trực tiếp – gián tiếp (27), 2.4 Thuyết minh BCTC (4), Dễ nhầm lẫn (15); có câu tính toán theo số liệu ví dụ CTCP ABC, Bình Minh, Doanh nghiệp A (ô bị che trong sách được ước lượng cho khớp dòng tổng) | 113 |
 | Thực hành | `#bctc` | Thực hành đọc BCTC (chuyển từ Phần 9 cũ): tính EPS, P/E, ROE, D/E, nhận diện rủi ro | 29 |
 
 Câu hỏi các chương bám theo nội dung giáo trình; câu nào dùng số liệu ví dụ trong sách thì đề luôn kèm số liệu (không bắt nhớ số liệu ví dụ); khi giáo trình bổ sung chương mới sẽ thêm tab tương ứng.
@@ -76,6 +77,8 @@ Sau mỗi lượt có nút **Ôn lại câu sai** để chơi lại riêng các 
 - Cột mốc tiếp theo (100, 500, 1.000… câu), có thông báo khi đạt mốc hoặc hoàn thành mục tiêu ngày.
 
 **Lưu tiến độ:** khi mở bản trên Claude (đã đăng nhập), thống kê, mục tiêu ngày và điểm từng phần được lưu vào tài khoản (kho dữ liệu riêng của mỗi người, người khác không đọc được) và đồng bộ giữa các thiết bị. Bản GitHub Pages không có máy chủ nên vẫn lưu trên trình duyệt. Dòng trạng thái dưới dải thống kê cho biết đang lưu ở đâu.
+
+**Câu "Nhận định đúng hay sai?":** đề là một nhận định, 4 phương án gồm 2 "Đúng, vì …" và 2 "Sai, vì …" — phải chọn đúng cả kết luận lẫn lý do. Có trong phần PMI & CPI, mục "Dễ nhầm lẫn" của từng chương, và rải trong các phần Thuật ngữ, Quy định giao dịch, Định giá, Quản trị rủi ro.
 
 Các đáp án sai được viết dài tương đương đáp án đúng, để không thể đoán bằng cách chọn phương án dài nhất.
 
