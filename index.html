@@ -77,6 +77,9 @@ button.stat:hover { border-color: var(--muted); }
 .week { display: flex; gap: 3px; align-items: flex-end; height: 20px; }
 .week i { flex: 1; background: var(--line); border-radius: 2px; min-height: 3px; }
 .week i.on { background: var(--accent); }
+.sync { margin: -14px 0 0; font-size: 12.5px; color: var(--muted); }
+.sync.ok { color: var(--up); }
+.sync.warn { color: var(--down); }
 .toast { position: fixed; left: 50%; top: 14px; transform: translateX(-50%); z-index: 60; background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 99px; font-weight: 700; font-size: 14px; max-width: calc(100% - 32px); text-align: center; box-shadow: 0 6px 24px rgba(0,0,0,.18); }
 
 /* Chọn nhóm (tag) */
@@ -215,6 +218,7 @@ footer { text-align: center; font-size: 13px; color: var(--muted); }
   </header>
 
   <section class="stats" id="stats" aria-label="Thống kê học tập"></section>
+  <p class="sync" id="syncNote" aria-live="polite"></p>
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
   <nav class="subjects" id="subjects" role="tablist" aria-label="Chọn nhóm kiến thức"></nav>
@@ -2055,9 +2059,11 @@ TECH.forEach(x => {
 
 /* ===== Tiện ích ===== */
 const $ = id => document.getElementById(id);
+/* Bộ nhớ đệm trên máy; tiến độ học được đồng bộ lên tài khoản (xem phần "Đồng bộ tài khoản") */
+const memStore = {};
 const store = {
-  get(k) { try { return localStorage.getItem(k); } catch { return null; } },
-  set(k, v) { try { localStorage.setItem(k, v); } catch {} }
+  get(k) { let v = null; try { v = localStorage.getItem(k); } catch {} return v ?? (k in memStore ? memStore[k] : null); },
+  set(k, v) { memStore[k] = String(v); try { localStorage.setItem(k, v); } catch {} if (typeof onStoreSet === "function") onStoreSet(k); }
 };
 const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
@@ -2546,6 +2552,81 @@ function renderStats() {
   $("goalBtn").onclick = () => { store.set("bdq-goal", GOALS[(GOALS.indexOf(g) + 1) % GOALS.length]); renderStats(); };
 }
 
+/* ===== Đồng bộ tài khoản: lưu tiến độ (thống kê, mục tiêu, điểm từng phần) vào kho dữ liệu riêng của mỗi người =====
+   Mỗi người chỉ đọc/ghi được tài liệu của chính mình (data/users/<id>/progress). Ngoài Claude (vd GitHub Pages) thì lưu trên trình duyệt. */
+const SYNC_RE = /^bdq-(stats|goal|.+-(cur|best))$/;
+const sync = { ref: null, timer: 0, applying: false, state: "" };
+const SYNC_MSG = {
+  local: ["", "💾 Tiến độ đang lưu trên trình duyệt này. Mở bản trên Claude (đã đăng nhập) để lưu vào tài khoản và đồng bộ mọi thiết bị."],
+  signedout: ["", "💾 Đăng nhập Claude để lưu tiến độ vào tài khoản."],
+  loading: ["", "☁ Đang tải tiến độ từ tài khoản…"],
+  slow: ["warn", "☁ Chưa kết nối được máy chủ — tiến độ tạm giữ trên máy, sẽ tự đồng bộ khi kết nối lại."],
+  saving: ["", "☁ Đang lưu vào tài khoản…"],
+  synced: ["ok", "☁ Đã lưu vào tài khoản · đồng bộ trên mọi thiết bị"],
+  error: ["warn", "⚠ Không lưu được vào tài khoản lúc này — tiến độ tạm giữ trên trình duyệt."]
+};
+function setSync(st) {
+  sync.state = st; const [cls, msg] = SYNC_MSG[st] || SYNC_MSG.local;
+  const el = $("syncNote"); el.className = "sync " + cls; el.textContent = msg;
+}
+function onStoreSet(k) {
+  if (sync.applying || !SYNC_RE.test(k)) return;
+  try { localStorage.setItem("bdq-sync-at", Date.now()); } catch {} memStore["bdq-sync-at"] = String(Date.now());
+  if (sync.ref) schedulePush();
+}
+const localAt = () => +store.get("bdq-sync-at") || 0;
+function progressPayload() {
+  const scores = {};
+  for (const P of PARTS) for (const k of ["cur", "best"]) { const v = store.get(`bdq-${P.id}-${k}`); if (v !== null && v !== "") scores[`${P.id}-${k}`] = +v; }
+  return { v: 1, stats: { total: stats.total, right: stats.right, best: stats.best || 0, days: stats.days }, goal: goal(), scores, updatedAt: localAt() || Date.now() };
+}
+const canon = o => JSON.stringify(o, (k, v) => v && typeof v === "object" && !Array.isArray(v) ? Object.fromEntries(Object.keys(v).sort().map(x => [x, v[x]])) : v);
+const sameProgress = (a, b) => canon({ s: a.stats, g: a.goal, c: a.scores }) === canon({ s: b.stats, g: b.goal, c: b.scores });
+function mergeProgress(r) {
+  const rs = r.stats || {}, days = { ...(rs.days || {}) }, remoteNewer = (r.updatedAt || 0) > localAt();
+  for (const [d, n] of Object.entries(stats.days)) days[d] = Math.max(days[d] || 0, n);
+  stats = { total: Math.max(stats.total, rs.total || 0), right: Math.max(stats.right, rs.right || 0), days, best: Math.max(stats.best || 0, rs.best || 0) };
+  sync.applying = true;
+  store.set("bdq-stats", JSON.stringify(stats));
+  if (GOALS.includes(r.goal) && (remoteNewer || !store.get("bdq-goal"))) store.set("bdq-goal", r.goal);
+  for (const [k, v] of Object.entries(r.scores || {})) {
+    const key = `bdq-${k}`, cur = store.get(key);
+    if (k.endsWith("-best") ? (cur === null || v > +cur) : (cur === null || remoteNewer)) store.set(key, v);
+  }
+  if (remoteNewer) store.set("bdq-sync-at", r.updatedAt);
+  sync.applying = false;
+}
+function schedulePush() { clearTimeout(sync.timer); setSync("saving"); sync.timer = setTimeout(pushNow, 1200); }
+function pushNow(retried) {
+  clearTimeout(sync.timer); sync.timer = 0;
+  if (!sync.ref) return;
+  sync.ref.set(progressPayload()).then(() => setSync("synced")).catch(e => {
+    if (e && e.code === "unavailable" && !retried) setTimeout(() => pushNow(true), 1500 + Math.random() * 2000);
+    else setSync("error");
+  });
+}
+async function initSync() {
+  if (!window.claude || typeof window.claude.use !== "function") return setSync("local");
+  setSync("loading");
+  const [db, user] = await Promise.all([claude.use("db"), claude.use("user")]).catch(() => [null, null]);
+  if (!db || !user) return setSync("local");
+  const id = await user.id().catch(() => null);
+  if (!id) return setSync("signedout");
+  sync.ref = db.doc(`data/users/${id}/progress`);
+  const slow = setTimeout(() => sync.state === "loading" && setSync("slow"), 10000);
+  sync.ref.onSnapshot(snap => {
+    if (snap.metadata.hasPendingWrites) return;          // bản ghi của chính trang này, chưa xác nhận
+    if (snap.exists) { mergeProgress(snap.data()); renderStats(); renderParts(); }
+    if (snap.metadata.fromCache) return;                  // chờ bản xác nhận từ máy chủ
+    clearTimeout(slow);
+    const mine = progressPayload();
+    if (!snap.exists ? (stats.total || Object.keys(mine.scores).length) : !sameProgress(mine, snap.data())) schedulePush();
+    else if (!sync.timer) setSync("synced");
+  }, () => { clearTimeout(slow); sync.ref = null; setSync("error"); });
+}
+addEventListener("pagehide", () => { if (sync.timer) pushNow(); });
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden" && sync.timer) pushNow(); });
+
 function answer(id) {
   const g = game; if (!g || g.answered) return;
   g.answered = true;
@@ -2696,8 +2777,10 @@ function renderBoard() {
 }
 $("search").oninput = renderBoard;
 
+setSync(window.claude ? "loading" : "local");
 renderStats();
 setPart(part);
+initSync();
 </script>
 </body>
 </html>

@@ -55,11 +55,13 @@ Sau mỗi lượt có nút **Ôn lại câu sai** để chơi lại riêng các 
 - Chỉ lượt **ôn tổng hợp** (không lọc ngành, chủ đề, dạng câu) mới được tính % và điểm cao nhất; điểm cao nhất cần lượt từ 10 câu.
 - Lượt ôn theo mục nhỏ và lượt "Ôn lại câu sai" không tính vào % hay số câu đúng.
 
-**Thống kê học tập** (dải thẻ dưới tiêu đề, lưu trong trình duyệt):
+**Thống kê học tập** (dải thẻ dưới tiêu đề):
 - Tổng số câu đã trả lời (tính mọi câu, kể cả ôn theo mục và ôn lại câu sai) và tỷ lệ đúng tích lũy.
 - Số câu hôm nay so với mục tiêu ngày (bấm thẻ để đổi 20 / 50 / 100 / 200 câu).
 - Chuỗi ngày học liên tiếp, biểu đồ 7 ngày gần nhất và kỷ lục chuỗi.
 - Cột mốc tiếp theo (100, 500, 1.000… câu), có thông báo khi đạt mốc hoặc hoàn thành mục tiêu ngày.
+
+**Lưu tiến độ:** khi mở bản trên Claude (đã đăng nhập), thống kê, mục tiêu ngày và điểm từng phần được lưu vào tài khoản (kho dữ liệu riêng của mỗi người, người khác không đọc được) và đồng bộ giữa các thiết bị. Bản GitHub Pages không có máy chủ nên vẫn lưu trên trình duyệt. Dòng trạng thái dưới dải thống kê cho biết đang lưu ở đâu.
 
 Các đáp án sai được viết dài tương đương đáp án đúng, để không thể đoán bằng cách chọn phương án dài nhất.
 
