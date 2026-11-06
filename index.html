@@ -2611,6 +2611,29 @@ const PMICPI = [
   ].map(x => ({ ...x, sec: "p2" }))
 ];
 
+/* ----- Cách tính VN-Index (mục riêng trong phần Chỉ số thị trường) ----- */
+const INDEX_TOPICS = { i1: "Chỉ số & rổ chỉ số", i2: "Cách tính VN-Index" };
+INDEXES.forEach(x => { x.sec = x.sec || "i1"; });
+const VNI_AB = { head: ["Cổ phiếu", "Giá gốc", "Giá hiện tại", "Số CP"], rows: [["A", "10.000", "12.000", "1 triệu"], ["B", "20.000", "22.000", "2 triệu"]], note: "Chỉ số tại thời điểm gốc = 100 điểm; giả sử toàn bộ cổ phiếu tự do chuyển nhượng." };
+const VNI_AB2 = { head: ["Cổ phiếu", "Giá gốc", "Giá hiện tại", "Số CP"], rows: [["A", "10.000", "11.000", "1 triệu"], ["B", "20.000", "18.000", "2 triệu"]], note: "Chỉ số tại thời điểm gốc = 100 điểm; A tăng 10%, B giảm 10%." };
+INDEXES.push(...[
+  { q: "Công thức tổng quát của VN-Index là gì?", a: "Vốn hóa hiện tại ÷ Vốn hóa cơ sở × 100", w: ["Tổng giá các cổ phiếu ÷ Số cổ phiếu × 100", "Giá trị giao dịch ÷ Khối lượng giao dịch × 100", "Vốn hóa hiện tại − Vốn hóa cơ sở + 100"], e: "VN-Index = Σ(Pᵢ × Qᵢ) ÷ Σ(P₀ × Q₀) × 100, với P là giá, Q là số cổ phiếu (đã điều chỉnh tỷ lệ tự do chuyển nhượng), 100 là điểm gốc ngày 28/7/2000." },
+  { q: "VN-Index được xây dựng theo dạng công thức nào?", a: "Paasche – bình quân gia quyền theo vốn hóa hiện tại", w: ["Laspeyres – quyền số cố định theo số cổ phiếu kỳ gốc", "Bình quân giản đơn thị giá của tất cả cổ phiếu", "Bình quân nhân tỷ lệ tăng giá của từng mã"], e: "Quyền số là số cổ phiếu tại thời điểm hiện tại, nên tỷ trọng mỗi mã thay đổi theo vốn hóa thực tế." },
+  { q: "Tỷ trọng của một cổ phiếu trong VN-Index được xác định thế nào?", a: "Vốn hóa của mã ÷ Tổng vốn hóa các mã trong chỉ số", w: ["Thị giá của mã ÷ Tổng thị giá các mã", "Khối lượng giao dịch của mã ÷ Tổng khối lượng", "Lợi nhuận của mã ÷ Tổng lợi nhuận toàn sàn"], e: "Vì thế các mã vốn hóa lớn như ngân hàng, Vingroup có ảnh hưởng mạnh nhất tới chỉ số." },
+  { q: "Từ bảng (đơn vị giá: đồng), VN-Index giả định hiện tại là bao nhiêu điểm?", table: VNI_AB, a: "112 điểm", w: ["115 điểm", "113,3 điểm", "120 điểm"], e: "Vốn hóa gốc = 10.000×1tr + 20.000×2tr = 50 tỷ; hiện tại = 12.000×1tr + 22.000×2tr = 56 tỷ → 56 ÷ 50 × 100 = 112. (115 là bình quân giản đơn % tăng; 113,3 là tính theo tổng giá như chỉ số giá Dow Jones.)" },
+  { q: "Từ bảng (đơn vị giá: đồng), A tăng 10%, B giảm 10%. VN-Index giả định là bao nhiêu điểm?", table: VNI_AB2, a: "94 điểm", w: ["100 điểm", "96,7 điểm", "106 điểm"], e: "Vốn hóa hiện tại = 11 + 36 = 47 tỷ → 47 ÷ 50 × 100 = 94. B có vốn hóa gấp 4 lần A nên chỉ số giảm dù hai mã biến động ngược chiều cùng mức." },
+  { q: "VN-Index đang ở 1.250 điểm. Cổ phiếu X chiếm 5% vốn hóa chỉ số và tăng 4%. X đóng góp khoảng bao nhiêu điểm?", a: "2,5 điểm", w: ["50 điểm", "62,5 điểm", "0,2 điểm"], e: "Điểm đóng góp ≈ Chỉ số × Tỷ trọng × % thay đổi giá = 1.250 × 5% × 4% = 2,5 điểm." },
+  { q: "VN-Index tăng từ 1.200 lên 1.230 điểm. Chỉ số tăng bao nhiêu %?", a: "2,5%", w: ["30%", "3%", "2,44%"], e: "(1.230 − 1.200) ÷ 1.200 = 2,5%. (2,44% là chia nhầm cho 1.230.)" },
+  { q: "Tổng vốn hóa các mã đang là 1.000 tỷ đồng; một cổ phiếu mới niêm yết thêm 100 tỷ đồng vốn hóa. Để chỉ số không nhảy điểm, vốn hóa cơ sở (hệ số chia) phải điều chỉnh tăng bao nhiêu %?", a: "10%", w: ["0%", "9,1%", "20%"], e: "Vốn hóa hiện tại tăng 1.100 ÷ 1.000 = 1,1 lần, nên vốn hóa cơ sở cũng nhân 1,1 (tăng 10%) để tỷ số không đổi." },
+  { q: "Vì sao vốn hóa cơ sở (hệ số chia) của VN-Index phải được điều chỉnh?", a: "Để chỉ số không nhảy điểm khi có niêm yết mới, hủy niêm yết, phát hành thêm", w: ["Để chỉ số luôn tăng đều đặn theo thời gian, dễ theo dõi", "Để giữ VN-Index luôn dao động quanh mức 1.000 điểm", "Để loại bỏ ảnh hưởng của các cổ phiếu giảm giá mạnh"], e: "Chỉ số chỉ nên thay đổi do biến động giá, không do thay đổi số lượng cổ phiếu hay số mã trong rổ." },
+  { q: "VN30 khác VN-Index ở điểm nào trong cách tính?", a: "VN30 giới hạn tỷ trọng mỗi mã tối đa 10%", w: ["VN30 tính theo thị giá, không theo vốn hóa", "VN30 không điều chỉnh khi có cổ phiếu mới", "VN30 lấy điểm gốc 100 như VN-Index"], e: "VN30 gồm 30 mã, tính theo vốn hóa điều chỉnh free float, có giới hạn tỷ trọng 10%, điểm gốc 500 (năm 2012). VN-Index tính toàn bộ cổ phiếu HOSE, không giới hạn tỷ trọng." },
+  { q: "Chỉ số Dow Jones (Mỹ) khác VN-Index ở cách tính nào?", a: "Dow Jones tính theo giá, VN-Index theo vốn hóa", w: ["Dow Jones tính theo vốn hóa, VN-Index theo giá", "Cả hai đều tính bình quân giản đơn giá", "Dow Jones tính theo khối lượng giao dịch"], e: "Với chỉ số theo giá (price-weighted), mã có thị giá cao ảnh hưởng nhiều nhất; với chỉ số theo vốn hóa, mã có vốn hóa lớn ảnh hưởng nhiều nhất." },
+  TF("VN-Index tăng điểm nghĩa là đa số cổ phiếu trên HOSE tăng giá.", "Sai, vì chỉ số tính theo vốn hóa, vài mã lớn có thể kéo cả chỉ số", ["Sai, vì VN-Index chỉ tính các cổ phiếu nằm trong rổ VN30", "Đúng, vì VN-Index là bình quân giá của mọi cổ phiếu trên sàn", "Đúng, vì mỗi cổ phiếu có tỷ trọng bằng nhau trong chỉ số"], "Cần xem thêm độ rộng thị trường (số mã tăng/giảm) để biết đà tăng có lan tỏa hay không."),
+  TF("Cổ phiếu giá 100.000 đồng ảnh hưởng tới VN-Index nhiều hơn cổ phiếu giá 10.000 đồng.", "Sai, vì ảnh hưởng phụ thuộc vốn hóa (giá × số cổ phiếu), không phải thị giá", ["Sai, vì mọi cổ phiếu có ảnh hưởng như nhau tới chỉ số", "Đúng, vì giống chỉ số Dow Jones, mã có thị giá cao chi phối", "Đúng, vì mỗi bước giá của mã giá cao lớn hơn mã giá thấp"], "Một mã giá 10.000 đồng nhưng có hàng tỷ cổ phiếu vẫn có thể có vốn hóa lớn hơn nhiều mã giá 100.000 đồng."),
+  TF("Doanh nghiệp lớn mới niêm yết trên HOSE làm VN-Index tăng điểm ngay lập tức.", "Sai, vì hệ số chia được điều chỉnh để chỉ số không nhảy điểm", ["Sai, vì cổ phiếu mới không bao giờ được đưa vào VN-Index", "Đúng, vì tổng vốn hóa của sàn tăng lên", "Đúng, vì cổ phiếu mới niêm yết luôn tăng trần phiên đầu"], "Sau khi được đưa vào chỉ số, biến động giá của mã mới mới tác động tới điểm số."),
+  TF("Chia tách cổ phiếu 1:2 không làm VN-Index thay đổi.", "Đúng, vì giá giảm một nửa, số cổ phiếu gấp đôi nên vốn hóa không đổi", ["Đúng, vì cổ phiếu chia tách bị tạm loại khỏi chỉ số", "Sai, vì giá giảm một nửa nên chỉ số giảm theo tương ứng", "Sai, vì số cổ phiếu tăng gấp đôi nên chỉ số tăng theo"], "Vốn hóa = giá × số cổ phiếu; chia tách chỉ thay đổi cách chia, không thay đổi tổng giá trị.")
+].map(x => ({ ...x, sec: "i2" })));
+
 const PARTS = [
   {
     id: "ticker", hash: "ma", title: "Mã cổ phiếu", desc: "Nhìn tên doanh nghiệp, gõ đúng mã.", sectors: true,
@@ -2745,7 +2768,8 @@ const PARTS = [
   },
   {
     id: "index", hash: "chi-so", title: "Chỉ số thị trường", desc: "VN-Index, VN30, VN100, ETF…",
-    items: () => INDEXES, make: bankQ("Chỉ số & rổ chỉ số"), board: bankBoard(INDEXES)
+    sectors: true, topics: INDEX_TOPICS,
+    items: () => INDEXES, make: it => bankQ(INDEX_TOPICS[it.sec])(it), board: bankBoard(INDEXES, INDEX_TOPICS)
   },
   {
     id: "history", hash: "lich-su", title: "Lịch sử thị trường", desc: "Các mốc từ 2000 đến nay.",

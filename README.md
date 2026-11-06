@@ -16,7 +16,7 @@ Kiến thức chứng khoán gồm **22 phần tách biệt**. Mỗi phần có 
 | 5. Sàn niêm yết | `#san` | Mã này ở HOSE, HNX hay UPCoM? | 105 |
 | 6. Tập đoàn & doanh nhân | `#tap-doan` | 19 hệ sinh thái (Vingroup, Masan, FPT, Viettel, PVN, Sovico, T&T, Phenikaa, ThaiBev, SCG…) và 38 doanh nhân đứng sau doanh nghiệp, hỏi 2 chiều | 146 |
 | 7. Thương hiệu → Mã | `#thuong-hieu` | Long Châu, bia 333, Zalo, ngân hàng số, dự án BĐS, cảng, nhà máy điện… thuộc mã nào | 117 |
-| 8. Chỉ số thị trường | `#chi-so` | VN-Index, VN30, VN100, VNDiamond, ETF, cổ phiếu trụ | 28 |
+| 8. Chỉ số thị trường | `#chi-so` | VN-Index, VN30, VN100, ETF…; mục riêng "Cách tính VN-Index": công thức vốn hóa (Paasche), tỷ trọng, điểm đóng góp, hệ số chia, so sánh VN30 và Dow Jones, câu tính toán có bảng | 43 |
 | 9. Lịch sử thị trường | `#lich-su` | Các mốc từ năm 2000 đến nay | 28 |
 | 10. Phân tích kỹ thuật | `#ky-thuat` | 5 chủ đề lọc riêng: xu hướng & đa khung; nến Nhật; mẫu hình & kênh xu hướng; MA – MACD – RSI – phân kỳ (thường, ẩn); công thức giao dịch & quản trị vốn (3 điều kiện, giải ngân 2 lần, cắt lỗ 7%, rủi ro 2%). Có biểu đồ minh họa và câu tính | 130 |
 | 11. Thị trường phái sinh | `#phai-sinh` | Hợp đồng tương lai VN30, chứng quyền có bảo đảm | 29 |
