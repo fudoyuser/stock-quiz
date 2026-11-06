@@ -199,6 +199,13 @@ button.stat:hover { border-color: var(--muted); }
 .chart .fin td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: left; }
 .chart .fin td:last-child { text-align: right; font-family: "JetBrains Mono", monospace; font-weight: 700; white-space: nowrap; }
 .chart .fin tr:last-child td { border-bottom: 0; }
+.chart .fin-wrap { width: 100%; max-width: 520px; overflow-x: auto; }
+.chart .fin.multi { max-width: none; }
+.chart .fin.multi td:not(:first-child) { text-align: right; font-family: "JetBrains Mono", monospace; font-weight: 700; white-space: nowrap; }
+.chart .fin th { padding: 6px 8px; border-bottom: 2px solid var(--line); text-align: right; font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; white-space: nowrap; }
+.chart .fin th:first-child { text-align: left; }
+.chart .fin-note { margin: 8px 0 0; font-size: 12.5px; color: var(--muted); }
+@media (max-width: 480px) { .chart .fin.multi { font-size: 13px; } .chart .fin.multi td, .chart .fin th { padding: 6px 3px; } .chart .fin th { font-size: 10.5px; letter-spacing: 0; } }
 .tag { display: inline-block; font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--accent); border: 1px solid var(--line); border-radius: 99px; padding: 0 8px; margin: 0 6px 4px 0; }
 .thumb svg { width: 160px; height: auto; display: block; background: var(--opt); border-radius: 8px; }
 footer { text-align: center; font-size: 13px; color: var(--muted); }
@@ -1004,8 +1011,18 @@ function chartSVG(c, W = 320, H = 150) {
   return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Biểu đồ minh họa">${s}</svg>`;
 }
 /* Bảng số liệu rút gọn cho câu hỏi tính toán */
-const tableHTML = t => `<table class="fin">${t.map(([k, v]) => `<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("")}</table>`;
-const tableText = t => t.map(([k, v]) => `${k}: ${v}`).join(" · ");
+/* Bảng số liệu: mảng [nhãn, giá trị] (2 cột) hoặc {head, rows, note} cho bảng nhiều cột có tiêu đề */
+const tableHTML = t => {
+  const T = Array.isArray(t) ? { rows: t } : t;
+  const head = T.head ? `<thead><tr>${T.head.map(h => `<th>${esc(h)}</th>`).join("")}</tr></thead>` : "";
+  const body = T.rows.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join("")}</tr>`).join("");
+  const table = `<table class="fin${T.head ? " multi" : ""}">${head}<tbody>${body}</tbody></table>`;
+  return T.head ? `<div class="fin-wrap">${table}${T.note ? `<p class="fin-note">${esc(T.note)}</p>` : ""}</div>` : table;
+};
+const tableText = t => {
+  const T = Array.isArray(t) ? { rows: t } : t;
+  return T.rows.map(([k, ...v]) => `${k}: ${v.map((x, i) => T.head ? `${T.head[i + 1]} ${x}` : x).join(", ")}`).join(" · ");
+};
 
 TECH.push(
   { q: "Khung dưới là chỉ báo RSI, hai đường nét đứt là mức 70 và 30. Ở cuối biểu đồ, RSI đang ở vùng nào?", chart: { lines: [{ d: [30, 31, 33, 32, 35, 38, 41, 44, 48, 52] }], lower: { title: "RSI", lines: [{ d: [48, 52, 57, 54, 60, 66, 70, 74, 78, 81] }], hline: [70, 30] } }, a: "Quá mua", w: ["Quá bán", "Trung tính", "Phân kỳ dương"], e: "Giá tăng liên tục đẩy RSI lên trên 70; rủi ro điều chỉnh ngắn hạn tăng lên." },
@@ -2399,7 +2416,7 @@ const C2 = (sec, m) => x => ({ ...x, sec, e: x.e + " " + SRC_PTC + ", mục " + 
 const ABC_IS = [["Doanh thu bán hàng và CCDV", "50.822.277"], ["Các khoản giảm trừ doanh thu", "50.767"], ["Giá vốn hàng bán", "25.736.367"], ["Chi phí bán hàng", "12.422.237"], ["Chi phí quản lý doanh nghiệp", "964.848"], ["Lợi nhuận kế toán trước thuế", "12.311.157"], ["Lợi nhuận sau thuế TNDN", "10.085.159"]];
 const BM_DATA = [["Doanh thu bán hàng", "34.600"], ["Cổ tức được chia", "4.785"], ["Thu lãi tiền gửi và cho vay", "2.580"], ["Giá vốn hàng bán", "26.300"], ["Chi phí bán hàng", "1.470"], ["Chi phí quản lý doanh nghiệp", "1.150"], ["Lãi vay phải trả", "4.500"], ["Chi phí thuế TNDN hiện hành", "2.136"]];
 const DNA_CF = [["Lợi nhuận trước thuế", "415"], ["Khấu hao", "90"], ["Lãi thanh lý tài sản", "30"], ["Phải thu giảm", "78,5"], ["Hàng tồn kho tăng", "200"], ["Phải trả người bán tăng", "160,5"], ["Khoản phải nộp tăng", "6"]];
-const ABC_BS = [["Tài sản ngắn hạn", "3.989.369 | 2.142.716"], ["Tổng tài sản", "7.529.166 | 4.576.157"], ["Nợ phải trả", "4.548.916 | 2.951.517 (ước)"], ["Nợ ngắn hạn", "3.206.103 | 1.990.837 (ước)"], ["Vốn chủ sở hữu", "2.980.250 | 1.624.640 (ước)"], ["Phải trả người bán ngắn hạn", "622.778 | 519.420 (ước)"]];
+const ABC_BS = { head: ["Triệu đồng", "Cuối năm", "Đầu năm"], rows: [["Tài sản ngắn hạn", "3.989.369", "2.142.716"], ["Tổng tài sản", "7.529.166", "4.576.157"], ["Nợ phải trả", "4.548.916", "2.951.517*"], ["Nợ ngắn hạn", "3.206.103", "1.990.837*"], ["Vốn chủ sở hữu", "2.980.250", "1.624.640*"], ["Phải trả người bán ngắn hạn", "622.778", "519.420*"]], note: "* Số ước lượng: chữ số bị che ở gáy sách, điền sao cho khớp các dòng tổng đã in." };
 const PTC_CH2 = [
   /* 2.1 Bảng cân đối kế toán */
   ...[
@@ -2433,11 +2450,11 @@ const PTC_CH2 = [
     { q: "Theo Bảng 2.1, điểm khác biệt về thuế giữa nợ vay và vốn chủ sở hữu là gì?", a: "Lãi vay được trừ khi tính thuế, cổ tức thì không", w: ["Cổ tức được trừ khi tính thuế, lãi vay thì không", "Cả hai đều được trừ khi tính thuế", "Cả hai đều không được trừ khi tính thuế"], e: "Vì vậy nợ vay tạo \"lá chắn thuế\". Ngoài ra nợ có thời hạn hoàn trả và lãi cố định; vốn chủ sở hữu không có thời hạn hoàn trả, cổ tức không cố định." },
     { q: "Theo Bảng 2.1, vốn chủ sở hữu có thời hạn hoàn trả thế nào?", a: "Không có thời hạn, trừ khi doanh nghiệp phá sản", w: ["Hoàn trả cho cổ đông sau đúng 5 năm", "Hoàn trả theo lịch cố định hằng năm", "Hoàn trả khi giá cổ phiếu tăng cao"], e: "Ngược lại, nợ vay có thời hạn hoàn trả nhất định và trả lãi cố định." },
     { q: "Theo Bảng 2.2 (CTCP ABC), tổng tài sản cuối năm bằng tổng của hai chỉ tiêu nào?", table: [["A. Tài sản ngắn hạn (100)", "3.989.369"], ["B. Tài sản dài hạn (200)", "3.539.797"], ["C. Nợ phải trả (300)", "4.548.916"], ["D. Vốn chủ sở hữu (400)", "2.980.250"]], a: "7.529.166 triệu đồng", w: ["8.538.713 triệu đồng", "7.088.165 triệu đồng", "6.528.047 triệu đồng"], e: "Mã 270 = 100 + 200 = 3.989.369 + 3.539.797 = 7.529.166, đúng bằng tổng nguồn vốn (440 = 300 + 400)." },
-    { q: "Bảng 2.2 (CTCP ABC, triệu đồng; cột: cuối năm | đầu năm). Tổng tài sản tăng khoảng bao nhiêu % trong năm?", table: ABC_BS, a: "64,5%", w: ["39,2%", "53,0%", "86,2%"], e: "(7.529.166 − 4.576.157) ÷ 4.576.157 ≈ 64,5%. Quy mô tài sản mở rộng rất nhanh trong năm." },
-    { q: "Bảng 2.2 (CTCP ABC, triệu đồng; cột: cuối năm | đầu năm). Hệ số nợ (Nợ phải trả ÷ Tổng tài sản) cuối năm là bao nhiêu?", table: ABC_BS, a: "60,4%", w: ["64,5%", "39,6%", "152,6%"], e: "4.548.916 ÷ 7.529.166 ≈ 60,4%, giảm nhẹ so với đầu năm (2.951.517 ÷ 4.576.157 ≈ 64,5%). Số đầu năm có chữ số bị che ở gáy sách nên được ước lượng sao cho khớp các dòng tổng đã in." },
-    { q: "Bảng 2.2 (CTCP ABC, triệu đồng; cột: cuối năm | đầu năm). Nợ phải trả đầu năm bằng bao nhiêu nếu vốn chủ sở hữu đầu năm là 1.624.640?", table: ABC_BS, a: "2.951.517 triệu đồng", w: ["2.142.716 triệu đồng", "3.206.103 triệu đồng", "6.200.797 triệu đồng"], e: "Nợ phải trả = Tổng nguồn vốn − Vốn chủ sở hữu = 4.576.157 − 1.624.640 = 2.951.517. Số đầu năm có chữ số bị che ở gáy sách nên được ước lượng sao cho khớp các dòng tổng đã in." },
-    { q: "Bảng 2.2 (CTCP ABC, triệu đồng; cột: cuối năm | đầu năm). Hệ số thanh toán hiện hành (TSNH ÷ Nợ ngắn hạn) thay đổi thế nào?", table: ABC_BS, a: "Từ khoảng 1,08 lên 1,24 lần", w: ["Từ khoảng 1,24 xuống 1,08 lần", "Từ khoảng 0,93 lên 1,24 lần", "Giữ nguyên khoảng 1,08 lần"], e: "Đầu năm: 2.142.716 ÷ 1.990.837 ≈ 1,08; cuối năm: 3.989.369 ÷ 3.206.103 ≈ 1,24. Số đầu năm có chữ số bị che ở gáy sách nên được ước lượng sao cho khớp các dòng tổng đã in." },
-    { q: "Bảng 2.2 (CTCP ABC, triệu đồng; cột: cuối năm | đầu năm). Phải trả người bán ngắn hạn tăng khoảng bao nhiêu %?", table: ABC_BS, a: "19,9%", w: ["16,6%", "103,4%", "8,3%"], e: "(622.778 − 519.420) ÷ 519.420 ≈ 19,9% (tăng 103.358 triệu đồng). Số đầu năm có chữ số bị che ở gáy sách nên được ước lượng sao cho khớp các dòng tổng đã in." },
+    { q: "Theo Bảng 2.2 (CTCP ABC), Tổng tài sản tăng khoảng bao nhiêu % trong năm?", table: ABC_BS, a: "64,5%", w: ["39,2%", "53,0%", "86,2%"], e: "(7.529.166 − 4.576.157) ÷ 4.576.157 ≈ 64,5%. Quy mô tài sản mở rộng rất nhanh trong năm." },
+    { q: "Theo Bảng 2.2 (CTCP ABC), Hệ số nợ (Nợ phải trả ÷ Tổng tài sản) cuối năm là bao nhiêu?", table: ABC_BS, a: "60,4%", w: ["64,5%", "39,6%", "152,6%"], e: "4.548.916 ÷ 7.529.166 ≈ 60,4%, giảm nhẹ so với đầu năm (2.951.517 ÷ 4.576.157 ≈ 64,5%). Số đầu năm có chữ số bị che ở gáy sách nên được ước lượng sao cho khớp các dòng tổng đã in." },
+    { q: "Theo Bảng 2.2 (CTCP ABC), Nợ phải trả đầu năm bằng bao nhiêu nếu vốn chủ sở hữu đầu năm là 1.624.640?", table: ABC_BS, a: "2.951.517 triệu đồng", w: ["2.142.716 triệu đồng", "3.206.103 triệu đồng", "6.200.797 triệu đồng"], e: "Nợ phải trả = Tổng nguồn vốn − Vốn chủ sở hữu = 4.576.157 − 1.624.640 = 2.951.517. Số đầu năm có chữ số bị che ở gáy sách nên được ước lượng sao cho khớp các dòng tổng đã in." },
+    { q: "Theo Bảng 2.2 (CTCP ABC), Hệ số thanh toán hiện hành (TSNH ÷ Nợ ngắn hạn) thay đổi thế nào?", table: ABC_BS, a: "Từ khoảng 1,08 lên 1,24 lần", w: ["Từ khoảng 1,24 xuống 1,08 lần", "Từ khoảng 0,93 lên 1,24 lần", "Giữ nguyên khoảng 1,08 lần"], e: "Đầu năm: 2.142.716 ÷ 1.990.837 ≈ 1,08; cuối năm: 3.989.369 ÷ 3.206.103 ≈ 1,24. Số đầu năm có chữ số bị che ở gáy sách nên được ước lượng sao cho khớp các dòng tổng đã in." },
+    { q: "Theo Bảng 2.2 (CTCP ABC), Phải trả người bán ngắn hạn tăng khoảng bao nhiêu %?", table: ABC_BS, a: "19,9%", w: ["16,6%", "103,4%", "8,3%"], e: "(622.778 − 519.420) ÷ 519.420 ≈ 19,9% (tăng 103.358 triệu đồng). Số đầu năm có chữ số bị che ở gáy sách nên được ước lượng sao cho khớp các dòng tổng đã in." },
     { q: "Theo Bảng 2.2, khoản mục tài sản dài hạn nào của CTCP ABC tăng mạnh nhất trong năm?", a: "Tài sản dở dang dài hạn", w: ["Tài sản cố định hữu hình", "Tài sản cố định vô hình", "Đầu tư tài chính dài hạn"], e: "Tài sản dở dang dài hạn lên 1.208.009 triệu đồng cuối năm (đầu năm ước khoảng 50 tỷ), trong khi TSCĐ hữu hình và vô hình giảm nhẹ do khấu hao — doanh nghiệp đang xây dựng dự án lớn. Số đầu năm có chữ số bị che ở gáy sách nên được ước lượng sao cho khớp các dòng tổng đã in." },
     { q: "Ví dụ Doanh nghiệp A (đơn vị: triệu đồng): tổng tài sản ngắn hạn là bao nhiêu?", table: [["Tiền", "2.378"], ["Chứng khoán kinh doanh ngắn hạn", "1.153"], ["Trả trước cho người bán", "576.013"], ["Hàng tồn kho", "4.996.114"], ["Đầu tư vào doanh nghiệp liên kết", "688.112"], ["Tài sản cố định hữu hình", "13.743.909"]], a: "5.575.658", w: ["6.263.770", "4.999.645", "5.574.505"], e: "2.378 + 1.153 + 576.013 + 4.996.114 = 5.575.658. Đầu tư vào doanh nghiệp liên kết là tài sản dài hạn." },
     { q: "Ví dụ Doanh nghiệp A (đơn vị: triệu đồng): tổng tài sản dài hạn là bao nhiêu?", table: [["Đầu tư vào doanh nghiệp liên kết", "688.112"], ["Tài sản cố định hữu hình", "13.743.909"], ["Chi phí SXKD dở dang dài hạn", "249.633"], ["Tài sản thuế thu nhập hoãn lại", "26.367"], ["Hàng tồn kho", "4.996.114"]], a: "14.708.021", w: ["14.019.909", "19.704.135", "14.021.062"], e: "13.743.909 + 249.633 + 688.112 + 26.367 = 14.708.021. Bảng lời giải trong sách ghi khoản đầu tư liên kết là 1.153 do chép nhầm số của chứng khoán kinh doanh; số đúng theo đề là 688.112." },
