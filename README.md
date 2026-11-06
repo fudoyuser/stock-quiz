@@ -43,7 +43,7 @@ Kiến thức chứng khoán gồm **22 phần tách biệt**. Mỗi phần có 
 |---|---|---|---|
 | Viết tắt | `#ptc-viet-tat` | 62 từ viết tắt trong giáo trình, hỏi 2 chiều (viết tắt → nghĩa, nghĩa → viết tắt) | 124 |
 | Chương 1 | `#ptc-chuong-1` | Toàn bộ Chương 1, lọc theo mục: 1.1 Tổng quan (29), 1.2 Quy trình phân tích 6 bước (15), 1.3 Phương pháp ngang – dọc – chéo – tỷ số (27), 1.4 Thông tin sử dụng: 5 áp lực Porter, MD&A, hệ thống BCTC, hợp nhất, báo cáo thường niên, phát triển bền vững, kiểm toán, cáo bạch (47) | 118 |
-| Chương 2 | `#ptc-chuong-2` | Giới thiệu về BCTC (trang 77–106), lọc theo mục: 2.1 Bảng cân đối kế toán (30), 2.2 Báo cáo KQHĐKD (30), 2.3 Lưu chuyển tiền tệ trực tiếp – gián tiếp (24), 2.4 Thuyết minh BCTC (4); có câu tính toán theo số liệu ví dụ CTCP ABC, Bình Minh, Doanh nghiệp A | 88 |
+| Chương 2 | `#ptc-chuong-2` | Giới thiệu về BCTC (trang 77–106), lọc theo mục: 2.1 Bảng cân đối kế toán (38), 2.2 Báo cáo KQHĐKD (30), 2.3 Lưu chuyển tiền tệ trực tiếp – gián tiếp (27), 2.4 Thuyết minh BCTC (5); có câu tính toán theo số liệu ví dụ CTCP ABC, Bình Minh, Doanh nghiệp A (ô bị che trong sách được ước lượng cho khớp dòng tổng) | 100 |
 | Thực hành | `#bctc` | Thực hành đọc BCTC (chuyển từ Phần 9 cũ): tính EPS, P/E, ROE, D/E, nhận diện rủi ro | 29 |
 
 Câu hỏi các chương bám theo nội dung giáo trình; khi giáo trình bổ sung chương mới sẽ thêm tab tương ứng.
