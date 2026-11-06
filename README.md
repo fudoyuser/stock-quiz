@@ -15,7 +15,7 @@ Kiến thức chứng khoán gồm **22 phần tách biệt**. Mỗi phần có 
 | 4. Quy định giao dịch | `#quy-dinh` | Biên độ, bước giá, lô chẵn, giờ giao dịch, T+2, GDKHQ, thuế | 35 |
 | 5. Sàn niêm yết | `#san` | Mã này ở HOSE, HNX hay UPCoM? | 105 |
 | 6. Tập đoàn & doanh nhân | `#tap-doan` | 19 hệ sinh thái (Vingroup, Masan, FPT, Viettel, PVN, Sovico, T&T, Phenikaa, ThaiBev, SCG…) và 38 doanh nhân đứng sau doanh nghiệp, hỏi 2 chiều | 146 |
-| 7. Thương hiệu → Mã | `#thuong-hieu` | Long Châu, bia 333, Zalo… thuộc mã nào | 48 |
+| 7. Thương hiệu → Mã | `#thuong-hieu` | Long Châu, bia 333, Zalo, ngân hàng số, dự án BĐS, cảng, nhà máy điện… thuộc mã nào | 117 |
 | 8. Chỉ số thị trường | `#chi-so` | VN-Index, VN30, VN100, VNDiamond, ETF, cổ phiếu trụ | 28 |
 | 9. Lịch sử thị trường | `#lich-su` | Các mốc từ năm 2000 đến nay | 28 |
 | 10. Phân tích kỹ thuật | `#ky-thuat` | 5 chủ đề lọc riêng: xu hướng & đa khung; nến Nhật; mẫu hình & kênh xu hướng; MA – MACD – RSI – phân kỳ (thường, ẩn); công thức giao dịch & quản trị vốn (3 điều kiện, giải ngân 2 lần, cắt lỗ 7%, rủi ro 2%). Có biểu đồ minh họa và câu tính | 130 |
@@ -31,6 +31,10 @@ Kiến thức chứng khoán gồm **22 phần tách biệt**. Mỗi phần có 
 | 20. Doanh nhân & thương vụ | `#doanh-nhan` | Câu chuyện doanh nghiệp từ báo chí, mỗi bài là một chủ đề lọc riêng: Danieli & ngành thép Việt; FPT & chip bán dẫn | 28 |
 | 21. Trụ sở chính | `#tru-so` | Doanh nghiệp đặt trụ sở ở tỉnh/thành nào (tên 34 tỉnh/thành sau sáp nhập 7/2025, ghi kèm tỉnh cũ) | 78 |
 | 22. Kiểm toán | `#kiem-toan` | 4 loại ý kiến kiểm toán, vấn đề cần nhấn mạnh, hoạt động liên tục, soát xét, Big4 và doanh nghiệp kiểm toán Việt Nam, quy định, hệ quả với cổ phiếu, bê bối Enron, Wirecard | 30 |
+| 23. Chuẩn mực kế toán VAS | `#vas` | 26 chuẩn mực, 7 nguyên tắc, hàng tồn kho, TSCĐ, doanh thu, hợp nhất, EPS; chọn mục để ôn | 38 |
+| 24. Chuẩn mực quốc tế IFRS | `#ifrs` | Đề án 345, IFRS 9/13/15/16/17, IAS 36/41, khác biệt VAS – IFRS | 30 |
+| 25. Các quỹ đầu tư lớn tại Việt Nam | `#quy-lon` | Dragon Capital, VinaCapital, Mekong, PYN Elite, ETF ngoại, ETF nội | 27 |
+| 26. MSCI và FTSE | `#msci-ftse` | So sánh thang xếp hạng, lịch rà soát, tiêu chí, lộ trình nâng hạng của Việt Nam | 25 |
 
 ### Môn: Phân tích tài chính
 
