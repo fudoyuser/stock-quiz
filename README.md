@@ -11,7 +11,7 @@ Kiến thức chứng khoán gồm **22 phần tách biệt**. Mỗi phần có 
 |---|---|---|---|
 | 1. Mã cổ phiếu | `#ma` | Nhìn tên doanh nghiệp, tự gõ mã | 184 |
 | 2. Lĩnh vực hoạt động | `#linh-vuc` | Đọc lĩnh vực, chọn đúng mã; dạng **Phân biệt cùng ngành**: phân biệt các mã cùng lĩnh vực qua cổ đông chiến lược, mảng mạnh, khách hàng mục tiêu, dự án | 233 |
-| 3. Thuật ngữ & chỉ số | `#thuat-ngu` | P/E, EPS, ROE, margin, room ngoại, ETF, chứng quyền… | 68 |
+| 3. Thuật ngữ & chỉ số | `#thuat-ngu` | P/E, EPS, ROE, margin, room ngoại, ETF, chứng quyền… | 73 |
 | 4. Quy định giao dịch | `#quy-dinh` | Biên độ, bước giá, lô chẵn, giờ giao dịch, T+2, GDKHQ, thuế | 35 |
 | 5. Sàn niêm yết | `#san` | Mã này ở HOSE, HNX hay UPCoM? | 105 |
 | 6. Tập đoàn & doanh nhân | `#tap-doan` | 19 hệ sinh thái (Vingroup, Masan, FPT, Viettel, PVN, Sovico, T&T, Phenikaa, ThaiBev, SCG…) và 38 doanh nhân đứng sau doanh nghiệp, hỏi 2 chiều | 146 |
@@ -20,14 +20,14 @@ Kiến thức chứng khoán gồm **22 phần tách biệt**. Mỗi phần có 
 | 9. Lịch sử thị trường | `#lich-su` | Các mốc từ năm 2000 đến nay | 28 |
 | 10. Phân tích kỹ thuật | `#ky-thuat` | 5 chủ đề lọc riêng: xu hướng & đa khung; nến Nhật; mẫu hình & kênh xu hướng; MA – MACD – RSI – phân kỳ (thường, ẩn); công thức giao dịch & quản trị vốn (3 điều kiện, giải ngân 2 lần, cắt lỗ 7%, rủi ro 2%). Có biểu đồ minh họa và câu tính | 130 |
 | 11. Thị trường phái sinh | `#phai-sinh` | Hợp đồng tương lai VN30, chứng quyền có bảo đảm | 29 |
-| 12. Trái phiếu & chứng khoán hóa | `#trai-phieu` | Coupon, lợi suất, lãi suất và giá, rủi ro, phương thức trả nợ, xếp hạng tín nhiệm, đấu thầu kiểu Hà Lan, bài học 2022; chứng khoán hóa: ABS, MBS, SPV, phân tầng, khủng hoảng 2008 | 47 |
-| 13. Quỹ đầu tư & ETF | `#quy` | NAV, quỹ mở/đóng, ETF nội và ngoại, DCA | 28 |
-| 14. Quản trị rủi ro & tâm lý | `#rui-ro` | Cắt lỗ, R:R, quy mô vị thế, margin, FOMO và các thiên kiến | 28 |
+| 12. Trái phiếu & chứng khoán hóa | `#trai-phieu` | Coupon, lợi suất, lãi suất và giá, rủi ro, phương thức trả nợ, xếp hạng tín nhiệm, đấu thầu kiểu Hà Lan, bài học 2022; chứng khoán hóa: ABS, MBS, SPV, phân tầng, khủng hoảng 2008 | 50 |
+| 13. Quỹ đầu tư & ETF | `#quy` | NAV, quỹ mở/đóng, ETF nội và ngoại, DCA | 31 |
+| 14. Quản trị rủi ro & tâm lý | `#rui-ro` | Cắt lỗ, R:R, quy mô vị thế, margin, FOMO và các thiên kiến | 32 |
 | 15. Đọc hiểu theo ngành | `#nganh` | Chia 9 ngành, chọn ngành để ôn riêng: ngân hàng, chứng khoán & bảo hiểm, bất động sản & KCN, thép & vật liệu, bán lẻ, dầu khí & điện, vận tải, xuất khẩu, công nghệ | 68 |
-| 16. Kinh tế vĩ mô | `#vi-mo` | Lãi suất, tỷ giá, lạm phát, Fed, chính sách tiền tệ, cổ phiếu chu kỳ/phòng thủ | 35 |
-| 17. Định giá doanh nghiệp | `#dinh-gia` | Giá trị nội tại, DCF, PEG, EV/EBITDA, mô hình cổ tức, giá mục tiêu | 33 |
+| 16. Kinh tế vĩ mô | `#vi-mo` | Lãi suất, tỷ giá, lạm phát, Fed, chính sách tiền tệ, cổ phiếu chu kỳ/phòng thủ | 38 |
+| 17. Định giá doanh nghiệp | `#dinh-gia` | Giá trị nội tại, DCF, PEG, EV/EBITDA, mô hình cổ tức, giá mục tiêu | 38 |
 | 18. Quyền cổ đông & công bố thông tin | `#co-dong` | ĐHCĐ, cổ đông lớn, giao dịch nội bộ, thời hạn công bố BCTC, hủy niêm yết | 34 |
-| 19. Lý thuyết thị trường tài chính | `#ly-thuyet` | Cơ chế chuyển thời hạn vốn, sơ cấp/thứ cấp, thị trường hiệu quả (EMH), lý thuyết quả chanh | 25 |
+| 19. Lý thuyết thị trường tài chính | `#ly-thuyet` | Cơ chế chuyển thời hạn vốn, sơ cấp/thứ cấp, thị trường hiệu quả (EMH), lý thuyết quả chanh | 28 |
 | 20. Doanh nhân & thương vụ | `#doanh-nhan` | Câu chuyện doanh nghiệp từ báo chí, mỗi bài là một chủ đề lọc riêng: Danieli & ngành thép Việt; FPT & chip bán dẫn | 28 |
 | 21. Trụ sở chính | `#tru-so` | Doanh nghiệp đặt trụ sở ở tỉnh/thành nào (tên 34 tỉnh/thành sau sáp nhập 7/2025, ghi kèm tỉnh cũ) | 78 |
 | 22. Kiểm toán | `#kiem-toan` | 4 loại ý kiến kiểm toán, vấn đề cần nhấn mạnh, hoạt động liên tục, soát xét, Big4 và doanh nghiệp kiểm toán Việt Nam, quy định, hệ quả với cổ phiếu, bê bối Enron, Wirecard | 30 |
@@ -45,9 +45,11 @@ Kiến thức chứng khoán gồm **22 phần tách biệt**. Mỗi phần có 
 | Viết tắt | `#ptc-viet-tat` | 62 từ viết tắt trong giáo trình, hỏi 2 chiều (viết tắt → nghĩa, nghĩa → viết tắt) | 124 |
 | Chương 1 | `#ptc-chuong-1` | Toàn bộ Chương 1, lọc theo mục: 1.1 Tổng quan (29), 1.2 Quy trình phân tích 6 bước (14), 1.3 Phương pháp ngang – dọc – chéo – tỷ số (23), 1.4 Thông tin sử dụng: 5 áp lực Porter, MD&A, hệ thống BCTC, hợp nhất, báo cáo thường niên, phát triển bền vững, kiểm toán, cáo bạch (45), Dễ nhầm lẫn (8) | 119 |
 | Chương 2 | `#ptc-chuong-2` | Giới thiệu về BCTC (trang 77–106), lọc theo mục: 2.1 Bảng cân đối kế toán (37), 2.2 Báo cáo KQHĐKD (30), 2.3 Lưu chuyển tiền tệ trực tiếp – gián tiếp (27), 2.4 Thuyết minh BCTC (4), Dễ nhầm lẫn (15); có câu tính toán theo số liệu ví dụ CTCP ABC, Bình Minh, Doanh nghiệp A (ô bị che trong sách được ước lượng cho khớp dòng tổng) | 113 |
-| Thực hành | `#bctc` | Thực hành đọc BCTC (chuyển từ Phần 9 cũ): tính EPS, P/E, ROE, D/E, nhận diện rủi ro | 29 |
+| Thực hành | `#bctc` | Thực hành đọc BCTC (chuyển từ Phần 9 cũ): tính EPS, P/E, ROE, D/E, nhận diện rủi ro | 32 |
 
 Câu hỏi các chương bám theo nội dung giáo trình; câu nào dùng số liệu ví dụ trong sách thì đề luôn kèm số liệu (không bắt nhớ số liệu ví dụ); khi giáo trình bổ sung chương mới sẽ thêm tab tương ứng.
+
+**Câu hỏi đời thường:** 24 tình huống mới (mỗi phần 3 câu) nằm trong Thuật ngữ & chỉ số, Trái phiếu, Quỹ đầu tư, Quản trị rủi ro, Kinh tế vĩ mô, Định giá, Lý thuyết thị trường và Thực hành đọc BCTC. Chuyện chia bánh, bán hàng chịu, góp tiền đi chợ, giá phở, mua xe cũ… được nối với khái niệm tài chính trong lời giải, có nêu giả định và giới hạn của ví dụ. Các câu mở đầu bằng **“Đời thường:”**; gõ cụm này trong ô tìm kiếm của bảng tra cứu từng phần để xem riêng.
 
 ### CFA Level I
 
