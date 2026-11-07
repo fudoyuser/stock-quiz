@@ -10,6 +10,11 @@
 - Ô số liệu bị che/không đọc được (`???`): tự ước lượng sao cho khớp các dòng tổng đã in, đánh dấu `*` và ghi chú trong `table.note`.
 - Số liệu in sai trong sách: tính lại cho đúng, ghi rõ trong phần giải thích `e`.
 
+## Khi người dùng gửi tài liệu mới (PDF, slide…)
+- Đọc hết tài liệu trước khi soạn. Tài liệu thuộc giáo trình riêng (vd CFA) thì vào nhóm riêng (`subject`), không trộn vào Kiến thức chứng khoán.
+- Nhóm CFA: `subject: "cfa"`, mỗi phần gom 1–3 module, `topics` theo module/LOS và luôn có `n: "Dễ nhầm lẫn"`.
+- Lỗi trong tài liệu: soạn theo kiến thức đúng và ghi chú lỗi trong `e`.
+
 ## Định dạng câu hỏi (ngân hàng câu hỏi dạng `{ q, a, w: [3 phương án sai], e, sec?, table?, calc? }`)
 - Phương án sai phải dài tương đương đáp án đúng (đáp án đúng "dài rõ rệt nhất" — dài hơn 1,15 lần phương án sai dài nhất — chỉ nên chiếm ≤ 25% số câu).
 - Câu đúng/sai: `tf: true` (hoặc helper `TF(q, a, w, e)`), đúng 4 phương án gồm **2 phương án "Đúng, vì …" và 2 phương án "Sai, vì …"**.

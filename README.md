@@ -49,6 +49,20 @@ Kiến thức chứng khoán gồm **22 phần tách biệt**. Mỗi phần có 
 
 Câu hỏi các chương bám theo nội dung giáo trình; câu nào dùng số liệu ví dụ trong sách thì đề luôn kèm số liệu (không bắt nhớ số liệu ví dụ); khi giáo trình bổ sung chương mới sẽ thêm tab tương ứng.
 
+### CFA Level I
+
+Nhóm riêng, theo tài liệu FinSeed (Equity Investments 2026 và Reading 27). Mỗi phần chia mục theo module/LOS, có mục "Dễ nhầm lẫn", câu đúng/sai có lý do và bài tính toán kèm số liệu.
+
+| Phần | Đường dẫn | Nội dung | Số câu |
+|---|---|---|---|
+| Equity M1–2 | `#cfa-equity-m1-2` | Hệ thống tài chính, tài sản, trung gian, vị thế và ký quỹ (margin call, lợi suất có đòn bẩy), lệnh, thị trường sơ cấp – thứ cấp; price/total return của chỉ số, các cách tính trọng số | 35 |
+| Equity M3–4 | `#cfa-equity-m3-4` | EMH 3 dạng, các bất thường thị trường, tài chính hành vi; cổ phiếu phổ thông/ưu đãi, private equity, DR, rủi ro – lợi suất, ROE, P/B, chi phí vốn | 29 |
+| Equity M5–7 | `#cfa-equity-m5-7` | Mô hình kinh doanh, sức mạnh định giá, DOL/DFL, CCC; phân ngành GICS, HHI, Porter, PESTEL, chiến lược cạnh tranh; các cách dự báo doanh thu, chi phí, vốn lưu động | 37 |
+| Equity M8 | `#cfa-equity-m8` | Cổ tức và các mốc ngày, DDM một năm/nhiều giai đoạn, Gordon, cổ phiếu ưu đãi, CAPM, tăng trưởng bền vững, P/E hợp lý, FCFE, EV, định giá theo tài sản | 24 |
+| FSA R27 | `#cfa-fsa-r27` | Khung phân tích 6 bước, vai trò FSA, cơ quan ban hành và quản lý, SOX, hồ sơ SEC, thuyết minh, báo cáo bộ phận, MD&A, ý kiến kiểm toán, KAM, IFRS vs US GAAP, nguồn thông tin | 36 |
+
+Ghi chú: slide 18 của Reading 27 ghi ngược quy định LIFO (IFRS cấm LIFO, US GAAP cho phép); câu hỏi theo quy định đúng và có ghi chú trong phần giải thích.
+
 ### Tiếng Anh chuyên ngành
 
 Nhóm thứ ba, độc lập với hai nhóm trên. Mỗi bộ từ vựng có hai chiều **Anh → Việt** và **Việt → Anh** (chọn ở "Dạng câu hỏi"), phương án sai lấy từ cùng bộ.
