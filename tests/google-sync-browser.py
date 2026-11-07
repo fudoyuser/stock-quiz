@@ -1,6 +1,7 @@
 """Browser + actual Code.gs in a stubbed Apps Script runtime. No Google login needed."""
 import json
 import subprocess
+import sys
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 from playwright.sync_api import sync_playwright, expect
@@ -13,6 +14,7 @@ KEY = 'a' * 64  # Public fixture, not a real secret.
 flags = {'offline': False, 'lose_response': False, 'reject_write': False, 'calls': 0}
 backends = {ENDPOINT: None, OTHER: None}
 errors = []
+BOOTSTRAP = '--bootstrap' in sys.argv
 
 
 def apps_script(route):
@@ -27,7 +29,7 @@ def apps_script(route):
     if req.method == 'POST' and flags['reject_write']:
         route.fulfill(content_type='application/json', body='{"ok":false}')
         return
-    request = {'method': req.method, 'state': backends[endpoint]}
+    request = {'method': req.method, 'state': backends[endpoint], 'bootstrap': BOOTSTRAP}
     if req.method == 'GET':
         request['params'] = {k: v[0] for k, v in parse_qs(urlparse(req.url).query, keep_blank_values=True).items()}
     else:
@@ -207,5 +209,5 @@ with sync_playwright() as p:
     assert b.evaluate('stats.total') == 436
     assert b.locator('#sheetKey').input_value() == ''
     assert not errors, errors
-    print(json.dumps({'old_progress_import': 428, 'cross_device_final_total': 436, 'offline_auto_reconnect': 'passed', 'lost_response_retry': 'passed', 'opaque_write_readback': 'passed', 'concurrent_tabs': 'passed', 'sheet_isolation': 'passed', 'wrong_key': 'passed', 'corrupt_remote': 'passed', 'disconnect_preserves_data': 'passed', 'mobile_width': 390, 'page_errors': errors}))
+    print(json.dumps({'apps_script_mode': 'auto-update' if BOOTSTRAP else 'standalone', 'old_progress_import': 428, 'cross_device_final_total': 436, 'offline_auto_reconnect': 'passed', 'lost_response_retry': 'passed', 'opaque_write_readback': 'passed', 'concurrent_tabs': 'passed', 'sheet_isolation': 'passed', 'wrong_key': 'passed', 'corrupt_remote': 'passed', 'disconnect_preserves_data': 'passed', 'mobile_width': 390, 'page_errors': errors}))
     browser.close()

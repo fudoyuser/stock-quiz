@@ -1,3 +1,4 @@
+// BDQ_SERVER_BUNDLE_V1
 // Tự tạo bởi node scripts/build-apps-script.cjs. Dán toàn bộ file vào Apps Script V8.
 /* Tiến độ cộng dồn theo phiên: gộp nhiều máy mà không đếm trùng hay ghi đè câu đã học. */
 (function (root) {

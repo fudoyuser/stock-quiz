@@ -2,6 +2,8 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { fixture, signed, result, KEY, HEADER } = require('./apps-script-fixture.cjs');
 const M = require('../progress-model.js');
+const fs = require('node:fs');
+const path = require('node:path');
 const A = '11111111-1111-4111-8111-111111111111', B = '22222222-2222-4222-8222-222222222222';
 const post = (f, p) => result(f.context.doPost({ postData: { contents: JSON.stringify(p) } }));
 const get = f => result(f.context.doGet({ parameter: signed('read') }));
@@ -58,4 +60,39 @@ test('JSONP callback injection is rejected; callback is covered by the signature
   assert.ok(!output.text.includes('alert(1)'));
   const q = signed('read'); q.callback = 'bdqSheets_' + 'b'.repeat(32);
   assert.equal(result(f.context.doGet({ parameter: q })).ok, false);
+});
+
+test('one-time bootstrap updates server logic from GitHub without resetting data or keys', () => {
+  const bundle = fs.readFileSync(path.join(__dirname, '../apps-script/Code.gs'), 'utf8');
+  let build = 1;
+  const f = fixture(undefined, { bootstrap: true, source: () => ({ status: 200, body: bundle.replace('ok: true, service: BDQ_SERVICE', `ok: true, build: ${build}, service: BDQ_SERVICE`) }) });
+  f.context.setup();
+  const key = f.state.properties.BDQ_SYNC_KEY, data = baseline();
+  M.answer(data, A, '2026-11-07', true);
+  assert.equal(post(f, signed('write', JSON.stringify(data))).ok, true);
+  assert.equal(get(f).build, 1);
+  assert.equal(f.state.fetches, 1);
+  build = 2;
+  assert.equal(get(f).build, 1);
+  delete f.state.cache['bdq-server-v1']; // Simulate cache expiry in Apps Script.
+  const updated = get(f);
+  assert.equal(updated.build, 2);
+  assert.equal(M.summarize(updated.progress).total, 429);
+  assert.equal(f.state.properties.BDQ_SYNC_KEY, key);
+  build = 3;
+  f.context.updateServer();
+  assert.equal(get(f).build, 3);
+  assert.equal(f.state.fetches, 3);
+  assert.equal(f.state.properties.BDQ_SYNC_KEY, key);
+  f.context.onOpen();
+});
+
+test('bootstrap refuses HTTP errors and unexpected code without executing it or changing data', () => {
+  for (const response of [{ status: 404, body: '// BDQ_SERVER_BUNDLE_V1\nglobalThis.untrusted = true;' }, { status: 200, body: 'globalThis.untrusted = true;' }]) {
+    const f = fixture(undefined, { bootstrap: true, source: () => response });
+    assert.throws(() => get(f), /Chưa tải được mã/);
+    assert.equal(f.context.untrusted, undefined);
+    assert.equal(f.state.writes, 0);
+    assert.equal(f.state.properties.BDQ_SYNC_KEY, KEY);
+  }
 });

@@ -2,7 +2,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
-const output = '// Tự tạo bởi node scripts/build-apps-script.cjs. Dán toàn bộ file vào Apps Script V8.\n'
+const output = '// BDQ_SERVER_BUNDLE_V1\n// Tự tạo bởi node scripts/build-apps-script.cjs. Dán toàn bộ file vào Apps Script V8.\n'
   + fs.readFileSync(path.join(root, 'progress-model.js'), 'utf8') + '\n'
   + fs.readFileSync(path.join(root, 'apps-script/server.js'), 'utf8');
 const target = path.join(root, 'apps-script/Code.gs');
