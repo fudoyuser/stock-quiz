@@ -71,9 +71,12 @@ Nhóm riêng, theo sách GARP 2022 – *Financial Markets and Products* (John Hu
 |---|---|---|---|
 | FMP Ch.1 – Banks | `#frm-fmp-c1` | Rủi ro thị trường/tín dụng/hoạt động, NIM, IFRS 9, CVA; vốn kinh tế vs vốn quy định, các bộ Basel, sàn 72,5%, trading vs banking book, LCR/NSFR, bảo hiểm tiền gửi; firm commitment vs best efforts, đấu giá Hà Lan, poison pill; Glass–Steagall, Chinese walls, originate-to-distribute, tranche | 36 |
 | FMP Ch.2 – Insurance & Pension | `#frm-fmp-c2` | Bảng tử vong, phí hòa vốn, các loại bảo hiểm nhân thọ, niên kim, rủi ro tuổi thọ/tử vong, quỹ hưu trí DB/DC; CAT bond, loss/combined/operating ratio; moral hazard, adverse selection, Solvency II | 36 |
-| FMP Ch.3 – Fund Management (3.1–3.2) | `#frm-fmp-c3` | Quỹ mở, quỹ thị trường tiền tệ, sai số theo dõi, phí quỹ, quỹ đóng và chiết khấu NAV, ETF | 16 |
+| FMP Ch.3 – Fund Management | `#frm-fmp-c3` | Quỹ mở, quỹ thị trường tiền tệ, sai số theo dõi, phí quỹ, quỹ đóng, ETF; late trading, market timing, front running; quỹ phòng hộ: phí 2 plus 20, hurdle rate, high-water mark, clawback, prime broker; 9 chiến lược; nghiên cứu Jensen, thiên lệch dữ liệu | 51 |
+| FMP Ch.4 – Introduction to Derivatives | `#frm-fmp-c4` | Phái sinh tuyến tính/phi tuyến, sàn vs OTC, quy mô thị trường, forward, futures, quyền chọn kiểu Âu/Mỹ và payoff; phòng ngừa, đầu cơ (điểm hòa vốn), kinh doanh chênh lệch; các vụ thua lỗ lớn | 29 |
+| FMP Ch.5 – Exchanges and OTC Markets | `#frm-fmp-c5` | Netting, CCP, ký quỹ biến động/ban đầu, haircut, thác nước vỡ nợ; ký quỹ duy trì, ký quỹ quyền chọn CBOE, bán khống, mua ký quỹ; netting OTC, CSA, SPV, DPC, CDS, AIG | 31 |
+| FMP Ch.6 – Central Clearing | `#frm-fmp-c6` | CCP OTC, G-20 Pittsburgh, sản phẩm chuẩn, ký quỹ giao dịch không qua CCP (5 vs 10 ngày), netting đa phương, loss mutualization, moral hazard, adverse selection, procyclical, rủi ro CCP | 26 |
 
-Tài liệu đã nhận mới tới trang 34 của sách (đầu mục 3.3); khi có phần tiếp theo sẽ bổ sung Chương 3 và các chương sau.
+Tài liệu đã nhận tới trang 84 của sách (đầu Chương 7 – Futures Markets); khi có phần tiếp theo sẽ thêm Chương 7 và các chương sau.
 
 ### Tiếng Anh chuyên ngành
 
