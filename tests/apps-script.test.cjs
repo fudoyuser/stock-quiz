@@ -138,3 +138,31 @@ test('explicit project selection supports its deployments and never opens other 
     if (!r.ok) assert.equal(f.state.opens, 0);
   }
 });
+
+test('public mode targets the configured Sheet even with old or absent setup properties', () => {
+  const f = fixture(undefined, { sharedConfig: () => ({ mode: 'shared', endpoint: 'https://script.google.com/macros/s/test-deployment/exec', spreadsheetId: 'sheet-one' }) });
+  f.state.properties = { BDQ_SHEET_ID: 'old-sheet' };
+  f.state.sheets = {};
+  const r = result(f.context.doGet({ parameter: publicRequest('sharedRead') }));
+  assert.equal(r.ok, true); assert.equal(r.spreadsheetId, 'sheet-one');
+  assert.deepEqual(f.state.sheets.Progress[0], HEADER);
+  const progress = baseline(); M.answer(progress, A, '2026-11-07', true);
+  assert.equal(post(f, publicRequest('sharedWrite', JSON.stringify(progress))).ok, true);
+  assert.equal(f.state.sheets['Thống kê Quiz'][2][1], 429);
+  assert.equal(f.state.sheets['Thống kê Quiz'][3][1], 335);
+  const health = result(f.context.doGet({ parameter: { action: 'health' } }));
+  assert.equal(health.ok, true); assert.equal(health.total, 429);
+  assert.equal(health.spreadsheetId, 'sheet-one');
+  assert.equal(health.version, 'shared-v3'); assert.equal(health.hasOverview, true);
+});
+
+test('an explicitly selected Web app URL remains valid when the older project ID differs', () => {
+  const f = fixture(undefined, { sharedConfig: () => ({ mode: 'shared', scriptId: 'older-project-id', endpoint: 'https://script.google.com/macros/s/test-deployment/exec' }) });
+  assert.equal(result(f.context.doGet({ parameter: publicRequest('sharedRead') })).ok, true);
+});
+
+test('overview never overwrites an existing tab with unrelated data', () => {
+  const f = fixture(); f.state.sheets['Thống kê Quiz'] = [['My own data', 'keep']];
+  assert.equal(post(f, publicRequest('sharedWrite', JSON.stringify(baseline()))).ok, true);
+  assert.deepEqual(f.state.sheets['Thống kê Quiz'], [['My own data', 'keep']]);
+});

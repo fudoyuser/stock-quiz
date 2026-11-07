@@ -5,16 +5,19 @@
   const M = window.BDQProgress, KEY = "bdq-google-progress-v2", CONNECTION = "bdq-sheet-connection", BINDING = "bdq-sheet-id";
   const actor = crypto.randomUUID(), requests = new Set();
   const panel = $("googleSync"), connect = $("googleConnect"), save = $("googleSave"), disconnect = $("googleDisconnect"), sheet = $("googleSheet"), config = $("sheetConfig");
+  const health = $("sheetHealth");
   let ledger, connection = null, shared = true, loadingConfig = false, active = false, timer = 0, pending = false, running = null, generation = 0;
   panel.hidden = false;
   config.hidden = true;
   function note(message, cls = "") {
     $("syncNote").className = "sync " + cls; $("syncNote").textContent = message;
+    if (health) health.hidden = !(cls === 'warn' && shared && connection);
   }
   function localNote() { note(shared ? "💾 Đã lưu trên máy; đang chờ kết nối số liệu chung của website." : "💾 Tiến độ đã lưu trên trình duyệt. Kết nối Google Sheet để đồng bộ giữa các máy."); }
   function controls() {
-    save.hidden = !active; disconnect.hidden = shared || !active;
+    save.hidden = !connection; disconnect.hidden = shared || !active;
     sheet.hidden = shared || !active || !sheet.href;
+    if (connection && health) health.href = connection.endpoint + '?action=health';
   }
   function legacy() {
     const x = M.empty();
@@ -42,8 +45,9 @@
   function schedule() {
     pending = true;
     if (!active) return;
-    note("☁ Đã lưu trên máy, đang chờ đồng bộ Google Sheets…");
-    clearTimeout(timer); timer = setTimeout(run, 4000);
+    if (!running) note("☁ Đã lưu trên máy, đang chờ đồng bộ Google Sheets…");
+    // Gửi sau lượt đầu, không dời mãi thời điểm gửi khi người học trả lời liên tục.
+    if (!timer) timer = setTimeout(run, 1500);
   }
   try { ledger = store.get(KEY) ? readLocal() : legacy(); apply(); }
   catch {
@@ -74,7 +78,7 @@
     return { endpoint: value.endpoint, key: value.key };
   }
   function stop() {
-    generation++; active = false; clearTimeout(timer);
+    generation++; active = false; clearTimeout(timer); timer = 0;
     for (const cancel of [...requests]) cancel();
     controls();
   }
@@ -102,7 +106,7 @@
       };
       const fail = message => { if (!finished) { finished = true; cleanup(true); reject(Error(message)); } };
       const cancel = () => fail("Đã ngắt kết nối. Tiến độ trên máy vẫn được giữ.");
-      const timeout = setTimeout(() => fail("Chưa nhận được phản hồi Apps Script. Kiểm tra đường dẫn /exec, quyền Anyone và kết nối mạng; tiến độ vẫn lưu trên máy."), 20000);
+      const timeout = setTimeout(() => fail("Apps Script chưa phản hồi sau 45 giây. Bấm Kiểm tra kết nối để xem lỗi; kết quả trên máy vẫn được giữ."), 45000);
       requests.add(cancel);
       window[callback] = data => {
         if (finished) return;
@@ -113,6 +117,7 @@
         try { resolve({ progress: M.validate(data.progress), spreadsheetId: data.spreadsheetId }); } catch { reject(Error("Dữ liệu trong Sheet không hợp lệ. Tiến độ trên máy vẫn được giữ.")); }
       };
       script.onerror = () => fail("Không truy cập được Apps Script. Kiểm tra mạng, đường dẫn /exec và quyền truy cập Anyone.");
+      script.onload = () => { if (!finished) fail("Web app đã tải nhưng không trả đúng dữ liệu đồng bộ. Bấm Kiểm tra kết nối để xem phiên bản và lỗi Apps Script."); };
       script.referrerPolicy = "no-referrer";
       // URL chỉ chứa chữ ký ngắn hạn; mã đồng bộ không được đưa lên URL.
       script.src = endpoint + "?" + new URLSearchParams(params); document.head.append(script);
@@ -128,23 +133,28 @@
     } finally { clearTimeout(timeout); requests.delete(cancel); }
   }
   function checkSheet(result) {
-    if (shared) return;
+    if (shared) {
+      if (connection.spreadsheetId && result.spreadsheetId !== connection.spreadsheetId) throw Error('Web app đang ghi vào Sheet khác với Sheet đã cấu hình. Bấm Kiểm tra kết nối để xem ID đích.');
+      return;
+    }
     const previous = store.get(BINDING);
     if (previous && previous !== result.spreadsheetId) throw Error("Trình duyệt đang giữ tiến độ của một Sheet khác. Dùng cùng Sheet hoặc hồ sơ trình duyệt riêng để tránh trộn dữ liệu.");
     store.set(BINDING, result.spreadsheetId);
   }
   async function syncOnce() {
-    note("☁ Đang đồng bộ Google Sheets…");
+    note("☁ Đang tải số liệu từ Google Sheets…");
     let remote = await read(); checkSheet(remote);
     active = true; if (!shared) store.set(CONNECTION, JSON.stringify(connection)); config.open = false;
     sheet.href = `https://docs.google.com/spreadsheets/d/${remote.spreadsheetId}/edit`; controls();
     ledger = M.merge(ledger, remote.progress); apply();
     const snapshot = M.validate(ledger), version = M.canon(snapshot); pending = false;
     if (version !== M.canon(remote.progress)) {
+      note("☁ Đang gửi kết quả luyện tập lên Google Sheets…");
       let writeError;
       try { await write(snapshot); } catch (e) { writeError = e; }
       // Đọc lại trạng thái thật để xác nhận: cả trường hợp POST mất phản hồi nhưng đã ghi.
       let confirmed = false;
+      note("☁ Đang xác nhận dữ liệu đã được lưu trong Sheet…");
       for (let attempt = 0; attempt < 4; attempt++) {
         if (attempt) await new Promise(resolve => setTimeout(resolve, 300 * attempt));
         remote = await read(); checkSheet(remote);
@@ -158,7 +168,7 @@
     else note(shared ? "☁ Đã đồng bộ Google Sheets · số liệu dùng chung cho toàn website." : "☁ Đã đồng bộ Google Sheets · các máy dùng cùng đường dẫn và mã đồng bộ để tiếp tục học.", "ok");
   }
   function run() {
-    clearTimeout(timer);
+    clearTimeout(timer); timer = 0;
     if (!connection) return Promise.resolve();
     if (running) { pending = true; return running; }
     const gen = generation;
@@ -201,7 +211,7 @@
       $("googleAccount").textContent = shared ? 'Mọi người cùng dùng một bộ thống kê: các lượt luyện tập trên các máy được cộng chung. Không cần đăng nhập hoặc nhập mã.' : 'Thiết lập một lần trên mỗi máy. Tiến độ cũ được gộp vào Sheet; mất mạng vẫn tiếp tục học được.';
       if (shared) {
         if (!/^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec$/.test(settings.endpoint || '')) throw Error('Chủ website chưa cấu hình đường dẫn số liệu chung. Các lượt học vẫn được giữ trên máy.');
-        connection = { endpoint: settings.endpoint };
+        connection = { endpoint: settings.endpoint, spreadsheetId: settings.spreadsheetId || '' };
       } else {
         const saved = store.get(CONNECTION);
         if (saved) {

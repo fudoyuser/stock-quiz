@@ -11,7 +11,7 @@ BASE = 'http://127.0.0.1:8000'
 ENDPOINT = 'https://script.google.com/macros/s/test-deployment/exec'
 OTHER = 'https://script.google.com/macros/s/other-deployment/exec'
 KEY = 'a' * 64  # Public fixture, not a real secret.
-flags = {'offline': False, 'lose_response': False, 'reject_write': False, 'calls': 0}
+flags = {'offline': False, 'lose_response': False, 'reject_write': False, 'empty_script': False, 'calls': 0}
 backends = {ENDPOINT: None, OTHER: None}
 errors = []
 BOOTSTRAP = '--bootstrap' in sys.argv
@@ -26,6 +26,9 @@ def apps_script(route):
     flags['calls'] += 1
     if flags['offline']:
         route.abort('failed')
+        return
+    if flags['empty_script'] and req.method == 'GET' and 'action=health' not in req.url:
+        route.fulfill(content_type='application/javascript', body='void 0;')
         return
     if req.method == 'POST' and flags['reject_write']:
         route.fulfill(content_type='application/json', body='{"ok":false}')
@@ -58,7 +61,7 @@ def context(browser, seed=None):
     c.route('https://fonts.googleapis.com/**', lambda r: r.abort())
     c.route('https://fonts.gstatic.com/**', lambda r: r.abort())
     c.route('https://script.google.com/macros/s/**', apps_script)
-    c.route('**/shared-config.json', lambda r: r.fulfill(json={'mode': 'shared' if SHARED else 'private', 'endpoint': ENDPOINT if SHARED else ''}))
+    c.route('**/shared-config.json', lambda r: r.fulfill(json={'mode': 'shared' if SHARED else 'private', 'endpoint': ENDPOINT if SHARED else '', 'spreadsheetId': 'sheet-one' if SHARED else ''}))
     if seed:
         c.add_init_script('''if(!localStorage.getItem('fixture-seeded')) {
           localStorage.setItem('fixture-seeded','1');
@@ -138,9 +141,30 @@ with sync_playwright() as p:
         b.reload(wait_until='domcontentloaded')
         expect(b.locator('#syncNote')).to_contain_text('Đã đồng bộ Google Sheets', timeout=15000)
         assert b.evaluate('stats.total') == 433
+        # Continuous answers must not keep postponing the first upload indefinitely.
+        before = backends[ENDPOINT]['writes']
+        b.evaluate('window.rapidCount=0;window.rapidTimer=setInterval(()=>{recordAnswer(true);window.rapidCount++;},100)')
+        b.wait_for_timeout(2500)
+        assert backends[ENDPOINT]['writes'] > before
+        learned = b.evaluate('clearInterval(window.rapidTimer);window.rapidCount')
+        sync(b)
+        sync(a)
+        assert a.evaluate('stats.total') == 433 + learned
+        # A response that loads but never calls JSONP must show a real error, not hang.
+        flags['empty_script'] = True
+        b.click('#googleSave')
+        expect(b.locator('#syncNote')).to_contain_text('không trả đúng dữ liệu đồng bộ')
+        expect(b.locator('#sheetHealth')).to_be_visible()
+        with b.expect_popup() as opened:
+            b.click('#sheetHealth')
+        diagnostics = opened.value
+        expect(diagnostics.locator('body')).to_contain_text('shared-v3')
+        diagnostics.close()
+        flags['empty_script'] = False
+        sync(b)
         assert b.evaluate('document.documentElement.scrollWidth<=innerWidth')
         assert not errors, errors
-        print(json.dumps({'mode': 'public-shared', 'bootstrap': BOOTSTRAP, 'fresh_browsers': 3, 'manual_fields_entered': 0, 'login_required': False, 'final_shared_total': 433, 'offline_reconnect': 'passed', 'lost_response_retry': 'passed', 'page_errors': errors}))
+        print(json.dumps({'mode': 'public-shared', 'bootstrap': BOOTSTRAP, 'fresh_browsers': 3, 'manual_fields_entered': 0, 'login_required': False, 'final_shared_total': 433 + learned, 'continuous_auto_upload': 'passed', 'jsonp_failure_diagnosed': 'passed', 'health_endpoint': 'passed', 'offline_reconnect': 'passed', 'lost_response_retry': 'passed', 'page_errors': errors}))
         browser.close()
         sys.exit(0)
     c0, plain = context(browser)
