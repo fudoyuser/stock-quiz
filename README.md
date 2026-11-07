@@ -107,7 +107,7 @@ Sau mỗi lượt có nút **Ôn lại câu sai** để chơi lại riêng các 
 - Chuỗi ngày học liên tiếp, biểu đồ 7 ngày gần nhất và kỷ lục chuỗi.
 - Cột mốc tiếp theo (100, 500, 1.000… câu), có thông báo khi đạt mốc hoặc hoàn thành mục tiêu ngày.
 
-**Lưu tiến độ:** khi mở bản trên Claude (đã đăng nhập), thống kê, mục tiêu ngày và điểm từng phần được lưu vào tài khoản (kho dữ liệu riêng của mỗi người, người khác không đọc được) và đồng bộ giữa các thiết bị. Bản GitHub Pages không có máy chủ nên vẫn lưu trên trình duyệt. Dòng trạng thái dưới dải thống kê cho biết đang lưu ở đâu.
+**Lưu tiến độ:** bản GitHub Pages hỗ trợ đăng nhập Google để đồng bộ thống kê, mục tiêu ngày và điểm từng phần qua Google Sheet riêng trong Drive của bạn. Dữ liệu cũ trên trình duyệt được nhập lần đầu; máy khác đăng nhập cùng tài khoản sẽ lấy lại tiến độ. Chủ website cần cấu hình OAuth Client ID theo [hướng dẫn Google Sheets](docs/google-sheets.md) để bật nút đăng nhập. Khi chưa kết nối, mất mạng hoặc phiên Google hết hạn, dữ liệu tiếp tục lưu trên trình duyệt. Dòng trạng thái dưới dải thống kê cho biết đã đồng bộ hay còn chờ gửi. Bản trên Claude vẫn dùng cơ chế đồng bộ tài khoản Claude sẵn có.
 
 **Câu "Nhận định đúng hay sai?":** đề là một nhận định, 4 phương án gồm 2 "Đúng, vì …" và 2 "Sai, vì …" — phải chọn đúng cả kết luận lẫn lý do. Có trong phần PMI & CPI, mục "Dễ nhầm lẫn" của từng chương, và rải trong các phần Thuật ngữ, Quy định giao dịch, Định giá, Quản trị rủi ro.
 

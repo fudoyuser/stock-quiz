@@ -80,6 +80,12 @@ button.stat:hover { border-color: var(--muted); }
 .sync { margin: -14px 0 0; font-size: 12.5px; color: var(--muted); }
 .sync.ok { color: var(--up); }
 .sync.warn { color: var(--down); }
+.google-sync { margin-top: -14px; display: grid; gap: 8px; font-size: 13px; }
+.google-sync[hidden] { display: none; }
+.sync-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.sync-actions button, .sync-actions a { border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; background: var(--card); color: var(--ink); font: inherit; text-decoration: none; }
+.sync-actions button:disabled { opacity: .6; cursor: wait; }
+.google-sync p { margin: 0; color: var(--muted); overflow-wrap: anywhere; }
 .toast { position: fixed; left: 50%; top: 14px; transform: translateX(-50%); z-index: 60; background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 99px; font-weight: 700; font-size: 14px; max-width: calc(100% - 32px); text-align: center; box-shadow: 0 6px 24px rgba(0,0,0,.18); }
 
 /* Chọn nhóm (tag) */
@@ -228,6 +234,16 @@ footer { text-align: center; font-size: 13px; color: var(--muted); }
 
   <section class="stats" id="stats" aria-label="Thống kê học tập"></section>
   <p class="sync" id="syncNote" aria-live="polite"></p>
+  <section class="google-sync" id="googleSync" aria-label="Đồng bộ tiến độ bằng Google" hidden>
+    <div class="sync-actions">
+      <button type="button" id="googleConnect">Đăng nhập Google</button>
+      <button type="button" id="googleSave" hidden>Đồng bộ ngay</button>
+      <a id="googleSheet" target="_blank" rel="noopener noreferrer" hidden>Mở Google Sheet</a>
+      <button type="button" id="googleDisconnect" hidden>Ngắt kết nối</button>
+      <a id="googleSetup" href="https://github.com/fudoyuser/stock-quiz/blob/main/docs/google-sheets.md" target="_blank" rel="noopener noreferrer">Hướng dẫn thiết lập</a>
+    </div>
+    <p id="googleAccount"></p>
+  </section>
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
   <nav class="subjects" id="subjects" role="tablist" aria-label="Chọn nhóm kiến thức"></nav>
@@ -3745,6 +3761,7 @@ function recordAnswer(ok) {
   const keys = Object.keys(stats.days).sort(); if (keys.length > 400) keys.slice(0, keys.length - 400).forEach(d => delete stats.days[d]);
   const st = streakNow(); if (st > stats.best) stats.best = st;
   store.set("bdq-stats", JSON.stringify(stats));
+  if (window.bdqGoogleSync) window.bdqGoogleSync.recordAnswer(ok, k);
   if (MILESTONES.includes(stats.total)) toast(`🎉 Cột mốc ${fmtN(stats.total)} câu đã trả lời!`);
   else if (stats.days[k] === goal()) toast(`✅ Hoàn thành mục tiêu hôm nay: ${goal()} câu!`);
   renderStats();
@@ -3768,7 +3785,7 @@ function renderStats() {
 const SYNC_RE = /^bdq-(stats|goal|.+-(cur|best))$/;
 const sync = { ref: null, timer: 0, applying: false, state: "" };
 const SYNC_MSG = {
-  local: ["", "💾 Tiến độ đang lưu trên trình duyệt này. Mở bản trên Claude (đã đăng nhập) để lưu vào tài khoản và đồng bộ mọi thiết bị."],
+  local: ["", "💾 Tiến độ đang lưu trên trình duyệt này. Đăng nhập Google bên dưới để đồng bộ giữa các máy."],
   signedout: ["", "💾 Đăng nhập Claude để lưu tiến độ vào tài khoản."],
   loading: ["", "☁ Đang tải tiến độ từ tài khoản…"],
   slow: ["warn", "☁ Chưa kết nối được máy chủ — tiến độ tạm giữ trên máy, sẽ tự đồng bộ khi kết nối lại."],
@@ -3783,6 +3800,7 @@ function setSync(st) {
 function onStoreSet(k) {
   if (sync.applying || !SYNC_RE.test(k)) return;
   try { localStorage.setItem("bdq-sync-at", Date.now()); } catch {} memStore["bdq-sync-at"] = String(Date.now());
+  if (window.bdqGoogleSync) window.bdqGoogleSync.changed(k);
   if (sync.ref) schedulePush();
 }
 const localAt = () => +store.get("bdq-sync-at") || 0;
@@ -3993,5 +4011,8 @@ renderStats();
 setPart(part);
 initSync();
 </script>
+<script src="google-config.js"></script>
+<script src="progress-model.js"></script>
+<script src="google-sync.js"></script>
 </body>
 </html>
