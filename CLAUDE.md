@@ -13,6 +13,8 @@
 ## Khi người dùng gửi tài liệu mới (PDF, slide…)
 - Đọc hết tài liệu trước khi soạn. Tài liệu thuộc giáo trình riêng (vd CFA) thì vào nhóm riêng (`subject`), không trộn vào Kiến thức chứng khoán.
 - Nhóm CFA: `subject: "cfa"`, mỗi phần gom 1–3 module, `topics` theo module/LOS và luôn có `n: "Dễ nhầm lẫn"`.
+- Nhóm FRM: `subject: "frm"`, mỗi chương sách một phần (`frmC1`, `frmC2`…), `topics` theo mục của chương + `n: "Dễ nhầm lẫn"`. Sách FRM nhận dưới dạng PDF scan (không có lớp chữ): đọc bằng hình ảnh từng trang. Khi người dùng gửi tiếp các trang sau, bổ sung vào chương đang dở (vd Chương 3 mới tới 3.2) rồi thêm chương mới.
+- Bảng nhiều cột phải vừa màn hình 390px: tối đa ~3–4 cột ngắn; bảng rộng thì tách thành nhiều bảng nhỏ.
 - Lỗi trong tài liệu: soạn theo kiến thức đúng và ghi chú lỗi trong `e`.
 
 ## Định dạng câu hỏi (ngân hàng câu hỏi dạng `{ q, a, w: [3 phương án sai], e, sec?, table?, calc? }`)

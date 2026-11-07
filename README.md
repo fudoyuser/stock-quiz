@@ -63,6 +63,18 @@ Nhóm riêng, theo tài liệu FinSeed (Equity Investments 2026 và Reading 27).
 
 Ghi chú: slide 18 của Reading 27 ghi ngược quy định LIFO (IFRS cấm LIFO, US GAAP cho phép); câu hỏi theo quy định đúng và có ghi chú trong phần giải thích.
 
+### FRM Part I
+
+Nhóm riêng, theo sách GARP 2022 – *Financial Markets and Products* (John Hull). Mỗi chương một bộ, chia theo mục, có "Dễ nhầm lẫn", câu đúng/sai có lý do, bài tính toán kèm bảng số liệu.
+
+| Bộ | Đường dẫn | Nội dung | Số câu |
+|---|---|---|---|
+| FMP Ch.1 – Banks | `#frm-fmp-c1` | Rủi ro thị trường/tín dụng/hoạt động, NIM, IFRS 9, CVA; vốn kinh tế vs vốn quy định, các bộ Basel, sàn 72,5%, trading vs banking book, LCR/NSFR, bảo hiểm tiền gửi; firm commitment vs best efforts, đấu giá Hà Lan, poison pill; Glass–Steagall, Chinese walls, originate-to-distribute, tranche | 36 |
+| FMP Ch.2 – Insurance & Pension | `#frm-fmp-c2` | Bảng tử vong, phí hòa vốn, các loại bảo hiểm nhân thọ, niên kim, rủi ro tuổi thọ/tử vong, quỹ hưu trí DB/DC; CAT bond, loss/combined/operating ratio; moral hazard, adverse selection, Solvency II | 36 |
+| FMP Ch.3 – Fund Management (3.1–3.2) | `#frm-fmp-c3` | Quỹ mở, quỹ thị trường tiền tệ, sai số theo dõi, phí quỹ, quỹ đóng và chiết khấu NAV, ETF | 16 |
+
+Tài liệu đã nhận mới tới trang 34 của sách (đầu mục 3.3); khi có phần tiếp theo sẽ bổ sung Chương 3 và các chương sau.
+
 ### Tiếng Anh chuyên ngành
 
 Nhóm thứ ba, độc lập với hai nhóm trên. Mỗi bộ từ vựng có hai chiều **Anh → Việt** và **Việt → Anh** (chọn ở "Dạng câu hỏi"), phương án sai lấy từ cùng bộ.
