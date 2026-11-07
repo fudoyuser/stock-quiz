@@ -1,77 +1,60 @@
-"""Browser integration using mocked Google services; no real Google credentials."""
-import copy
+"""Browser + actual Code.gs in a stubbed Apps Script runtime. No Google login needed."""
 import json
-import re
-from urllib.parse import unquote, urlparse
+import subprocess
+from pathlib import Path
+from urllib.parse import parse_qs, urlparse
 from playwright.sync_api import sync_playwright, expect
 
+ROOT = Path(__file__).resolve().parents[1]
 BASE = 'http://127.0.0.1:8000'
-HEADER = ['Loại', 'Mã', 'Cập nhật', 'Dữ liệu (JSON)']
-state = {'files': {}, 'account': 'account-one', 'offline': False, 'expired': False, 'drop': False, 'writes': 0, 'data_calls': 0}
+ENDPOINT = 'https://script.google.com/macros/s/test-deployment/exec'
+OTHER = 'https://script.google.com/macros/s/other-deployment/exec'
+KEY = 'a' * 64  # Public fixture, not a real secret.
+flags = {'offline': False, 'lose_response': False, 'reject_write': False, 'calls': 0}
+backends = {ENDPOINT: None, OTHER: None}
 errors = []
 
 
-def google(route):
+def apps_script(route):
     req = route.request
-    url = req.url
-    if 'accounts.google.com/gsi/client' in url:
-        script = '''window.google={accounts:{oauth2:{initTokenClient:(options)=>({requestAccessToken:()=>options.callback({access_token:'mock-token',expires_in:3600})})}}};'''
-        route.fulfill(status=200, content_type='application/javascript', body=script)
+    endpoint = req.url.split('?')[0]
+    assert KEY not in req.url  # The key must not appear in script URLs.
+    assert req.method in ('GET', 'POST')  # No CORS preflight needed.
+    flags['calls'] += 1
+    if flags['offline']:
+        route.abort('failed')
         return
-    if state['offline']:
-        route.fulfill(status=503, json={'error': 'offline fixture'})
+    if req.method == 'POST' and flags['reject_write']:
+        route.fulfill(content_type='application/json', body='{"ok":false}')
         return
-    if state['expired']:
-        route.fulfill(status=401, json={'error': 'expired fixture'})
-        return
-    assert req.headers.get('authorization') == 'Bearer mock-token'
-    path = unquote(urlparse(url).path)
-    if not path.endswith('/about'):
-        state['data_calls'] += 1
-    body = req.post_data_json if req.method != 'GET' else None
-    if path.endswith('/about'):
-        route.fulfill(json={'user': {'permissionId': state['account'], 'emailAddress': state['account']+'@example.test'}})
-    elif path == '/drive/v3/files' and req.method == 'GET':
-        route.fulfill(json={'files': [{'id': k, 'createdTime': v['createdTime']} for k, v in state['files'].items() if v.get('marked') and v['account'] == state['account']]})
-    elif path.startswith('/drive/v3/files/') and req.method == 'PATCH':
-        key = path.split('/')[-1]
-        assert body['appProperties']['bdqApp'] == 'stock-quiz-progress-v2'
-        state['files'][key]['marked'] = True
-        route.fulfill(json={'id': key})
-    elif path == '/v4/spreadsheets' and req.method == 'POST':
-        key = 'sheet-'+str(len(state['files'])+1)
-        state['files'][key] = {'rows': [], 'account': state['account'], 'createdTime': f'2026-11-07T00:00:{len(state["files"]):02d}Z'}
-        route.fulfill(json={'spreadsheetId': key})
-    elif '/values/' in path:
-        key = path.split('/')[3]
-        f = state['files'][key]
-        assert f['account'] == state['account']
-        if req.method == 'GET':
-            route.fulfill(json={'values': f['rows']})
-        elif req.method == 'PUT':
-            assert body['values'] == [HEADER]
-            f['rows'] = copy.deepcopy(body['values'])
-            route.fulfill(json={'updatedRows': 1})
-        elif req.method == 'POST' and path.endswith(':append'):
-            f['rows'].extend(copy.deepcopy(body['values']))
-            state['writes'] += 1
-            if state['drop']:
-                state['drop'] = False
-                route.abort('failed')  # Server accepted data; browser never got the acknowledgement.
-            else:
-                route.fulfill(json={'updates': {'updatedRows': len(body['values'])}})
-        else:
-            raise AssertionError((req.method, path))
+    request = {'method': req.method, 'state': backends[endpoint]}
+    if req.method == 'GET':
+        request['params'] = {k: v[0] for k, v in parse_qs(urlparse(req.url).query, keep_blank_values=True).items()}
     else:
-        raise AssertionError((req.method, path))
+        assert KEY not in req.post_data
+        request['body'] = req.post_data
+    result = subprocess.run(['node', str(ROOT / 'tests/apps-script-fixture.cjs')], input=json.dumps(request), text=True, capture_output=True, check=True)
+    result = json.loads(result.stdout)
+    backends[endpoint] = result['state']
+    if endpoint == OTHER and backends[endpoint]['id'] == 'sheet-one':
+        backends[endpoint]['id'] = 'sheet-two'
+        backends[endpoint]['properties']['BDQ_SHEET_ID'] = 'sheet-two'
+        # Re-run the read with the different Sheet identity.
+        request['state'] = backends[endpoint]
+        result = json.loads(subprocess.run(['node', str(ROOT / 'tests/apps-script-fixture.cjs')], input=json.dumps({**request, 'state': {**request['state'], 'cache': {}}}), text=True, capture_output=True, check=True).stdout)
+        backends[endpoint] = result['state']
+    if req.method == 'POST' and flags['lose_response']:
+        flags['lose_response'] = False
+        route.abort('failed')
+    else:
+        route.fulfill(content_type=result['mime'], body=result['text'])
 
 
-def context(browser, seed=None, configured=True):
+def context(browser, seed=None):
     c = browser.new_context(viewport={'width': 390, 'height': 844})
     c.route('https://fonts.googleapis.com/**', lambda r: r.abort())
     c.route('https://fonts.gstatic.com/**', lambda r: r.abort())
-    c.route('**/google-config.js', lambda r: r.fulfill(content_type='application/javascript', body='window.BDQ_GOOGLE_CLIENT_ID='+json.dumps('test.apps.googleusercontent.com' if configured else '')+';'))
-    c.route(re.compile(r'https://(accounts\.google\.com|www\.googleapis\.com|sheets\.googleapis\.com)/'), google)
+    c.route('https://script.google.com/macros/s/**', apps_script)
     if seed:
         c.add_init_script('''if(!localStorage.getItem('fixture-seeded')) {
           localStorage.setItem('fixture-seeded','1');
@@ -85,10 +68,13 @@ def context(browser, seed=None, configured=True):
     return c, page
 
 
-def signin(page):
-    expect(page.locator('#googleConnect')).to_be_enabled()
+def connect(page, endpoint=ENDPOINT, key=KEY):
+    if not page.locator('#sheetConfig').evaluate('(e)=>e.open'):
+        page.locator('#sheetConfig summary').click()
+    page.fill('#sheetEndpoint', endpoint)
+    page.fill('#sheetKey', key)
     page.click('#googleConnect')
-    expect(page.locator('#syncNote')).to_contain_text('Đã đồng bộ Google Sheets')
+    expect(page.locator('#syncNote')).to_contain_text('Đã đồng bộ Google Sheets', timeout=15000)
 
 
 def answer(page, ok=True):
@@ -101,41 +87,36 @@ def answer(page, ok=True):
 
 def sync(page):
     page.click('#googleSave')
-    expect(page.locator('#syncNote')).to_contain_text('Đã đồng bộ Google Sheets')
+    expect(page.locator('#syncNote')).to_contain_text('Đã đồng bộ Google Sheets', timeout=15000)
 
 
 with sync_playwright() as p:
     browser = p.chromium.launch(executable_path='/usr/bin/chromium', headless=True, args=['--no-sandbox'])
-    c0, plain = context(browser, configured=False)
-    expect(plain.locator('#googleConnect')).to_be_disabled()
+    c0, plain = context(browser)
+    expect(plain.locator('#googleConnect')).to_be_enabled()
     answer(plain)
     assert plain.evaluate('stats.total') == 1
     plain.reload(wait_until='domcontentloaded')
     assert plain.evaluate('stats.total') == 1
     assert plain.evaluate('document.documentElement.scrollWidth<=innerWidth')
+    assert flags['calls'] == 0
     c0.close()
 
-    # The real screenshot's old totals, migrated without resetting progress.
     seed = {'total': 428, 'right': 334, 'best': 2, 'days': {'2026-11-07': 77}}
     ca, a = context(browser, seed)
-    signin(a)
-    assert len(state['files']) == 1
+    connect(a)
     assert a.evaluate('stats.total') == 428
     assert a.evaluate('goal()') == 200
     answer(a)
     sync(a)
     assert a.evaluate('stats.total') == 429
 
-    # A new computer has no Google token or progress, and restores the first computer.
     cb, b = context(browser)
     assert b.evaluate('stats.total') == 0
-    signin(b)
+    connect(b)
     assert b.evaluate('stats.total') == 429
     assert b.evaluate('goal()') == 200
     assert b.evaluate("store.get('bdq-terms-best')") == '80'
-    assert len(state['files']) == 1
-
-    # Independent answers are kept even when both computers started with the same total.
     answer(a, False)
     answer(b)
     sync(a)
@@ -144,93 +125,87 @@ with sync_playwright() as p:
     assert a.evaluate('stats.total') == b.evaluate('stats.total') == 431
     assert a.evaluate('stats.right') == b.evaluate('stats.right') == 336
 
-    # Write acknowledged by Google but connection lost before browser sees response.
+    # Losing the POST response does not cause a false failure or duplicate answers.
     answer(a)
-    state['drop'] = True
-    a.click('#googleSave')
-    expect(a.locator('#syncNote')).to_have_class('sync warn')
+    flags['lose_response'] = True
     sync(a)
     sync(b)
     assert b.evaluate('stats.total') == 432
 
-    # An offline answer survives a reload; login restores and uploads it once.
-    state['offline'] = True
+    # Opaque success is not a saved acknowledgement: read-back must contain the new answer.
+    answer(a)
+    flags['reject_write'] = True
+    a.click('#googleSave')
+    expect(a.locator('#syncNote')).to_contain_text('chưa xác nhận dữ liệu mới', timeout=15000)
+    assert a.locator('#syncNote').get_attribute('class') == 'sync warn'
+    flags['reject_write'] = False
+    sync(a)
+    sync(b)
+    assert b.evaluate('stats.total') == 433
+
+    # Offline learning survives reload and automatically reconnects without another login.
+    flags['offline'] = True
     answer(b)
     b.click('#googleSave')
-    expect(b.locator('#syncNote')).to_contain_text('HTTP 503')
-    assert b.evaluate('stats.total') == 433
+    expect(b.locator('#syncNote')).to_contain_text('Không truy cập được Apps Script')
+    assert b.evaluate('stats.total') == 434
     b.reload(wait_until='domcontentloaded')
-    assert b.evaluate('stats.total') == 433
-    state['offline'] = False
-    signin(b)
+    assert b.evaluate('stats.total') == 434
+    expect(b.locator('#syncNote')).to_contain_text('Không truy cập được Apps Script')
+    flags['offline'] = False
+    b.reload(wait_until='domcontentloaded')
+    expect(b.locator('#syncNote')).to_contain_text('Đã đồng bộ Google Sheets')
     sync(a)
-    assert a.evaluate('stats.total') == 433
+    assert a.evaluate('stats.total') == 434
 
-    # Concurrent tabs in one browser keep separate counters and merge through storage events.
+    # A second tab shares local counters but contributes a unique session.
     a2 = ca.new_page()
     a2.on('pageerror', lambda error: errors.append(str(error)))
     a2.goto(BASE, wait_until='domcontentloaded')
+    expect(a2.locator('#syncNote')).to_contain_text('Đã đồng bộ Google Sheets')
     answer(a2)
-    a.wait_for_function('stats.total===434')
+    a.wait_for_function('stats.total===435')
     answer(a)
-    a2.wait_for_function('stats.total===435')
+    a2.wait_for_function('stats.total===436')
     sync(a)
     sync(b)
-    assert b.evaluate('stats.total') == 435
+    assert b.evaluate('stats.total') == 436
 
-    # An expired login is visible, no progress disappears, and re-login recovers.
-    state['expired'] = True
-    b.click('#googleSave')
-    expect(b.locator('#googleConnect')).to_be_visible()
-    expect(b.locator('#syncNote')).to_contain_text('hết hạn')
-    assert b.evaluate('stats.total') == 435
-    state['expired'] = False
-    signin(b)
-
-    # Account switching cannot upload the previous account's progress to another user.
-    b.click('#googleDisconnect')
-    state['account'] = 'account-two'
-    writes = state['writes']
-    data_calls = state['data_calls']
-    waiting_about = []
-    b.route('https://www.googleapis.com/drive/v3/about?*', lambda r: waiting_about.append(r))
+    # Valid credentials to another Sheet still cannot silently mix old progress into it.
+    if not b.locator('#sheetConfig').evaluate('(e)=>e.open'):
+        b.locator('#sheetConfig summary').click()
+    b.fill('#sheetEndpoint', OTHER)
+    b.fill('#sheetKey', KEY)
     b.click('#googleConnect')
-    b.wait_for_timeout(100)
-    assert len(waiting_about) == 1
-    b.evaluate('window.dispatchEvent(new Event("focus"))')
-    b.wait_for_timeout(100)
-    assert state['data_calls'] == data_calls  # No Sheet access before identity is checked.
-    waiting_about[0].fulfill(json={'user': {'permissionId': 'account-two', 'emailAddress': 'other@example.test'}})
-    expect(b.locator('#syncNote')).to_contain_text('tài khoản Google khác')
-    assert state['writes'] == writes
-    b.unroute('https://www.googleapis.com/drive/v3/about?*')
-    state['account'] = 'account-one'
-    signin(b)
+    expect(b.locator('#syncNote')).to_contain_text('một Sheet khác')
+    assert backends[OTHER]['writes'] == 0
+    connect(b)
 
-    # Corrupted Sheet must not overwrite local progress or produce a fake saved status.
-    f = next(iter(state['files'].values()))
-    f['rows'].append(['actor', '33333333-3333-4333-8333-333333333333', '', '{broken'])
-    writes = state['writes']
+    # A wrong sync key receives no data. The last good connection remains recoverable.
+    b.locator('#sheetConfig summary').click()
+    b.fill('#sheetKey', 'b'*64)
+    b.click('#googleConnect')
+    expect(b.locator('#syncNote')).to_contain_text('Mã đồng bộ không đúng')
+    assert b.evaluate('stats.total') == 436
+    connect(b)
+
+    # A corrupt remote header blocks writes, preserving the local copy.
+    backends[ENDPOINT]['sheets']['Progress'][0][0] = 'edited'
+    before = backends[ENDPOINT]['writes']
     b.click('#googleSave')
-    expect(b.locator('#syncNote')).to_contain_text('JSON bị sửa hoặc hỏng')
-    assert b.evaluate('stats.total') == 435
-    assert state['writes'] == writes
-    f['rows'].pop()
+    expect(b.locator('#syncNote')).to_contain_text('thay đổi cấu trúc')
+    assert b.evaluate('stats.total') == 436
+    assert backends[ENDPOINT]['writes'] == before
+    backends[ENDPOINT]['sheets']['Progress'][0][0] = 'Loại'
     sync(b)
-
-    # Two devices creating the first Sheet concurrently converge on the oldest Sheet.
-    state['files']['sheet-extra'] = {
-        'marked': True, 'account': 'account-one', 'createdTime': '2026-11-08T00:00:00Z',
-        'rows': [HEADER, ['actor', '44444444-4444-4444-8444-444444444444', '', json.dumps({'total': 1, 'right': 1, 'days': {'2026-11-07': 1}})]]
-    }
-    sync(b)
-    sync(a)
-    assert a.evaluate('stats.total') == b.evaluate('stats.total') == 436
-    assert '/sheet-1/' in b.locator('#googleSheet').get_attribute('href')
-
-    # There is no access token in persistent browser storage.
-    assert 'mock-token' not in b.evaluate('JSON.stringify({...localStorage})')
     assert b.evaluate('document.documentElement.scrollWidth<=innerWidth')
+
+    # Disconnect forgets connection credentials, while preserving all practice progress.
+    b.click('#googleDisconnect')
+    assert b.evaluate("store.get('bdq-sheet-connection')") is None
+    b.reload(wait_until='domcontentloaded')
+    assert b.evaluate('stats.total') == 436
+    assert b.locator('#sheetKey').input_value() == ''
     assert not errors, errors
-    print(json.dumps({'old_progress_import': 428, 'cross_device_final_total': 436, 'offline_reload': 'passed', 'lost_response_retry': 'passed', 'concurrent_tabs': 'passed', 'expired_token': 'passed', 'account_isolation': 'passed', 'corrupt_remote': 'passed', 'duplicate_sheet_convergence': 'passed', 'mobile_width': 390, 'page_errors': errors}))
+    print(json.dumps({'old_progress_import': 428, 'cross_device_final_total': 436, 'offline_auto_reconnect': 'passed', 'lost_response_retry': 'passed', 'opaque_write_readback': 'passed', 'concurrent_tabs': 'passed', 'sheet_isolation': 'passed', 'wrong_key': 'passed', 'corrupt_remote': 'passed', 'disconnect_preserves_data': 'passed', 'mobile_width': 390, 'page_errors': errors}))
     browser.close()

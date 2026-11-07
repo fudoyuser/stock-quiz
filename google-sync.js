@@ -1,28 +1,19 @@
-/* Google Identity Services + Sheets/Drive API; access token chỉ nằm trong bộ nhớ. */
+/* Google Sheets qua Apps Script: mã riêng trên mỗi máy, không cần OAuth Client ID. */
 (function () {
   "use strict";
   if (window.claude || !window.BDQProgress) return;
-  const M = window.BDQProgress;
-  const KEY = "bdq-google-progress-v2", ACCOUNT = "bdq-google-account";
-  const APP = "stock-quiz-progress-v2", HEADER = ["Loại", "Mã", "Cập nhật", "Dữ liệu (JSON)"];
-  const CLIENT = String(window.BDQ_GOOGLE_CLIENT_ID || "").trim();
-  const SCOPE = "https://www.googleapis.com/auth/drive.file";
-  const actor = crypto.randomUUID();
-  let ledger, token = null, tokenUntil = 0, linked = false, tokenClient, timer = 0, pending = false, running = null, generation = 0;
-  const requests = new Set();
-  const panel = $("googleSync"), connect = $("googleConnect"), save = $("googleSave"), disconnect = $("googleDisconnect"), sheet = $("googleSheet");
+  const M = window.BDQProgress, KEY = "bdq-google-progress-v2", CONNECTION = "bdq-sheet-connection", BINDING = "bdq-sheet-id";
+  const actor = crypto.randomUUID(), requests = new Set();
+  const panel = $("googleSync"), connect = $("googleConnect"), save = $("googleSave"), disconnect = $("googleDisconnect"), sheet = $("googleSheet"), config = $("sheetConfig");
+  let ledger, connection = null, active = false, timer = 0, pending = false, running = null, generation = 0;
   panel.hidden = false;
-
   function note(message, cls = "") {
     $("syncNote").className = "sync " + cls; $("syncNote").textContent = message;
   }
-  function localNote() {
-    note("💾 Tiến độ đã lưu trên trình duyệt. Đăng nhập Google để đồng bộ giữa các máy.");
-  }
+  function localNote() { note("💾 Tiến độ đã lưu trên trình duyệt. Kết nối Google Sheet để đồng bộ giữa các máy."); }
   function controls() {
-    const signedIn = !!token && linked;
-    connect.hidden = signedIn; save.hidden = !signedIn; disconnect.hidden = !signedIn;
-    sheet.hidden = !signedIn || !sheet.href;
+    save.hidden = !active; disconnect.hidden = !active;
+    sheet.hidden = !active || !sheet.href;
   }
   function legacy() {
     const x = M.empty();
@@ -35,54 +26,39 @@
     }
     return M.validate(x);
   }
-  function readLocal() {
-    const raw = store.get(KEY); return raw ? M.validate(JSON.parse(raw)) : M.empty();
-  }
-  function persist() {
-    ledger = M.merge(ledger, readLocal());
-    store.set(KEY, JSON.stringify(ledger));
-  }
+  function readLocal() { const raw = store.get(KEY); return raw ? M.validate(JSON.parse(raw)) : M.empty(); }
   function apply() {
-    persist();
+    ledger = M.merge(ledger, readLocal()); store.set(KEY, JSON.stringify(ledger));
     const wasApplying = sync.applying; sync.applying = true;
     try {
-      stats = M.summarize(ledger);
-      store.set("bdq-stats", JSON.stringify(stats));
+      stats = M.summarize(ledger); store.set("bdq-stats", JSON.stringify(stats));
       for (const [key, s] of Object.entries(ledger.settings)) {
-        const id = key.replace(/-(cur|best)$/, "");
-        if (key === "goal" || PART[id]) store.set(`bdq-${key}`, s.value);
+        if (key === "goal" || PART[key.replace(/-(cur|best)$/, "")]) store.set(`bdq-${key}`, s.value);
       }
     } finally { sync.applying = wasApplying; }
     renderStats(); renderParts();
   }
   function schedule() {
     pending = true;
-    if (!token || !linked) return;
-    note("☁ Tiến độ trên máy đã lưu, đang chờ đồng bộ Google Sheets…");
+    if (!active) return;
+    note("☁ Đã lưu trên máy, đang chờ đồng bộ Google Sheets…");
     clearTimeout(timer); timer = setTimeout(run, 4000);
   }
-  function changed(key) {
-    if (key === "bdq-stats") return;
-    const k = key.slice(4);
-    if (k !== "goal" && !PART[k.replace(/-(cur|best)$/, "")]) return;
-    ledger = M.merge(ledger, readLocal());
-    ledger.settings[k] = { value: +store.get(key), at: Date.now() };
-    apply(); schedule();
-  }
-  try {
-    const saved = store.get(KEY); ledger = saved ? M.validate(JSON.parse(saved)) : legacy();
-    apply();
-  } catch {
+  try { ledger = store.get(KEY) ? readLocal() : legacy(); apply(); }
+  catch {
     connect.disabled = true;
-    note("⚠ Chưa đọc được bản sao tiến độ. Dữ liệu hiện tại vẫn được giữ; hãy sao lưu trình duyệt trước khi thiết lập đồng bộ.", "warn");
+    note("⚠ Chưa đọc được bản sao tiến độ. Dữ liệu hiện tại vẫn được giữ; hãy sao lưu trình duyệt trước khi kết nối.", "warn");
     return;
   }
   window.bdqGoogleSync = {
-    recordAnswer(ok, day) {
-      ledger = M.merge(ledger, readLocal()); M.answer(ledger, actor, day, ok);
+    recordAnswer(ok, day) { ledger = M.merge(ledger, readLocal()); M.answer(ledger, actor, day, ok); apply(); schedule(); },
+    changed(key) {
+      if (key === "bdq-stats") return;
+      const k = key.slice(4);
+      if (k !== "goal" && !PART[k.replace(/-(cur|best)$/, "")]) return;
+      ledger = M.merge(ledger, readLocal()); ledger.settings[k] = { value: +store.get(key), at: Date.now() };
       apply(); schedule();
-    },
-    changed
+    }
   };
   addEventListener("storage", e => {
     if (e.key !== KEY || !e.newValue) return;
@@ -91,158 +67,129 @@
       if (M.canon(merged) !== M.canon(ledger)) { ledger = merged; apply(); schedule(); }
     } catch { note("⚠ Chưa đọc được tiến độ từ tab khác. Bản trên tab này vẫn được giữ.", "warn"); }
   });
-
-  function stop(message) {
-    generation++; token = null; tokenUntil = 0; linked = false; clearTimeout(timer);
-    for (const controller of requests) controller.abort();
-    controls(); connect.textContent = "Đăng nhập lại Google";
-    if (message) note(message, "warn");
+  function validConnection(value) {
+    if (!value || typeof value.endpoint !== "string" || !/^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec$/.test(value.endpoint) || !/^[a-f0-9]{64}$/.test(value.key))
+      throw Error("Nhập đường dẫn Web app của Apps Script kết thúc bằng /exec và mã đồng bộ ở tab Kết nối trong Sheet.");
+    return { endpoint: value.endpoint, key: value.key };
   }
-  async function api(url, method = "GET", body) {
-    if (!token || Date.now() >= tokenUntil) {
-      stop("💾 Phiên Google đã hết hạn. Tiến độ vẫn lưu trên máy; đăng nhập lại để đồng bộ.");
-      throw Error("Phiên Google đã hết hạn. Hãy đăng nhập lại; tiến độ trên máy vẫn được giữ.");
-    }
-    const gen = generation, controller = new AbortController(); requests.add(controller);
-    const timeout = setTimeout(() => controller.abort(), 20000);
-    try {
-      const res = await fetch(url, {
-        method, signal: controller.signal,
-        headers: { Authorization: `Bearer ${token}`, ...(body ? { "Content-Type": "application/json" } : {}) },
-        ...(body ? { body: JSON.stringify(body) } : {})
-      });
-      if (gen !== generation) throw Error("Đã ngắt kết nối Google. Tiến độ trên máy vẫn được giữ.");
-      if (res.status === 401) {
-        stop("💾 Phiên Google đã hết hạn. Tiến độ vẫn lưu trên máy; đăng nhập lại để đồng bộ.");
-        throw Error("Phiên Google đã hết hạn. Hãy đăng nhập lại; tiến độ trên máy vẫn được giữ.");
-      }
-      if (res.status === 403) throw Error("Google chưa cho phép đọc/ghi Sheet. Kiểm tra đã bật Google Sheets API, Google Drive API và cấp quyền tệp cho ứng dụng.");
-      if (res.status === 429) throw Error("Google tạm giới hạn số lần đồng bộ. Tiến độ vẫn lưu trên máy; thử lại sau một phút.");
-      if (!res.ok) throw Error(`Chưa đồng bộ được với Google (HTTP ${res.status}). Tiến độ trên máy vẫn được giữ.`);
-      return await res.json();
-    } finally { clearTimeout(timeout); requests.delete(controller); }
+  function stop() {
+    generation++; active = false; clearTimeout(timer);
+    for (const cancel of [...requests]) cancel();
+    controls();
   }
-  async function findSheets() {
-    const files = []; let next = "";
-    do {
-      const query = new URLSearchParams({ q: `trashed = false and mimeType = 'application/vnd.google-apps.spreadsheet' and appProperties has { key='bdqApp' and value='${APP}' }`, fields: "nextPageToken,files(id,name,createdTime)", pageSize: "100", ...(next ? { pageToken: next } : {}) });
-      const result = await api(`https://www.googleapis.com/drive/v3/files?${query}`);
-      files.push(...(result.files || [])); next = result.nextPageToken || "";
-    } while (next);
-    return files.sort((a, b) => (a.createdTime || "").localeCompare(b.createdTime || "") || a.id.localeCompare(b.id));
+  async function signed(action, payload, callback = "") {
+    const value = connection, gen = generation;
+    if (!value) throw Error("Chưa kết nối Google Sheet.");
+    const at = String(Date.now()), nonce = crypto.randomUUID().replace(/-/g, "");
+    const message = JSON.stringify([1, action, at, nonce, callback, payload]);
+    const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(value.key), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+    const bytes = new Uint8Array(await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(message)));
+    const signature = btoa(String.fromCharCode(...bytes)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+    if (gen !== generation) throw Error("Đã ngắt kết nối.");
+    return { v: "1", action, at, nonce, callback, payload, signature };
   }
-  const valuesURL = (id, range) => `https://sheets.googleapis.com/v4/spreadsheets/${encodeURIComponent(id)}/values/${encodeURIComponent(range)}`;
-  async function createSheet() {
-    const result = await api("https://sheets.googleapis.com/v4/spreadsheets?fields=spreadsheetId", "POST", {
-      properties: { title: "Bảng Điện Quiz — Tiến độ học tập" }, sheets: [{ properties: { title: "Progress" } }]
+  async function read() {
+    const callback = "bdqSheets_" + crypto.randomUUID().replace(/-/g, "");
+    const params = await signed("read", "", callback), endpoint = connection.endpoint;
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script"); let finished = false;
+      const cleanup = (late = false) => {
+        clearTimeout(timeout); requests.delete(cancel); script.remove();
+        if (late) { window[callback] = () => {}; setTimeout(() => delete window[callback], 60000); }
+        else delete window[callback];
+      };
+      const fail = message => { if (!finished) { finished = true; cleanup(true); reject(Error(message)); } };
+      const cancel = () => fail("Đã ngắt kết nối. Tiến độ trên máy vẫn được giữ.");
+      const timeout = setTimeout(() => fail("Chưa nhận được phản hồi Apps Script. Kiểm tra đường dẫn /exec, quyền Anyone và kết nối mạng; tiến độ vẫn lưu trên máy."), 20000);
+      requests.add(cancel);
+      window[callback] = data => {
+        if (finished) return;
+        finished = true; cleanup();
+        if (!data || data.ok !== true) return reject(Error(data?.error || "Apps Script chưa xác nhận kết nối."));
+        if (data.service !== "stock-quiz-progress-v2" || !/^[A-Za-z0-9_-]+$/.test(data.spreadsheetId || "")) return reject(Error("Đường dẫn không phải Apps Script của Bảng Điện Quiz."));
+        try { resolve({ progress: M.validate(data.progress), spreadsheetId: data.spreadsheetId }); } catch { reject(Error("Dữ liệu trong Sheet không hợp lệ. Tiến độ trên máy vẫn được giữ.")); }
+      };
+      script.onerror = () => fail("Không truy cập được Apps Script. Kiểm tra mạng, đường dẫn /exec và quyền truy cập Anyone.");
+      script.referrerPolicy = "no-referrer";
+      // URL chỉ chứa chữ ký ngắn hạn; mã đồng bộ không được đưa lên URL.
+      script.src = endpoint + "?" + new URLSearchParams(params); document.head.append(script);
     });
-    const id = result.spreadsheetId;
-    await api(valuesURL(id, "Progress!A1:D1") + "?valueInputOption=RAW", "PUT", { values: [HEADER] });
-    await api(`https://www.googleapis.com/drive/v3/files/${encodeURIComponent(id)}?fields=id`, "PATCH", { appProperties: { bdqApp: APP } });
-    return { id, createdTime: new Date().toISOString() };
   }
-  async function readSheet(id) {
-    const result = await api(valuesURL(id, "Progress!A:D"));
-    const rows = result.values || [];
-    if (M.canon(rows[0]) !== M.canon(HEADER)) throw Error("Tab Progress trong Google Sheet đã đổi cấu trúc. Tiến độ trên máy vẫn được giữ; hãy khôi phục bốn cột ban đầu.");
-    return M.fromRows(rows.slice(1));
+  async function write(snapshot) {
+    const body = await signed("write", JSON.stringify(snapshot)), controller = new AbortController();
+    const cancel = () => controller.abort(); requests.add(cancel);
+    const timeout = setTimeout(cancel, 20000);
+    try {
+      // Apps Script không cung cấp CORS tùy chỉnh. Phản hồi opaque không được coi là đã lưu.
+      await fetch(connection.endpoint, { method: "POST", mode: "no-cors", credentials: "omit", referrerPolicy: "no-referrer", headers: { "Content-Type": "text/plain;charset=UTF-8" }, body: JSON.stringify(body), signal: controller.signal });
+    } finally { clearTimeout(timeout); requests.delete(cancel); }
+  }
+  function checkSheet(result) {
+    const previous = store.get(BINDING);
+    if (previous && previous !== result.spreadsheetId) throw Error("Trình duyệt đang giữ tiến độ của một Sheet khác. Dùng cùng Sheet hoặc hồ sơ trình duyệt riêng để tránh trộn dữ liệu.");
+    store.set(BINDING, result.spreadsheetId);
   }
   async function syncOnce() {
-    note("☁ Đang đồng bộ với Google Sheets…");
-    let files = await findSheets();
-    if (!files.length) {
-      const created = await createSheet();
-      files = await findSheets();
-      if (!files.some(f => f.id === created.id)) files.push(created);
-      files.sort((a, b) => (a.createdTime || "").localeCompare(b.createdTime || "") || a.id.localeCompare(b.id));
+    note("☁ Đang đồng bộ Google Sheets…");
+    let remote = await read(); checkSheet(remote);
+    active = true; store.set(CONNECTION, JSON.stringify(connection)); config.open = false;
+    sheet.href = `https://docs.google.com/spreadsheets/d/${remote.spreadsheetId}/edit`; controls();
+    ledger = M.merge(ledger, remote.progress); apply();
+    const snapshot = M.validate(ledger), version = M.canon(snapshot); pending = false;
+    if (version !== M.canon(remote.progress)) {
+      let writeError;
+      try { await write(snapshot); } catch (e) { writeError = e; }
+      // Đọc lại trạng thái thật để xác nhận: cả trường hợp POST mất phản hồi nhưng đã ghi.
+      let confirmed = false;
+      for (let attempt = 0; attempt < 4; attempt++) {
+        if (attempt) await new Promise(resolve => setTimeout(resolve, 300 * attempt));
+        remote = await read(); checkSheet(remote);
+        if (M.canon(M.merge(remote.progress, snapshot)) === M.canon(remote.progress)) { confirmed = true; break; }
+      }
+      if (!confirmed) throw Error(writeError ? "Kết nối ghi bị gián đoạn; Sheet chưa xác nhận lưu. Tiến độ vẫn giữ trên máy, sẽ thử lại khi kết nối ổn định." : "Sheet chưa xác nhận dữ liệu mới. Kiểm tra đã triển khai bản Apps Script mới nhất; tiến độ trên máy vẫn được giữ.");
+      ledger = M.merge(ledger, remote.progress); apply();
     }
-    let remote = M.empty(), primary;
-    for (const file of files) {
-      const data = await readSheet(file.id);
-      if (!primary) primary = data;
-      remote = M.merge(remote, data);
-    }
-    ledger = M.merge(ledger, remote); apply();
-    sheet.href = `https://docs.google.com/spreadsheets/d/${encodeURIComponent(files[0].id)}/edit`; controls();
-    const saved = new Map(M.records(primary).map(([type, id, data]) => [`${type}:${id}`, M.canon(data)]));
-    const rows = M.records(ledger).filter(([type, id, data]) => saved.get(`${type}:${id}`) !== M.canon(data))
-      .map(([type, id, data]) => [type, id, new Date().toISOString(), JSON.stringify(data)]);
-    const snapshot = M.canon(ledger); pending = false;
-    if (rows.length) {
-      const result = await api(valuesURL(files[0].id, "Progress!A:D") + ":append?valueInputOption=RAW&insertDataOption=INSERT_ROWS", "POST", { values: rows });
-      if (result.updates?.updatedRows !== rows.length) throw Error("Google chưa xác nhận đủ bản ghi. Tiến độ vẫn lưu trên máy; hãy thử đồng bộ lại.");
-    }
-    if (pending || snapshot !== M.canon(ledger)) schedule();
-    else note("☁ Đã đồng bộ Google Sheets · dùng cùng tài khoản Google trên máy khác để tiếp tục học.", "ok");
+    const newer = M.canon(ledger) !== M.canon(M.merge(snapshot, remote.progress));
+    if (pending || newer) schedule();
+    else note("☁ Đã đồng bộ Google Sheets · các máy dùng cùng đường dẫn và mã đồng bộ để tiếp tục học.", "ok");
   }
   function run() {
     clearTimeout(timer);
-    if (!token || !linked) return Promise.resolve();
+    if (!connection) return Promise.resolve();
     if (running) { pending = true; return running; }
     const gen = generation;
     running = syncOnce().catch(e => {
       pending = true;
-      if (gen === generation) note("⚠ " + (e.name === "AbortError" ? "Kết nối Google bị gián đoạn. Tiến độ trên máy vẫn được giữ; thử đồng bộ lại." : e.message), "warn");
+      if (gen === generation) { note("⚠ " + e.message, "warn"); if (!active) config.open = true; }
     }).finally(() => { running = null; });
     return running;
   }
-  async function authorized(response) {
-    connect.disabled = false;
-    if (response.error || !response.access_token) { localNote(); return; }
+  $("sheetForm").onsubmit = async e => {
+    e.preventDefault(); stop();
+    try { connection = validConnection({ endpoint: $("sheetEndpoint").value.trim(), key: $("sheetKey").value.trim() }); }
+    catch (e) { note(e.message, "warn"); return; }
     connect.disabled = true;
-    generation++; linked = false; token = response.access_token; tokenUntil = Date.now() + Math.max(0, (+response.expires_in || 3600) - 60) * 1000;
-    const gen = generation;
-    try {
-      const info = await api("https://www.googleapis.com/drive/v3/about?fields=user(permissionId,emailAddress)");
-      const id = info.user?.permissionId;
-      if (!id) throw Error("Chưa xác định được tài khoản Google. Tiến độ trên máy vẫn được giữ.");
-      const previous = store.get(ACCOUNT);
-      if (previous && previous !== id) {
-        stop("Trình duyệt đang giữ tiến độ của tài khoản Google khác. Hãy chọn đúng tài khoản hoặc dùng hồ sơ trình duyệt riêng để tránh trộn dữ liệu.");
-        return;
-      }
-      store.set(ACCOUNT, id);
-      linked = true;
-      $("googleAccount").textContent = "Tài khoản: " + (info.user.emailAddress || "Google") + ". Tiến độ tự lưu sau khi bạn trả lời; bản trên máy vẫn dùng được khi mất mạng.";
-      controls(); if (running) await running; await run();
-    } catch (e) { if (gen === generation) { stop(); note("⚠ " + e.message, "warn"); } }
-    finally { connect.disabled = false; }
-  }
-  connect.onclick = () => {
-    if (!tokenClient) return;
-    connect.disabled = true;
-    note("Đang mở đăng nhập Google…");
-    try { tokenClient.requestAccessToken({ prompt: "select_account" }); }
-    catch { connect.disabled = false; note("Chưa mở được đăng nhập Google. Hãy cho phép cửa sổ đăng nhập rồi thử lại.", "warn"); }
+    if (running) await running;
+    await run(); connect.disabled = false;
   };
   save.onclick = run;
-  disconnect.onclick = () => { stop(); localNote(); $("googleAccount").textContent = "Đã ngắt Google trên tab này. Tiến độ trên máy và Google Sheet vẫn được giữ."; };
-  addEventListener("online", () => { if (token) run(); });
-  addEventListener("focus", () => { if (token) run(); });
-  document.addEventListener("visibilitychange", () => { if (token && (pending || document.visibilityState === "visible")) run(); });
-  setInterval(() => { if (token && document.visibilityState === "visible") run(); }, 60000);
-
-  localNote(); controls();
-  $("googleAccount").textContent = "Lần đầu kết nối, tiến độ trên trình duyệt sẽ được gộp vào Google Sheet riêng trong Drive của bạn. Không cần chia sẻ Sheet công khai.";
-  if (!/^[A-Za-z0-9_-]+\.apps\.googleusercontent\.com$/.test(CLIENT)) {
-    connect.disabled = true;
-    note("💾 Tiến độ đã lưu trên trình duyệt. Chủ website cần hoàn tất thiết lập Google để bật đồng bộ.");
-    return;
-  }
-  connect.disabled = true;
-  const script = document.createElement("script"); script.src = "https://accounts.google.com/gsi/client"; script.async = true;
-  const fail = () => { connect.disabled = true; note("Chưa tải được đăng nhập Google. Tiến độ vẫn lưu trên máy; kiểm tra kết nối và tải lại trang.", "warn"); };
-  const timeout = setTimeout(fail, 20000);
-  script.onerror = () => { clearTimeout(timeout); fail(); };
-  script.onload = () => {
-    clearTimeout(timeout);
-    try {
-      tokenClient = google.accounts.oauth2.initTokenClient({
-        client_id: CLIENT, scope: SCOPE, callback: authorized,
-        error_callback: () => { connect.disabled = false; note("Đăng nhập Google chưa hoàn tất. Tiến độ trên máy vẫn được giữ; bạn có thể thử lại.", "warn"); }
-      });
-      connect.disabled = false;
-    } catch { fail(); }
+  disconnect.onclick = () => {
+    stop(); connection = null;
+    try { localStorage.removeItem(CONNECTION); } catch {} delete memStore[CONNECTION];
+    $("sheetKey").value = ""; config.open = true; localNote();
   };
-  document.head.append(script);
+  addEventListener("online", () => { if (active) run(); });
+  addEventListener("focus", () => { if (active) run(); });
+  document.addEventListener("visibilitychange", () => { if (active && (pending || document.visibilityState === "visible")) run(); });
+  setInterval(() => { if (active && document.visibilityState === "visible") run(); }, 60000);
+  localNote(); controls();
+  $("googleAccount").textContent = "Thiết lập một lần trên mỗi máy. Tiến độ cũ được gộp vào Sheet; mất mạng vẫn tiếp tục học được.";
+  try {
+    const saved = store.get(CONNECTION);
+    if (saved) {
+      connection = validConnection(JSON.parse(saved));
+      $("sheetEndpoint").value = connection.endpoint; $("sheetKey").value = connection.key;
+      run();
+    } else config.open = true;
+  } catch { config.open = true; note("Chưa đọc được thiết lập kết nối. Nhập lại đường dẫn và mã; tiến độ vẫn giữ trên máy.", "warn"); }
 })();

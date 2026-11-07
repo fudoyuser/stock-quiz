@@ -86,6 +86,12 @@ button.stat:hover { border-color: var(--muted); }
 .sync-actions button, .sync-actions a { border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; background: var(--card); color: var(--ink); font: inherit; text-decoration: none; }
 .sync-actions button:disabled { opacity: .6; cursor: wait; }
 .google-sync p { margin: 0; color: var(--muted); overflow-wrap: anywhere; }
+.sheet-config { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
+.sheet-config summary { cursor: pointer; font-weight: 700; }
+.sheet-config form { display: grid; gap: 10px; margin-top: 12px; }
+.sheet-config label { display: grid; gap: 5px; }
+.sheet-config input { width: 100%; min-width: 0; box-sizing: border-box; border: 1px solid var(--line); border-radius: 8px; padding: 10px; font: inherit; background: var(--bg); color: var(--ink); }
+.sheet-config button { justify-self: start; }
 .toast { position: fixed; left: 50%; top: 14px; transform: translateX(-50%); z-index: 60; background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 99px; font-weight: 700; font-size: 14px; max-width: calc(100% - 32px); text-align: center; box-shadow: 0 6px 24px rgba(0,0,0,.18); }
 
 /* Chọn nhóm (tag) */
@@ -236,12 +242,19 @@ footer { text-align: center; font-size: 13px; color: var(--muted); }
   <p class="sync" id="syncNote" aria-live="polite"></p>
   <section class="google-sync" id="googleSync" aria-label="Đồng bộ tiến độ bằng Google" hidden>
     <div class="sync-actions">
-      <button type="button" id="googleConnect">Đăng nhập Google</button>
       <button type="button" id="googleSave" hidden>Đồng bộ ngay</button>
       <a id="googleSheet" target="_blank" rel="noopener noreferrer" hidden>Mở Google Sheet</a>
       <button type="button" id="googleDisconnect" hidden>Ngắt kết nối</button>
       <a id="googleSetup" href="https://github.com/fudoyuser/stock-quiz/blob/main/docs/google-sheets.md" target="_blank" rel="noopener noreferrer">Hướng dẫn thiết lập</a>
     </div>
+    <details class="sheet-config" id="sheetConfig">
+      <summary>Kết nối Google Sheet</summary>
+      <form id="sheetForm">
+        <label>Đường dẫn Apps Script<input id="sheetEndpoint" type="url" placeholder="https://script.google.com/macros/s/…/exec" required autocomplete="off" spellcheck="false"></label>
+        <label>Mã đồng bộ<input id="sheetKey" type="password" placeholder="Lấy ở tab Kết nối trong Sheet của bạn" required autocomplete="off" spellcheck="false"></label>
+        <div class="sync-actions"><button id="googleConnect" type="submit">Lưu và kết nối</button><a href="https://sheets.new" target="_blank" rel="noopener noreferrer">Tạo Google Sheet</a></div>
+      </form>
+    </details>
     <p id="googleAccount"></p>
   </section>
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
@@ -3785,7 +3798,7 @@ function renderStats() {
 const SYNC_RE = /^bdq-(stats|goal|.+-(cur|best))$/;
 const sync = { ref: null, timer: 0, applying: false, state: "" };
 const SYNC_MSG = {
-  local: ["", "💾 Tiến độ đang lưu trên trình duyệt này. Đăng nhập Google bên dưới để đồng bộ giữa các máy."],
+  local: ["", "💾 Tiến độ đang lưu trên trình duyệt này. Kết nối Google Sheet bên dưới để đồng bộ giữa các máy."],
   signedout: ["", "💾 Đăng nhập Claude để lưu tiến độ vào tài khoản."],
   loading: ["", "☁ Đang tải tiến độ từ tài khoản…"],
   slow: ["warn", "☁ Chưa kết nối được máy chủ — tiến độ tạm giữ trên máy, sẽ tự đồng bộ khi kết nối lại."],
@@ -4011,7 +4024,6 @@ renderStats();
 setPart(part);
 initSync();
 </script>
-<script src="google-config.js"></script>
 <script src="progress-model.js"></script>
 <script src="google-sync.js"></script>
 </body>
