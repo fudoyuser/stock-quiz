@@ -6,18 +6,22 @@
   const actor = crypto.randomUUID(), requests = new Set();
   const panel = $("googleSync"), connect = $("googleConnect"), save = $("googleSave"), disconnect = $("googleDisconnect"), sheet = $("googleSheet"), config = $("sheetConfig");
   const health = $("sheetHealth");
-  let ledger, connection = null, shared = true, loadingConfig = false, active = false, timer = 0, pending = false, running = null, generation = 0;
+  let ledger, connection = null, shared = true, loadingConfig = false, active = false, timer = 0, pending = false, running = null, generation = 0, lastError = '';
   panel.hidden = false;
   config.hidden = true;
   function note(message, cls = "") {
+    if (!cls && lastError) { message = '⚠ ' + lastError + ' · Đang thử kết nối lại…'; cls = 'warn'; }
     $("syncNote").className = "sync " + cls; $("syncNote").textContent = message;
-    if (health) health.hidden = !(cls === 'warn' && shared && connection);
+    if (health) health.hidden = !(shared && connection);
   }
   function localNote() { note(shared ? "💾 Đã lưu trên máy; đang chờ kết nối số liệu chung của website." : "💾 Tiến độ đã lưu trên trình duyệt. Kết nối Google Sheet để đồng bộ giữa các máy."); }
   function controls() {
     save.hidden = !connection; disconnect.hidden = shared || !active;
-    sheet.hidden = shared || !active || !sheet.href;
-    if (connection && health) health.href = connection.endpoint + '?action=health';
+    sheet.hidden = !active || !sheet.href;
+    if (health) {
+      health.hidden = !(shared && connection);
+      if (connection) health.href = connection.endpoint + '?action=health';
+    }
   }
   function legacy() {
     const x = M.empty();
@@ -78,7 +82,7 @@
     return { endpoint: value.endpoint, key: value.key };
   }
   function stop() {
-    generation++; active = false; clearTimeout(timer); timer = 0;
+    generation++; active = false; lastError = ''; clearTimeout(timer); timer = 0;
     for (const cancel of [...requests]) cancel();
     controls();
   }
@@ -114,7 +118,7 @@
         if (!data || data.ok !== true) return reject(Error(data?.error || "Apps Script chưa xác nhận kết nối."));
         if (data.service !== "stock-quiz-progress-v2" || !/^[A-Za-z0-9_-]+$/.test(data.spreadsheetId || "")) return reject(Error("Đường dẫn không phải Apps Script của Bảng Điện Quiz."));
         if (shared && data.shared !== true) return reject(Error("Máy chủ chưa bật số liệu chung. Chủ website cần cập nhật Apps Script; các lượt trên máy vẫn được giữ."));
-        try { resolve({ progress: M.validate(data.progress), spreadsheetId: data.spreadsheetId }); } catch { reject(Error("Dữ liệu trong Sheet không hợp lệ. Tiến độ trên máy vẫn được giữ.")); }
+        try { resolve({ progress: M.validate(data.progress), spreadsheetId: data.spreadsheetId, overviewId: Number.isSafeInteger(data.overviewId) && data.overviewId >= 0 ? data.overviewId : null }); } catch { reject(Error("Dữ liệu trong Sheet không hợp lệ. Tiến độ trên máy vẫn được giữ.")); }
       };
       script.onerror = () => fail("Không truy cập được Apps Script. Kiểm tra mạng, đường dẫn /exec và quyền truy cập Anyone.");
       script.onload = () => { if (!finished) fail("Web app đã tải nhưng không trả đúng dữ liệu đồng bộ. Bấm Kiểm tra kết nối để xem phiên bản và lỗi Apps Script."); };
@@ -145,7 +149,8 @@
     note("☁ Đang tải số liệu từ Google Sheets…");
     let remote = await read(); checkSheet(remote);
     active = true; if (!shared) store.set(CONNECTION, JSON.stringify(connection)); config.open = false;
-    sheet.href = `https://docs.google.com/spreadsheets/d/${remote.spreadsheetId}/edit`; controls();
+    sheet.href = `https://docs.google.com/spreadsheets/d/${remote.spreadsheetId}/edit` + (remote.overviewId === null ? '' : `#gid=${remote.overviewId}`);
+    sheet.textContent = remote.overviewId === null ? 'Mở Google Sheet' : 'Xem thống kê trong Sheet'; controls();
     ledger = M.merge(ledger, remote.progress); apply();
     const snapshot = M.validate(ledger), version = M.canon(snapshot); pending = false;
     if (version !== M.canon(remote.progress)) {
@@ -164,17 +169,19 @@
       ledger = M.merge(ledger, remote.progress); apply();
     }
     const newer = M.canon(ledger) !== M.canon(M.merge(snapshot, remote.progress));
+    lastError = '';
     if (pending || newer) schedule();
     else note(shared ? "☁ Đã đồng bộ Google Sheets · số liệu dùng chung cho toàn website." : "☁ Đã đồng bộ Google Sheets · các máy dùng cùng đường dẫn và mã đồng bộ để tiếp tục học.", "ok");
   }
   function run() {
     clearTimeout(timer); timer = 0;
     if (!connection) return Promise.resolve();
-    if (running) { pending = true; return running; }
+    // Chỉ thay đổi dữ liệu mới cần lượt gửi tiếp; kiểm tra định kỳ/focus dùng chung lượt đang chạy.
+    if (running) return running;
     const gen = generation;
     running = syncOnce().catch(e => {
       pending = true;
-      if (gen === generation) { note("⚠ " + e.message, "warn"); if (!shared && !active) config.open = true; }
+      if (gen === generation) { lastError = e.message; note("⚠ " + lastError, "warn"); if (!shared && !active) config.open = true; }
     }).finally(() => { running = null; });
     return running;
   }

@@ -153,7 +153,7 @@ test('public mode targets the configured Sheet even with old or absent setup pro
   const health = result(f.context.doGet({ parameter: { action: 'health' } }));
   assert.equal(health.ok, true); assert.equal(health.total, 429);
   assert.equal(health.spreadsheetId, 'sheet-one');
-  assert.equal(health.version, 'shared-v3'); assert.equal(health.hasOverview, true);
+  assert.equal(health.version, 'shared-v4'); assert.equal(health.hasOverview, true);
 });
 
 test('an explicitly selected Web app URL remains valid when the older project ID differs', () => {
@@ -165,4 +165,19 @@ test('overview never overwrites an existing tab with unrelated data', () => {
   const f = fixture(); f.state.sheets['Thống kê Quiz'] = [['My own data', 'keep']];
   assert.equal(post(f, publicRequest('sharedWrite', JSON.stringify(baseline()))).ok, true);
   assert.deepEqual(f.state.sheets['Thống kê Quiz'], [['My own data', 'keep']]);
+  assert.equal(result(f.context.doGet({ parameter: publicRequest('sharedRead') })).overviewId, null);
+});
+
+test('existing saved progress gains an overview on reconnect without adding answers', () => {
+  const f = fixture(), progress = baseline();
+  for (let i = 0; i < 4; i++) M.answer(progress, A, '2026-11-07', true);
+  f.state.sheets.Progress = [HEADER, ...M.records(progress).map(([type, id, data]) => [type, id, '', JSON.stringify(data)])];
+  const before = JSON.stringify(f.state.sheets.Progress);
+  const health = result(f.context.doGet({ parameter: { action: 'health' } }));
+  assert.equal(health.total, 432); assert.equal(health.hasOverview, false);
+  assert.equal(f.state.writes, 0); // Diagnostics remain read-only.
+  const response = result(f.context.doGet({ parameter: publicRequest('sharedRead') }));
+  assert.equal(response.ok, true); assert.equal(response.overviewId, 1);
+  assert.equal(f.state.sheets['Thống kê Quiz'][2][1], 432);
+  assert.equal(JSON.stringify(f.state.sheets.Progress), before);
 });

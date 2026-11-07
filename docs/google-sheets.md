@@ -30,7 +30,7 @@ Bản tự cập nhật chạy mã từ repository này bằng quyền Apps Scri
 
 ## Xem kết quả ngay trong Sheet
 
-Tab **Thống kê Quiz** hiển thị tổng số câu, số câu đúng, tỷ lệ đúng, mục tiêu, kỷ lục chuỗi và thời điểm lưu gần nhất; tab này tự cập nhật khi ghi kết quả. Tab **Progress** giữ các bản ghi JSON dùng để gộp dữ liệu. Nếu đang mở tab mặc định của Sheet, chuyển sang một trong hai tab này để xem kết quả. Ứng dụng không ghi đè tab Thống kê Quiz có sẵn chứa dữ liệu không thuộc ứng dụng.
+Tab **Thống kê Quiz** hiển thị tổng số câu, số câu đúng, tỷ lệ đúng, mục tiêu, kỷ lục chuỗi và thời điểm lưu gần nhất; tab này được tạo ở lần kết nối tiếp theo nếu đã có dữ liệu cũ, rồi tự cập nhật khi ghi kết quả. Bấm **Xem thống kê trong Sheet** trên website để mở đúng tab này. Tab **Progress** giữ các bản ghi JSON dùng để gộp dữ liệu. Nếu đang mở tab mặc định của Sheet, chuyển sang một trong hai tab này để xem kết quả. Ứng dụng không ghi đè tab Thống kê Quiz có sẵn chứa dữ liệu không thuộc ứng dụng.
 
 ## Dữ liệu và cách gộp
 
@@ -45,7 +45,9 @@ Tab **Thống kê Quiz** hiển thị tổng số câu, số câu đúng, tỷ l
 
 ## Khi gặp lỗi
 
-**Đang tải / đang gửi / đang xác nhận chưa có nghĩa là đã lưu thành công.** Khi có lỗi, nút **Kiểm tra kết nối** mở Web app với `?action=health`: kết quả cho biết phiên bản máy chủ, ID Sheet thực tế, tab Progress đã có chưa và tổng số câu máy chủ đã nhận. Có thể gửi kết quả này để chẩn đoán; trang chẩn đoán không trả mã đồng bộ. Nếu trang chỉ trả “Callback không hợp lệ”, deployment chưa chạy mã xử lý mới hoặc vẫn đang dùng bản đầy đủ cũ.
+**Đang tải / đang gửi / đang xác nhận chưa có nghĩa là đã lưu thành công.** Nút **Kiểm tra kết nối** luôn có sẵn trong chế độ chung và mở Web app với `?action=health`: kết quả cho biết phiên bản máy chủ, ID Sheet thực tế, tab Progress đã có chưa và tổng số câu máy chủ đã nhận. Trang chẩn đoán chỉ đọc, không tạo tab tổng hợp; `hasOverview: false` cùng `total > 0` nghĩa là đã có kết quả trong Progress nhưng chưa có tab tổng hợp. Có thể gửi kết quả này để chẩn đoán; trang chẩn đoán không trả mã đồng bộ. Nếu trang chỉ trả “Callback không hợp lệ”, deployment chưa chạy mã xử lý mới hoặc vẫn đang dùng bản đầy đủ cũ.
+
+Khi Google phản hồi chậm, các lần kiểm tra định kỳ/quay lại tab dùng chung yêu cầu đang chạy, không tự tạo thêm lượt gửi. Nếu gặp lỗi, thông báo lỗi được giữ trong lúc tự thử lại, tới khi xác nhận đồng bộ thành công.
 
 
 - **Không truy cập được Apps Script:** kiểm tra URL `/exec`, mạng, quyền **Anyone** và Web app chạy với tư cách **Me**. Link `/edit` và `/dev` không phải URL triển khai dùng trên website.

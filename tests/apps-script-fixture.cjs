@@ -13,6 +13,7 @@ function fixture(saved, options = {}) {
     const cells = state.sheets[name];
     if (!cells) return null;
     return {
+      getSheetId: () => Object.keys(state.sheets).indexOf(name),
       getLastRow: () => cells.reduce((n, row, i) => row.some(x => x !== '' && x != null) ? i + 1 : n, 0),
       getMaxRows: () => Math.max(1000, cells.length), insertRowsAfter() {}, setFrozenRows() {}, setColumnWidth() {},
       getRange(row, col, height = 1, width = 1) {

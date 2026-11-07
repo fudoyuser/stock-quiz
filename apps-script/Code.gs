@@ -94,7 +94,7 @@
 /* Chạy trong Google Apps Script V8, gắn với Google Sheet của bạn. */
 var BDQ_HEADER = ['Loại', 'Mã', 'Cập nhật', 'Dữ liệu (JSON)'];
 var BDQ_SERVICE = 'stock-quiz-progress-v2';
-var BDQ_VERSION = 'shared-v3';
+var BDQ_VERSION = 'shared-v4';
 
 function onOpen() {
   SpreadsheetApp.getUi().createMenu('Bảng Điện Quiz').addItem('Thiết lập đồng bộ', 'setup').addToUi();
@@ -224,6 +224,10 @@ function BDQ_summary_(ss, progress) {
   sheet.getRange(1, 1, rows.length, 2).setValues(rows);
   sheet.setFrozenRows(1); sheet.setColumnWidth(1, 300); sheet.setColumnWidth(2, 220);
 }
+function BDQ_overviewId_(ss) {
+  var sheet = ss.getSheetByName('Thống kê Quiz');
+  return sheet && sheet.getRange(1, 1).getValue() === 'Bảng Điện Quiz — Số liệu chung' ? sheet.getSheetId() : null;
+}
 function BDQ_health_() {
   var result = { ok: false, service: BDQ_SERVICE, version: BDQ_VERSION, scriptId: ScriptApp.getScriptId() };
   try {
@@ -233,7 +237,8 @@ function BDQ_health_() {
     if (!sheet || !sheet.getLastRow()) throw new Error('Sheet chưa có dữ liệu Progress. Website sẽ khởi tạo khi đồng bộ thành công.');
     var progress = BDQ_read_(ss);
     result.total = BDQProgress.summarize(progress).total;
-    result.hasOverview = !!ss.getSheetByName('Thống kê Quiz');
+    result.overviewId = BDQ_overviewId_(ss);
+    result.hasOverview = result.overviewId !== null;
     result.ok = true;
   } catch (error) { result.error = String(error.message || error); }
   return result;
@@ -251,7 +256,8 @@ function doGet(e) {
     var shared = p.action === 'sharedRead';
     var id = shared ? BDQ_shared_(p, 'sharedRead') : BDQ_auth_(p, 'read');
     var result = BDQ_locked_(p, function () {
-      return { ok: true, service: BDQ_SERVICE, shared: shared, version: BDQ_VERSION, spreadsheetId: id, progress: BDQ_read_(SpreadsheetApp.openById(id), shared) };
+      var ss = SpreadsheetApp.openById(id), progress = BDQ_read_(ss, shared);
+      return { ok: true, service: BDQ_SERVICE, shared: shared, version: BDQ_VERSION, spreadsheetId: id, progress: progress, overviewId: BDQ_overviewId_(ss) };
     });
     return BDQ_output_(result, callback);
   } catch (error) { return BDQ_output_({ ok: false, error: String(error.message || error) }, callback); }

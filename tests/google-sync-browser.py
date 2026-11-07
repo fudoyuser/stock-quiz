@@ -11,7 +11,8 @@ BASE = 'http://127.0.0.1:8000'
 ENDPOINT = 'https://script.google.com/macros/s/test-deployment/exec'
 OTHER = 'https://script.google.com/macros/s/other-deployment/exec'
 KEY = 'a' * 64  # Public fixture, not a real secret.
-flags = {'offline': False, 'lose_response': False, 'reject_write': False, 'empty_script': False, 'calls': 0}
+flags = {'offline': False, 'lose_response': False, 'reject_write': False, 'empty_script': False, 'focus_during_read': False, 'hold_read': False, 'calls': 0}
+held_reads = []
 backends = {ENDPOINT: None, OTHER: None}
 errors = []
 BOOTSTRAP = '--bootstrap' in sys.argv
@@ -27,6 +28,12 @@ def apps_script(route):
     if flags['offline']:
         route.abort('failed')
         return
+    if req.method == 'GET' and 'action=health' not in req.url:
+        if flags['hold_read']:
+            held_reads.append(route)
+            return
+        if flags['focus_during_read']:
+            req.frame.evaluate('window.dispatchEvent(new Event("focus"))')
     if flags['empty_script'] and req.method == 'GET' and 'action=health' not in req.url:
         route.fulfill(content_type='application/javascript', body='void 0;')
         return
@@ -105,6 +112,8 @@ with sync_playwright() as p:
         expect(a.locator('#syncNote')).to_contain_text('Đã đồng bộ Google Sheets', timeout=15000)
         expect(a.locator('#sheetConfig')).to_be_hidden()
         expect(a.locator('#googleSetup')).to_be_hidden()
+        expect(a.locator('#googleSheet')).to_be_visible()
+        expect(a.locator('#googleSheet')).to_have_attribute('href', 'https://docs.google.com/spreadsheets/d/sheet-one/edit#gid=1')
         assert a.evaluate("store.get('bdq-sheet-connection')") is None
         answer(a)
         sync(a)
@@ -158,13 +167,30 @@ with sync_playwright() as p:
         with b.expect_popup() as opened:
             b.click('#sheetHealth')
         diagnostics = opened.value
-        expect(diagnostics.locator('body')).to_contain_text('shared-v3')
+        expect(diagnostics.locator('body')).to_contain_text('shared-v4')
         diagnostics.close()
         flags['empty_script'] = False
+        # Keep the last actionable error visible while an automatic retry is in flight.
+        flags['hold_read'] = True
+        b.evaluate('window.dispatchEvent(new Event("online"))')
+        b.wait_for_timeout(100)
+        assert held_reads
+        expect(b.locator('#syncNote')).to_contain_text('không trả đúng dữ liệu đồng bộ')
+        expect(b.locator('#syncNote')).to_contain_text('Đang thử kết nối lại')
+        flags['hold_read'] = False
+        for route in held_reads:
+            apps_script(route)
+        held_reads.clear()
+        expect(b.locator('#syncNote')).to_contain_text('Đã đồng bộ Google Sheets', timeout=15000)
+        # A focus/poll during each slow read must not create endless pending syncs.
+        flags['focus_during_read'] = True
         sync(b)
+        b.wait_for_timeout(1700)
+        expect(b.locator('#syncNote')).to_contain_text('Đã đồng bộ Google Sheets')
+        flags['focus_during_read'] = False
         assert b.evaluate('document.documentElement.scrollWidth<=innerWidth')
         assert not errors, errors
-        print(json.dumps({'mode': 'public-shared', 'bootstrap': BOOTSTRAP, 'fresh_browsers': 3, 'manual_fields_entered': 0, 'login_required': False, 'final_shared_total': 433 + learned, 'continuous_auto_upload': 'passed', 'jsonp_failure_diagnosed': 'passed', 'health_endpoint': 'passed', 'offline_reconnect': 'passed', 'lost_response_retry': 'passed', 'page_errors': errors}))
+        print(json.dumps({'mode': 'public-shared', 'bootstrap': BOOTSTRAP, 'fresh_browsers': 3, 'manual_fields_entered': 0, 'login_required': False, 'final_shared_total': 433 + learned, 'continuous_auto_upload': 'passed', 'jsonp_failure_diagnosed': 'passed', 'health_endpoint': 'passed', 'overview_link': 'passed', 'retry_error_preserved': 'passed', 'overlapping_refreshes': 'passed', 'offline_reconnect': 'passed', 'lost_response_retry': 'passed', 'page_errors': errors}))
         browser.close()
         sys.exit(0)
     c0, plain = context(browser)
