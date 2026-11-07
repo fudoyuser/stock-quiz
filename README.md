@@ -107,7 +107,7 @@ Sau mỗi lượt có nút **Ôn lại câu sai** để chơi lại riêng các 
 - Chuỗi ngày học liên tiếp, biểu đồ 7 ngày gần nhất và kỷ lục chuỗi.
 - Cột mốc tiếp theo (100, 500, 1.000… câu), có thông báo khi đạt mốc hoặc hoàn thành mục tiêu ngày.
 
-**Lưu tiến độ:** bản GitHub Pages hỗ trợ đồng bộ qua **Google Sheet + Apps Script**, không cần OAuth Client ID. Tạo Sheet, dán đoạn khởi tạo tự cập nhật và triển khai một lần theo [hướng dẫn kết nối](docs/google-sheets.md), sau đó nhập cùng đường dẫn và mã đồng bộ trên các máy. Website tự nhớ kết nối, nhập tiến độ cũ và gộp các phiên học mới. Mã xử lý Apps Script tự cập nhật theo GitHub; không phải dán mã lại mỗi lần sửa chức năng đồng bộ. Khi mất mạng, dữ liệu vẫn lưu trên trình duyệt; dòng trạng thái cho biết đã đồng bộ hay còn chờ gửi. Bản trên Claude vẫn dùng cơ chế đồng bộ tài khoản Claude sẵn có.
+**Lưu tiến độ:** website tự đồng bộ **một bộ số liệu chung cho mọi người** qua Google Sheet + Apps Script. Mở trang trên trình duyệt mới là tự tải số liệu, không cần đăng nhập, nhập URL hoặc mã. Các lượt luyện tập được cộng chung; mục tiêu ngày và điểm từng phần cũng dùng chung. Chủ website đã chọn dự án và URL trong [shared-config.json](shared-config.json). Mã xử lý Apps Script tự cập nhật từ GitHub bằng đoạn khởi tạo cài một lần; xem [hướng dẫn](docs/google-sheets.md). Khi mất mạng, lượt mới giữ trên trình duyệt để gửi lại. Bản trên Claude vẫn dùng cơ chế tài khoản Claude sẵn có.
 
 **Câu "Nhận định đúng hay sai?":** đề là một nhận định, 4 phương án gồm 2 "Đúng, vì …" và 2 "Sai, vì …" — phải chọn đúng cả kết luận lẫn lý do. Có trong phần PMI & CPI, mục "Dễ nhầm lẫn" của từng chương, và rải trong các phần Thuật ngữ, Quy định giao dịch, Định giá, Quản trị rủi ro.
 

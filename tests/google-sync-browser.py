@@ -15,6 +15,7 @@ flags = {'offline': False, 'lose_response': False, 'reject_write': False, 'calls
 backends = {ENDPOINT: None, OTHER: None}
 errors = []
 BOOTSTRAP = '--bootstrap' in sys.argv
+SHARED = '--shared' in sys.argv
 
 
 def apps_script(route):
@@ -29,7 +30,7 @@ def apps_script(route):
     if req.method == 'POST' and flags['reject_write']:
         route.fulfill(content_type='application/json', body='{"ok":false}')
         return
-    request = {'method': req.method, 'state': backends[endpoint], 'bootstrap': BOOTSTRAP}
+    request = {'method': req.method, 'state': backends[endpoint], 'bootstrap': BOOTSTRAP, 'endpoint': endpoint}
     if req.method == 'GET':
         request['params'] = {k: v[0] for k, v in parse_qs(urlparse(req.url).query, keep_blank_values=True).items()}
     else:
@@ -57,6 +58,7 @@ def context(browser, seed=None):
     c.route('https://fonts.googleapis.com/**', lambda r: r.abort())
     c.route('https://fonts.gstatic.com/**', lambda r: r.abort())
     c.route('https://script.google.com/macros/s/**', apps_script)
+    c.route('**/shared-config.json', lambda r: r.fulfill(json={'mode': 'shared' if SHARED else 'private', 'endpoint': ENDPOINT if SHARED else ''}))
     if seed:
         c.add_init_script('''if(!localStorage.getItem('fixture-seeded')) {
           localStorage.setItem('fixture-seeded','1');
@@ -94,6 +96,53 @@ def sync(page):
 
 with sync_playwright() as p:
     browser = p.chromium.launch(executable_path='/usr/bin/chromium', headless=True, args=['--no-sandbox'])
+    if SHARED:
+        seed = {'total': 428, 'right': 334, 'best': 2, 'days': {'2026-11-07': 77}}
+        ca, a = context(browser, seed)
+        expect(a.locator('#syncNote')).to_contain_text('Đã đồng bộ Google Sheets', timeout=15000)
+        expect(a.locator('#sheetConfig')).to_be_hidden()
+        expect(a.locator('#googleSetup')).to_be_hidden()
+        assert a.evaluate("store.get('bdq-sheet-connection')") is None
+        answer(a)
+        sync(a)
+        cb, b = context(browser)
+        expect(b.locator('#syncNote')).to_contain_text('Đã đồng bộ Google Sheets', timeout=15000)
+        assert b.evaluate('stats.total') == 429
+        assert b.locator('#sheetEndpoint').input_value() == ''
+        assert b.locator('#sheetKey').input_value() == ''
+        assert b.evaluate("store.get('bdq-sheet-connection')") is None
+        answer(a, False)
+        answer(b)
+        sync(a)
+        sync(b)
+        sync(a)
+        assert a.evaluate('stats.total') == b.evaluate('stats.total') == 431
+        cc, c = context(browser)
+        expect(c.locator('#syncNote')).to_contain_text('Đã đồng bộ Google Sheets', timeout=15000)
+        assert c.evaluate('stats.total') == 431
+        flags['offline'] = True
+        answer(b)
+        b.click('#googleSave')
+        expect(b.locator('#syncNote')).to_contain_text('Không truy cập được Apps Script')
+        assert b.evaluate('stats.total') == 432
+        flags['offline'] = False
+        b.evaluate('window.dispatchEvent(new Event("online"))')
+        expect(b.locator('#syncNote')).to_contain_text('Đã đồng bộ Google Sheets', timeout=15000)
+        sync(a)
+        assert a.evaluate('stats.total') == 432
+        answer(a)
+        flags['lose_response'] = True
+        sync(a)
+        sync(c)
+        assert c.evaluate('stats.total') == 433
+        b.reload(wait_until='domcontentloaded')
+        expect(b.locator('#syncNote')).to_contain_text('Đã đồng bộ Google Sheets', timeout=15000)
+        assert b.evaluate('stats.total') == 433
+        assert b.evaluate('document.documentElement.scrollWidth<=innerWidth')
+        assert not errors, errors
+        print(json.dumps({'mode': 'public-shared', 'bootstrap': BOOTSTRAP, 'fresh_browsers': 3, 'manual_fields_entered': 0, 'login_required': False, 'final_shared_total': 433, 'offline_reconnect': 'passed', 'lost_response_retry': 'passed', 'page_errors': errors}))
+        browser.close()
+        sys.exit(0)
     c0, plain = context(browser)
     expect(plain.locator('#googleConnect')).to_be_enabled()
     answer(plain)

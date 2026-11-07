@@ -96,3 +96,45 @@ test('bootstrap refuses HTTP errors and unexpected code without executing it or 
     assert.equal(f.state.properties.BDQ_SYNC_KEY, KEY);
   }
 });
+
+function publicRequest(action, payload = '') {
+  const p = signed(action === 'sharedRead' ? 'read' : 'write', payload);
+  p.action = action; delete p.signature;
+  return p;
+}
+test('chosen public deployment shares progress without login, key or signature', () => {
+  const f = fixture(), a = baseline(), b = baseline();
+  M.answer(a, A, '2026-11-07', true); M.answer(b, B, '2026-11-07', false);
+  for (const x of [a, b]) assert.equal(post(f, publicRequest('sharedWrite', JSON.stringify(x))).ok, true);
+  const response = result(f.context.doGet({ parameter: publicRequest('sharedRead') }));
+  assert.equal(response.ok, true); assert.equal(response.shared, true);
+  assert.equal(M.summarize(response.progress).total, 430);
+  assert.equal(M.summarize(response.progress).right, 335);
+  assert.ok(!JSON.stringify(response).includes(KEY));
+});
+test('a deployment not explicitly selected by the repository stays private', () => {
+  const f = fixture(undefined, { endpoint: 'https://script.google.com/macros/s/unselected/exec' });
+  const response = result(f.context.doGet({ parameter: publicRequest('sharedRead') }));
+  assert.equal(response.ok, false); assert.equal(response.progress, undefined);
+  assert.equal(post(f, publicRequest('sharedWrite', JSON.stringify(baseline()))).ok, false);
+  assert.equal(f.state.opens, 0); assert.equal(f.state.writes, 0);
+  assert.equal(get(f).ok, true); // Existing key-protected integration still works.
+});
+test('public writes still validate data, time, nonce and take the write lock', () => {
+  const f = fixture(), invalid = baseline(); invalid.base.right = 999;
+  assert.equal(post(f, publicRequest('sharedWrite', JSON.stringify(invalid))).ok, false);
+  const p = publicRequest('sharedWrite', JSON.stringify(baseline())); p.nonce = 'bad';
+  assert.equal(post(f, p).ok, false);
+  f.state.busy = true;
+  assert.equal(post(f, publicRequest('sharedWrite', JSON.stringify(baseline()))).ok, false);
+  assert.equal(f.state.writes, 0);
+});
+
+test('explicit project selection supports its deployments and never opens other projects', () => {
+  for (const id of ['script-one', 'another-private-project']) {
+    const f = fixture(undefined, { sharedConfig: () => ({ mode: 'shared', scriptId: id, endpoint: 'https://script.google.com/macros/s/new-deployment/exec' }) });
+    const r = result(f.context.doGet({ parameter: publicRequest('sharedRead') }));
+    assert.equal(r.ok, id === 'script-one');
+    if (!r.ok) assert.equal(f.state.opens, 0);
+  }
+});

@@ -1,60 +1,62 @@
-# Lưu tiến độ bằng Google Sheet + Apps Script
+# Số liệu chung tự động qua Google Sheet
 
-Dùng Sheet của bạn để tự lưu và lấy lại tiến độ trên nhiều máy. Không cần tạo dự án Google Cloud hay OAuth Client ID. Bạn chỉ cấp quyền chạy Apps Script một lần bằng tài khoản sở hữu Sheet.
+Website hiện dùng **một bộ số liệu chung cho tất cả người truy cập**, theo cấu hình của chủ website. Mở trang trên trình duyệt mới là tự tải số liệu từ Sheet, không cần đăng nhập, nhập URL hay mã đồng bộ. Các lượt luyện tập của mọi người được cộng chung; mục tiêu và điểm từng phần cũng dùng chung.
 
-## Thiết lập một lần
+## Cấu hình hiện tại
 
-1. **[Tạo Google Sheet tại đây](https://sheets.new)**, đặt tên tùy ý, ví dụ **Tiến độ Bảng Điện Quiz**. Giữ quyền chia sẻ Sheet ở **Restricted / Bị hạn chế**.
-2. Trong Sheet, mở **Extensions / Tiện ích mở rộng → Apps Script**. Xóa mã mẫu trong `Code.gs`, rồi **[dán đoạn khởi tạo ngắn này một lần](https://raw.githubusercontent.com/fudoyuser/stock-quiz/main/apps-script/Bootstrap.gs)**. Lưu lại. Đoạn khởi tạo tự lấy mã xử lý từ repository của bạn; các bản cập nhật mã xử lý sau đó không cần sao chép lại hay triển khai lại. Script dùng runtime **V8** (mặc định của dự án mới).
-3. Chọn hàm **`setup`** trong thanh công cụ Apps Script → **Run / Chạy** và cấp quyền bằng tài khoản của bạn. Hàm này tạo hai tab:
-   - **Progress:** nơi website tự lưu dữ liệu.
-   - **Kết nối:** có **Mã đồng bộ** được tạo riêng cho Sheet của bạn. Chạy `setup` lại sẽ giữ mã và tiến độ đã có.
-4. Bấm **Deploy / Triển khai → New deployment / Lượt triển khai mới → Web app / Ứng dụng web**:
-   - **Execute as / Thực thi với tư cách:** **Me / Tôi**.
-   - **Who has access / Ai có quyền truy cập:** **Anyone / Bất kỳ ai**.
-   - Bấm **Deploy**, sao chép **Web app URL** kết thúc bằng **`/exec`**. Đây là đường dẫn Apps Script, không phải link mở Sheet và không phải URL `/dev`.
-5. Mở [website quiz](https://fudoyuser.github.io/stock-quiz/). Ngay dưới dải thống kê, mở **Kết nối Google Sheet**, dán **đường dẫn `/exec`** và **Mã đồng bộ** ở bước 3, rồi bấm **Lưu và kết nối**. Chờ thông báo **Đã đồng bộ Google Sheets**.
+[shared-config.json](../shared-config.json) đã chứa URL Web app do chủ website cung cấp và mã dự án Apps Script tương ứng. Đây là cấu hình công khai, không chứa mật khẩu hoặc mã đồng bộ. Dự án được chỉ định trong file này cho phép đọc/ghi số liệu chung qua website. Các bản Apps Script cài trong dự án khác vẫn yêu cầu chữ ký như trước, không tự bị công khai khi mã trên GitHub cập nhật.
 
-Trên máy khác, nhập **cùng đường dẫn và cùng mã**. Website tự nhớ kết nối trên từng máy; các lần sau mở trang sẽ tự đọc Sheet, gộp dữ liệu và lưu các lượt học mới. Không cần đăng nhập Google mỗi lần học.
+Khách truy cập **không phải thiết lập gì**. Nếu Apps Script đã cài bản tự cập nhật `Bootstrap.gs`, nó sẽ lấy mã xử lý mới sau khi bộ đệm hết hạn, khoảng một phút. Sau khi GitHub Pages cập nhật, chỉ cần mở hoặc tải lại website và chờ **Đã đồng bộ Google Sheets · số liệu dùng chung cho toàn website**.
 
-## Không phải sửa mã thủ công mỗi lần cập nhật
+## Chủ website thiết lập một lần
 
-Sau khi cài `Bootstrap.gs` và triển khai một lần, mã xử lý được tải qua HTTPS từ `fudoyuser/stock-quiz` trên GitHub và lưu đệm tối đa khoảng một phút. Khi có commit cập nhật `apps-script/Code.gs`, lần đồng bộ sau khi bộ đệm hết hạn sẽ dùng mã mới. Tiến độ, mã đồng bộ và URL `/exec` vẫn giữ nguyên. Để lấy bản mới ngay, tải lại Sheet rồi chọn **Bảng Điện Quiz → Cập nhật từ GitHub**; không cần mở trình sửa mã.
+Nếu dự án chưa được thiết lập:
 
-Nếu đã cài bản đầy đủ `Code.gs` trước đây, chỉ cần thay bằng đoạn khởi tạo **một lần**, chạy `setup` và cập nhật lượt triển khai hiện có sang **New version** để giữ nguyên URL `/exec`. Những bản cập nhật mã xử lý sau đó tự đi theo GitHub. Các thay đổi chính đoạn khởi tạo hoặc các quyền Google cần cấp mới vẫn có thể yêu cầu bạn thao tác lại một lần.
+1. [Tạo hoặc mở Google Sheet](https://sheets.new), giữ quyền chia sẻ trực tiếp Sheet ở **Restricted / Bị hạn chế**.
+2. Trong Sheet, mở **Extensions / Tiện ích mở rộng → Apps Script**. Trong `Code.gs`, dán [đoạn khởi tạo tự cập nhật](https://raw.githubusercontent.com/fudoyuser/stock-quiz/main/apps-script/Bootstrap.gs) một lần và lưu lại. Runtime dùng **V8**.
+3. Chọn hàm **`setup` → Run / Chạy**, cấp quyền bằng tài khoản sở hữu Sheet. Script tạo tab **Progress** để lưu dữ liệu và tab **Kết nối**. Mã đồng bộ trong tab Kết nối chỉ còn cần cho chế độ riêng cũ; **chế độ số liệu chung không dùng mã này**.
+4. **Deploy → New deployment → Web app**, chọn **Execute as: Me / Tôi**, **Who has access: Anyone / Bất kỳ ai**, rồi triển khai. Lấy **Web app URL** kết thúc bằng **`/exec`**.
+5. Chủ website cập nhật `endpoint` và `scriptId` trong `shared-config.json` một lần. `scriptId` lấy từ link dự án `/projects/…/edit`, không phải mã deployment trong URL `/exec`. Khách truy cập sẽ tự dùng cấu hình này trên mọi máy.
 
-Bản tự cập nhật chạy mã từ repository này bằng quyền Apps Script bạn đã cấp. Chỉ cấp quyền ghi repository cho người bạn tin tưởng. Nội dung tiến độ và mã đồng bộ không gửi lên GitHub; yêu cầu tải mã chỉ có URL công khai và thời điểm tải. Nếu GitHub gián đoạn sau khi bộ đệm hết hạn, đồng bộ sẽ báo lỗi và tiến độ tiếp tục giữ trên trình duyệt để thử lại. Muốn cố định một bản mã thay vì tự cập nhật, có thể dùng [bản đầy đủ Code.gs](https://raw.githubusercontent.com/fudoyuser/stock-quiz/main/apps-script/Code.gs).
+Không cần OAuth Client ID. Web app chạy bằng quyền đã cấp cho Apps Script để đọc/ghi Sheet. Nội dung số liệu được công khai qua Web app theo chế độ dùng chung; quyền chỉnh sửa trực tiếp các ô Sheet vẫn do chủ Sheet quản lý.
 
-**Anyone ở bước 4 là quyền gọi Web app, không phải chia sẻ công khai nội dung Sheet.** Script vẫn kiểm tra chữ ký tạo từ mã đồng bộ trước khi đọc/ghi. Người giữ mã có thể đọc/ghi tiến độ trong Sheet này, nên không đăng mã hoặc link chia sẻ có mã lên GitHub/chat công khai. Mã được lưu trong trình duyệt của các máy bạn kết nối và trong tab Kết nối của Sheet riêng; không nằm trong mã nguồn công khai, URL yêu cầu hoặc log của ứng dụng. Không gửi mật khẩu Google cho website.
+## Không phải dán lại mã mỗi lần sửa chức năng
 
-Nếu tài khoản cơ quan không cho triển khai **Anyone**, cần quản trị viên cho phép Web app hoặc dùng tài khoản Google cá nhân. Google có thể hiện màn hình cấp quyền/cảnh báo ứng dụng chưa xác minh khi bạn chạy script do chính mình tạo; hãy kiểm tra mã đã dán và chỉ cấp quyền nếu đúng dự án của bạn.
+`Bootstrap.gs` tự tải mã xử lý qua HTTPS từ `fudoyuser/stock-quiz` trên GitHub, lưu đệm tối đa khoảng một phút. Khi `apps-script/Code.gs` được cập nhật, lần đồng bộ sau khi bộ đệm hết hạn sẽ dùng mã mới. Tiến độ và URL `/exec` giữ nguyên. Muốn lấy bản mới ngay, tải lại Sheet rồi chọn **Bảng Điện Quiz → Cập nhật từ GitHub**.
 
-## Cách đồng bộ
+Nếu trước đây đã cài bản đầy đủ `Code.gs`, cần thay bằng đoạn khởi tạo **một lần**, chạy `setup` và **Deploy → Manage deployments → Edit → New version → Deploy** để giữ cùng URL `/exec`. Sau đó không cần dán lại mã xử lý. Thay đổi chính đoạn khởi tạo hoặc những quyền Google mới vẫn có thể cần thao tác một lần.
 
-- Dữ liệu cũ trên trình duyệt được nhập vào Sheet lần đầu, gồm tổng câu, số câu đúng, lịch sử theo ngày, chuỗi ngày học, mục tiêu và điểm các phần.
-- Các phiên học mới có mã riêng. Hai máy học độc lập rồi đồng bộ vẫn giữ đủ các phiên; gửi lại sau khi mất phản hồi không đếm trùng.
-- Apps Script khóa lúc ghi và gộp dữ liệu trước khi cập nhật Sheet, tránh máy này ghi đè mất phiên của máy kia. Mỗi phiên chỉ giữ một bản bộ đếm hiện tại trong Sheet thay vì nối thêm vô hạn mỗi lần lưu.
-- Website kiểm tra lại dữ liệu trong Sheet sau khi gửi. Phản hồi POST không đọc được từ trình duyệt không được dùng làm bằng chứng đã lưu thành công.
-- Mất mạng vẫn học được trên máy. Khi có mạng hoặc mở lại trang, website thử kết nối và gửi phần chưa đồng bộ. Chờ dòng **Đã đồng bộ** hoặc bấm **Đồng bộ ngay** trước khi chuyển máy; đóng tab ngay có thể khiến phần mới chỉ còn trên trình duyệt cho đến lần mở sau.
-- Khi đang mở, trang kiểm tra thay đổi mỗi phút, khi quay lại tab hoặc bấm nút đồng bộ. **Ngắt kết nối** xóa đường dẫn/mã đã nhớ trên máy này, giữ nguyên tiến độ trên máy và Sheet.
-- Một hồ sơ trình duyệt gắn với một Sheet sau lần kết nối đầu để không vô tình trộn dữ liệu của người khác. Dùng cùng Sheet; nếu muốn dùng Sheet khác độc lập, dùng hồ sơ trình duyệt khác.
+Bản tự cập nhật chạy mã từ repository này bằng quyền Apps Script đã cấp; chỉ cấp quyền ghi repository cho người bạn tin tưởng. Yêu cầu tải mã/cấu hình từ GitHub không gửi dữ liệu luyện tập hoặc mã đồng bộ lên GitHub. Khi GitHub gián đoạn sau khi bộ đệm hết hạn, trang giữ lượt học trên máy và thử lại sau.
 
-Lịch sử cũ trước khi có tính năng này chỉ có các số tổng, nên không thể biết chính xác phần nào trùng giữa hai máy từng học độc lập. Khi nhập lịch sử cũ, ứng dụng gộp bảo thủ theo mức lớn nhất thay vì cộng mù hai số tổng; các lượt học mới được đếm riêng đầy đủ.
+## Dữ liệu và cách gộp
+
+- Tổng số câu, số câu đúng, lịch sử từng ngày, chuỗi ngày học, mục tiêu và điểm từng phần được dùng chung.
+- Tiến độ cũ trên trình duyệt được gộp vào lần đầu. Vì lịch sử cũ chỉ có tổng chung, không biết chính xác phần trùng giữa các máy từng học độc lập: phần lịch sử đó được gộp bảo thủ theo mức lớn nhất, không cộng mù mọi số tổng.
+- Các phiên học mới có mã riêng. Hai máy học rồi đồng bộ giữ đủ các phiên; gửi lại sau khi mất phản hồi không đếm trùng.
+- Apps Script khóa lúc ghi, gộp dữ liệu trước khi cập nhật và giữ một bản bộ đếm hiện tại cho mỗi phiên, tránh ghi đè mất lượt của máy khác.
+- Trang đọc lại dữ liệu thật sau khi gửi để xác nhận. Phản hồi POST không đọc được từ trình duyệt không được coi là bằng chứng đã lưu.
+- Khi mất mạng, các lượt mới vẫn ở trên máy. Khi kết nối lại, quay lại trang hoặc tải lại, trang tự thử gửi tiếp. Chờ **Đã đồng bộ** hoặc bấm **Đồng bộ ngay** trước khi đóng tab để bảo đảm lượt mới đã lên Sheet.
+- Khi đang mở, trang kiểm tra thay đổi mỗi phút và khi quay lại tab. Trình duyệt mới tự tải cấu hình công khai rồi tải số liệu, không dùng cấu hình bí mật trên máy cũ.
 
 ## Khi gặp lỗi
 
-- **Không truy cập được Apps Script:** kiểm tra URL `/exec`, kết nối mạng, quyền **Anyone** và Web app chạy với tư cách **Me**. Không dùng link trang chỉnh sửa Apps Script hoặc link Google Sheet để điền vào ô này.
-- **Mã đồng bộ không đúng:** sao chép lại mã ở tab **Kết nối**, không thêm dấu cách. Đảm bảo mã và URL thuộc cùng một dự án/Sheet.
-- **Yêu cầu quá hạn:** bật đồng bộ ngày giờ tự động trên máy, rồi thử lại.
-- **Chưa có tab Progress:** chạy `setup` trong dự án gắn với đúng Sheet trước khi triển khai.
-- **Bản tự cập nhật chưa lấy mã mới:** tải lại Sheet rồi chọn **Bảng Điện Quiz → Cập nhật từ GitHub**, hoặc chờ khoảng một phút và đồng bộ lại. Nếu vừa thay bản đầy đủ bằng đoạn khởi tạo, cần **Deploy → Manage deployments → Edit → Version: New version → Deploy** một lần. Chỉ bấm Save chưa cập nhật đoạn khởi tạo trong Web app đã triển khai.
-- **Tab Progress đã thay đổi cấu trúc:** khôi phục bốn cột **Loại**, **Mã**, **Cập nhật**, **Dữ liệu (JSON)**; không tự sửa các bản ghi JSON đang dùng. Ứng dụng giữ bản trên trình duyệt khi gặp dữ liệu lỗi.
+- **Không truy cập được Apps Script:** kiểm tra URL `/exec`, mạng, quyền **Anyone** và Web app chạy với tư cách **Me**. Link `/edit` và `/dev` không phải URL triển khai dùng trên website.
+- **Web app chưa được chọn làm nguồn số liệu chung:** kiểm tra `scriptId` trong `shared-config.json` đúng dự án chứa deployment này. Cấu hình chỉ chọn dự án dự định công khai.
+- **Máy chủ chưa bật số liệu chung hoặc yêu cầu không hợp lệ:** kiểm tra dự án đã cài `Bootstrap.gs` và lượt triển khai đang dùng bản khởi tạo. Nếu vẫn là bản đầy đủ cũ, chuyển sang bản khởi tạo một lần theo hướng dẫn trên.
+- **Yêu cầu quá hạn:** bật đồng bộ ngày giờ tự động của máy rồi thử lại.
+- **Chưa có tab Progress:** chủ Sheet chạy `setup` trong dự án gắn với đúng Sheet.
+- **Chưa lấy mã mới:** trong Sheet chọn **Bảng Điện Quiz → Cập nhật từ GitHub**, hoặc chờ khoảng một phút và đồng bộ lại. Nếu chính đoạn khởi tạo vừa thay đổi, cần tạo **New version** cho deployment.
+- **Tab Progress đã đổi cấu trúc:** khôi phục bốn cột **Loại**, **Mã**, **Cập nhật**, **Dữ liệu (JSON)**. Không sửa các bản ghi JSON đang dùng. Khi gặp dữ liệu lỗi, ứng dụng giữ bản trên máy và không ghi đè vào Sheet.
 
-Script chỉ thao tác hai tab của Sheet gắn với dự án. Nếu đã có tab cùng tên chứa dữ liệu khác, `setup` dừng để bạn đổi tên tab đó, không ghi đè. Giới hạn Apps Script/Sheets và dung lượng trình duyệt vẫn áp dụng. Bạn có thể sao lưu Sheet trước khi tự chỉnh script; không đổi mã đồng bộ trừ khi muốn kết nối lại các máy.
+`setup` không ghi đè tab Progress/Kết nối có sẵn chứa nội dung khác. Giới hạn Google Apps Script, Sheets và dung lượng trình duyệt vẫn áp dụng.
+
+## Tương thích chế độ riêng trước đây
+
+Mã vẫn hỗ trợ những bản cài riêng có kiểm tra chữ ký. Nếu chủ một bản sao website chọn `mode: "private"` trong file cấu hình, giao diện kết nối URL/mã trên từng máy được bật lại. Website này đang chọn **shared**, nên những ô đó được ẩn và không có bước nhập thông tin.
 
 ## Phát triển và kiểm thử
 
-`apps-script/Bootstrap.gs` là đoạn cài một lần. `apps-script/Code.gs` là bản gộp sẵn của `progress-model.js` và `apps-script/server.js` để đoạn khởi tạo tải và chạy. Sau khi sửa hai file nguồn, tạo lại bản gộp và commit cùng thay đổi:
+`apps-script/Bootstrap.gs` chỉ cài một lần. `apps-script/Code.gs` gộp `progress-model.js` và `apps-script/server.js`; khi sửa nguồn, tạo lại bản gộp và commit cùng thay đổi:
 
 ```sh
 node scripts/build-apps-script.cjs
@@ -62,8 +64,8 @@ node scripts/build-apps-script.cjs --check
 node --test tests/*.test.cjs
 python3 -m http.server 8000 --bind 0.0.0.0
 # Phiên terminal khác, có Python Playwright và Chromium:
-python3 tests/google-sync-browser.py
+python3 tests/google-sync-browser.py --bootstrap --shared
 python3 tests/google-sync-browser.py --bootstrap
 ```
 
-Kiểm thử chạy chính `Code.gs` và `Bootstrap.gs` với các dịch vụ Apps Script giả lập, kiểm tra tải mã mới mà không mất dữ liệu/mã kết nối, kiểm tra chữ ký, khóa ghi, gộp nhiều máy, gửi lại, tự kết nối sau tải lại, mã sai và dữ liệu hỏng. Cần bạn tạo Sheet và triển khai thật để xác minh quyền Google và đường dẫn Web app thực tế; kiểm thử giả lập không thay thế bước này.
+Kiểm thử chạy chính Code.gs/Bootstrap.gs với các dịch vụ Apps Script giả lập, gồm ba trình duyệt mới không nhập thông tin, cộng lượt trên nhiều máy, khôi phục mạng, gửi lại, khóa ghi, dữ liệu lỗi và bảo vệ các dự án không được chọn công khai. Kết nối Google thực tế còn phụ thuộc quyền triển khai của chủ Sheet và khả năng truy cập dịch vụ; kiểm thử giả lập không thay thế kiểm tra trên Web app thật.

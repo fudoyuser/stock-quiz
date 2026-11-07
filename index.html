@@ -3798,7 +3798,7 @@ function renderStats() {
 const SYNC_RE = /^bdq-(stats|goal|.+-(cur|best))$/;
 const sync = { ref: null, timer: 0, applying: false, state: "" };
 const SYNC_MSG = {
-  local: ["", "💾 Tiến độ đang lưu trên trình duyệt này. Kết nối Google Sheet bên dưới để đồng bộ giữa các máy."],
+  local: ["", "💾 Tiến độ tạm lưu trên máy, đang tải số liệu chung của website."],
   signedout: ["", "💾 Đăng nhập Claude để lưu tiến độ vào tài khoản."],
   loading: ["", "☁ Đang tải tiến độ từ tài khoản…"],
   slow: ["warn", "☁ Chưa kết nối được máy chủ — tiến độ tạm giữ trên máy, sẽ tự đồng bộ khi kết nối lại."],

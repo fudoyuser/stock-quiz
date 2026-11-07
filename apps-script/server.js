@@ -38,17 +38,39 @@ function setup() {
 function BDQ_message_(p) {
   return JSON.stringify([1, p.action, String(p.at), p.nonce, p.callback || '', p.payload || '']);
 }
+function BDQ_request_(p, action) {
+  if (!p || p.v !== '1' || p.action !== action || !/^[a-f0-9]{32}$/.test(p.nonce || '') || !/^\d{13}$/.test(String(p.at)) || Math.abs(Date.now() - Number(p.at)) > 300000)
+    throw new Error('Yêu cầu quá hạn hoặc không hợp lệ. Kiểm tra giờ trên máy rồi thử lại.');
+  if (typeof p.payload !== 'string' || p.payload.length > 500000 || ((action === 'read' || action === 'sharedRead') && p.payload !== '')) throw new Error('Dữ liệu gửi không hợp lệ hoặc quá lớn.');
+}
 function BDQ_auth_(p, action) {
   var props = PropertiesService.getScriptProperties();
   var id = props.getProperty('BDQ_SHEET_ID'), key = props.getProperty('BDQ_SYNC_KEY');
   if (!id || !key) throw new Error('Chủ Sheet cần chạy hàm setup một lần trong Apps Script.');
-  if (!p || p.v !== '1' || p.action !== action || !/^[a-f0-9]{32}$/.test(p.nonce || '') || !/^\d{13}$/.test(String(p.at)) || Math.abs(Date.now() - Number(p.at)) > 300000)
-    throw new Error('Yêu cầu quá hạn hoặc không hợp lệ. Kiểm tra giờ trên máy rồi thử lại.');
-  if (typeof p.payload !== 'string' || p.payload.length > 500000 || (action === 'read' && p.payload !== '')) throw new Error('Dữ liệu gửi không hợp lệ hoặc quá lớn.');
+  BDQ_request_(p, action);
   var expected = Utilities.base64EncodeWebSafe(Utilities.computeHmacSha256Signature(BDQ_message_(p), key, Utilities.Charset.UTF_8)).replace(/=+$/, '');
   var supplied = String(p.signature || ''), diff = expected.length ^ supplied.length;
   for (var i = 0; i < expected.length; i++) diff |= expected.charCodeAt(i) ^ (supplied.charCodeAt(i) || 0);
   if (diff) throw new Error('Mã đồng bộ không đúng. Lấy lại mã ở tab Kết nối trong Sheet của bạn.');
+  return id;
+}
+function BDQ_shared_(p, action) {
+  BDQ_request_(p, action);
+  var cache = CacheService.getScriptCache(), raw = cache.get('bdq-shared-config-v1');
+  if (!raw) {
+    var response = UrlFetchApp.fetch('https://raw.githubusercontent.com/fudoyuser/stock-quiz/main/shared-config.json?t=' + Date.now(), { muteHttpExceptions: true, validateHttpsCertificates: true });
+    if (response.getResponseCode() !== 200) throw new Error('Chưa đọc được cấu hình số liệu chung của website.');
+    raw = response.getContentText();
+    try { cache.put('bdq-shared-config-v1', raw, 60); } catch (_) {}
+  }
+  var settings = JSON.parse(raw);
+  // Chỉ dự án được chủ repository chọn mới công khai; các bản cài riêng vẫn cần chữ ký.
+  var selected = settings && settings.mode === 'shared' && (settings.scriptId
+    ? settings.scriptId === ScriptApp.getScriptId()
+    : settings.endpoint === ScriptApp.getService().getUrl());
+  if (!selected) throw new Error('Web app này chưa được chủ website chọn làm nguồn số liệu chung.');
+  var id = PropertiesService.getScriptProperties().getProperty('BDQ_SHEET_ID');
+  if (!id) throw new Error('Chủ Sheet cần chạy hàm setup một lần trong Apps Script.');
   return id;
 }
 function BDQ_locked_(p, fn) {
@@ -90,9 +112,10 @@ function doGet(e) {
   var p = e && e.parameter || {}, callback = p.callback;
   if (!/^bdqSheets_[a-f0-9]{32}$/.test(callback || '')) return BDQ_output_({ ok: false, error: 'Callback không hợp lệ.' });
   try {
-    var id = BDQ_auth_(p, 'read');
+    var shared = p.action === 'sharedRead';
+    var id = shared ? BDQ_shared_(p, 'sharedRead') : BDQ_auth_(p, 'read');
     var result = BDQ_locked_(p, function () {
-      return { ok: true, service: BDQ_SERVICE, spreadsheetId: id, progress: BDQ_read_(SpreadsheetApp.openById(id)) };
+      return { ok: true, service: BDQ_SERVICE, shared: shared, spreadsheetId: id, progress: BDQ_read_(SpreadsheetApp.openById(id)) };
     });
     return BDQ_output_(result, callback);
   } catch (error) { return BDQ_output_({ ok: false, error: String(error.message || error) }, callback); }
@@ -100,7 +123,8 @@ function doGet(e) {
 function doPost(e) {
   try {
     if (!e || !e.postData || e.postData.contents.length > 1100000) throw new Error('Yêu cầu ghi không hợp lệ.');
-    var p = JSON.parse(e.postData.contents), id = BDQ_auth_(p, 'write');
+    var p = JSON.parse(e.postData.contents);
+    var id = p.action === 'sharedWrite' ? BDQ_shared_(p, 'sharedWrite') : BDQ_auth_(p, 'write');
     if (p.callback !== '') throw new Error('Yêu cầu ghi không hợp lệ.');
     var incoming = BDQProgress.validate(JSON.parse(p.payload));
     BDQ_locked_(p, function () {

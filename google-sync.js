@@ -1,19 +1,20 @@
-/* Google Sheets qua Apps Script: mã riêng trên mỗi máy, không cần OAuth Client ID. */
+/* Google Sheets qua Apps Script: số liệu chung tự động, tương thích bản cài riêng cũ. */
 (function () {
   "use strict";
   if (window.claude || !window.BDQProgress) return;
   const M = window.BDQProgress, KEY = "bdq-google-progress-v2", CONNECTION = "bdq-sheet-connection", BINDING = "bdq-sheet-id";
   const actor = crypto.randomUUID(), requests = new Set();
   const panel = $("googleSync"), connect = $("googleConnect"), save = $("googleSave"), disconnect = $("googleDisconnect"), sheet = $("googleSheet"), config = $("sheetConfig");
-  let ledger, connection = null, active = false, timer = 0, pending = false, running = null, generation = 0;
+  let ledger, connection = null, shared = true, loadingConfig = false, active = false, timer = 0, pending = false, running = null, generation = 0;
   panel.hidden = false;
+  config.hidden = true;
   function note(message, cls = "") {
     $("syncNote").className = "sync " + cls; $("syncNote").textContent = message;
   }
-  function localNote() { note("💾 Tiến độ đã lưu trên trình duyệt. Kết nối Google Sheet để đồng bộ giữa các máy."); }
+  function localNote() { note(shared ? "💾 Đã lưu trên máy; đang chờ kết nối số liệu chung của website." : "💾 Tiến độ đã lưu trên trình duyệt. Kết nối Google Sheet để đồng bộ giữa các máy."); }
   function controls() {
-    save.hidden = !active; disconnect.hidden = !active;
-    sheet.hidden = !active || !sheet.href;
+    save.hidden = !active; disconnect.hidden = shared || !active;
+    sheet.hidden = shared || !active || !sheet.href;
   }
   function legacy() {
     const x = M.empty();
@@ -81,6 +82,7 @@
     const value = connection, gen = generation;
     if (!value) throw Error("Chưa kết nối Google Sheet.");
     const at = String(Date.now()), nonce = crypto.randomUUID().replace(/-/g, "");
+    if (shared) return { v: "1", action: action === "read" ? "sharedRead" : "sharedWrite", at, nonce, callback, payload };
     const message = JSON.stringify([1, action, at, nonce, callback, payload]);
     const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(value.key), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
     const bytes = new Uint8Array(await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(message)));
@@ -107,6 +109,7 @@
         finished = true; cleanup();
         if (!data || data.ok !== true) return reject(Error(data?.error || "Apps Script chưa xác nhận kết nối."));
         if (data.service !== "stock-quiz-progress-v2" || !/^[A-Za-z0-9_-]+$/.test(data.spreadsheetId || "")) return reject(Error("Đường dẫn không phải Apps Script của Bảng Điện Quiz."));
+        if (shared && data.shared !== true) return reject(Error("Máy chủ chưa bật số liệu chung. Chủ website cần cập nhật Apps Script; các lượt trên máy vẫn được giữ."));
         try { resolve({ progress: M.validate(data.progress), spreadsheetId: data.spreadsheetId }); } catch { reject(Error("Dữ liệu trong Sheet không hợp lệ. Tiến độ trên máy vẫn được giữ.")); }
       };
       script.onerror = () => fail("Không truy cập được Apps Script. Kiểm tra mạng, đường dẫn /exec và quyền truy cập Anyone.");
@@ -125,6 +128,7 @@
     } finally { clearTimeout(timeout); requests.delete(cancel); }
   }
   function checkSheet(result) {
+    if (shared) return;
     const previous = store.get(BINDING);
     if (previous && previous !== result.spreadsheetId) throw Error("Trình duyệt đang giữ tiến độ của một Sheet khác. Dùng cùng Sheet hoặc hồ sơ trình duyệt riêng để tránh trộn dữ liệu.");
     store.set(BINDING, result.spreadsheetId);
@@ -132,7 +136,7 @@
   async function syncOnce() {
     note("☁ Đang đồng bộ Google Sheets…");
     let remote = await read(); checkSheet(remote);
-    active = true; store.set(CONNECTION, JSON.stringify(connection)); config.open = false;
+    active = true; if (!shared) store.set(CONNECTION, JSON.stringify(connection)); config.open = false;
     sheet.href = `https://docs.google.com/spreadsheets/d/${remote.spreadsheetId}/edit`; controls();
     ledger = M.merge(ledger, remote.progress); apply();
     const snapshot = M.validate(ledger), version = M.canon(snapshot); pending = false;
@@ -151,7 +155,7 @@
     }
     const newer = M.canon(ledger) !== M.canon(M.merge(snapshot, remote.progress));
     if (pending || newer) schedule();
-    else note("☁ Đã đồng bộ Google Sheets · các máy dùng cùng đường dẫn và mã đồng bộ để tiếp tục học.", "ok");
+    else note(shared ? "☁ Đã đồng bộ Google Sheets · số liệu dùng chung cho toàn website." : "☁ Đã đồng bộ Google Sheets · các máy dùng cùng đường dẫn và mã đồng bộ để tiếp tục học.", "ok");
   }
   function run() {
     clearTimeout(timer);
@@ -160,7 +164,7 @@
     const gen = generation;
     running = syncOnce().catch(e => {
       pending = true;
-      if (gen === generation) { note("⚠ " + e.message, "warn"); if (!active) config.open = true; }
+      if (gen === generation) { note("⚠ " + e.message, "warn"); if (!shared && !active) config.open = true; }
     }).finally(() => { running = null; });
     return running;
   }
@@ -178,18 +182,36 @@
     try { localStorage.removeItem(CONNECTION); } catch {} delete memStore[CONNECTION];
     $("sheetKey").value = ""; config.open = true; localNote();
   };
-  addEventListener("online", () => { if (active) run(); });
-  addEventListener("focus", () => { if (active) run(); });
+  function reconnect() { if (connection) run(); else if (shared) loadConfig(); }
+  addEventListener("online", reconnect);
+  addEventListener("focus", reconnect);
   document.addEventListener("visibilitychange", () => { if (active && (pending || document.visibilityState === "visible")) run(); });
-  setInterval(() => { if (active && document.visibilityState === "visible") run(); }, 60000);
+  setInterval(() => { if (document.visibilityState === "visible") reconnect(); }, 60000);
   localNote(); controls();
-  $("googleAccount").textContent = "Thiết lập một lần trên mỗi máy. Tiến độ cũ được gộp vào Sheet; mất mạng vẫn tiếp tục học được.";
-  try {
-    const saved = store.get(CONNECTION);
-    if (saved) {
-      connection = validConnection(JSON.parse(saved));
-      $("sheetEndpoint").value = connection.endpoint; $("sheetKey").value = connection.key;
-      run();
-    } else config.open = true;
-  } catch { config.open = true; note("Chưa đọc được thiết lập kết nối. Nhập lại đường dẫn và mã; tiến độ vẫn giữ trên máy.", "warn"); }
+  async function loadConfig() {
+    if (loadingConfig) return;
+    loadingConfig = true;
+    try {
+      const response = await fetch('shared-config.json', { cache: 'no-store', signal: AbortSignal.timeout(15000) });
+      if (!response.ok) throw Error('Chưa tải được cấu hình đồng bộ. Các lượt học vẫn được giữ trên máy.');
+      const settings = await response.json();
+      if (!settings || !['shared', 'private'].includes(settings.mode)) throw Error('Cấu hình đồng bộ của website chưa hợp lệ.');
+      shared = settings.mode === 'shared'; localNote(); config.hidden = shared; $("googleSetup").hidden = shared;
+      panel.setAttribute('aria-label', shared ? 'Số liệu luyện tập dùng chung' : 'Kết nối Google Sheet');
+      $("googleAccount").textContent = shared ? 'Mọi người cùng dùng một bộ thống kê: các lượt luyện tập trên các máy được cộng chung. Không cần đăng nhập hoặc nhập mã.' : 'Thiết lập một lần trên mỗi máy. Tiến độ cũ được gộp vào Sheet; mất mạng vẫn tiếp tục học được.';
+      if (shared) {
+        if (!/^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec$/.test(settings.endpoint || '')) throw Error('Chủ website chưa cấu hình đường dẫn số liệu chung. Các lượt học vẫn được giữ trên máy.');
+        connection = { endpoint: settings.endpoint };
+      } else {
+        const saved = store.get(CONNECTION);
+        if (saved) {
+          connection = validConnection(JSON.parse(saved));
+          $("sheetEndpoint").value = connection.endpoint; $("sheetKey").value = connection.key;
+        } else config.open = true;
+      }
+      controls(); if (connection) await run();
+    } catch (error) { note('⚠ ' + error.message, 'warn'); }
+    finally { loadingConfig = false; }
+  }
+  loadConfig();
 })();
